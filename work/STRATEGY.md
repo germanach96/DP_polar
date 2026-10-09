@@ -1,4 +1,4 @@
-# >>> ESTRATEGIA FRAGANCIAS DECIDIDA POR EL USUARIO (2026-10-09): ver ESTRATEGIA_FRAGANCIAS.md en la raíz. (LY + 25% cortes LY) x (1 + trend 12M house x tamaño, todo Central incl. lanzamientos >=6m, tope ±30%). <<<
+# >>> ESTRATEGIA FRAGANCIAS DECIDIDA POR EL USUARIO (2026-10-09): ver ESTRATEGIA_FRAGANCIAS.md en la raíz. Base = LY + 25% cortes LY − 50% DA+ LY; forecast = base x (1 + trend 12M actuals house x tamaño, todo Central incl. lanzamientos >=6m, tope ±30%). <<<
 # >>> DA POSITIVOS (sesión 4e) — src/da_test.py, results/da_test.md (fragancias, regla con 25% cortes) <<<
 DA histórico solo existe desde ene-25 (cada versión guarda futuro + algunos meses pasados). En cada corte uso versiones <= corte.
 1. Sumar DA futuros al forecast: SIEMPRE peor (k=0 óptimo); el LY ya trae el nivel promo y la mitad consenso ya lleva DA. +/- igual de malo.

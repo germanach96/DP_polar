@@ -4,7 +4,9 @@ Fecha de decisión: 2026-10-09
 
 ## Regla
 
-> **Forecast EAN, mes futuro = (mismo mes del año anterior + 25% de los supply cuts de ese mes del año anterior) × (1 + trend de su house × tamaño)**
+> **Base = mismo mes del año anterior + 25% de los supply cuts de ese mes − 50% de los DAs positivos de ese mes (año anterior)**
+>
+> **Forecast EAN, mes futuro = Base × (1 + trend de 12 meses de su house × tamaño)**
 
 ## Cálculo del trend, en cada foto o mes
 
@@ -45,6 +47,23 @@ Fecha de decisión: 2026-10-09
   | 33% | −0,7% | +7,5% | 62,5% | 8 de 13 cortes |
 
 - Dentro del proceso completo (media con consenso y factor) el efecto es neutro. Aporta sobre todo cuando se usa la regla sola.
+
+## Ajuste por DAs / promociones (añadido 2026-10-09)
+
+- **A la base** se le resta el **50% de los DAs positivos** que tuvo ese EAN en ese mes del año anterior.
+  - Motivo: no repetir promos ni volúmenes puntuales del año pasado.
+  - El 50%, y no el 100%, porque parte de los DAs son inputs de mercado que sí se repiten.
+- **No sumar los DAs de los meses futuros.** Empeora con cualquier %: la base ya incluye el nivel normal de promos, y la mitad del número que viene del consenso ya trae los DAs.
+- **No quitar los DAs del cálculo del trend por ahora.** Solo hay DAs desde ene-25, así que la ventana anterior no tiene DAs y el trend saldría sesgado a la baja. Reevaluar con 24 meses de DAs o con el volumen real de promociones.
+- **Evidencia** (11 cortes, todos los Central):
+
+  | Variante | Error EAN-mes | Desvío |
+  |---|---|---|
+  | Sin ajuste | 74,8% | +9,1% |
+  | −50% de DAs+ | 70,9% | −1,9% |
+
+  En los maduros es prácticamente neutro (61,9% → 61,6%).
+- **Pendiente:** cuando haya volumen exacto de promos o un histórico corregido por outliers (o9), sustituir este ajuste y comparar las tres variantes: regla actual, outliers puros e híbrido.
 
 ## Complementos validados en el backtest por fotos (sep-25 → sep-26)
 
