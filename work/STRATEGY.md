@@ -1,3 +1,11 @@
+# >>> AJUSTE (sesión 4b): definición Local = <6 meses de envíos (luego pasan a Central) — src/launch_trend.py <<<
+Trend del grupo (house x tamaño) calculado con TODO lo Central en la foto (>=6 meses de envíos, incluye lanzamientos y manuales)
+y aplicado COMPLETO (100%) ≈ equivale a "medio trend LFL" pero algo mejor y más simple:
+  trend medio aplicado: LFL sin manuales -23/-24/-21/-16% ; central con manuales -18/-18/-16/-10%.
+  maduros, regla sola: completo+central 62.4% WMAPE bias -2.2% vs medio LFL 63.6% bias +2.9%.
+  cadena mix50 + factor100%: completo+central WMAPE 62.6%, bias +1.8/+9.0/-7.0/+4.5% (|bias| 5.6%) vs anterior 63.2% (6.4%).
+EANs jóvenes (6-17 meses): regla LY falla (bias +20..+47%) porque su LY incluye el llenado de canal -> tratarlos aparte.
+
 # >>> TÉCNICA VIGENTE (sesión 4) — lo que el usuario quiere: PROCEDIMIENTO, no resultados por house <<<
 Evidencia: src/tracking.py (main = técnica por foto sin memoria; --chain = inicio sep-25 + corrección encadenada). results/tracking.md.
 PASO 1 (foto inicial): número = media( consenso , LY x (1 + 50% trend YoY 12M de house x tipo de tamaño, tope ±30%) ).
