@@ -1,4 +1,4 @@
-"""Reporte único PDF: WAPE90 por casa y quarter, consenso vs regla (fotos sep-25 y mar-26). Lee work/wape90.json.
+"""Reporte único PDF: WAPE90 y SPP3 por casa y quarter, consenso vs regla (fotos sep-25 y mar-26). Lee work/wape90.json.
 Salida: reportes/REPORTE_WAPE90.pdf"""
 import json
 import subprocess
@@ -40,7 +40,8 @@ def cell(r):
     win = g < c
     cls = "win" if win else "lose"
     return (f"<td class='{cls}'><div class='pair'><span class='c'>{pc(c)}</span><span class='g'>{pc(g)}</span></div>"
-            f"<div class='d'>{'▼' if win else '▲'} {abs(d) * 100:.0f} pts</div></td>")
+            f"<div class='d'>{'▼' if win else '▲'} {abs(d) * 100:.0f} pts</div>"
+            f"<div class='sp'>SPP3 {pc(r['spp3_cons'], True)} · <b>{pc(r['spp3_regla'], True)}</b></div></td>")
 
 
 def bar_block(h, fam):
@@ -96,14 +97,15 @@ def main():
                 r = get(h, s, q)
                 if r:
                     detail += (f"<tr><td>{h}</td><td>{sl[5:]}</td><td>{QL[q][0]} · {QL[q][1]}</td><td>{r['eans']}</td><td>{n0(r['real'])}</td>"
-                               f"<td>{n0(r['consenso'])}</td><td>{n0(r['regla'])}</td><td>{pc(r['bias_cons'], True)}</td><td>{pc(r['bias_regla'], True)}</td>"
-                               f"<td>{pc(r['wape_cons'])}</td><td class='{'gw' if r['wape_regla'] < r['wape_cons'] else 'gl'}'>{pc(r['wape_regla'])}</td></tr>")
+                               f"<td>{n0(r['consenso'])}</td><td>{n0(r['regla'])}</td><td>{pc(r['spp3_cons'], True)}</td><td>{pc(r['spp3_regla'], True)}</td>"
+                               f"<td>{pc(r['wape_cons'])}</td><td class='{'gw' if r['wape_regla'] < r['wape_cons'] else 'gl'}'>{pc(r['wape_regla'])}</td>"
+                               f"<td class='ref'>{pc(r['ean_cons'])}</td><td class='ref'>{pc(r['ean_regla'])}</td></tr>")
     cards = "".join(f"<div class='card'><div class='ct'><i style='background:{ACC[fam]}'></i>{h}</div>{bar_block(h, fam)}</div>" for h, fam in HOUSES)
     html = f"""<!doctype html><html><head><meta charset='utf-8'><title>WAPE90 · consenso vs regla</title><style>{CSS}</style></head><body>
 <section class="page">
   <div class="blob"></div>
   <header>
-    <div class="kick">Reporte · WAPE90 por casa y quarter</div>
+    <div class="kick">Reporte · WAPE90 y SPP3 por casa y quarter</div>
     <h1>Consenso vs regla<span class="dot">.</span></h1>
     <div class="tag">Forecast que había en cada foto frente a la regla aplicada con la información de ese momento. Real = foto sep-26.</div>
   </header>
@@ -116,10 +118,12 @@ def main():
   </div>
   <table class="hm"><tr><th rowspan="2" class="hh">Casa</th>{head}</tr><tr>{qhead}</tr>{body}</table>
   <div class="row2">
-    <div class="note"><b>WAPE90</b> = Σ |forecast del quarter − real del quarter| / Σ real del quarter, EAN a EAN. Es el error sobre el total trimestral de cada EAN, así que no penaliza que un pedido caiga un mes antes o después dentro del mismo quarter.
+    <div class="note"><b>WAPE90</b> = |Σ forecast − Σ actuals| / Σ actuals de la casa en el quarter: desvío total en valor absoluto.
+    <br/><b>SPP3</b> = (Σ actuals − Σ forecast) / Σ actuals: el mismo desvío con signo. <b>Negativo = overforecast</b>, positivo = underforecast.
+    En cada celda: consenso (gris) y regla (negrita).
     <br/><b>Universo:</b> EANs donde se aplica la regla (Central, 6+ meses de envíos en la foto); los Local quedan fuera. Consenso tal cual estaba en cada foto.
     <br/><b>*</b> Septiembre 2026 no está cerrado en los datos (la foto de sep-26 es de la semana 38), así que el Q1 FY27 se mide con julio y agosto.</div>
-    <div class="aggw"><div class="ct">WAPE90 de toda la foto (todos sus quarters)</div>
+    <div class="aggw"><div class="ct">WAPE90 de toda la foto (media de sus quarters ponderada por actuals)</div>
       <table class="ag"><tr><th>Casa</th><th>Cons. sep-25</th><th>Regla sep-25</th><th>Cons. mar-26</th><th>Regla mar-26</th></tr>{aggrows}</table></div>
   </div>
 </section>
@@ -134,7 +138,7 @@ def main():
   <div class="blob"></div>
   <header class="sm"><div class="kick">Detalle por casa · números</div></header>
   <table class="dt"><tr><th>Casa</th><th>Foto</th><th>Quarter</th><th>EANs</th><th>Real</th><th>Consenso</th><th>Regla</th>
-    <th>Desvío cons.</th><th>Desvío regla</th><th>WAPE90 cons.</th><th>WAPE90 regla</th></tr>{detail}</table>
+    <th>SPP3 cons.</th><th>SPP3 regla</th><th>WAPE90 cons.</th><th>WAPE90 regla</th><th>Error EAN cons.</th><th>Error EAN regla</th></tr>{detail}</table>
 </section></body></html>"""
     hp = ROOT / "work" / "reporte_wape90.html"
     hp.write_text(html, encoding="utf-8")
@@ -203,6 +207,9 @@ svg .bv {{ font-family: Inter; font-size: 7.2px; fill: {MUTED}; }}
 svg .bv.b {{ fill: {INK}; font-weight: 700; }}
 .dt {{ position: relative; background: #fff; border: 1px solid #EEEAF2; border-radius: 12px; }}
 .dt td {{ font-size: 8pt; padding: 1.5mm 2mm; }}
+.dt td.ref {{ color: {MUTED}; }}
+.sp {{ font-size: 6.6pt; color: {MUTED}; margin-top: .3mm; }}
+.sp b {{ color: {INK2}; }}
 .dt {{ width: 100%; }}
 """
 

@@ -1,5 +1,7 @@
 """WAPE90 por casa y quarter: consenso de la foto vs regla, contra actuals de la foto sep-26.
-WAPE90 = suma_EAN |forecast del quarter - real del quarter| / suma real del quarter (error sobre el total trimestral de cada EAN).
+WAPE90 = |suma forecast - suma actuals| / suma actuals de la casa en el quarter (desvío total en valor absoluto).
+SPP3   = (suma actuals - suma forecast) / suma actuals (mismo desvío con signo: negativo = overforecast, positivo = underforecast).
+Se guarda también el error EAN a EAN (suma |F - A| por EAN / suma actuals) como referencia.
 Foto sep-25: Q2 (oct-dic 25), Q3 (ene-mar 26), Q4 (abr-jun 26). Foto mar-26: Q4 (abr-jun 26), Q1 FY27 (jul-sep 26; sep sin cerrar -> jul-ago).
 Universo: EANs donde se aplica la regla (Central, 6+ meses de envíos en la foto). Consenso tal cual estaba en la foto.
 Salida: work/wape90.json"""
@@ -32,7 +34,9 @@ def quarters(house, snap, F, Cn, A, sel, months):
         f = F[sel][:, idx].sum(1); c = Cn[sel][:, idx].sum(1); a = A[sel][:, idx].sum(1)
         rows.append(dict(house=house, snap=snap, q=q, label=QNAME[q], meses=len(idx), real=float(a.sum()),
                          consenso=float(c.sum()), regla=float(f.sum()),
-                         wape_cons=float(np.abs(c - a).sum() / a.sum()), wape_regla=float(np.abs(f - a).sum() / a.sum()),
+                         wape_cons=float(abs(c.sum() - a.sum()) / a.sum()), wape_regla=float(abs(f.sum() - a.sum()) / a.sum()),
+                         spp3_cons=float((a.sum() - c.sum()) / a.sum()), spp3_regla=float((a.sum() - f.sum()) / a.sum()),
+                         ean_cons=float(np.abs(c - a).sum() / a.sum()), ean_regla=float(np.abs(f - a).sum() / a.sum()),
                          bias_cons=float(c.sum() / a.sum() - 1), bias_regla=float(f.sum() / a.sum() - 1), eans=int(sel.sum())))
     return rows
 
@@ -67,7 +71,7 @@ def main():
     (W / "wape90.json").write_text(json.dumps(out, indent=1, ensure_ascii=False))
     df = pd.DataFrame(out)
     pd.set_option("display.width", 250)
-    print(df[["house", "snap", "q", "meses", "real", "wape_cons", "wape_regla", "bias_cons", "bias_regla"]].round(3).to_string())
+    print(df[["house", "snap", "q", "meses", "real", "wape_cons", "wape_regla", "spp3_cons", "spp3_regla", "ean_cons", "ean_regla"]].round(3).to_string())
 
 
 if __name__ == "__main__":
