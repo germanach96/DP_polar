@@ -1,3 +1,25 @@
+# >>> GUÍA VIGENTE (sesión 3) — backtest POR FOTO (src/snapshots.py, snap_eval.py, guide.py) <<<
+Método: en cada foto S&OP (sep-25, dic-25, mar-26, jun-26) solo info disponible entonces (histórico reexpresado truncado;
+consenso de fotos viejas x factor de reexpresión del mes calendario: ~1.15-1.21, oct 1.44, nov 1.43, dic 1.26 — NO es 20% plano),
+universo sin Local ni isf>=1, horizonte 8 meses tras mes en curso, verdad = última foto. Resultados: work/results/snapshots.md, guia_actual.md.
+
+REGLAS (con evidencia, EANs maduros = 80-98% del volumen):
+1. Ventana: SIEMPRE trend YoY 12M. 3M/6M/YTD se van con baches de supply/fasing (sep-25: trend 6M house -48% bias; 12M -36%; naive -9%).
+2. Nivel del trend: house x tipo de producto (tamaño: mini<=15ml, 20-40, 45-60, 75-125, >=150/refill, ancilares) con tope ±30%.
+   Mejor que house (house-q 9.3-10% vs 10.5-11%) y mucho mejor que product line (explota con lanzamientos: bias +450%) o EAN a 6M (equipo).
+3. Aplicar SOLO 50-60% del trend: número = LY x (1 + 0.5..0.6 x g12). Trend completo subestima (bias 8m -6..-28%), LY plano sobreestima (+3..+26%).
+   Corredor [LY x (1+g12 tipo) ; LY] contuvo la verdad (±5%) en 11/12 house x foto y 89% de house-quarters. La verdad cae ~70% del camino hacia el trend (salvo sep-25 rebote post-cortes).
+   x0.5 maduros: house-8m WMAPE 8.8-9.4%, bias ~0 (rango -12%..+12% entre fotos); house-q ~10.7%.
+4. Banda del número (punto medio): house-8m P10 -13% / P50 -4% / P90 +9%; house-quarter P10 -15% / P50 -3% / P90 +16%.
+5. Consenso: sobreestimó en 12/12 house x foto (A/F-1 mediana -16%, P10 -24%, P90 -6.5%); maduros +15..+21% en las 4 fotos (también en mar-26/jun-26 sin factor).
+   mix50 (consenso + estadístico) = la regla más robusta (house-8m 6.6%, peor foto 10%).
+6. Reparto EAN: base LY suavizada (mediana móvil 5m desestacionalizada) x trend 12M house -> EAN-mes 58.7% vs 74% naive vs 78.5% trend6M EAN.
+   trend12M propio del EAN con tope ±30% sirve para agregados (house-q 9.3%) pero es malo a EAN-mes (65%).
+7. EPOS: no mejora al trend 12M de envíos (solo 2 fotos). Usarlo como desempate: si EPOS 12M < trend envíos -> acercarse al suelo.
+8. Tipos (FY26 YoY, maduros sin Local): medio 45-60ml -20% (peor en las 3 houses), refill/jumbo -27%, grande -13%, mini -17% (BBY +4% últ.12M, Gucci -25%), pequeño 20-40 -12% (MJ +16%).
+APLICADO A FOTO 2026-09 (oct-26..may-27): número BBY 1.263M (cons 1.146M = -9%), MJ 763k (cons -2%), Gucci 842k (cons 701k = -17%, por debajo del suelo 770k y de P10 733k).
+   -> esta vez el consenso está por DEBAJO (al revés que históricamente). Gucci necesita justificación (EPOS Gucci -23% podría justificarlo).
+
 # STRATEGY — conclusiones del análisis (memoria para Claude; base para el resumen al usuario)
 
 ## 0. DECISIONES DEL USUARIO (sesión 2, 2026-10-09) — PREVALECEN sobre lo de abajo
