@@ -88,7 +88,7 @@ def main():
         body += f"<tr><td class='h'><i style='background:{ACC[fam]}'></i>{h}</td>" + "".join(cell(get(h, s, q)) for s, _, qs in SNAPS for q in qs) + "</tr>"
     aggrows = "".join(
         f"<tr><td class='h'><i style='background:{ACC[fam]}'></i>{h}</td>"
-        + "".join(f"<td class='ref'>{pc(agg[(h, s)][2])}</td><td>{pc(agg[(h, s)][0])}</td><td class='{'gw' if agg[(h, s)][1] < agg[(h, s)][0] else 'gl'}'>{pc(agg[(h, s)][1])}</td>" for s, _, _ in SNAPS)
+        + "".join(f"<td>{pc(agg[(h, s)][0])}</td><td class='{'gw' if agg[(h, s)][1] < agg[(h, s)][0] else 'gl'}'>{pc(agg[(h, s)][1])}</td><td class='ref'>{pc(agg[(h, s)][2])}</td>" for s, _, _ in SNAPS)
         + "</tr>" for h, fam in HOUSES)
     detail = ""
     for h, fam in HOUSES:
@@ -101,45 +101,45 @@ def main():
                                f"<td>{pc(r['wape_cons'])}</td><td class='{'gw' if r['wape_regla'] < r['wape_cons'] else 'gl'}'>{pc(r['wape_regla'])}</td>"
                                f"<td class='ref'>{n0(r['orig'])}</td><td class='ref'>{pc(r['spp3_orig'], True)}</td><td class='ref'>{pc(r['wape_orig'])}</td></tr>")
     cards = "".join(f"<div class='card'><div class='ct'><i style='background:{ACC[fam]}'></i>{h}</div>{bar_block(h, fam)}</div>" for h, fam in HOUSES)
-    html = f"""<!doctype html><html><head><meta charset='utf-8'><title>WAPE90 · consenso sin DAs vs regla</title><style>{CSS}</style></head><body>
+    html = f"""<!doctype html><html><head><meta charset='utf-8'><title>WAPE90 · regla + DAs vs consenso</title><style>{CSS}</style></head><body>
 <section class="page">
   <div class="blob"></div>
   <header>
     <div class="kick">Reporte · WAPE90 y SPP3 por casa y quarter</div>
-    <h1>Consenso sin DAs vs regla<span class="dot">.</span></h1>
-    <div class="tag">Consenso de cada foto quitando sus DAs, frente a la regla aplicada con la información de ese momento. Real = foto sep-26.</div>
+    <h1>Regla + DAs vs consenso<span class="dot">.</span></h1>
+    <div class="tag">Consenso de cada foto tal cual (ya lleva los DAs) frente a la regla + los mismos DAs de la foto. Real = foto sep-26.</div>
   </header>
   <div class="kpis">
-    <div class="kpi big"><div class="kv">{wins}<span>/{len(R)}</span></div><div class="kl">casa × quarter donde la regla tiene menor WAPE90</div></div>
+    <div class="kpi big"><div class="kv">{wins}<span>/{len(R)}</span></div><div class="kl">casa × quarter donde regla + DAs tiene menor WAPE90</div></div>
     <div class="kpi"><div class="kv">{mw}<span>/{mt}</span></div><div class="kl">Makeup (Gucci Make up, Kylie)</div></div>
     <div class="kpi"><div class="kv">{fw}<span>/{ft}</span></div><div class="kl">Fragancias (Burberry, Gucci, Marc Jacobs)</div></div>
-    <div class="legend"><div><span class="sw c"></span>Consenso sin DAs (gris)</div><div><span class="sw g"></span>Regla (negrita)</div>
-      <div><span class="sw w"></span>La regla acierta más</div><div><span class="sw l"></span>El consenso acierta más</div></div>
+    <div class="legend"><div><span class="sw c"></span>Consenso (gris)</div><div><span class="sw g"></span>Regla + DAs (negrita)</div>
+      <div><span class="sw w"></span>Regla + DAs acierta más</div><div><span class="sw l"></span>El consenso acierta más</div></div>
   </div>
   <table class="hm"><tr><th rowspan="2" class="hh">Casa</th>{head}</tr><tr>{qhead}</tr>{body}</table>
   <div class="row2">
     <div class="note"><b>WAPE90</b> = |Σ forecast − Σ actuals| / Σ actuals de la casa en el quarter: desvío total en valor absoluto.
     <br/><b>SPP3</b> = (Σ actuals − Σ forecast) / Σ actuals: el mismo desvío con signo. <b>Negativo = overforecast</b>, positivo = underforecast.
-    En cada celda: consenso sin DAs (gris) y regla (negrita).
-    <br/><b>Consenso sin DAs</b> = consenso de la foto − DAs netos de la foto, con suelo 0 por EAN y mes. El consenso original (con DAs) aparece como referencia en la página 3.
+    En cada celda: consenso (gris) y regla + DAs (negrita).
+    <br/><b>Regla + DAs</b> = regla + todos los DAs de la foto en esos meses, positivos y negativos (suelo 0 por EAN y mes). Así los dos llevan los mismos DAs. La regla sola aparece como referencia.
     <br/><b>Universo:</b> EANs donde se aplica la regla (Central, 6+ meses de envíos en la foto); los Local quedan fuera.
     <br/><b>*</b> Septiembre 2026 no está cerrado en los datos (la foto de sep-26 es de la semana 38), así que el Q1 FY27 se mide con julio y agosto.</div>
     <div class="aggw"><div class="ct">WAPE90 de toda la foto (media de sus quarters ponderada por actuals)</div>
-      <table class="ag"><tr><th>Casa</th><th>Con DAs<br/>sep-25</th><th>Sin DAs<br/>sep-25</th><th>Regla<br/>sep-25</th><th>Con DAs<br/>mar-26</th><th>Sin DAs<br/>mar-26</th><th>Regla<br/>mar-26</th></tr>{aggrows}</table></div>
+      <table class="ag"><tr><th>Casa</th><th>Consenso<br/>sep-25</th><th>Regla+DAs<br/>sep-25</th><th>Regla sola<br/>sep-25</th><th>Consenso<br/>mar-26</th><th>Regla+DAs<br/>mar-26</th><th>Regla sola<br/>mar-26</th></tr>{aggrows}</table></div>
   </div>
 </section>
 <section class="page">
   <div class="blob"></div>
   <header class="sm"><div class="kick">Detalle por casa</div></header>
   <div class="cards">{cards}<div class="card legend2"><div class="ct">Cómo leerlo</div>
-    <p>Cada par de barras es un quarter: <b style="color:{GREY}">gris = consenso sin DAs</b>, color = regla. Más corta = menos error.</p>
+    <p>Cada par de barras es un quarter: <b style="color:{GREY}">gris = consenso</b>, color = regla + DAs. Más corta = menos error.</p>
     <p>Las fotos se toman al cierre del mes, por eso el mes de la foto no entra: sep-25 mide oct–jun, mar-26 mide abr–ago.</p></div></div>
 </section>
 <section class="page">
   <div class="blob"></div>
   <header class="sm"><div class="kick">Detalle por casa · números</div></header>
-  <table class="dt"><tr><th>Casa</th><th>Foto</th><th>Quarter</th><th>EANs</th><th>Real</th><th>Cons. sin DAs</th><th>Regla</th>
-    <th>SPP3 cons. s/DA</th><th>SPP3 regla</th><th>WAPE90 cons. s/DA</th><th>WAPE90 regla</th><th>Cons. con DAs</th><th>SPP3 con DAs</th><th>WAPE90 con DAs</th></tr>{detail}</table>
+  <table class="dt"><tr><th>Casa</th><th>Foto</th><th>Quarter</th><th>EANs</th><th>Real</th><th>Consenso</th><th>Regla + DAs</th>
+    <th>SPP3 cons.</th><th>SPP3 regla+DA</th><th>WAPE90 cons.</th><th>WAPE90 regla+DA</th><th>Regla sola</th><th>SPP3 regla sola</th><th>WAPE90 regla sola</th></tr>{detail}</table>
 </section></body></html>"""
     hp = ROOT / "work" / "reporte_wape90.html"
     hp.write_text(html, encoding="utf-8")

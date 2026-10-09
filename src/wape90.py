@@ -4,7 +4,8 @@ SPP3   = (suma actuals - suma forecast) / suma actuals (mismo desvío con signo:
 Se guarda también el error EAN a EAN (suma |F - A| por EAN / suma actuals) como referencia.
 Foto sep-25: Q2 (oct-dic 25), Q3 (ene-mar 26), Q4 (abr-jun 26). Foto mar-26: Q4 (abr-jun 26), Q1 FY27 (jul-sep 26; sep sin cerrar -> jul-ago).
 Universo: EANs donde se aplica la regla (Central, 6+ meses de envíos en la foto).
-Consenso = el de la foto menos sus DAs (netos, suelo 0 por EAN-mes): los DAs no tienen impacto real. Se guarda también el consenso original (orig_*).
+Consenso = tal cual en la foto (ya incluye los DAs). Regla + DAs = regla + todos los DAs de la foto en esos meses (positivos y negativos), suelo 0 por EAN-mes.
+Se guarda también la regla sin DAs (orig_*) como referencia.
 Salida: work/wape90.json"""
 import sys, json, warnings
 import numpy as np, pandas as pd
@@ -43,12 +44,12 @@ def quarters(house, snap, F, Cn, A, sel, months, Co):
     return rows
 
 
-def cons_noda(x, V, idx, months):
-    """Consenso original de la foto y consenso sin DAs (cons - DA neto, suelo 0), EAN x mes."""
+def cons_da(x, V, idx, months):
+    """Consenso de la foto y DAs netos de la foto, EAN x mes."""
     y = x[x.date > V]
     pv = lambda col: y.pivot_table(index="ean", columns="date", values=col, aggfunc="sum").reindex(index=idx, columns=months).fillna(0).values
     co = pv("cons")
-    return co, np.clip(co - pv("da"), 0, None)
+    return co, pv("da")
 
 
 def main():
@@ -63,10 +64,10 @@ def main():
         DAp = np.clip(np.nan_to_num(dt.da_known(d, H.index, V)[0].values), 0, None)
         F, central, alive, g = hc.frag_rule(Hv, C, DAp, a.house_ptype.values, m)
         x = d[d.version == s]
-        Co, Cn = cons_noda(x, V, H.index, months)
+        Cn, Da = cons_da(x, V, H.index, months)
         Am = A[:, m + 1:m + 10]; in_snap = H.index.isin(set(x.ean))
         for house, lab in [("BURBERRY", "Burberry"), ("Gucci", "Gucci"), ("CP-Marc Jacobs", "Marc Jacobs")]:
-            out += quarters(lab, s, F, Cn, Am, (a.house == house).values & in_snap & central, months, Co)
+            out += quarters(lab, s, np.clip(F + Da, 0, None), Cn, Am, (a.house == house).values & in_snap & central, months, F)
     dm, Hdf, Edf, Cdf, attr, fac = mb.load()
     Hm_ = Hdf.values; Cm = Cdf.values; eans = Hdf.index; Am_ = np.nan_to_num(Hm_)
     for s in hc.SNAPS:
@@ -74,10 +75,10 @@ def main():
         DAp = np.clip(np.nan_to_num(mb.da_known(dm, eans, V).values), 0, None); DAp[:, m:] = 0
         F, central, alive, g = hc.mu_rule(Hm_, Cm, DAp, attr.fam_brand.values, m)
         x = dm[dm.version == s]
-        Co, Cn = cons_noda(x, V, eans, months)
+        Cn, Da = cons_da(x, V, eans, months)
         Am = Am_[:, m + 1:m + 10]; in_snap = eans.isin(set(x.ean))
         for fam, lab in [("GUMU", "Gucci Make up"), ("KYMU", "Kylie Makeup")]:
-            out += quarters(lab, s, F, Cn, Am, (attr.fam == fam).values & in_snap & central, months, Co)
+            out += quarters(lab, s, np.clip(F + Da, 0, None), Cn, Am, (attr.fam == fam).values & in_snap & central, months, F)
     (W / "wape90.json").write_text(json.dumps(out, indent=1, ensure_ascii=False))
     df = pd.DataFrame(out)
     pd.set_option("display.width", 250)
