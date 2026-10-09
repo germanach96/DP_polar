@@ -1,0 +1,9 @@
+/home/user/DP_polar/src/backtest.py:175: Pandas4Warning: Starting with pandas version 4.0 all arguments of sum will be keyword-only.
+  new = H[win].sum(1)
+/home/user/DP_polar/src/backtest.py:175: Pandas4Warning: Starting with pandas version 4.0 all arguments of sum will be keyword-only.
+  new = H[win].sum(1)
+/home/user/DP_polar/src/backtest.py:175: Pandas4Warning: Starting with pandas version 4.0 all arguments of sum will be keyword-only.
+  new = H[win].sum(1)
+/home/user/DP_polar/src/backtest.py:175: Pandas4Warning: Starting with pandas version 4.0 all arguments of sum will be keyword-only.
+  new = H[win].sum(1)
+(36096, 7)

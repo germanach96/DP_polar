@@ -13,12 +13,22 @@ ROOT = Path(__file__).resolve().parents[1]
 W = ROOT / "work"
 
 
-def context():
+FILTER = "--all" not in sys.argv  # por defecto: excluye EANs Local y con forecast manual (isf>=1)
+SUF = "" if not FILTER else "_f"
+
+
+def context(filtered=None):
+    filtered = FILTER if filtered is None else filtered
     H = pd.read_pickle(W / "hist.pkl")
+    if filtered:
+        a0 = pd.read_pickle(W / "attr.pkl")
+        keep = (a0.resp != "Local") & (a0.isf.fillna(0) == 0)
+        H = H[keep.reindex(H.index).values]
     months = H.columns
     C = pd.read_pickle(W / "cuts.pkl").reindex(columns=months).fillna(0)
     E = pd.read_pickle(W / "epos.pkl").reindex(columns=months)
-    attr = pd.read_pickle(W / "attr.pkl")
+    attr = pd.read_pickle(W / "attr.pkl").reindex(H.index)
+    C = C.reindex(H.index).fillna(0); E = E.reindex(H.index)
     # EPOS: NaN antes de que exista dato EPOS del EAN; 0 después
     Ev = E.values.copy()
     started = np.nan_to_num(Ev).cumsum(1) > 0
@@ -169,7 +179,9 @@ def consensus_rows(ctx, origins):
             tgt = M + pd.DateOffset(months=k)
             A = H[tgt].values if tgt in H.columns else np.nan
             F = S[tgt].values if tgt in S.columns else np.nan
-            for name, FF in (("consensus", F), ("consensus_scopeadj", F * fac.values)):
+            # factor fijo de perímetro (+20%) para versiones anteriores a la reexpresión (2026-03), según indicación del usuario
+            f20 = 1.20 if M < pd.Timestamp("2026-03-01") else 1.0
+            for name, FF in (("consensus", F), ("consensus_scopeadj", F * fac.values), ("consensus_adj20", F * f20)):
                 rows.append(pd.DataFrame(dict(method=name, origin=M, ean=ctx["eans"], lag=k, target=tgt, F=FF, A=A)))
     return pd.concat(rows, ignore_index=True)
 
@@ -177,24 +189,29 @@ def consensus_rows(ctx, origins):
 if __name__ == "__main__":
     ctx = context()
     origins = pd.date_range("2025-01-01", "2026-07-01", freq="MS")
+    if "--cons" in sys.argv:
+        bt = consensus_rows(ctx, origins)
+        bt.to_parquet(W / ("bt_cons" + SUF + ".parquet"))
+        print(bt.shape)
+        sys.exit()
     if "--v4" in sys.argv:
         bt = run(origins, method_registry_v4(), ctx)
-        bt.to_parquet(W / "bt_v4.parquet")
+        bt.to_parquet(W / ("bt_v4" + SUF + ".parquet"))
         print(bt.shape)
         sys.exit()
     if "--v3" in sys.argv:
         bt = run(origins, method_registry_v3(), ctx)
-        bt.to_parquet(W / "bt_v3.parquet")
+        bt.to_parquet(W / ("bt_v3" + SUF + ".parquet"))
         print(bt.shape)
         sys.exit()
     if "--v2" in sys.argv:
         bt = run(origins, method_registry_v2(), ctx)
-        bt.to_parquet(W / "bt_v2.parquet")
+        bt.to_parquet(W / ("bt_v2" + SUF + ".parquet"))
         print(bt.shape)
         sys.exit()
     slow = "--fast" not in sys.argv
     bt = run(origins, method_registry(include_slow=slow), ctx)
     cs = consensus_rows(ctx, origins)
     bt = pd.concat([bt, cs], ignore_index=True)
-    bt.to_parquet(W / ("bt.parquet" if slow else "bt_fast.parquet"))
+    bt.to_parquet(W / (("bt" if slow else "bt_fast") + SUF + ".parquet"))
     print(bt.shape)

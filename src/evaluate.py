@@ -80,7 +80,8 @@ def table(df, by, metric="wmape"):
 
 if __name__ == "__main__":
     import sys
-    files = sys.argv[1:] or ["bt.parquet", "bt_v2.parquet"]
+    files = sys.argv[1:] or ["bt_fast_f.parquet", "bt_v2_f.parquet", "bt_v3_f.parquet", "bt_v4_f.parquet", "bt_cons_f.parquet"]
     bt = prepare(files)
-    bt.to_parquet(W / "ev.parquet")
+    out = "ev_f.parquet" if all(f.endswith("_f.parquet") for f in files) else "ev.parquet"
+    bt.to_parquet(W / out)
     print(bt.shape)

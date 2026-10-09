@@ -1,5 +1,31 @@
 # STRATEGY — conclusiones del análisis (memoria para Claude; base para el resumen al usuario)
 
+## 0. DECISIONES DEL USUARIO (sesión 2, 2026-10-09) — PREVALECEN sobre lo de abajo
+1. Reexpresión del histórico: asumir +20% fijo -> consenso de versiones 2025-09 y 2025-12 x1.20 (`consensus_adj20`).
+   Medido: ratio total 1.21 / 1.20 (BBY 1.18-1.20, MJ 1.15-1.16, Gucci 1.26-1.27).
+   OJO: con x1.20 ese consenso pasa a bias +17% (maduros) vs +4% sin ajustar -> o ya estaba en perímetro nuevo, o sobreestimaba. Comentar al usuario si sale.
+2. Local: IGNORAR (no hay datos). Excluidos del universo (resp 2026-09 == Local).
+3. isf = nº de customers ignorados de 2 seleccionados (1 = normalmente el más grande; 2 = todos) -> forecast manual. Excluidos también (isf>=1).
+   => UNIVERSO OFICIAL = sin Local y sin isf>=1. Archivos con sufijo _f (bt_*_f.parquet, ev_f.parquet, results/backtest_f.md, results/forecast_f.md).
+   `python3 src/backtest.py --fast|--v2|--v3|--v4|--cons` (filtra por defecto; `--all` = universo completo antiguo).
+4. Pregunta 4 (consenso maduros FY27 muy por debajo de LY) quedó resuelta: era contaminación de Local/isf. En el universo filtrado el ganador queda a -7%..+11% del consenso actual.
+
+## 0b. RESULTADOS EN UNIVERSO OFICIAL (13 cortes, maduros)
+- EAN-mes WMAPE: resc_median 55.0% (bias -1.5%), resc_x40_cap 56.2% (-2.2%), house12 62.3%, naive 68.1% (+10.8%), flat6 (equipo) 73.3% (-0.7%).
+  -> **número para defender: -17/-18 puntos de error vs método actual a nivel EAN**; gana en 13/13 cortes.
+- House-quarter: resc_x40_cap 12.4% (mejor) vs flat6 ~20.7%, naive 18%.
+- Total house 8 meses (todos los EANs del universo, incl. lanzamientos Central): house12 9.9% (bias +3%), resc_x40_cap 10.3% (bias 0%), flat6 17.8% (+9%), naive 19.6% (+20%).
+  Por house (resc_x40_cap): BBY 7.3%, MJ 13.2%, Gucci 12.3%.
+  => SIN Local, el LY plano YA NO es la guía: sobreestima ~20%. **La guía total = LY x (1 + trend 12M de la house)**. (Sustituye §1.A de abajo.)
+- Vs consenso real (maduros, 4 versiones): resc_median 55.0% / resc_x40_cap 56.5% / consenso 65.3% (bias +4%) / consenso x1.20 70.1% (bias +17%).
+- Trends 12M house (limpios) a 2026-08: BBY -10.4%, MJ -9.6%, Gucci -17.0%, Kylie +57% (tope ±30%). Trend 6M bruto (estilo equipo): -14.6%, -14.1%, -30.4% -> 6M exagera la caída.
+- Bandas ganador: house-quarter P10 -26% / P50 0% / P90 +46%; house-mes por lag: lag1 -46%/+95% ... lag8 -39%/+38%. EAN-mes no sirve (P10=-100%).
+- Forecast oct-26..may-27 vs consenso actual (universo oficial): BBY +1..+6%, MJ -7..+6%, Gucci +4..+11% -> consenso actual razonable; Gucci algo bajo.
+- Efecto base FY27.Q2 (oct-dic): LY por encima de su base limpia +19% BBY, +22% MJ, +22% Gucci (carga de Navidad desplazada a Q2 en FY26 por cortes en Q1). Q3 también inflado ~+13..23%.
+
+(Secciones siguientes = sesión 1, universo completo incl. Local; mantener como contexto, §1.A superado por §0b.)
+
+
 Estado: sesión 1 (2026-10-09). Evidencia de 13 cortes rolling (orígenes 2025-07..2026-07, horizonte 8 meses
 excluyendo mes en curso) + 4 versiones reales de consenso (2025-09, 2025-12, 2026-03, 2026-06). Verdad = última versión.
 OJO: todo el backtest cae en un solo "régimen" (FY26: caída que se desacelera). Validar con más años cuando haya.

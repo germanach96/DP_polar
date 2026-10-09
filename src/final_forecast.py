@@ -27,7 +27,7 @@ def bands(ev, method, level):
 
 
 def main():
-    ev = pd.read_parquet(W / "ev.parquet")
+    ev = pd.read_parquet(W / "ev_f.parquet")  # universo: sin Local, sin isf>=1
     ctx = context()
     H = ctx["H"]; T = H.shape[1]; months = ctx["months"]; attr = ctx["attr"]
     m = T  # versión 2026-09 (mes en curso, parcial)
@@ -57,7 +57,7 @@ def main():
     F["hybrid"] = np.where(F.mature, F.winner.fillna(0), F.consensus)
     bE = bands(ev, WINNER, "ean"); bH = bands(ev, WINNER, "house")
     F = F.merge(bH[["P10", "P90"]], left_on="lag", right_index=True)
-    F.to_parquet(W / "forecast_winner.parquet")
+    F.to_parquet(W / "forecast_winner_f.parquet")
 
     L = [f"# Forecast desde versión {M:%Y-%m} (generado por src/final_forecast.py)\n",
          f"Ganador: {WINNER} = total house-mes = LY real x (1 + trend 12M house sobre histórico limpio, tope ±30%); reparto por EAN/mes según base LY limpia.\n",
@@ -101,7 +101,7 @@ def main():
     ol = O.stack(); ol = ol[ol]
     L += [f"\n## Outliers detectados con datos hasta {months[-1]:%Y-%m}: {len(ol)} EAN-mes "
           f"({len(ol) / np.isfinite(H).sum():.1%} de los puntos con dato). Regla: |A - mediana móvil 5m (desestacionalizada house)| > 40% de esa mediana.\n"]
-    (W / "results" / "forecast.md").write_text("\n".join(L))
+    (W / "results" / "forecast_f.md").write_text("\n".join(L))
     print("ok")
 
 
