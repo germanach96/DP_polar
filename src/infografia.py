@@ -178,14 +178,15 @@ def main():
           "The 6-month average already contains part of the recent trend. Applying the full trend on top would count the same movement twice."),
          ("Why a trend by Face / Lips / Eyes?",
           "The categories grow and decline at different speeds. One trend for the whole brand would hide that."),
-         ("Why so little of the cuts, and capped?",
-          "Makeup cuts are much bigger and more inflated than in fragrance (repeated weekly orders). We acknowledge them, "
-          "but cap them so a month with huge cuts cannot blow up the base."),
+         ("Why only 10% of the cuts?",
+          "When an item is cut, retailers keep re-ordering the same quantity week after week, so the recorded cuts count the same demand "
+          "several times. In makeup this re-ordering is much heavier than in fragrance, so the cuts are heavily inflated and only about "
+          "one tenth of them is real lost demand."),
          ("Why only 25% of the DAs?",
           "The base is already an average of six months, so a single promotion is diluted. Removing more would cut growing lines too hard."),
          ("Why recalculate instead of a correction factor?",
           "A rolling average updates itself with the latest reality every cycle. An extra correction factor would add noise, not accuracy.")],
-        "Exceptions: Local items (under 6 months of shipments) keep the consensus. Rule status: proposal, pending final sign-off.",
+        "Exceptions: Local items (under 6 months of shipments) keep the consensus.",
     )
     c.save()
     print(OUT)

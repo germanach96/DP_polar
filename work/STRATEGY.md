@@ -1,4 +1,4 @@
-# >>> ESTRATEGIA FRAGANCIAS DECIDIDA POR EL USUARIO (2026-10-09): ver ESTRATEGIA_FRAGANCIAS.md en la raíz. Base = LY + 25% cortes LY − 50% DA+ LY; forecast = base x (1 + trend 12M actuals house x tamaño, todo Central incl. lanzamientos >=6m, tope ±30%). <<<
+# >>> ESTRATEGIAS DECIDIDAS (2026-10-09): ESTRATEGIA_FRAGANCIAS.md y ESTRATEGIA_MAKEUP.md en la raíz. Infografía: INFOGRAFIA_REGLAS.pdf (src/infografia.py). <<<
 # >>> MAKEUP GUMU/KYMU (sesión 5) — ver ESTRATEGIA_MAKEUP.md. Regla propuesta: media 6M x (1 + 50% trend12M función, tope ±30%), plana, recalcular en cada foto. <<<
    Bug corregido en mu_backtest.evaluate (A indexado por columnas del horizonte). Envíos sin estacionalidad estable; EPOS sí (dic pico) pero aplicarla empeora.
 

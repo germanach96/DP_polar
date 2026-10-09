@@ -1,4 +1,6 @@
-# Estrategia de forecast — Makeup (propuesta, pendiente de decisión)
+# Estrategia de forecast — Makeup (decidida)
+
+Fecha de decisión: 2026-10-09
 
 Basada en GUMU (Gucci Make up) y KYMU (Kylie Makeup). Fotos: sep-25 (forecast inicial), mar-26 (corrección) y sep-26 (verdad), más 13 cortes mensuales (jul-25 a jul-26). Scripts: `src/mu_load.py`, `src/mu_season.py`, `src/mu_backtest.py`. Resultados: `work/results/mu_season.md` y `work/results/mu_backtest.md`.
 
@@ -33,7 +35,8 @@ Base probada = media 6M de (actual + kc × cortes − kd × DAs positivos), en 1
     | 15% | 1,8 puntos |
     | 25% | 4,5 puntos |
 
-  - Motivo: en algunos meses los cortes multiplican varias veces lo enviado. El tope evita que un mes con cortes desproporcionados dispare la base.
+  - Motivo del 10%: cuando se corta un ítem, el retailer repite el mismo pedido semana tras semana, así que los cortes cuentan la misma demanda varias veces. En makeup ese re-pedido es mucho mayor que en fragancias: los cortes están muy inflados y solo ~una décima parte es demanda perdida real.
+  - El tope evita que un mes con cortes desproporcionados dispare la base.
 - **DAs positivos: restar el 25% en la base.** Es la única opción que no empeora en ningún caso:
 
   | Variante | GUMU sin manual | GUMU todos | KYMU sin manual | KYMU todos |
