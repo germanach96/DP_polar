@@ -134,7 +134,7 @@ FRAG = dict(
          ("Only 25% of the cuts", "A cut month understates demand, so some of it goes back. But retailers re-order weekly while an item is cut, so most of the figure is duplicated."),
          ("Remove 50% of the positive DAs", "Last year's promotions should not repeat by default. Only half, because part of the DAs are market inputs that do come back."),
          ("Recalculate every month", "Each month the 12-month window moves forward one month, so the trend and the base already include the latest reality. No manual corrections needed.")],
-    foot="Local items (under 6 months of shipments) keep the consensus. Items with 6–17 months of life lean more on consensus: their last year includes the launch pipeline fill.",
+    foot="Local items (under 6 months of shipments) are outside the rule: no history yet. Items with 6–17 months of life: review with care, their last year includes the launch pipeline fill.",
 )
 
 MU = dict(
@@ -155,7 +155,7 @@ MU = dict(
          ("Only 10% of the cuts", "When an item is cut, retailers keep re-ordering the same quantity week after week. In makeup that re-ordering is far heavier, so the cuts are heavily inflated."),
          ("Only 25% of the DAs", "A six-month average already dilutes a single promotion. Removing more would cut growing lines too hard."),
          ("Recalculate, don't correct", "A rolling average refreshes itself with the latest months every cycle. An extra correction factor would add noise.")],
-    foot="Local items (under 6 months of shipments) keep the consensus.",
+    foot="Local items (under 6 months of shipments) are outside the rule: no history yet.",
 )
 
 

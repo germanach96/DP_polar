@@ -60,14 +60,13 @@ Fecha de decisión: 2026-10-09
   | 25% | −2,0% | +3,3% | 62,2% | 9 de 13 cortes |
   | 33% | −0,7% | +7,5% | 62,5% | 8 de 13 cortes |
 
-- Dentro del proceso completo (media con consenso y factor) el efecto es neutro. Aporta sobre todo cuando se usa la regla sola.
 
 ## Ajuste por DAs / promociones (añadido 2026-10-09)
 
 - **A la base** se le resta el **50% de los DAs positivos** que tuvo ese EAN en ese mes del año anterior.
   - Motivo: no repetir promos ni volúmenes puntuales del año pasado.
   - El 50%, y no el 100%, porque parte de los DAs son inputs de mercado que sí se repiten.
-- **No sumar los DAs de los meses futuros.** Empeora con cualquier %: la base ya incluye el nivel normal de promos, y la mitad del número que viene del consenso ya trae los DAs.
+- **No sumar los DAs de los meses futuros.** Empeora con cualquier %: la base ya incluye el nivel normal de promos.
 - **No quitar los DAs del cálculo del trend por ahora.** Solo hay DAs desde ene-25, así que la ventana anterior no tiene DAs y el trend saldría sesgado a la baja. Reevaluar con 24 meses de DAs o con el volumen real de promociones.
 - **Evidencia** (11 cortes, todos los Central):
 
@@ -90,4 +89,17 @@ Fecha de decisión: 2026-10-09
   - House y descripción, más el mapeo de tamaños.
   - Los 9 meses del horizonte tienen su base dentro de esos 12 meses.
   - Ojo con los DAs de meses pasados: o9 no los conserva todos en cada extracción, así que conviene guardarlos mes a mes.
-- **Opcional:** media con el consenso. En el backtest bajó el error del total, pero no forma parte de la regla.
+
+## Por qué 9 meses: la regla gana en cada mes del horizonte (`src/horizon9.py`)
+
+Regla recalculada cada mes, 13 cortes mensuales (jul-25 a jul-26), EANs Central sin forecast manual. Error por EAN y mes:
+
+| Mes del horizonte | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+|---|---|---|---|---|---|---|---|---|---|
+| **Regla** | **75%** | **71%** | **74%** | **72%** | **71%** | **70%** | **66%** | **63%** | **64%** |
+| Año pasado tal cual | 83% | 79% | 85% | 86% | 86% | 86% | 75% | 69% | 72% |
+| Método actual (trend 6M EAN) | 83% | 83% | 89% | 89% | 87% | 94% | 82% | 81% | 81% |
+
+- **Mejor que las dos alternativas en los 9 meses.**
+- **El error no crece con el horizonte:** el mes 9 es tan fiable como el mes 1, porque la base es el mismo mes del año anterior y el trend es de 12 meses.
+- **Desvío total de los 9 meses: 0%.** El año pasado tal cual se pasa un +23% y el método actual un +12%.

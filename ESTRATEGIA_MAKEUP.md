@@ -65,7 +65,6 @@ Base probada = media 6M de (actual + kc × cortes − kd × DAs positivos), en 1
 | Media 6M plana | 70% / 74% | 60% / 61% | 66% / 68% | 66% / 72% | 69% / 73% | 49% / 49% |
 | Año pasado tal cual | 95% / 108% | 89% / 101% | 91% / 99% | 84% / 106% | 98% / 119% | 94% / 87% |
 | Regla de fragancias | 82–100% | 80–90% | – | – | 101–116% | 80–81% |
-| Consenso | – | – | 75% / 77% | 87% / 102% | 70% / 70% | 78% / 65% |
 
 ## Estacionalidad revisada EAN a EAN (`src/mu_season_ean.py`, `work/results/mu_season_ean.md`)
 
@@ -89,10 +88,29 @@ Se analizaron los EANs con FY24, FY25 y FY26 completos y al menos 50 unidades al
 
 ## Notas
 
-- **Media con el consenso:** no se recomienda de forma general. En GUMU ayuda un poco al sesgo; en KYMU empeora. El consenso de makeup es débil (75–102% de error en sep-25).
 - **Desvío conocido:**
   - En GUMU, que está cayendo, la regla se queda algo alta: +9% a +16% de media.
   - En KYMU, que está creciendo, se queda baja: −18% a −22%.
   - Revisar el desvío en cada foto.
 - **EANs con forecast manual:** pesan un 26% del volumen en GUMU y un 30% en KYMU. La conclusión es la misma con y sin ellos.
 - **Reexpresión del histórico:** KYMU subió un 18% de sep-25 a mar-26; GUMU apenas cambió. Se trabaja con el histórico reexpresado.
+
+## Por qué 9 meses: la regla gana en cada mes del horizonte (`src/horizon9.py`)
+
+Regla recalculada cada mes, 13 cortes mensuales (jul-25 a jul-26), todos los EANs Central. Error por EAN y mes:
+
+| Mes del horizonte | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+|---|---|---|---|---|---|---|---|---|---|
+| **Regla, Gucci Make up** | **64%** | **66%** | **67%** | **70%** | **72%** | **72%** | **74%** | **72%** | **71%** |
+| Año pasado, Gucci Make up | 108% | 105% | 110% | 109% | 109% | 111% | 106% | 99% | 98% |
+| Método actual, Gucci Make up | 99% | 98% | 100% | 104% | 100% | 109% | 107% | 102% | 106% |
+| **Regla, Kylie Makeup** | **55%** | **56%** | **57%** | **59%** | **60%** | **63%** | **66%** | **68%** | **70%** |
+| Año pasado, Kylie Makeup | 113% | 112% | 100% | 100% | 102% | 90% | 90% | 86% | 84% |
+| Método actual, Kylie Makeup | 131% | 129% | 122% | 116% | 115% | 108% | 103% | 98% | 98% |
+
+- **Mejor que las dos alternativas en los 9 meses, en las dos familias.**
+- **El error sube algo con el horizonte** (es un ritmo plano), pero el mes 9 sigue muy por debajo de las alternativas.
+- **Desvío conocido:**
+  - Gucci Make up, que está cayendo, sale algo alto (+12% en los 9 meses).
+  - Kylie, que está creciendo, sale bajo (−24%).
+  - Hay que revisarlo cada mes.
