@@ -4,7 +4,7 @@ Fecha de decisión: 2026-10-09
 
 ## Regla
 
-> **Forecast EAN, mes futuro = mismo mes del año anterior × (1 + trend de su house × tamaño)**
+> **Forecast EAN, mes futuro = (mismo mes del año anterior + 25% de los supply cuts de ese mes del año anterior) × (1 + trend de su house × tamaño)**
 
 ## Cálculo del trend, en cada foto o mes
 
@@ -29,6 +29,22 @@ Fecha de decisión: 2026-10-09
 6. **Aplicación:** se calcula EAN por EAN y mes por mes, sobre el mismo mes del año anterior.
    - Es × (1 + trend), no + trend.
    - Todos los meses del grupo llevan el mismo %. La estacionalidad la da la base del año anterior.
+
+## Ajuste por supply cuts (añadido 2026-10-09)
+
+- **A la base** se le suma el **25%** de los cortes que tuvo ese EAN en ese mes del año anterior.
+  - Motivo: no repetir un corte del año pasado como si fuera demanda.
+  - El 25%, y no el 100%, porque los cortes están inflados: el retailer repite el pedido cada semana.
+- **El trend se sigue calculando con las ventas reales, sin cortes.** Meterlos en el trend empeora el resultado.
+- **Evidencia** (13 cortes, EANs maduros):
+
+  | Variante | Desvío total | Desvío en meses con cortes el año anterior | Error EAN-mes | Mejor que sin ajuste en… |
+  |---|---|---|---|---|
+  | Sin ajuste | −6,3% | −9,9% | 62,5% | – |
+  | 25% | −2,0% | +3,3% | 62,2% | 9 de 13 cortes |
+  | 33% | −0,7% | +7,5% | 62,5% | 8 de 13 cortes |
+
+- Dentro del proceso completo (media con consenso y factor) el efecto es neutro. Aporta sobre todo cuando se usa la regla sola.
 
 ## Complementos validados en el backtest por fotos (sep-25 → sep-26)
 
