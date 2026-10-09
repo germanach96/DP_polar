@@ -127,6 +127,7 @@ Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infogra
   - Cortes / DAs: `src/cuts_test.py`, `src/da_test.py`.
   - Makeup: `src/mu_season.py`, `src/mu_backtest.py`, `src/mu_cuts_da.py`, `src/mu_cuts2.py`.
 - **Resultados:** `work/results/*.md`. Memoria de trabajo: `work/STRATEGY.md` y `work/NOTES.md`.
+- **Reportes por casa (consenso vs regla, fotos sep-25 y mar-26):** `src/house_compare.py` + `src/house_report.py` → `reportes/REPORTE_<casa>.pdf`.
 - **Infografía:** `src/infografia.py` (HTML + SVG → PDF con Chromium). Datos de los gráficos en `work/infog_data.json`.
 
 **Cómo regenerar:**

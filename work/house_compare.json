@@ -1,0 +1,2549 @@
+[
+ {
+  "house": "Burberry",
+  "snap": "2025-09",
+  "segs": [
+   {
+    "seg": "Maduros (18+ meses)",
+    "n": 72,
+    "real": 1209191.0,
+    "err_cons": 0.6232241225745146,
+    "err_regla": 0.6844606281004778,
+    "bias_cons": -0.06556863225081888,
+    "bias_regla": -0.13170983947471504
+   },
+   {
+    "seg": "Jóvenes (6-17 meses)",
+    "n": 5,
+    "real": 29422.0,
+    "err_cons": 2.070797362517844,
+    "err_regla": 1.076240544502047,
+    "bias_cons": 2.0690299775678063,
+    "bias_regla": 0.6467663341163827
+   },
+   {
+    "seg": "Forecast manual",
+    "n": 27,
+    "real": 123127.0,
+    "err_cons": 0.6085505210067653,
+    "err_regla": 1.0558364093375694,
+    "bias_cons": -0.2667083580368238,
+    "bias_regla": 0.0422474958628305
+   }
+  ],
+  "hibrido": {
+   "wmape": 0.7075503630307144,
+   "bias": -0.09636667242224661,
+   "total": 1230513.6474957298,
+   "monthly": [
+    190064.36453963726,
+    144795.79962090426,
+    160181.89425945032,
+    114502.05698382758,
+    160728.3778109732,
+    139451.08956451318,
+    123280.31727221356,
+    110362.28312714519,
+    87147.46431706529
+   ]
+  },
+  "meses": [
+   "Oct-25",
+   "Nov-25",
+   "Dec-25",
+   "Jan-26",
+   "Feb-26",
+   "Mar-26",
+   "Apr-26",
+   "May-26",
+   "Jun-26"
+  ],
+  "n_meses": 9,
+  "n_eans": 104,
+  "real": 1361740.0,
+  "consenso": 1310491.0,
+  "regla": 1226708.6140012047,
+  "wmape_cons": 0.6531738804764492,
+  "wmape_regla": 0.726504876280561,
+  "bias_cons": -0.03763493765329651,
+  "bias_regla": -0.09916091617988398,
+  "err_total_cons": 51249.0,
+  "err_total_regla": 135031.38599879527,
+  "eans_mejor": 33,
+  "eans_peor": 55,
+  "monthly": [
+   {
+    "mes": "Oct-25",
+    "real": 161669.0,
+    "consenso": 162663.0,
+    "regla": 173173.61011940794
+   },
+   {
+    "mes": "Nov-25",
+    "real": 206558.0,
+    "consenso": 147723.0,
+    "regla": 187964.0835616895
+   },
+   {
+    "mes": "Dec-25",
+    "real": 227397.0,
+    "consenso": 143744.0,
+    "regla": 166695.96841647924
+   },
+   {
+    "mes": "Jan-26",
+    "real": 62839.0,
+    "consenso": 142670.0,
+    "regla": 116255.0862850474
+   },
+   {
+    "mes": "Feb-26",
+    "real": 139768.0,
+    "consenso": 145048.0,
+    "regla": 170983.29154833188
+   },
+   {
+    "mes": "Mar-26",
+    "real": 269748.0,
+    "consenso": 180814.0,
+    "regla": 137459.5245238115
+   },
+   {
+    "mes": "Apr-26",
+    "real": 71290.0,
+    "consenso": 138235.0,
+    "regla": 108282.4412870273
+   },
+   {
+    "mes": "May-26",
+    "real": 128618.0,
+    "consenso": 125216.0,
+    "regla": 96221.17125624279
+   },
+   {
+    "mes": "Jun-26",
+    "real": 93853.0,
+    "consenso": 124378.0,
+    "regla": 69673.43700316726
+   }
+  ],
+  "quarters": [
+   {
+    "q": "FY26.Q2",
+    "meses": 3,
+    "real": 595624.0,
+    "consenso": 454130.0,
+    "regla": 527833.6620975768,
+    "err_cons": 0.5950532550736707,
+    "err_regla": 0.708284738538867
+   },
+   {
+    "q": "FY26.Q3",
+    "meses": 3,
+    "real": 472355.0,
+    "consenso": 468532.0,
+    "regla": 424697.90235719073,
+    "err_cons": 0.7069111155804427,
+    "err_regla": 0.8009327959300561
+   },
+   {
+    "q": "FY26.Q4",
+    "meses": 3,
+    "real": 293761.0,
+    "consenso": 387829.0,
+    "regla": 274177.04954643734,
+    "err_cons": 0.6846109592491856,
+    "err_regla": 0.6437707874676195
+   }
+  ],
+  "top_win": [
+   {
+    "ean": "3616304967153",
+    "desc": "BBY GODD INT RG EDP 10 ML B6 PS IV",
+    "real": 18213.0,
+    "consenso": 56698.0,
+    "regla": 18958.61568472895,
+    "ahorro": 27542.315684728943
+   },
+   {
+    "ean": "3614227693920",
+    "desc": "BBY HER EDP EDP 50ml 22IV",
+    "real": 30432.0,
+    "consenso": 59069.0,
+    "regla": 36577.654158906924,
+    "ahorro": 13339.832987574595
+   },
+   {
+    "ean": "3616304061936",
+    "desc": "BBY HER ELIXIR EDP 50 ML RG IV",
+    "real": 32049.0,
+    "consenso": 45764.0,
+    "regla": 33034.764377167885,
+    "ahorro": 8726.857098497247
+   },
+   {
+    "ean": "3614228838030",
+    "desc": "BBY HERO EDP EDP 50ML HERO RG IV",
+    "real": 18941.0,
+    "consenso": 30426.0,
+    "regla": 23674.88115281169,
+    "ahorro": 6205.698658605255
+   },
+   {
+    "ean": "3614226904980",
+    "desc": "BBY BRT ORGN F EDT NS 50 ML IV",
+    "real": 1067.0,
+    "consenso": 6820.0,
+    "regla": 523.0920803787807,
+    "ahorro": 5909.878651423343
+   },
+   {
+    "ean": "3614227693241",
+    "desc": "BBY HER RG EDP 30ML 18 IV",
+    "real": 38055.0,
+    "consenso": 59940.0,
+    "regla": 30190.278325456216,
+    "ahorro": 4567.688341210451
+   },
+   {
+    "ean": "3616304967108",
+    "desc": "BBY GODD INT RG EDP 30 ML IV",
+    "real": 1323.0,
+    "consenso": 9971.0,
+    "regla": 4786.718401908563,
+    "ahorro": 4134.372608146811
+   },
+   {
+    "ean": "3614227748729",
+    "desc": "BBY TCH M RG EDT 50 ML REPACK IV",
+    "real": 21709.0,
+    "consenso": 15249.0,
+    "regla": 6955.172832916968,
+    "ahorro": 3588.0796267807673
+   }
+  ],
+  "top_loss": [
+   {
+    "ean": "3616302020652",
+    "desc": "BBY GODD EDP RG EDP 100 ML IV",
+    "real": 85562.0,
+    "consenso": 68982.0,
+    "regla": 80236.44747437448,
+    "ahorro": -23018.940038130422
+   },
+   {
+    "ean": "3616305181053",
+    "desc": "BBY HER 7TH EDP 50ML NS INTENSE IV",
+    "real": 19325.0,
+    "consenso": 21222.0,
+    "regla": 23163.851634327773,
+    "ahorro": -17629.546230470707
+   },
+   {
+    "ean": "3616305880604",
+    "desc": "BBY HERO PINT PRFM 100ML INT INTE IV",
+    "real": 8898.0,
+    "consenso": 6201.0,
+    "regla": 14089.55540991815,
+    "ahorro": -15585.362422688988
+   },
+   {
+    "ean": "3616305181046",
+    "desc": "BBY HER 7TH EDP 30ML NS INTENSE IV",
+    "real": 31460.0,
+    "consenso": 19476.0,
+    "regla": 15526.95809591137,
+    "ahorro": -13441.041904088634
+   },
+   {
+    "ean": "3614227693876",
+    "desc": "BBY HER EDP EDP 100ml 22IV",
+    "real": 68342.0,
+    "consenso": 62989.0,
+    "regla": 75772.35905852381,
+    "ahorro": -13141.766215485659
+   }
+  ],
+  "local_cons": 346585.99999999994,
+  "local_real": 300067.0,
+  "trends": {
+   "ancilar(deo/BL/SG)": 0.009,
+   "grande(75-125)": -0.042,
+   "medio(45-60)": -0.219,
+   "mini(<=15ml/penspray)": -0.3,
+   "pequeño(20-40)": -0.3,
+   "refill/jumbo(>=150)": -0.249
+  }
+ },
+ {
+  "house": "Gucci",
+  "snap": "2025-09",
+  "segs": [
+   {
+    "seg": "Maduros (18+ meses)",
+    "n": 102,
+    "real": 724674.0,
+    "err_cons": 0.7187631955886371,
+    "err_regla": 0.6467578035791176,
+    "bias_cons": 0.01635356035955482,
+    "bias_regla": -0.14395501826080892
+   },
+   {
+    "seg": "Jóvenes (6-17 meses)",
+    "n": 8,
+    "real": 184807.0,
+    "err_cons": 0.6774689270428068,
+    "err_regla": 0.6460924348487234,
+    "bias_cons": 0.10834546310475246,
+    "bias_regla": -0.2738398455101255
+   },
+   {
+    "seg": "Forecast manual",
+    "n": 38,
+    "real": 22473.0,
+    "err_cons": 1.8430116139367234,
+    "err_regla": 1.8067102435400595,
+    "bias_cons": 0.7581542295198676,
+    "bias_regla": 0.4306619329635273
+   }
+  ],
+  "hibrido": {
+   "wmape": 0.6816941228332014,
+   "bias": -0.07217036345477712,
+   "total": 864694.5410968666,
+   "monthly": [
+    118283.27921085157,
+    107031.41669713706,
+    109733.24829180099,
+    86939.30576343957,
+    103086.07044541088,
+    92152.53514298485,
+    75993.43056586554,
+    87323.24832126705,
+    84152.00665810911
+   ]
+  },
+  "meses": [
+   "Oct-25",
+   "Nov-25",
+   "Dec-25",
+   "Jan-26",
+   "Feb-26",
+   "Mar-26",
+   "Apr-26",
+   "May-26",
+   "Jun-26"
+  ],
+  "n_meses": 9,
+  "n_eans": 148,
+  "real": 931954.0,
+  "consenso": 980866.0,
+  "regla": 786704.2863871662,
+  "wmape_cons": 0.737684477989257,
+  "wmape_regla": 0.6745967810225152,
+  "bias_cons": 0.05248327707161504,
+  "bias_regla": -0.1558550246179895,
+  "err_total_cons": 48912.0,
+  "err_total_regla": 145249.71361283376,
+  "eans_mejor": 43,
+  "eans_peor": 92,
+  "monthly": [
+   {
+    "mes": "Oct-25",
+    "real": 149757.0,
+    "consenso": 145875.0,
+    "regla": 99338.32686932097
+   },
+   {
+    "mes": "Nov-25",
+    "real": 79485.0,
+    "consenso": 99173.0,
+    "regla": 111472.53195894469
+   },
+   {
+    "mes": "Dec-25",
+    "real": 142105.0,
+    "consenso": 115425.0,
+    "regla": 102772.34814759767
+   },
+   {
+    "mes": "Jan-26",
+    "real": 61160.0,
+    "consenso": 106863.0,
+    "regla": 69390.40443579885
+   },
+   {
+    "mes": "Feb-26",
+    "real": 91080.0,
+    "consenso": 120187.0,
+    "regla": 90177.19697890512
+   },
+   {
+    "mes": "Mar-26",
+    "real": 159995.0,
+    "consenso": 118239.99999999999,
+    "regla": 95264.19474869902
+   },
+   {
+    "mes": "Apr-26",
+    "real": 64047.0,
+    "consenso": 84344.0,
+    "regla": 61174.72509769328
+   },
+   {
+    "mes": "May-26",
+    "real": 95212.0,
+    "consenso": 94787.0,
+    "regla": 81989.55260844724
+   },
+   {
+    "mes": "Jun-26",
+    "real": 89113.0,
+    "consenso": 95972.0,
+    "regla": 75125.00554175935
+   }
+  ],
+  "quarters": [
+   {
+    "q": "FY26.Q2",
+    "meses": 3,
+    "real": 371347.0,
+    "consenso": 360473.0,
+    "regla": 313583.2069758634,
+    "err_cons": 0.7894018263241658,
+    "err_regla": 0.7077577083762908
+   },
+   {
+    "q": "FY26.Q3",
+    "meses": 3,
+    "real": 312235.0,
+    "consenso": 345290.0,
+    "regla": 254831.79616340302,
+    "err_cons": 0.7542299870290006,
+    "err_regla": 0.7239025428947238
+   },
+   {
+    "q": "FY26.Q4",
+    "meses": 3,
+    "real": 248372.0,
+    "consenso": 275103.0,
+    "regla": 218289.2832478999,
+    "err_cons": 0.6395608200602322,
+    "err_regla": 0.5630334991380374
+   }
+  ],
+  "top_win": [
+   {
+    "ean": "3616302039357",
+    "desc": "GUCCI FL GG EDP 10 ML PENSPRAY IV",
+    "real": 83068.0,
+    "consenso": 181875.0,
+    "regla": 67729.73356962822,
+    "ahorro": 51572.466430371765
+   },
+   {
+    "ean": "3616304249730",
+    "desc": "GUCCI BM EDPIN EDP 10ml PS IV",
+    "real": 7616.0,
+    "consenso": 20468.0,
+    "regla": 12403.170592596985,
+    "ahorro": 6805.320592596987
+   },
+   {
+    "ean": "3616306115903",
+    "desc": "GUCCI CHRYLS PRFM 10ml PS IV",
+    "real": 4752.0,
+    "consenso": 13842.0,
+    "regla": 1795.1664309660773,
+    "ahorro": 6133.166430966077
+   },
+   {
+    "ean": "3614229382129",
+    "desc": "GG PH P EDP 90 ML IV",
+    "real": 37380.0,
+    "consenso": 24943.0,
+    "regla": 32411.214306562306,
+    "ahorro": 6090.661373149458
+   },
+   {
+    "ean": "3616306115934",
+    "desc": "GUCCI CHRYLS PRFM 100 ML IV",
+    "real": 2209.0,
+    "consenso": 16972.99999999999,
+    "regla": 9665.761400572448,
+    "ahorro": 4860.939450056558
+   },
+   {
+    "ean": "3616305169297",
+    "desc": "GUCCI FL G ORC EDP 10 ML PENSPRAY VP IV",
+    "real": 50128.0,
+    "consenso": 89672.0,
+    "regla": 18414.1685796521,
+    "ahorro": 4508.5710235878505
+   },
+   {
+    "ean": "3616302022472",
+    "desc": "GUCCI FL GG EDP 100 ML UPGRADE REG IV",
+    "real": 63266.0,
+    "consenso": 35132.0,
+    "regla": 44192.58782791018,
+    "ahorro": 3974.7619228727635
+   },
+   {
+    "ean": "3616303470845",
+    "desc": "GUCCI FL G MAG RG EDP 150 ML JUMBO IV",
+    "real": 813.0,
+    "consenso": 6170.999999999999,
+    "regla": 1253.0770836107977,
+    "ahorro": 3685.6513277868407
+   }
+  ],
+  "top_loss": [
+   {
+    "ean": "3616305169273",
+    "desc": "GUCCI FL G ORC EDP 100 ML VP IV",
+    "real": 30251.0,
+    "consenso": 24330.0,
+    "regla": 37079.217802729945,
+    "ahorro": -14632.26429026862
+   },
+   {
+    "ean": "3616303048181",
+    "desc": "GUCCI FL G JSM EDP FL 100ML VP IV",
+    "real": 10412.0,
+    "consenso": 7369.0,
+    "regla": 15378.729169701437,
+    "ahorro": -9137.220951058687
+   },
+   {
+    "ean": "3616306115910",
+    "desc": "GUCCI CHRYLS PRFM 30ml IV",
+    "real": 2741.0,
+    "consenso": 2745.0,
+    "regla": 5671.89447288507,
+    "ahorro": -4194.894472885071
+   },
+   {
+    "ean": "3614229382112",
+    "desc": "GG PH P EDP 50 ML IV",
+    "real": 16617.0,
+    "consenso": 11035.0,
+    "regla": 6749.60640102432,
+    "ahorro": -3955.1935989756785
+   },
+   {
+    "ean": "3616306115927",
+    "desc": "GUCCI CHRYLS PRFM 50 ML IV",
+    "real": 789.0,
+    "consenso": 3200.0,
+    "regla": 5422.200000000034,
+    "ahorro": -3446.2000000000344
+   }
+  ],
+  "local_cons": 503773.4,
+  "local_real": 294610.0,
+  "trends": {
+   "ancilar(deo/BL/SG)": 0.3,
+   "grande(75-125)": -0.135,
+   "medio(45-60)": -0.3,
+   "mini(<=15ml/penspray)": -0.3,
+   "pequeño(20-40)": -0.3,
+   "refill/jumbo(>=150)": -0.248
+  }
+ },
+ {
+  "house": "Marc Jacobs",
+  "snap": "2025-09",
+  "segs": [
+   {
+    "seg": "Maduros (18+ meses)",
+    "n": 50,
+    "real": 670081.0,
+    "err_cons": 0.6978171295709026,
+    "err_regla": 0.7418973657972201,
+    "bias_cons": -0.055348532490848146,
+    "bias_regla": -0.11784313721813966
+   },
+   {
+    "seg": "Jóvenes (6-17 meses)",
+    "n": 7,
+    "real": 43200.0,
+    "err_cons": 1.9439351851851852,
+    "err_regla": 1.791688345165845,
+    "bias_cons": 1.4569907407407405,
+    "bias_regla": 0.7507197443785498
+   },
+   {
+    "seg": "Forecast manual",
+    "n": 11,
+    "real": 60518.0,
+    "err_cons": 0.9101589609702898,
+    "err_regla": 2.3584886064407464,
+    "bias_cons": 0.38631481542681523,
+    "bias_regla": 1.0824826298280597
+   }
+  ],
+  "hibrido": {
+   "wmape": 0.8221648370840062,
+   "bias": 0.009507059029194576,
+   "total": 781155.5527697317,
+   "monthly": [
+    85552.06722509618,
+    83400.89727439368,
+    98095.14313073744,
+    54101.74613978454,
+    90812.31268040191,
+    115965.52185454244,
+    86102.65527355074,
+    71206.96554732748,
+    95918.24364389732
+   ]
+  },
+  "meses": [
+   "Oct-25",
+   "Nov-25",
+   "Dec-25",
+   "Jan-26",
+   "Feb-26",
+   "Mar-26",
+   "Apr-26",
+   "May-26",
+   "Jun-26"
+  ],
+  "n_meses": 9,
+  "n_eans": 68,
+  "real": 773799.0,
+  "consenso": 823032.0,
+  "regla": 792775.3295188196,
+  "wmape_cons": 0.7839930007663489,
+  "wmape_regla": 0.9269374589092421,
+  "bias_cons": 0.06362504991606355,
+  "bias_regla": 0.024523590129761796,
+  "err_total_cons": 49233.0,
+  "err_total_regla": 18976.329518819577,
+  "eans_mejor": 22,
+  "eans_peor": 43,
+  "monthly": [
+   {
+    "mes": "Oct-25",
+    "real": 71106.0,
+    "consenso": 81225.0,
+    "regla": 79451.64316419538
+   },
+   {
+    "mes": "Nov-25",
+    "real": 100179.0,
+    "consenso": 73990.0,
+    "regla": 74398.37188968305
+   },
+   {
+    "mes": "Dec-25",
+    "real": 130566.0,
+    "consenso": 98752.0,
+    "regla": 178125.68586525985
+   },
+   {
+    "mes": "Jan-26",
+    "real": 51575.0,
+    "consenso": 86112.0,
+    "regla": 43562.95104120131
+   },
+   {
+    "mes": "Feb-26",
+    "real": 90702.0,
+    "consenso": 81653.0,
+    "regla": 80775.69642774711
+   },
+   {
+    "mes": "Mar-26",
+    "real": 131061.0,
+    "consenso": 144067.0,
+    "regla": 97224.23679442426
+   },
+   {
+    "mes": "Apr-26",
+    "real": 42118.0,
+    "consenso": 88013.0,
+    "regla": 88178.1563699174
+   },
+   {
+    "mes": "May-26",
+    "real": 102957.0,
+    "consenso": 75175.0,
+    "regla": 57701.09016183238
+   },
+   {
+    "mes": "Jun-26",
+    "real": 53535.0,
+    "consenso": 94045.0,
+    "regla": 93357.49780455885
+   }
+  ],
+  "quarters": [
+   {
+    "q": "FY26.Q2",
+    "meses": 3,
+    "real": 301851.0,
+    "consenso": 253967.0,
+    "regla": 331975.70091913827,
+    "err_cons": 0.7306054974142872,
+    "err_regla": 1.1190368972707283
+   },
+   {
+    "q": "FY26.Q3",
+    "meses": 3,
+    "real": 273338.0,
+    "consenso": 311832.0,
+    "regla": 221562.8842633727,
+    "err_cons": 0.7875816754348096,
+    "err_regla": 0.6574198637283012
+   },
+   {
+    "q": "FY26.Q4",
+    "meses": 3,
+    "real": 198610.0,
+    "consenso": 257233.0,
+    "regla": 239236.74433630865,
+    "err_cons": 0.8601933437389859,
+    "err_regla": 1.0059062563651358
+   }
+  ],
+  "top_win": [
+   {
+    "ean": "3616303445102",
+    "desc": "MJ D SO FRESH EDP 10ML EVSF PSPR 23IV",
+    "real": 15387.0,
+    "consenso": 50718.0,
+    "regla": 18360.3,
+    "ahorro": 22791.899999999998
+   },
+   {
+    "ean": "3614227372344",
+    "desc": "MJ SWEET EDT NS 50ML LOV ESS CHNG IV",
+    "real": 14596.0,
+    "consenso": 36110.0,
+    "regla": 10626.410300601143,
+    "ahorro": 20086.26031702624
+   },
+   {
+    "ean": "3616305264022",
+    "desc": "MJ PERF ELIX RG EDP 10 ML PS IV",
+    "real": 13341.0,
+    "consenso": 37786.0,
+    "regla": 9548.616322767344,
+    "ahorro": 16297.716322767345
+   },
+   {
+    "ean": "3616304476068",
+    "desc": "MJ PERFECT EDT EDT NS 10ML PENSPRAY IV",
+    "real": 7761.0,
+    "consenso": 21252.0,
+    "regla": 6505.799999999999,
+    "ahorro": 10398.8
+   },
+   {
+    "ean": "3616304940804",
+    "desc": "MJ HONEY EDP 100ML NEW MADE IN IV",
+    "real": 1174.0,
+    "consenso": 20979.0,
+    "regla": 14825.47144584758,
+    "ahorro": 5769.528554152421
+   },
+   {
+    "ean": "3614227372375",
+    "desc": "MJ SWEET EDT NS 100ML ESSRG CAPCHG IV",
+    "real": 31303.0,
+    "consenso": 16611.0,
+    "regla": 28904.06230589033,
+    "ahorro": 5627.387348372533
+   },
+   {
+    "ean": "3614225476570",
+    "desc": "MJ D LOVE RG EDT 100 ML CAP CHANGE IV",
+    "real": 19519.0,
+    "consenso": 10861.0,
+    "regla": 17147.609891928925,
+    "ahorro": 4644.861483426491
+   },
+   {
+    "ean": "3616303466060",
+    "desc": "MJ D WILD EDP 100ML REFILLABLE IV",
+    "real": 22136.0,
+    "consenso": 6930.0,
+    "regla": 30276.55366995534,
+    "ahorro": 3678.5845764806527
+   }
+  ],
+  "top_loss": [
+   {
+    "ean": "3616305033055",
+    "desc": "MJ DAISY W INT EDP 100 ML EXTNRFL IV",
+    "real": 7321.0,
+    "consenso": 11943.0,
+    "regla": 42556.99662659048,
+    "ahorro": -38185.99662659048
+   },
+   {
+    "ean": "3616305033048",
+    "desc": "MJ DAISY W INT EDP 50 ML EXTNRFL IV",
+    "real": 4993.0,
+    "consenso": 7676.0,
+    "regla": 20570.86488243498,
+    "ahorro": -17922.998499491638
+   },
+   {
+    "ean": "3607349764289",
+    "desc": "MJ D DREAM EDTNS 50ML LIL IV",
+    "real": 3414.0,
+    "consenso": 9510.0,
+    "regla": 23285.256934654186,
+    "ahorro": -14028.687263065196
+   },
+   {
+    "ean": "3616305187321",
+    "desc": "MJ PERF ELIX RG EDP 100 ML IV",
+    "real": 9359.0,
+    "consenso": 12173.0,
+    "regla": 25217.696656757464,
+    "ahorro": -12605.907076870088
+   },
+   {
+    "ean": "3616305033031",
+    "desc": "MJ DAISY W INT EDP 30 ML EXTNRFL IV",
+    "real": 6416.0,
+    "consenso": 5499.0,
+    "regla": 14942.51629445985,
+    "ahorro": -11095.63643657518
+   }
+  ],
+  "local_cons": 145304.0,
+  "local_real": 175719.0,
+  "trends": {
+   "ancilar(deo/BL/SG)": -0.3,
+   "grande(75-125)": 0.055,
+   "medio(45-60)": -0.027,
+   "mini(<=15ml/penspray)": -0.3,
+   "pequeño(20-40)": -0.25,
+   "refill/jumbo(>=150)": 0.3
+  }
+ },
+ {
+  "house": "Burberry",
+  "snap": "2026-03",
+  "segs": [
+   {
+    "seg": "Maduros (18+ meses)",
+    "n": 77,
+    "real": 630044.0,
+    "err_cons": 0.4855518027312378,
+    "err_regla": 0.5037185429902877,
+    "bias_cons": 0.10434350616782329,
+    "bias_regla": 0.041326219943476294
+   },
+   {
+    "seg": "Jóvenes (6-17 meses)",
+    "n": 6,
+    "real": 53309.0,
+    "err_cons": 0.40163949802097204,
+    "err_regla": 0.6298513864118809,
+    "bias_cons": -0.0004689639648089994,
+    "bias_regla": -0.3826705144980945
+   },
+   {
+    "seg": "Forecast manual",
+    "n": 29,
+    "real": 31730.0,
+    "err_cons": 0.6010715411282698,
+    "err_regla": 2.06183894326774,
+    "bias_cons": -0.5077844311377245,
+    "bias_regla": 0.9139359481653717
+   }
+  ],
+  "hibrido": {
+   "wmape": 0.5004284057931356,
+   "bias": 0.01384501787634096,
+   "total": 724983.3369180675,
+   "monthly": [
+    122716.92770775719,
+    106669.1672768814,
+    102950.59631985932,
+    218081.10214173555,
+    174565.54347183407
+   ]
+  },
+  "meses": [
+   "Apr-26",
+   "May-26",
+   "Jun-26",
+   "Jul-26",
+   "Aug-26"
+  ],
+  "n_meses": 5,
+  "n_eans": 112,
+  "real": 715083.0,
+  "consenso": 764687.0,
+  "regla": 749719.7420959759,
+  "wmape_cons": 0.4844220880653015,
+  "wmape_regla": 0.5822593222435566,
+  "bias_cons": 0.06936817124725381,
+  "bias_regla": 0.048437373138469075,
+  "err_total_cons": 49604.0,
+  "err_total_regla": 34636.742095975904,
+  "eans_mejor": 36,
+  "eans_peor": 51,
+  "monthly": [
+   {
+    "mes": "Apr-26",
+    "real": 73705.0,
+    "consenso": 112683.0,
+    "regla": 118987.73778334027
+   },
+   {
+    "mes": "May-26",
+    "real": 132959.0,
+    "consenso": 104690.0,
+    "regla": 105115.76243791799
+   },
+   {
+    "mes": "Jun-26",
+    "real": 96317.0,
+    "consenso": 107260.0,
+    "regla": 135986.79064835605
+   },
+   {
+    "mes": "Jul-26",
+    "real": 241458.0,
+    "consenso": 228807.0,
+    "regla": 226890.93216181378
+   },
+   {
+    "mes": "Aug-26",
+    "real": 170644.0,
+    "consenso": 211247.0,
+    "regla": 162738.51906454773
+   }
+  ],
+  "quarters": [
+   {
+    "q": "FY26.Q4",
+    "meses": 3,
+    "real": 302981.0,
+    "consenso": 324633.0,
+    "regla": 360090.29086961434,
+    "err_cons": 0.5268317155201151,
+    "err_regla": 0.721933944866901
+   },
+   {
+    "q": "FY27.Q1",
+    "meses": 2,
+    "real": 412102.0,
+    "consenso": 440054.0,
+    "regla": 389629.4512263615,
+    "err_cons": 0.4532421584947416,
+    "err_regla": 0.47956931628133476
+   }
+  ],
+  "top_win": [
+   {
+    "ean": "3616304061943",
+    "desc": "BBY HER ELIXIR EDP 100 ML RG IV",
+    "real": 30780.0,
+    "consenso": 27058.0,
+    "regla": 38378.87628070337,
+    "ahorro": 4233.123719296624
+   },
+   {
+    "ean": "3614227693920",
+    "desc": "BBY HER EDP EDP 50ml 22IV",
+    "real": 15254.0,
+    "consenso": 27478.0,
+    "regla": 23946.904246445207,
+    "ahorro": 4023.095753554793
+   },
+   {
+    "ean": "3616304061929",
+    "desc": "BBY HER ELIXIR EDP 30 ML RG IV",
+    "real": 19302.0,
+    "consenso": 25178.0,
+    "regla": 22633.96905373608,
+    "ahorro": 3510.3406749644564
+   },
+   {
+    "ean": "3614227693876",
+    "desc": "BBY HER EDP EDP 100ml 22IV",
+    "real": 28345.0,
+    "consenso": 39577.0,
+    "regla": 35386.39169506516,
+    "ahorro": 2910.273908281095
+   },
+   {
+    "ean": "3616304061936",
+    "desc": "BBY HER ELIXIR EDP 50 ML RG IV",
+    "real": 15458.0,
+    "consenso": 25666.0,
+    "regla": 20788.213241522375,
+    "ahorro": 2475.954197180665
+   },
+   {
+    "ean": "3614228838030",
+    "desc": "BBY HERO EDP EDP 50ML HERO RG IV",
+    "real": 9638.0,
+    "consenso": 14363.0,
+    "regla": 11377.624258837506,
+    "ahorro": 1647.5802830699017
+   },
+   {
+    "ean": "3616304967153",
+    "desc": "BBY GODD INT RG EDP 10 ML B6 PS IV",
+    "real": 15963.0,
+    "consenso": 18787.0,
+    "regla": 15881.897516205716,
+    "ahorro": 1393.0041582874578
+   },
+   {
+    "ean": "3614229820782",
+    "desc": "BBY HERO EDT NS 50ML HERO RG IV",
+    "real": 10227.0,
+    "consenso": 12767.0,
+    "regla": 8780.956938705312,
+    "ahorro": 1227.2037706286756
+   }
+  ],
+  "top_loss": [
+   {
+    "ean": "3616305271563",
+    "desc": "B6 EXT3 P PRFM 100ml IV",
+    "real": 6007.0,
+    "consenso": 3000.0,
+    "regla": 19802.127149684686,
+    "ahorro": -13707.402264966866
+   },
+   {
+    "ean": "3616305271587",
+    "desc": "B6 EXT3 P PRFM 10ml PENSPRAY IV",
+    "real": 12291.0,
+    "consenso": 7500.0,
+    "regla": 18293.41905551729,
+    "ahorro": -13655.41905551729
+   },
+   {
+    "ean": "3616305271549",
+    "desc": "B6 EXT3 P PRFM 30ml IV",
+    "real": 5900.0,
+    "consenso": 750.0,
+    "regla": 10496.181643427866,
+    "ahorro": -9598.181643427866
+   },
+   {
+    "ean": "3616305271556",
+    "desc": "B6 EXT3 P PRFM 50ml IV",
+    "real": 4674.0,
+    "consenso": 2500.0,
+    "regla": 9920.771693919021,
+    "ahorro": -9232.771693919021
+   },
+   {
+    "ean": "3616304085116",
+    "desc": "BBY HER ELIXIR EDP PS 10 ML IV",
+    "real": 52160.0,
+    "consenso": 51853.0,
+    "regla": 39758.79616726408,
+    "ahorro": -5404.287007001805
+   }
+  ],
+  "local_cons": 184611.0,
+  "local_real": 162345.0,
+  "trends": {
+   "ancilar(deo/BL/SG)": -0.3,
+   "grande(75-125)": -0.082,
+   "medio(45-60)": -0.247,
+   "mini(<=15ml/penspray)": -0.252,
+   "pequeño(20-40)": -0.196,
+   "refill/jumbo(>=150)": -0.131
+  }
+ },
+ {
+  "house": "Gucci",
+  "snap": "2026-03",
+  "segs": [
+   {
+    "seg": "Maduros (18+ meses)",
+    "n": 100,
+    "real": 470232.0,
+    "err_cons": 0.5964927950458497,
+    "err_regla": 0.5675086760329039,
+    "bias_cons": 0.22596505554704915,
+    "bias_regla": 0.13969717296429263
+   },
+   {
+    "seg": "Jóvenes (6-17 meses)",
+    "n": 13,
+    "real": 4617.0,
+    "err_cons": 0.7325102880658436,
+    "err_regla": 1.9159776771570323,
+    "bias_cons": 0.0424518085336798,
+    "bias_regla": 0.9647689165192139
+   },
+   {
+    "seg": "Forecast manual",
+    "n": 55,
+    "real": 55625.0,
+    "err_cons": 0.8370876404494382,
+    "err_regla": 2.800259740815291,
+    "bias_cons": 0.19349213483146066,
+    "bias_regla": 1.6688455728625247
+   }
+  ],
+  "hibrido": {
+   "wmape": 0.5972125679077664,
+   "bias": 0.14449168298040083,
+   "total": 607123.0810373451,
+   "monthly": [
+    82474.08686745004,
+    112547.63187493404,
+    115498.43011848771,
+    153420.29821769346,
+    143182.63395877992
+   ]
+  },
+  "meses": [
+   "Apr-26",
+   "May-26",
+   "Jun-26",
+   "Jul-26",
+   "Aug-26"
+  ],
+  "n_meses": 5,
+  "n_eans": 168,
+  "real": 530474.0,
+  "consenso": 647689.0,
+  "regla": 693447.9541153923,
+  "wmape_cons": 0.6229051753714603,
+  "wmape_regla": 0.8133692825031745,
+  "bias_cons": 0.22096276160565842,
+  "bias_regla": 0.30722326469420236,
+  "err_total_cons": 117215.0,
+  "err_total_regla": 162973.9541153923,
+  "eans_mejor": 66,
+  "eans_peor": 81,
+  "monthly": [
+   {
+    "mes": "Apr-26",
+    "real": 69387.0,
+    "consenso": 76998.0,
+    "regla": 73879.7813066603
+   },
+   {
+    "mes": "May-26",
+    "real": 109662.0,
+    "consenso": 102177.0,
+    "regla": 194000.0553172978
+   },
+   {
+    "mes": "Jun-26",
+    "real": 97672.0,
+    "consenso": 125236.0,
+    "regla": 138223.6374449411
+   },
+   {
+    "mes": "Jul-26",
+    "real": 141414.0,
+    "consenso": 158424.0,
+    "regla": 146891.16174815892
+   },
+   {
+    "mes": "Aug-26",
+    "real": 112339.0,
+    "consenso": 184854.0,
+    "regla": 140453.3182983342
+   }
+  ],
+  "quarters": [
+   {
+    "q": "FY26.Q4",
+    "meses": 3,
+    "real": 276721.0,
+    "consenso": 304411.0,
+    "regla": 406103.4740688992,
+    "err_cons": 0.5115260497034919,
+    "err_regla": 0.9790800940829234
+   },
+   {
+    "q": "FY27.Q1",
+    "meses": 2,
+    "real": 253753.0,
+    "consenso": 343278.0,
+    "regla": 287344.4800464931,
+    "err_cons": 0.7443655838551663,
+    "err_regla": 0.6326594525064468
+   }
+  ],
+  "top_win": [
+   {
+    "ean": "3616304077029",
+    "desc": "GUCCI BM EDT NS 10 ML PENSPRAY RGIV",
+    "real": 3481.0,
+    "consenso": 14430.0,
+    "regla": 6071.202306854431,
+    "ahorro": 6399.321928732591
+   },
+   {
+    "ean": "3616307513418",
+    "desc": "GG PH P EDP 10 ML PENSPRAY IV",
+    "real": 4482.0,
+    "consenso": 13662.0,
+    "regla": 0.0,
+    "ahorro": 4698.0
+   },
+   {
+    "ean": "3616305169259",
+    "desc": "GUCCI FL G ORC EDP 30ML IV",
+    "real": 10090.0,
+    "consenso": 12814.0,
+    "regla": 10269.543508963605,
+    "ahorro": 4592.32531793987
+   },
+   {
+    "ean": "3616303470777",
+    "desc": "GUCCI FL G MAG RG EDP 10 ML IV",
+    "real": 16270.0,
+    "consenso": 21489.0,
+    "regla": 17707.960145491328,
+    "ahorro": 4269.461507041156
+   },
+   {
+    "ean": "3616302039357",
+    "desc": "GUCCI FL GG EDP 10 ML PENSPRAY IV",
+    "real": 56580.0,
+    "consenso": 67116.0,
+    "regla": 63549.58527192096,
+    "ahorro": 4230.466622578384
+   },
+   {
+    "ean": "3614229382129",
+    "desc": "GG PH P EDP 90 ML IV",
+    "real": 17002.0,
+    "consenso": 24596.0,
+    "regla": 19053.914212461044,
+    "ahorro": 3835.6683053195175
+   },
+   {
+    "ean": "3616305820747",
+    "desc": "GUCCI G BLK H RG EDT 50 ML ESSENCE IV",
+    "real": 5281.0,
+    "consenso": 12725.0,
+    "regla": 8917.229326153629,
+    "ahorro": 3807.770673846372
+   },
+   {
+    "ean": "3616305820846",
+    "desc": "GUCCI G BLK H RG EDT 90 ML ESSENCE IV",
+    "real": 20415.0,
+    "consenso": 35547.0,
+    "regla": 28180.82508057857,
+    "ahorro": 2943.0403039343655
+   }
+  ],
+  "top_loss": [
+   {
+    "ean": "3616305275776",
+    "desc": "GUCCI FLG EDPI PRFM 10ML INTEN P/SPRY IV",
+    "real": 12839.0,
+    "consenso": 11054.0,
+    "regla": 47351.86454524236,
+    "ahorro": -40538.531315646156
+   },
+   {
+    "ean": "3616305275745",
+    "desc": "GUCCI FLG EDPI PRFM 100 ML INTENSE IV",
+    "real": 10478.0,
+    "consenso": 17194.0,
+    "regla": 44434.17947144455,
+    "ahorro": -27094.17947144455
+   },
+   {
+    "ean": "3616305275769",
+    "desc": "GUCCI FLG EDPI PRFM 30 ML INTENSE IV",
+    "real": 5445.0,
+    "consenso": 1676.0,
+    "regla": 26858.934043715482,
+    "ahorro": -22000.934043715482
+   },
+   {
+    "ean": "3616305275752",
+    "desc": "GUCCI FLG EDPI PRFM 50 ML INTENSE IV",
+    "real": 1418.0,
+    "consenso": 3364.0,
+    "regla": 22837.7282444674,
+    "ahorro": -19827.7282444674
+   },
+   {
+    "ean": "3616302022472",
+    "desc": "GUCCI FL GG EDP 100 ML UPGRADE REG IV",
+    "real": 30737.0,
+    "consenso": 29710.0,
+    "regla": 34666.10831024746,
+    "ahorro": -5969.530901547641
+   }
+  ],
+  "local_cons": 201286.0,
+  "local_real": 206233.0,
+  "trends": {
+   "ancilar(deo/BL/SG)": -0.3,
+   "grande(75-125)": -0.055,
+   "medio(45-60)": -0.129,
+   "mini(<=15ml/penspray)": -0.276,
+   "pequeño(20-40)": 0.109,
+   "refill/jumbo(>=150)": -0.3
+  }
+ },
+ {
+  "house": "Marc Jacobs",
+  "snap": "2026-03",
+  "segs": [
+   {
+    "seg": "Maduros (18+ meses)",
+    "n": 54,
+    "real": 328809.0,
+    "err_cons": 0.951087105279965,
+    "err_regla": 0.8497426642049881,
+    "bias_cons": 0.36163243706832837,
+    "bias_regla": 0.09295683456706172
+   },
+   {
+    "seg": "Jóvenes (6-17 meses)",
+    "n": 5,
+    "real": 39672.0,
+    "err_cons": 1.0165607985480944,
+    "err_regla": 1.3920480470132817,
+    "bias_cons": -0.3333081266384351,
+    "bias_regla": -0.23325336689224252
+   },
+   {
+    "seg": "Forecast manual",
+    "n": 14,
+    "real": 64450.0,
+    "err_cons": 0.5473700543056633,
+    "err_regla": 0.9198262493908445,
+    "bias_cons": 0.2900543056633049,
+    "bias_regla": -0.4607734764414798
+   }
+  ],
+  "hibrido": {
+   "wmape": 0.8200152811292745,
+   "bias": 0.0832373838259699,
+   "total": 468967.04381716094,
+   "monthly": [
+    96520.9282940348,
+    73151.25700538518,
+    125730.95607169087,
+    61011.96157550952,
+    112551.94087054062
+   ]
+  },
+  "meses": [
+   "Apr-26",
+   "May-26",
+   "Jun-26",
+   "Jul-26",
+   "Aug-26"
+  ],
+  "n_meses": 5,
+  "n_eans": 73,
+  "real": 432931.0,
+  "consenso": 557310.0,
+  "regla": 424545.5656891586,
+  "wmape_cons": 0.896985893826037,
+  "wmape_regla": 0.9098705511246106,
+  "bias_cons": 0.2872952040856396,
+  "bias_regla": -0.01936898561396938,
+  "err_total_cons": 124379.0,
+  "err_total_regla": 8385.434310841374,
+  "eans_mejor": 34,
+  "eans_peor": 30,
+  "monthly": [
+   {
+    "mes": "Apr-26",
+    "real": 53109.0,
+    "consenso": 102775.0,
+    "regla": 88134.50514666142
+   },
+   {
+    "mes": "May-26",
+    "real": 117322.0,
+    "consenso": 89526.0,
+    "regla": 58516.86916566278
+   },
+   {
+    "mes": "Jun-26",
+    "real": 62860.0,
+    "consenso": 136467.0,
+    "regla": 112210.10159660046
+   },
+   {
+    "mes": "Jul-26",
+    "real": 116978.0,
+    "consenso": 81259.0,
+    "regla": 65554.4322474396
+   },
+   {
+    "mes": "Aug-26",
+    "real": 82662.0,
+    "consenso": 147283.0,
+    "regla": 100129.6575327943
+   }
+  ],
+  "quarters": [
+   {
+    "q": "FY26.Q4",
+    "meses": 3,
+    "real": 233291.0,
+    "consenso": 328768.0,
+    "regla": 258861.47590892465,
+    "err_cons": 0.8902572323835896,
+    "err_regla": 1.0277849757201396
+   },
+   {
+    "q": "FY27.Q1",
+    "meses": 2,
+    "real": 199640.0,
+    "consenso": 228542.0,
+    "regla": 165684.08978023392,
+    "err_cons": 0.9048487277098778,
+    "err_regla": 0.7720806591775282
+   }
+  ],
+  "top_win": [
+   {
+    "ean": "3614227372344",
+    "desc": "MJ SWEET EDT NS 50ML LOV ESS CHNG IV",
+    "real": 2774.0,
+    "consenso": 31937.0,
+    "regla": 18621.727567844886,
+    "ahorro": 13315.272432155114
+   },
+   {
+    "ean": "3614227086142",
+    "desc": "MJ PERFECT EDP 10 ML PEN SPR IV",
+    "real": 32104.0,
+    "consenso": 40316.0,
+    "regla": 24252.375,
+    "ahorro": 9166.875
+   },
+   {
+    "ean": "3616303445102",
+    "desc": "MJ D SO FRESH EDP 10ML EVSF PSPR 23IV",
+    "real": 0.0,
+    "consenso": 17251.0,
+    "regla": 11713.8,
+    "ahorro": 5537.200000000001
+   },
+   {
+    "ean": "3616305168788",
+    "desc": "MJ D WILD EDP 10 ML PENSPRAY IV",
+    "real": 22500.0,
+    "consenso": 25388.0,
+    "regla": 21052.5,
+    "ahorro": 3925.2999999999993
+   },
+   {
+    "ean": "3607349700058",
+    "desc": "MJ FRESH RG EDT NS10ML IV",
+    "real": 18552.0,
+    "consenso": 21647.0,
+    "regla": 14687.224999999999,
+    "ahorro": 3238.175000000001
+   },
+   {
+    "ean": "3607349764241",
+    "desc": "MJ D DREAM EDT NS 100 ML LIL IV",
+    "real": 669.0,
+    "consenso": 13864.0,
+    "regla": 10701.4942779783,
+    "ahorro": 3162.5057220217004
+   },
+   {
+    "ean": "3607342221208",
+    "desc": "MJ FRESH EDT NS 125 ML CAP CHANGE IV",
+    "real": 10415.0,
+    "consenso": 10051.0,
+    "regla": 7301.361295269768,
+    "ahorro": 2497.8037804937912
+   },
+   {
+    "ean": "3607342221161",
+    "desc": "MJ FRESH EDT NS 75 ML CAP CHANGE IV",
+    "real": 10059.0,
+    "consenso": 8898.0,
+    "regla": 6053.134047816742,
+    "ahorro": 1811.7967799153466
+   }
+  ],
+  "top_loss": [
+   {
+    "ean": "3616306098343",
+    "desc": "MJ PERFECT ABS EDP 10ml PENSPRAY IV",
+    "real": 22896.0,
+    "consenso": 25000.0,
+    "regla": 4505.0599999999995,
+    "ahorro": -13882.940000000002
+   },
+   {
+    "ean": "3616304940804",
+    "desc": "MJ HONEY EDP 100ML NEW MADE IN IV",
+    "real": 768.0,
+    "consenso": 5723.0,
+    "regla": 16366.431846415242,
+    "ahorro": -10465.431846415242
+   },
+   {
+    "ean": "3616304940835",
+    "desc": "MJ DOT EDP 100 ML NEW CAR IV",
+    "real": 984.0,
+    "consenso": 7148.0,
+    "regla": 16299.131451748892,
+    "ahorro": -9151.925494186733
+   },
+   {
+    "ean": "3616305869326",
+    "desc": "MJ PERFECT ABS EDP 100ML 25IV",
+    "real": 15406.0,
+    "consenso": 27000.0,
+    "regla": 16394.27860391849,
+    "ahorro": -8784.27860391849
+   },
+   {
+    "ean": "3616305869302",
+    "desc": "MJ PERFECT ABS EDP 30ML 25IV",
+    "real": 9115.0,
+    "consenso": 14600.0,
+    "regla": 5071.7534894668715,
+    "ahorro": -3393.7534894668715
+   }
+  ],
+  "local_cons": 256008.99999999997,
+  "local_real": 215577.0,
+  "trends": {
+   "ancilar(deo/BL/SG)": -0.3,
+   "grande(75-125)": -0.025,
+   "medio(45-60)": -0.088,
+   "mini(<=15ml/penspray)": -0.3,
+   "pequeño(20-40)": -0.26,
+   "refill/jumbo(>=150)": -0.139
+  }
+ },
+ {
+  "house": "Gucci Make up",
+  "snap": "2025-09",
+  "segs": [
+   {
+    "seg": "Maduros (18+ meses)",
+    "n": 258,
+    "real": 193837.0,
+    "err_cons": 0.7679627728452256,
+    "err_regla": 0.6896922868411587,
+    "bias_cons": -0.06241120116386456,
+    "bias_regla": -0.019942028957380398
+   },
+   {
+    "seg": "Jóvenes (6-17 meses)",
+    "n": 2,
+    "real": 28811.0,
+    "err_cons": 0.5691229044462185,
+    "err_regla": 0.4002851576472704,
+    "bias_cons": -0.37003227933775296,
+    "bias_regla": -0.3218856350326791
+   },
+   {
+    "seg": "Forecast manual",
+    "n": 26,
+    "real": 11996.0,
+    "err_cons": 1.216322107369121,
+    "err_regla": 0.9168104417122762,
+    "bias_cons": 0.6721407135711885,
+    "bias_regla": 0.23233023424609223
+   }
+  ],
+  "hibrido": {
+   "wmape": 0.70181161165182,
+   "bias": -0.027545997626241325,
+   "total": 228180.49693298823,
+   "monthly": [
+    24020.94410366535,
+    25109.944103665366,
+    26061.944103665366,
+    26796.944103665366,
+    26953.944103665362,
+    25054.94410366535,
+    24411.944103665366,
+    24943.944103665366,
+    24825.944103665366
+   ]
+  },
+  "meses": [
+   "Oct-25",
+   "Nov-25",
+   "Dec-25",
+   "Jan-26",
+   "Feb-26",
+   "Mar-26",
+   "Apr-26",
+   "May-26",
+   "Jun-26"
+  ],
+  "n_meses": 9,
+  "n_eans": 286,
+  "real": 234644.0,
+  "consenso": 219948.39999999997,
+  "regla": 224291.68339207786,
+  "wmape_cons": 0.7664700567668467,
+  "wmape_regla": 0.6657683876007298,
+  "bias_cons": -0.06262934487990335,
+  "bias_regla": -0.044119247063305056,
+  "err_total_cons": 14695.600000000035,
+  "err_total_regla": 10352.316607922141,
+  "eans_mejor": 180,
+  "eans_peor": 84,
+  "monthly": [
+   {
+    "mes": "Oct-25",
+    "real": 26216.0,
+    "consenso": 26550.19999999999,
+    "regla": 24921.298154675318
+   },
+   {
+    "mes": "Nov-25",
+    "real": 27553.0,
+    "consenso": 26859.0,
+    "regla": 24921.298154675318
+   },
+   {
+    "mes": "Dec-25",
+    "real": 22766.0,
+    "consenso": 24952.0,
+    "regla": 24921.298154675318
+   },
+   {
+    "mes": "Jan-26",
+    "real": 42397.0,
+    "consenso": 26975.2,
+    "regla": 24921.298154675318
+   },
+   {
+    "mes": "Feb-26",
+    "real": 23679.0,
+    "consenso": 30343.0,
+    "regla": 24921.298154675318
+   },
+   {
+    "mes": "Mar-26",
+    "real": 20857.0,
+    "consenso": 26735.99999999999,
+    "regla": 24921.298154675318
+   },
+   {
+    "mes": "Apr-26",
+    "real": 30686.0,
+    "consenso": 16941.0,
+    "regla": 24921.298154675318
+   },
+   {
+    "mes": "May-26",
+    "real": 23250.0,
+    "consenso": 21844.0,
+    "regla": 24921.298154675318
+   },
+   {
+    "mes": "Jun-26",
+    "real": 17240.0,
+    "consenso": 18748.0,
+    "regla": 24921.298154675318
+   }
+  ],
+  "quarters": [
+   {
+    "q": "FY26.Q2",
+    "meses": 3,
+    "real": 76535.0,
+    "consenso": 78361.19999999998,
+    "regla": 74763.89446402596,
+    "err_cons": 0.7825935846344808,
+    "err_regla": 0.6330421632152593
+   },
+   {
+    "q": "FY26.Q3",
+    "meses": 3,
+    "real": 86933.0,
+    "consenso": 84054.19999999998,
+    "regla": 74763.89446402596,
+    "err_cons": 0.8000506136910033,
+    "err_regla": 0.6957852319903866
+   },
+   {
+    "q": "FY26.Q4",
+    "meses": 3,
+    "real": 71176.0,
+    "consenso": 57533.0,
+    "regla": 74763.89446402596,
+    "err_cons": 0.708117904911768,
+    "err_regla": 0.6642966450191847
+   }
+  ],
+  "top_win": [
+   {
+    "ean": "3616303475680",
+    "desc": "GUC MU MUL M MASC7.5 01EVEBLK RPACK IV",
+    "real": 23547.0,
+    "consenso": 16081.0,
+    "regla": 15632.767609824248,
+    "ahorro": 3839.9225366080827
+   },
+   {
+    "ean": "3616304054808",
+    "desc": "GU MU VOL M RG MASC 7.5ML 01 ULBLCK 23IV",
+    "real": 5119.0,
+    "consenso": 11343.99999999998,
+    "regla": 1614.6343146427855,
+    "ahorro": 2720.6343146427653
+   },
+   {
+    "ean": "3616304663154",
+    "desc": "GU MU MAT FT LIQFND 30 ML NMEDM305 IV",
+    "real": 2033.0,
+    "consenso": 3886.0,
+    "regla": 506.4957185935127,
+    "ahorro": 2060.8319061978373
+   },
+   {
+    "ean": "3614229377705",
+    "desc": "GUC MU FAC P PRIM 30 ML SLK NW VER VP IV",
+    "real": 5824.0,
+    "consenso": 7879.0,
+    "regla": 3978.140482274218,
+    "ahorro": 2027.1092639910585
+   },
+   {
+    "ean": "3616303327439",
+    "desc": "GU MU BLUSH PWDBLU 5.5 G SHADE 03 IV",
+    "real": 3125.0,
+    "consenso": 6334.0,
+    "regla": 5541.523747099305,
+    "ahorro": 1270.476252900694
+   },
+   {
+    "ean": "3616305921017",
+    "desc": "GUC MU SHI L LPK 1.8G 217VALERIA ROSE IV",
+    "real": 106.0,
+    "consenso": 1464.999999999999,
+    "regla": 295.48125,
+    "ahorro": 1189.518749999999
+   },
+   {
+    "ean": "3616305921055",
+    "desc": "GUC MU LI MA LIQMTT6.5ML LSM VRO217 25IV",
+    "real": 62.0,
+    "consenso": 1494.0,
+    "regla": 400.98749999999995,
+    "ahorro": 1097.0125
+   },
+   {
+    "ean": "3616303327422",
+    "desc": "GU MU BLUSH PWDBLU 5.5 G SHADE 05 IV",
+    "real": 5538.0,
+    "consenso": 4606.0,
+    "regla": 3600.0778558626976,
+    "ahorro": 1076.0259519542324
+   }
+  ],
+  "top_loss": [
+   {
+    "ean": "3614229385250",
+    "desc": "GUC MU BE PW PRPOWD 10G 02 IV",
+    "real": 0.0,
+    "consenso": 0.0,
+    "regla": 2351.6630705885805,
+    "ahorro": -2351.6630705885805
+   },
+   {
+    "ean": "3616301290438",
+    "desc": "GUC MU BR PW PRSBRZ 12G SHADE 01 001 IV",
+    "real": 16121.0,
+    "consenso": 9309.0,
+    "regla": 7726.5850434157,
+    "ahorro": -1945.4716521947666
+   },
+   {
+    "ean": "3614229385298",
+    "desc": "GUC MU BE PW PRPOWD 10g 03 IV",
+    "real": 0.0,
+    "consenso": 0.0,
+    "regla": 1860.821227006601,
+    "ahorro": -1860.8212270066006
+   },
+   {
+    "ean": "3614229385274",
+    "desc": "GUC MU BE PW PRPOWD 10g SHADE 505 IV",
+    "real": 0.0,
+    "consenso": 0.0,
+    "regla": 1633.9726992970916,
+    "ahorro": -1633.9726992970914
+   },
+   {
+    "ean": "3616302937004",
+    "desc": "GUC MU FA PR FFLUID 30ml MATT PRMR C IV",
+    "real": 0.0,
+    "consenso": 0.0,
+    "regla": 1487.6487659265722,
+    "ahorro": -1487.6487659265722
+   }
+  ],
+  "local_cons": 132687.39999999997,
+  "local_real": 93284.0,
+  "trends": {
+   "Gucci Eyes (01199)": -0.174,
+   "Gucci Face (01201)": -0.231,
+   "Gucci Lips (01200)": -0.3
+  }
+ },
+ {
+  "house": "Kylie Makeup",
+  "snap": "2025-09",
+  "segs": [
+   {
+    "seg": "Maduros (18+ meses)",
+    "n": 107,
+    "real": 608760.0,
+    "err_cons": 0.842515915258564,
+    "err_regla": 0.5292401441640749,
+    "bias_cons": 0.09850998873126615,
+    "bias_regla": 0.035336159584473226
+   },
+   {
+    "seg": "Jóvenes (6-17 meses)",
+    "n": 31,
+    "real": 602365.0,
+    "err_cons": 0.7324213724236966,
+    "err_regla": 0.7683545001340811,
+    "bias_cons": -0.3694719978750426,
+    "bias_regla": -0.6277545532573855
+   },
+   {
+    "seg": "Forecast manual",
+    "n": 229,
+    "real": 178062.0,
+    "err_cons": 1.6718191623040146,
+    "err_regla": 0.9400889003061772,
+    "bias_cons": 0.8811041836550577,
+    "bias_regla": 0.05901935423283855
+   }
+  ],
+  "hibrido": {
+   "wmape": 0.763793998820533,
+   "bias": -0.03178447994501021,
+   "total": 1345032.413658631,
+   "monthly": [
+    159594.50536481413,
+    142938.01878767324,
+    138442.98364182335,
+    154277.21669285127,
+    146425.1378342938,
+    159244.1378342938,
+    171788.13783429377,
+    141328.1378342938,
+    130994.1378342938
+   ]
+  },
+  "meses": [
+   "Oct-25",
+   "Nov-25",
+   "Dec-25",
+   "Jan-26",
+   "Feb-26",
+   "Mar-26",
+   "Apr-26",
+   "May-26",
+   "Jun-26"
+  ],
+  "n_meses": 9,
+  "n_eans": 367,
+  "real": 1389187.0,
+  "consenso": 1383490.1138900325,
+  "regla": 1043069.9732891667,
+  "wmape_cons": 0.9010755587627733,
+  "wmape_regla": 0.6855838691269834,
+  "bias_cons": -0.0041008777867684865,
+  "bias_regla": -0.24915078150805714,
+  "err_total_cons": 5696.886109967483,
+  "err_total_regla": 346117.0267108333,
+  "eans_mejor": 219,
+  "eans_peor": 109,
+  "monthly": [
+   {
+    "mes": "Oct-25",
+    "real": 126639.0,
+    "consenso": 151316.18736769404,
+    "regla": 115896.6636987963
+   },
+   {
+    "mes": "Nov-25",
+    "real": 184268.0,
+    "consenso": 140820.5502217536,
+    "regla": 115896.6636987963
+   },
+   {
+    "mes": "Dec-25",
+    "real": 117165.0,
+    "consenso": 141952.8188202798,
+    "regla": 115896.6636987963
+   },
+   {
+    "mes": "Jan-26",
+    "real": 117962.0,
+    "consenso": 177723.55748030505,
+    "regla": 115896.6636987963
+   },
+   {
+    "mes": "Feb-26",
+    "real": 152094.0,
+    "consenso": 154658.0,
+    "regla": 115896.6636987963
+   },
+   {
+    "mes": "Mar-26",
+    "real": 218466.0,
+    "consenso": 196645.0,
+    "regla": 115896.6636987963
+   },
+   {
+    "mes": "Apr-26",
+    "real": 159296.0,
+    "consenso": 184234.0,
+    "regla": 115896.6636987963
+   },
+   {
+    "mes": "May-26",
+    "real": 190082.0,
+    "consenso": 135407.0,
+    "regla": 115896.6636987963
+   },
+   {
+    "mes": "Jun-26",
+    "real": 123215.0,
+    "consenso": 100733.0,
+    "regla": 115896.6636987963
+   }
+  ],
+  "quarters": [
+   {
+    "q": "FY26.Q2",
+    "meses": 3,
+    "real": 428072.0,
+    "consenso": 434089.5564097275,
+    "regla": 347689.9910963889,
+    "err_cons": 0.7666806674095752,
+    "err_regla": 0.6191302771014696
+   },
+   {
+    "q": "FY26.Q3",
+    "meses": 3,
+    "real": 488522.0,
+    "consenso": 529026.557480305,
+    "regla": 347689.9910963889,
+    "err_cons": 0.8715245691936682,
+    "err_regla": 0.693961586328002
+   },
+   {
+    "q": "FY26.Q4",
+    "meses": 3,
+    "real": 472593.0,
+    "consenso": 420374.0,
+    "regla": 347689.9910963889,
+    "err_cons": 1.0533566938147625,
+    "err_regla": 0.7371170549402934
+   }
+  ],
+  "top_win": [
+   {
+    "ean": "4064941156000",
+    "desc": "KJ MU TNT BB LMULM 2.4G MOCHA KISS634 IV",
+    "real": 261.0,
+    "consenso": 44531.0,
+    "regla": 10199.750057477362,
+    "ahorro": 34331.24994252264
+   },
+   {
+    "ean": "4064941155997",
+    "desc": "KJ MU TNT BB LMULM 2.4G SPICED 633 IV",
+    "real": 2416.0,
+    "consenso": 44531.0,
+    "regla": 11429.449920998768,
+    "ahorro": 33101.55007900123
+   },
+   {
+    "ean": "4064941006657",
+    "desc": "KJ MU M LIQ K SET NEW MDIN808 KYLIE 23IV",
+    "real": 42675.0,
+    "consenso": 27336.0,
+    "regla": 36447.268276464376,
+    "ahorro": 17721.089425488124
+   },
+   {
+    "ean": "4064941006794",
+    "desc": "KJ MU M LIQ K SET NEW MDIN301 ANGEL 23IV",
+    "real": 17521.0,
+    "consenso": 14911.0,
+    "regla": 15010.376426023988,
+    "ahorro": 10880.819602891554
+   },
+   {
+    "ean": "4064941006923",
+    "desc": "KJ MU M LIQ K SET NWMDIN100 POSIE K 23IV",
+    "real": 28209.0,
+    "consenso": 19918.0,
+    "regla": 23784.823151866964,
+    "ahorro": 10870.758127985218
+   },
+   {
+    "ean": "4064941008699",
+    "desc": "KJ MU M LIQ K SET NWMDIN703 DOLCE K 23IV",
+    "real": 16219.0,
+    "consenso": 21958.0,
+    "regla": 19317.754295718096,
+    "ahorro": 10608.748568093966
+   },
+   {
+    "ean": "4064941006824",
+    "desc": "KJ MU M LIQ K SET NEWMDIN300 KOKO K 23IV",
+    "real": 12124.0,
+    "consenso": 13285.0,
+    "regla": 13028.833139717166,
+    "ahorro": 8598.759366823797
+   },
+   {
+    "ean": "4064941006671",
+    "desc": "KJ MU M LIQ K SET NWMDIN802 CANDY K 23IV",
+    "real": 14769.0,
+    "consenso": 14247.0,
+    "regla": 15628.426249249986,
+    "ahorro": 8460.540972638897
+   }
+  ],
+  "top_loss": [
+   {
+    "ean": "4064941136651",
+    "desc": "KJ MU SKN TINT LIQFND 30 ML 2WARM IV",
+    "real": 47787.0,
+    "consenso": 30101.0,
+    "regla": 14630.327500000001,
+    "ahorro": -13266.6725
+   },
+   {
+    "ean": "4064941136705",
+    "desc": "KJ MU SKN TINT LIQFND30ML 4.5WNEUTRAL IV",
+    "real": 65519.0,
+    "consenso": 18948.0,
+    "regla": 7243.870000000002,
+    "ahorro": -8781.878888888881
+   },
+   {
+    "ean": "4064941091400",
+    "desc": "KJ MU SUMMER LG 15 ML UNDRESTIMATD002 IV",
+    "real": 2051.0,
+    "consenso": 10874.0,
+    "regla": 19254.731249999997,
+    "ahorro": -8380.731249999997
+   },
+   {
+    "ean": "4064941136736",
+    "desc": "KJ MU SKN TINT LIQFND 30ML 2.5NEUTRAL IV",
+    "real": 84544.0,
+    "consenso": 33128.999999999985,
+    "regla": 24614.756875,
+    "ahorro": -8236.189097222203
+   },
+   {
+    "ean": "4064941136545",
+    "desc": "KJ MU SKN TINT LIQFND 30 ML 1NEUTRAL IV",
+    "real": 28779.0,
+    "consenso": 17230.0,
+    "regla": 7504.4375,
+    "ahorro": -6563.5625
+   }
+  ],
+  "local_cons": 456980.9999999999,
+  "local_real": 422453.0,
+  "trends": {
+   "Collection (01319)": -0.3,
+   "Eyes (01244)": -0.3,
+   "Face (01243)": -0.3,
+   "Kylie Makeup Other (01223)": -0.165,
+   "Lips (01245)": -0.207
+  }
+ },
+ {
+  "house": "Gucci Make up",
+  "snap": "2026-03",
+  "segs": [
+   {
+    "seg": "Maduros (18+ meses)",
+    "n": 250,
+    "real": 108787.0,
+    "err_cons": 0.7076825968789163,
+    "err_regla": 0.6584625467368227,
+    "bias_cons": 0.2688237871559407,
+    "bias_regla": 0.3031781130609903
+   },
+   {
+    "seg": "Jóvenes (6-17 meses)",
+    "n": 5,
+    "real": 3920.0,
+    "err_cons": 0.49362244897959184,
+    "err_regla": 0.49833092302245,
+    "bias_cons": -0.000765306122448961,
+    "bias_regla": -0.4307540305005034
+   },
+   {
+    "seg": "Forecast manual",
+    "n": 63,
+    "real": 14156.0,
+    "err_cons": 0.7294433455778465,
+    "err_regla": 0.8250532858683811,
+    "bias_cons": 0.25190731845153946,
+    "bias_regla": 0.45284763408118955
+   }
+  ],
+  "hibrido": {
+   "wmape": 0.6612894624268598,
+   "bias": 0.2880653727687814,
+   "total": 163407.83738556592,
+   "monthly": [
+    33055.767477113186,
+    32390.767477113186,
+    31919.767477113186,
+    32971.767477113186,
+    33069.767477113186
+   ]
+  },
+  "meses": [
+   "Apr-26",
+   "May-26",
+   "Jun-26",
+   "Jul-26",
+   "Aug-26"
+  ],
+  "n_meses": 5,
+  "n_eans": 318,
+  "real": 126863.0,
+  "consenso": 159670.53333333333,
+  "regla": 164566.79269405728,
+  "wmape_cons": 0.7034964226501553,
+  "wmape_regla": 0.6721035810666588,
+  "bias_cons": 0.2586060028009216,
+  "bias_regla": 0.29720085993597256,
+  "err_total_cons": 32807.533333333326,
+  "err_total_regla": 37703.79269405728,
+  "eans_mejor": 151,
+  "eans_peor": 125,
+  "monthly": [
+   {
+    "mes": "Apr-26",
+    "real": 33262.0,
+    "consenso": 31854.0,
+    "regla": 32913.35853881146
+   },
+   {
+    "mes": "May-26",
+    "real": 26046.0,
+    "consenso": 32711.2,
+    "regla": 32913.35853881146
+   },
+   {
+    "mes": "Jun-26",
+    "real": 19035.0,
+    "consenso": 25353.6,
+    "regla": 32913.35853881146
+   },
+   {
+    "mes": "Jul-26",
+    "real": 15657.0,
+    "consenso": 32522.399999999998,
+    "regla": 32913.35853881146
+   },
+   {
+    "mes": "Aug-26",
+    "real": 32863.0,
+    "consenso": 37229.33333333333,
+    "regla": 32913.35853881146
+   }
+  ],
+  "quarters": [
+   {
+    "q": "FY26.Q4",
+    "meses": 3,
+    "real": 78343.0,
+    "consenso": 89918.8,
+    "regla": 98740.07561643438,
+    "err_cons": 0.6513587684923988,
+    "err_regla": 0.6103143083264961
+   },
+   {
+    "q": "FY27.Q1",
+    "meses": 2,
+    "real": 48520.0,
+    "consenso": 69751.73333333332,
+    "regla": 65826.71707762292,
+    "err_cons": 0.7876806815059081,
+    "err_regla": 0.7718718620700095
+   }
+  ],
+  "top_win": [
+   {
+    "ean": "3616304663178",
+    "desc": "GU MU MAT FT LIQFND 30 ML 275CFAIRMED IV",
+    "real": 270.0,
+    "consenso": 2482.0,
+    "regla": 872.526160856239,
+    "ahorro": 1609.4738391437609
+   },
+   {
+    "ean": "3616301290438",
+    "desc": "GUC MU BR PW PRSBRZ 12G SHADE 01 001 IV",
+    "real": 9979.0,
+    "consenso": 15444.0,
+    "regla": 9726.314612119126,
+    "ahorro": 1380.7370775761747
+   },
+   {
+    "ean": "3614228844765",
+    "desc": "GUC MU SHI L LPKSLM 1.8G 214 CIAD C IV",
+    "real": 1665.0,
+    "consenso": 3941.0,
+    "regla": 2586.0873064922616,
+    "ahorro": 1255.3476161046428
+   },
+   {
+    "ean": "3614229374933",
+    "desc": "GUC MU MAT L LPKMAT 3.5 G TM IN ARG IV",
+    "real": 712.0,
+    "consenso": 1843.0,
+    "regla": 887.24254429289,
+    "ahorro": 850.6544734242659
+   },
+   {
+    "ean": "3616304663154",
+    "desc": "GU MU MAT FT LIQFND 30 ML NMEDM305 IV",
+    "real": 485.0,
+    "consenso": 2067.0,
+    "regla": 1373.4994017472259,
+    "ahorro": 693.5005982527742
+   },
+   {
+    "ean": "3614228844734",
+    "desc": "GUC MU SHI L LPKSLM 1.8G 112 SSH C IV",
+    "real": 1335.0,
+    "consenso": 2688.0,
+    "regla": 2198.8610261317544,
+    "ahorro": 489.13897386824556
+   },
+   {
+    "ean": "3616305267498",
+    "desc": "GUC MU MAT L LPKMAT 3.5G/0.12OZ 509 IV",
+    "real": 1622.0,
+    "consenso": 4573.0,
+    "regla": 4103.2793059467,
+    "ahorro": 469.7206940532992
+   },
+   {
+    "ean": "3614229377705",
+    "desc": "GUC MU FAC P PRIM 30 ML SLK NW VER VP IV",
+    "real": 2691.0,
+    "consenso": 2062.0,
+    "regla": 3847.317237875137,
+    "ahorro": 467.6096572749177
+   }
+  ],
+  "top_loss": [
+   {
+    "ean": "3616303327422",
+    "desc": "GU MU BLUSH PWDBLU 5.5 G SHADE 05 IV",
+    "real": 2294.0,
+    "consenso": 3188.0,
+    "regla": 5124.633708675485,
+    "ahorro": -1634.6337086754852
+   },
+   {
+    "ean": "3616303327392",
+    "desc": "GU MU BLUSH PWDBLU 5.5 G SHADE 06 IV",
+    "real": 131.0,
+    "consenso": 301.0,
+    "regla": 1717.2651489075743,
+    "ahorro": -1416.2651489075743
+   },
+   {
+    "ean": "3616303327446",
+    "desc": "GU MU BLUSH PWDBLU 5.5 G SHADE 01 IV",
+    "real": 2405.0,
+    "consenso": 2829.0,
+    "regla": 4435.806670928193,
+    "ahorro": -1258.4840025569156
+   },
+   {
+    "ean": "3616304473333",
+    "desc": "GU MU BLUSH PWDBLU 5.5 G NEW SHADE 08 IV",
+    "real": 88.0,
+    "consenso": 116.0,
+    "regla": 910.4543115175953,
+    "ahorro": -738.4543115175953
+   },
+   {
+    "ean": "3616305847881",
+    "desc": "GU MU SKN TINT RG LIQFND40 F MED24 25IV",
+    "real": 592.0,
+    "consenso": 1199.999999999999,
+    "regla": 1783.8292766878103,
+    "ahorro": -583.8292766878113
+   }
+  ],
+  "local_cons": 33790.999999999985,
+  "local_real": 29578.0,
+  "trends": {
+   "Gucci Eyes (01199)": -0.3,
+   "Gucci Face (01201)": 0.144,
+   "Gucci Lips (01200)": -0.26
+  }
+ },
+ {
+  "house": "Kylie Makeup",
+  "snap": "2026-03",
+  "segs": [
+   {
+    "seg": "Maduros (18+ meses)",
+    "n": 224,
+    "real": 437123.0,
+    "err_cons": 0.763544814617396,
+    "err_regla": 0.44084164878193444,
+    "bias_cons": 0.08410676171237852,
+    "bias_regla": -0.08672887701542242
+   },
+   {
+    "seg": "Jóvenes (6-17 meses)",
+    "n": 31,
+    "real": 8189.0,
+    "err_cons": 1.360849920625229,
+    "err_regla": 0.5826228831359042,
+    "bias_cons": 0.3807546708999878,
+    "bias_regla": -0.11558722960483592
+   },
+   {
+    "seg": "Forecast manual",
+    "n": 129,
+    "real": 559749.0,
+    "err_cons": 0.5565494534157274,
+    "err_regla": 0.5304526020527409,
+    "bias_cons": -0.13374208797157316,
+    "bias_regla": -0.4126753572019114
+   }
+  ],
+  "hibrido": {
+   "wmape": 0.5127788502792423,
+   "bias": -0.10910301654089904,
+   "total": 895405.8130923875,
+   "monthly": [
+    180053.36261847755,
+    171852.36261847752,
+    197791.36261847755,
+    171721.36261847752,
+    173987.36261847743
+   ]
+  },
+  "meses": [
+   "Apr-26",
+   "May-26",
+   "Jun-26",
+   "Jul-26",
+   "Aug-26"
+  ],
+  "n_meses": 5,
+  "n_eans": 384,
+  "real": 1005061.0,
+  "consenso": 970082.0,
+  "regla": 735208.6507507409,
+  "wmape_cons": 0.6531295115420855,
+  "wmape_regla": 0.49190391068494865,
+  "bias_cons": -0.03480286271181554,
+  "bias_regla": -0.2684935036274009,
+  "err_total_cons": 34979.0,
+  "err_total_regla": 269852.3492492591,
+  "eans_mejor": 187,
+  "eans_peor": 128,
+  "monthly": [
+   {
+    "mes": "Apr-26",
+    "real": 192787.0,
+    "consenso": 169992.0,
+    "regla": 147041.73015014816
+   },
+   {
+    "mes": "May-26",
+    "real": 226905.0,
+    "consenso": 188075.0,
+    "regla": 147041.73015014816
+   },
+   {
+    "mes": "Jun-26",
+    "real": 146030.0,
+    "consenso": 228505.0,
+    "regla": 147041.73015014816
+   },
+   {
+    "mes": "Jul-26",
+    "real": 191310.0,
+    "consenso": 189686.0,
+    "regla": 147041.73015014816
+   },
+   {
+    "mes": "Aug-26",
+    "real": 248029.0,
+    "consenso": 193823.99999999994,
+    "regla": 147041.73015014816
+   }
+  ],
+  "quarters": [
+   {
+    "q": "FY26.Q4",
+    "meses": 3,
+    "real": 565722.0,
+    "consenso": 586572.0,
+    "regla": 441125.1904504445,
+    "err_cons": 0.6351812374275704,
+    "err_regla": 0.4816737756649866
+   },
+   {
+    "q": "FY27.Q1",
+    "meses": 2,
+    "real": 439339.0,
+    "consenso": 383509.99999999994,
+    "regla": 294083.4603002963,
+    "err_cons": 0.6762408982585202,
+    "err_regla": 0.5050769102223513
+   }
+  ],
+  "top_win": [
+   {
+    "ean": "4064941091394",
+    "desc": "KJ MU SUMMER LG 15 ML 001BESITOS IV",
+    "real": 3649.0,
+    "consenso": 12943.0,
+    "regla": 3872.931873426005,
+    "ahorro": 9617.586374685201
+   },
+   {
+    "ean": "4064941006985",
+    "desc": "KJ MU V LIQ K MLTLPK 3ML 1.1G CHARM IV",
+    "real": 3862.0,
+    "consenso": 12928.0,
+    "regla": 4942.75,
+    "ahorro": 7704.35
+   },
+   {
+    "ean": "4064941176381",
+    "desc": "KJ MU SPP LKIT SET 3ML 1.14G COCNT GL IV",
+    "real": 19035.0,
+    "consenso": 16893.99999999999,
+    "regla": 14351.152083333334,
+    "ahorro": 7206.691250000011
+   },
+   {
+    "ean": "4064941176367",
+    "desc": "KJ MU SPP LKIT SET 3ML 1.14G HT PNKGL IV",
+    "real": 16310.0,
+    "consenso": 14853.0,
+    "regla": 11750.081250000001,
+    "ahorro": 6933.016250000001
+   },
+   {
+    "ean": "4064941008644",
+    "desc": "KJ MU V LIQ K MLTLPK 3G 1G PSK 100 VP IV",
+    "real": 5159.0,
+    "consenso": 13794.0,
+    "regla": 6327.364583333333,
+    "ahorro": 6647.58125
+   },
+   {
+    "ean": "4064941155874",
+    "desc": "KJ MU PLMP LIN LINPEN 1.1G 808 KYLIE IV",
+    "real": 11040.0,
+    "consenso": 387.0,
+    "regla": 6959.445833333333,
+    "ahorro": 6572.445833333333
+   },
+   {
+    "ean": "4064941006657",
+    "desc": "KJ MU M LIQ K SET NEW MDIN808 KYLIE 23IV",
+    "real": 23565.0,
+    "consenso": 12748.0,
+    "regla": 18655.375,
+    "ahorro": 6165.075
+   },
+   {
+    "ean": "4064941136545",
+    "desc": "KJ MU SKN TINT LIQFND 30 ML 1NEUTRAL IV",
+    "real": 9913.0,
+    "consenso": 19149.0,
+    "regla": 9945.4951344975,
+    "ahorro": 5831.7029193015
+   }
+  ],
+  "top_loss": [
+   {
+    "ean": "4064941136705",
+    "desc": "KJ MU SKN TINT LIQFND30ML 4.5WNEUTRAL IV",
+    "real": 43553.0,
+    "consenso": 38626.0,
+    "regla": 23994.591264924744,
+    "ahorro": -12613.408735075252
+   },
+   {
+    "ean": "4064941136743",
+    "desc": "KJ MU SKN TINT LIQFND 30 ML 3WNEUTRAL IV",
+    "real": 51809.0,
+    "consenso": 54274.0,
+    "regla": 27127.469855150324,
+    "ahorro": -8746.53014484968
+   },
+   {
+    "ean": "4064941147107",
+    "desc": "KJ MU HYB BLSH PWDBLU2.5G 355PETAL 25IV",
+    "real": 14908.0,
+    "consenso": 6193.99999999999,
+    "regla": 3395.137478078551,
+    "ahorro": -2798.8625219214373
+   },
+   {
+    "ean": "4064941147145",
+    "desc": "KJ MU HYB BLSH PWDBLU2.5G 216SIENA 25IV",
+    "real": 7042.0,
+    "consenso": 3280.999999999999,
+    "regla": 1218.4004676295517,
+    "ahorro": -1726.5995323704474
+   },
+   {
+    "ean": "4064941136835",
+    "desc": "KJ MU MASC CRM12ml WISP LASH FULLSIZE IV",
+    "real": 228.0,
+    "consenso": 278.0,
+    "regla": 2022.2916666666686,
+    "ahorro": -1724.2916666666686
+   }
+  ],
+  "local_cons": 115784.0,
+  "local_real": 102044.0,
+  "trends": {
+   "Collection (01319)": 0.081,
+   "Eyes (01244)": -0.3,
+   "Face (01243)": -0.119,
+   "Kylie Makeup Other (01223)": 0.162,
+   "Lips (01245)": -0.3
+  }
+ }
+]
