@@ -4,12 +4,34 @@ Basada en GUMU (Gucci Make up) y KYMU (Kylie Makeup). Fotos: sep-25 (forecast in
 
 ## Regla
 
-> **Forecast EAN, cada mes futuro = media de envíos de los últimos 6 meses cerrados × (1 + 50% del trend de 12 meses de su función)**
+> **Base = media de los últimos 6 meses cerrados de (envíos − 25% de los DAs positivos)**
+>
+> **Forecast EAN, cada mes futuro = Base × (1 + 50% del trend de 12 meses de su función)**
 
 - **Función** = Face / Lips / Eyes (campo Brand) dentro de cada familia.
 - **Trend** = suma de los últimos 12 meses / suma de los 12 anteriores − 1, calculado con todos los EANs Central (6 meses o más de envíos). Tope de ±30%.
 - **Mismo número para todos los meses futuros.** No se aplica estacionalidad.
 - **En cada foto nueva: recalcular la media de 6 meses y el trend.** No corregir con el factor real/forecast: la media móvil ya absorbe la realidad reciente, y el factor añade ruido.
+
+## Ajuste de cortes y DAs (probado, `src/mu_cuts_da.py`, `work/results/mu_cuts_da.md`)
+
+Base probada = media 6M de (actual + kc × cortes − kd × DAs positivos), en 13 cortes mensuales. Variantes: solo en la base, o también en el trend.
+
+- **Cortes: no sumarlos.**
+  - En makeup los cortes son enormes (FY26: 68% de los envíos en GUMU y 42% en KYMU), claramente inflados por pedidos repetidos.
+  - Sumar el 25% empeora GUMU de 67% a 75% de error.
+  - En KYMU mejora un poco (58% → 56%), pero sobre todo porque compensa que KYMU va por debajo al estar creciendo.
+- **DAs positivos: restar el 25% en la base.** Es la única opción que no empeora en ningún caso:
+
+  | Variante | GUMU sin manual | GUMU todos | KYMU sin manual | KYMU todos |
+  |---|---|---|---|---|
+  | Sin ajuste | 66,6% | 70,9% | 57,7% | 59,8% |
+  | **−25% DAs+, solo base** | **66,0%** | **68,2%** | **57,5%** | **59,7%** |
+  | −50% DAs+, base y trend | 64,8% | 65,7% | 58,0% | 61,8% |
+
+- **Óptimos por familia, por si se quiere afinar:**
+  - GUMU: −50% a −100% de DAs, también en el trend (65% → 64%).
+  - KYMU: +25% cortes −25% DAs (56%).
 
 ## Por qué, y no la regla de fragancias
 
