@@ -79,25 +79,15 @@ Fecha de decisión: 2026-10-09
   En los maduros es prácticamente neutro (61,9% → 61,6%).
 - **Pendiente:** cuando haya volumen exacto de promos o un histórico corregido por outliers (o9), sustituir este ajuste y comparar las tres variantes: regla actual, outliers puros e híbrido.
 
-## Complementos validados en el backtest por fotos (sep-25 → sep-26)
+## Proceso mensual (decidido 2026-10-09)
 
-- **Número final** = media entre esta regla y el consenso.
-- **En cada foto nueva:**
-  - factor = real / forecast de los meses cerrados desde la foto anterior, calculado sobre el total;
-  - se multiplica todo el forecast restante por ese factor;
-  - los meses nuevos del horizonte se calculan con la regla y también se multiplican por el factor.
-- **Resultado de la cadena completa:** error EAN-mes 62,6%; desvío del total +2%, +9%, −7% y +5% en las 4 fotos.
-
-## Excepciones
-
-- **Local (menos de 6 meses de envíos):** no se aplica la regla; se usa el consenso.
-- **EANs de 6 a 17 meses de vida:** su año anterior incluye el llenado de canal y la regla los infla entre un 20% y un 47%. Apoyarse más en el consenso. Pendiente: definir una regla de ritmo de venta para ellos.
-- **Makeup:** no aplica esta regla. Ver `work/STRATEGY.md`: media de los últimos 12 meses del EAN, plana.
-
-## Qué no hacer
-
-- Trend de 3 o 6 meses, o YTD: se van con los baches de supply.
-- Trend EAN a EAN o por product line.
-- Ajustar el nivel con los últimos 3 meses si hubo cortes.
-
-Evidencia y scripts: `src/snapshots.py`, `src/tracking.py`, `src/launch_trend.py`, `work/results/` y `work/STRATEGY.md`.
+- **Horizonte:** los 9 meses siguientes al mes en curso.
+- **Cada mes se recalcula la regla completa** con los últimos 12 meses cerrados: base, cortes, DAs y trend. Los 9 meses se mueven con los números nuevos.
+- **No se usa factor de corrección.** Al recalcular cada mes, el trend de 12 meses ya incorpora lo último que ha pasado.
+- **Regla sola, recalculada cada mes** (13 cortes mensuales, EANs maduros): error EAN-mes 62,2%, desvío −2%.
+- **Datos necesarios cada mes:**
+  - Últimos 12 meses cerrados por EAN: actuals, actuals LY ("Consensus – Final LY M"), supply cuts y DAs.
+  - House y descripción, más el mapeo de tamaños.
+  - Los 9 meses del horizonte tienen su base dentro de esos 12 meses.
+  - Ojo con los DAs de meses pasados: o9 no los conserva todos en cada extracción, así que conviene guardarlos mes a mes.
+- **Opcional:** media con el consenso. En el backtest bajó el error del total, pero no forma parte de la regla.
