@@ -1,3 +1,5 @@
+# >>> ESTRATEGIA FRAGANCIAS DECIDIDA POR EL USUARIO (2026-10-09): ver ESTRATEGIA_FRAGANCIAS.md en la raíz. LY x (1 + trend 12M house x tamaño, todo Central incl. lanzamientos >=6m, tope ±30%). <<<
+
 # >>> MAKEUP (sesión 4c) — src/makeup.py, results/makeup.md (Kylie, 19 cortes rolling, EANs >=6m) <<<
 En makeup NO funciona "LY x (1+trend)" a ningún nivel (EAN, función/brand, house, categoría, empresa): WMAPE 0.76-0.79 ≈ LY plano 0.759.
 Mejor: RITMO PLANO = media de los últimos 12 meses del EAN, igual para todos los meses futuros: WMAPE 0.459, gana a LY en 19/19 cortes,
