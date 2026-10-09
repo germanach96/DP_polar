@@ -99,6 +99,25 @@ Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infogra
 - Local (menos de 6 meses de envíos): fuera de la regla, no tienen histórico.
 - EANs de 6 a 17 meses: su año anterior incluye el llenado de canal; revisarlos con cuidado.
 
+## Comparación estándar contra el consenso (decidida 2026-10-09)
+- **Script:** `python3 src/wape90.py` → imprime la tabla y guarda `work/wape90.json`.
+  - El usuario NO quiere más reportes PDF de esto: solo calcular y darle los resultados en el chat.
+  - `src/wape90_report.py` queda solo por si lo pide.
+- **Qué se compara:**
+  - Consenso de la foto tal cual (ya lleva los DAs).
+  - Contra **regla + todos los DAs de la foto** (positivos y negativos, suelo 0 por EAN-mes). Regla sola como referencia.
+- **Fotos y quarters:** fotos de cierre de mes, así que el mes de la foto no entra.
+  - Sep-25 → Q2 (oct–dic), Q3 (ene–mar), Q4 (abr–jun).
+  - Mar-26 → Q4 (abr–jun), Q1 FY27 (jul–sep; sep-26 sin cerrar → jul–ago).
+- **Real:** última foto.
+- **Universo:** EANs Central de cada casa.
+- **Métricas por casa × quarter:**
+  - **WAPE90** = |Σ forecast − Σ actuals| / Σ actuals.
+  - **SPP3** = (Σ actuals − Σ forecast) / Σ actuals. Negativo = overforecast, positivo = underforecast.
+- **Resultado 2026-10-09:**
+  - Regla + DAs gana 15/25 (fragancias 10/15, makeup 5/10).
+  - WAPE90 medio ponderado: consenso 13%, regla + DAs 11,5%, regla sola 18%.
+
 ## Decisiones / respuestas del usuario
 - **Local** = iniciativas con menos de ~6 meses de envíos; luego pasan a Central. Se ignoran en la regla.
 - **Ignore System Forecast Flag** = número de customers ignorados de los 2 seleccionados (1 = normalmente el más grande; 2 = ambos). Es forecast manual: darle poco peso.
