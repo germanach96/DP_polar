@@ -128,6 +128,15 @@ Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infogra
     - 5 partidos empeora (WAPE90 14,7% contra 14,3% del consenso): la media 6M gana en oct–mar y duplica en abr–jun por la estacionalidad.
     - 2 partidos (consenso / regla + DAs): WAPE90 11,3% contra 14,3% del consenso; error EAN 47,6% contra 48,6%.
     - El ganador del pasado repite solo en el 53% de los EANs (al azar sería 50%). Un solo corte: falta confirmarlo.
+- **Votación entre reglas** (`python3 src/rulevote.py` + `src/rulevote_report.py` → `reportes/REPORTE_VOTACION_REGLAS.pdf`).
+  - Regla de fragancias vs regla de makeup, aplicadas a todos los EANs Central.
+  - 5 quarters comunes: sep-25 Q2/Q3/Q4 FY26 y mar-26 Q4 FY26/Q1 FY27. Las dos reglas llevan los DAs de la foto.
+  - Grupo del trend: casa × tamaño (fragancias) o casa × función (makeup).
+  - Empate en quarters → decide el error mes a mes. Colores: morado = regla fragancias, naranja = regla makeup.
+  - Resultado 2026-10-09: makeup 593 EANs vs fragancias 380 (4 empates); volumen 51% vs 49%.
+    - EANs de fragancias: 151–169 en EANs, 54%–46% en volumen.
+    - EANs de makeup: 229–424 en EANs, 39%–61% en volumen.
+  - Pendiente: ampliar a 9 quarters con las fotos dic-25 y jun-26, que solo existen para fragancias.
 
 ## Decisiones / respuestas del usuario
 - **Local** = iniciativas con menos de ~6 meses de envíos; luego pasan a Central. Se ignoran en la regla.
