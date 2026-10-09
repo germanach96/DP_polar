@@ -1,3 +1,10 @@
+# >>> CORTES EN LA BASE (sesión 4d) — src/cuts_test.py, results/cuts_test.md <<<
+Propuesta usuario: base = LY + 33% de los cortes LY (EAN-mes). Probado con regla decidida, 13 cortes rolling, maduros:
+ k=0: WMAPE 62.5% bias -6.3% (meses con cortes LY: -9.9%) | k=0.25 solo base: 62.2% bias -2.0% (+3.3%), gana 9/13 | k=0.33: 62.5% bias -0.7% (+7.5%), gana 8/13 | k=0.5 peor.
+ Aplicar también al cálculo del trend: peor o neutro -> SOLO a la base.
+ Cadena completa (media consenso + factor): neutro (WMAPE 62.6/62.5/62.6%, |bias| 5.6/6.3/6.5%). Solo regla + factor: 66.6 -> 65.8% con k=0.25.
+ Recomendación: 25% (33% aceptable) solo en la base LY; aporta sobre todo si se usa la regla sin consenso.
+
 # >>> ESTRATEGIA FRAGANCIAS DECIDIDA POR EL USUARIO (2026-10-09): ver ESTRATEGIA_FRAGANCIAS.md en la raíz. LY x (1 + trend 12M house x tamaño, todo Central incl. lanzamientos >=6m, tope ±30%). <<<
 
 # >>> MAKEUP (sesión 4c) — src/makeup.py, results/makeup.md (Kylie, 19 cortes rolling, EANs >=6m) <<<
