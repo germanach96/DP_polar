@@ -1,5 +1,6 @@
-"""Infografía PDF (1 página, A4 horizontal) con las reglas de forecast de Fragancias y Makeup.
-Uso: python3 src/infografia.py  -> INFOGRAFIA_REGLAS.pdf"""
+"""Infographic PDF (English): one landscape A4 page per rule (Fragrances, Makeup).
+Formula + how it works + the reasoning behind each piece. No accuracy results on purpose.
+Usage: python3 src/infografia.py  -> INFOGRAFIA_REGLAS.pdf"""
 from pathlib import Path
 from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib import colors
@@ -12,159 +13,181 @@ W, H = landscape(A4)
 INK = colors.HexColor("#1F2430")
 MUTED = colors.HexColor("#5B6170")
 LINE = colors.HexColor("#D9DCE3")
-FRAG = colors.HexColor("#6B3FA0")      # fragancias
+FRAG = colors.HexColor("#6B3FA0")
 FRAG_BG = colors.HexColor("#F3EEFA")
-MU = colors.HexColor("#C2410C")        # makeup
+MU = colors.HexColor("#C2410C")
 MU_BG = colors.HexColor("#FDF1EA")
+M = 32  # page margin
 
 
-def st(size=8.6, color=INK, bold=False, lead=None, align=0):
+def st(size=9.6, color=INK, bold=False, lead=None):
     return ParagraphStyle("s", fontName="Helvetica-Bold" if bold else "Helvetica", fontSize=size,
-                          leading=lead or size * 1.32, textColor=color, alignment=align)
+                          leading=lead or size * 1.34, textColor=color)
 
 
 def para(c, text, x, y, w, style):
-    """Dibuja un párrafo con la esquina superior izquierda en (x, y). Devuelve la nueva y (debajo)."""
     p = Paragraph(text, style)
-    _, h = p.wrap(w, 1000)
+    _, h = p.wrap(w, 2000)
     p.drawOn(c, x, y - h)
     return y - h
 
 
 def section(c, title, x, y, w, color):
-    c.setFillColor(color); c.setFont("Helvetica-Bold", 9.4)
-    c.drawString(x, y - 10, title.upper())
-    c.setStrokeColor(color); c.setLineWidth(0.6); c.line(x, y - 14, x + w, y - 14)
-    return y - 20
+    c.setFillColor(color); c.setFont("Helvetica-Bold", 10)
+    c.drawString(x, y - 11, title.upper())
+    c.setStrokeColor(color); c.setLineWidth(0.7); c.line(x, y - 15, x + w, y - 15)
+    return y - 22
 
 
-def bullets(c, items, x, y, w, color, size=9.6):
+def bullets(c, items, x, y, w, color, size=9.6, gap=4):
     for it in items:
-        c.setFillColor(color); c.circle(x + 2.2, y - 6, 1.7, fill=1, stroke=0)
-        y = para(c, it, x + 9, y, w - 9, st(size)) - 3.4
+        c.setFillColor(color); c.circle(x + 2.4, y - 6.2, 1.8, fill=1, stroke=0)
+        y = para(c, it, x + 10, y, w - 10, st(size)) - gap
+    return y
+
+
+def why_cards(c, items, x, y, w, color, bg):
+    """items: (title, text). Each reason in a light card with a coloured left bar."""
+    for title, text in items:
+        p = Paragraph(f"<b>{title}</b><br/>{text}", st(9.2, lead=12))
+        _, h = p.wrap(w - 22, 2000)
+        hh = h + 10
+        c.setFillColor(bg); c.roundRect(x, y - hh, w, hh, 4, fill=1, stroke=0)
+        c.setFillColor(color); c.rect(x, y - hh, 3.2, hh, fill=1, stroke=0)
+        p.drawOn(c, x + 12, y - 5 - h)
+        y -= hh + 5
     return y
 
 
 def formula_box(c, lines, x, y, w, color, bg):
-    pad = 11
+    pad = 12
     ps = [Paragraph(t, st(s, color if b else INK, bold=b, lead=s * 1.28)) for t, s, b in lines]
-    hs = [p.wrap(w - 2 * pad, 1000)[1] for p in ps]
-    h = sum(hs) + 2 * pad + 4 * (len(ps) - 1)
-    c.setFillColor(bg); c.setStrokeColor(color); c.setLineWidth(1)
-    c.roundRect(x, y - h, w, h, 6, fill=1, stroke=1)
+    hs = [p.wrap(w - 2 * pad, 2000)[1] for p in ps]
+    h = sum(hs) + 2 * pad + 5 * (len(ps) - 1)
+    c.setFillColor(bg); c.setStrokeColor(color); c.setLineWidth(1.2)
+    c.roundRect(x, y - h, w, h, 7, fill=1, stroke=1)
     yy = y - pad
     for p, hh in zip(ps, hs):
-        p.drawOn(c, x + pad, yy - hh); yy -= hh + 4
+        p.drawOn(c, x + pad, yy - hh); yy -= hh + 5
     return y - h
 
 
 def example(c, title, rows, x, y, w, color):
-    c.setFillColor(MUTED); c.setFont("Helvetica-Bold", 8.6); c.drawString(x, y - 9, title)
-    y -= 14
+    c.setFillColor(MUTED); c.setFont("Helvetica-Bold", 9); c.drawString(x, y - 10, title.upper())
+    y -= 16
     for lab, val, strong in rows:
-        c.setFont("Helvetica-Bold" if strong else "Helvetica", 8.8)
+        c.setFont("Helvetica-Bold" if strong else "Helvetica", 9.4)
         c.setFillColor(color if strong else INK)
-        c.drawString(x + 4, y - 9.5, lab); c.drawRightString(x + w - 4, y - 9.5, val)
-        y -= 13.5
-        c.setStrokeColor(LINE); c.setLineWidth(0.4); c.line(x + 4, y + 1.5, x + w - 4, y + 1.5)
-    return y
-
-
-def evidence(c, rows, x, y, w, color):
-    """rows: (etiqueta, valor_float 0-1, destacado). Barras horizontales de error (menos = mejor)."""
-    lab_w = w * 0.52
-    bar_w = w - lab_w - 34
-    for lab, v, strong in rows:
-        c.setFont("Helvetica-Bold" if strong else "Helvetica", 8.6)
-        c.setFillColor(INK); c.drawString(x, y - 9, lab)
-        c.setFillColor(color if strong else colors.HexColor("#B9BEC9"))
-        c.roundRect(x + lab_w, y - 11, bar_w * min(v, 1.1) / 1.1, 9, 2, fill=1, stroke=0)
-        c.setFillColor(INK); c.setFont("Helvetica-Bold" if strong else "Helvetica", 8.6)
-        c.drawString(x + lab_w + bar_w * min(v, 1.1) / 1.1 + 3, y - 9.5, f"{v*100:.0f}%".replace(".", ","))
+        c.drawString(x + 4, y - 10, lab); c.drawRightString(x + w - 4, y - 10, val)
         y -= 15
+        c.setStrokeColor(LINE); c.setLineWidth(0.5); c.line(x + 4, y + 2, x + w - 4, y + 2)
     return y
 
 
-def column(c, x, w, top, color, bg, title, tag, formula, steps, extras, ex_title, ex_rows, ev_title, ev_rows, note):
-    # cabecera de columna
-    c.setFillColor(color); c.roundRect(x, top - 30, w, 30, 6, fill=1, stroke=0)
-    c.setFillColor(colors.white); c.setFont("Helvetica-Bold", 15); c.drawString(x + 12, top - 20, title)
-    c.setFont("Helvetica", 8.4); c.drawRightString(x + w - 12, top - 19, tag)
-    y = top - 40
-    y = formula_box(c, formula, x, y, w, color, bg) - 14
-    y = section(c, "Cómo se calcula", x, y, w, color)
-    y = bullets(c, steps, x, y, w, color) - 7
-    y = section(c, "Cada foto / mes", x, y, w, color)
-    y = bullets(c, extras, x, y, w, color) - 9
-    half = (w - 12) / 2
-    y0 = y
-    y1 = example(c, ex_title, ex_rows, x, y0, half, color)
-    c.setFillColor(MUTED); c.setFont("Helvetica-Bold", 8.6); c.drawString(x + half + 12, y0 - 9, ev_title)
-    y2 = evidence(c, ev_rows, x + half + 12, y0 - 16, half, color)
-    y = min(y1, y2) - 8
-    para(c, note, x, y, w, st(8.2, MUTED))
+def page(c, color, bg, title, tag, subtitle, formula, how, ex_title, ex_rows, whys, footer):
+    c.setFillColor(colors.white); c.rect(0, 0, W, H, fill=1, stroke=0)
+    # header band
+    c.setFillColor(color); c.rect(0, H - 62, W, 62, fill=1, stroke=0)
+    c.setFillColor(colors.white); c.setFont("Helvetica-Bold", 24); c.drawString(M, H - 40, title)
+    c.setFont("Helvetica", 10.5); c.drawRightString(W - M, H - 30, tag)
+    c.setFont("Helvetica", 9.5); c.drawRightString(W - M, H - 45, subtitle)
+    top = H - 80
+    gap = 26
+    lw = (W - 2 * M - gap) * 0.47
+    rw = (W - 2 * M - gap) - lw
+    xl, xr = M, M + lw + gap
+    # left: formula, how it works, example
+    y = formula_box(c, formula, xl, top, lw, color, bg) - 16
+    y = section(c, "How it works", xl, y, lw, color)
+    y = bullets(c, how, xl, y, lw, color) - 10
+    example(c, ex_title, ex_rows, xl, y, lw, color)
+    # right: why
+    y = section(c, "Why each piece is there", xr, top, rw, color)
+    why_cards(c, whys, xr, y, rw, color, bg)
+    c.setStrokeColor(LINE); c.setLineWidth(0.8); c.line(M, 30, W - M, 30)
+    c.setFillColor(MUTED); c.setFont("Helvetica", 8.2); c.drawString(M, 18, footer)
+    c.showPage()
 
 
 def main():
     c = canvas.Canvas(str(OUT), pagesize=(W, H))
-    c.setTitle("Reglas de forecast: Fragancias y Makeup")
-    c.setFillColor(colors.white); c.rect(0, 0, W, H, fill=1, stroke=0)
-    m = 28
-    c.setFillColor(INK); c.setFont("Helvetica-Bold", 21); c.drawString(m, H - 42, "Reglas de forecast")
-    c.setFillColor(MUTED); c.setFont("Helvetica", 9.5)
-    c.drawString(m, H - 58, "Validadas con backtest: cada foto S&OP usa solo la información disponible en su momento y se compara contra la foto final (sep-26).")
-    c.setStrokeColor(LINE); c.setLineWidth(0.8); c.line(m, H - 68, W - m, H - 68)
-    gap = 22
-    cw = (W - 2 * m - gap) / 2
-    top = H - 80
+    c.setTitle("Forecast rules: Fragrances and Makeup")
 
-    column(
-        c, m, cw, top, FRAG, FRAG_BG, "Fragancias", "Decidida  ·  BBY · Gucci · Marc Jacobs",
-        [("BASE = mismo mes del año anterior + 25% cortes - 50% DAs positivos", 10.6, True),
-         ("cortes y DAs del mismo mes del año anterior", 8.4, False),
-         ("FORECAST = BASE × (1 + trend 12M de house × tamaño)", 12, True)],
-        ["<b>Trend</b> = suma últimos 12 meses cerrados / suma 12 anteriores - 1 (con actuals puros, sin cortes ni DAs).",
-         "<b>Grupo</b>: house × tamaño: <=15 ml · 20-40 · 45-60 · 75-125 · >=150/refill · ancilares.",
-         "<b>Entran</b> todos los Central, incluidos lanzamientos con 6 meses o más. Fuera solo los Local (menos de 6 meses).",
-         "<b>Tope</b> del trend: ±30%. Se multiplica: trend -10% = base × 0,90.",
-         "<b>Estacionalidad</b>: la da el propio mes del año anterior."],
-        ["Número final = media entre la regla y el consenso.",
-         "Factor = real / forecast de los meses cerrados (total). Se multiplica todo el forecast restante por el factor."],
-        "Ejemplo: EAN, oct-26",
-        [("Venta oct-25", "1.000", False), ("+ 25% cortes oct-25 (200)", "+50", False),
-         ("- 50% DAs+ oct-25 (100)", "-50", False), ("Base", "1.000", True),
-         ("× (1 + trend -10%)", "× 0,90", False), ("Forecast oct-26", "900", True)],
-        "Error EAN-mes (menos = mejor)",
-        [("Regla completa", 0.626, True), ("Consenso", 0.717, False),
-         ("Año pasado tal cual", 0.720, False), ("Actual: trend 6M EAN", 0.785, False)],
-        "Error medio por EAN y mes en las fotos sep-25 a jun-26 (EANs Central sin forecast manual). Desvío del total con la cadena completa: entre -7% y +9%.",
+    page(
+        c, FRAG, FRAG_BG, "Fragrances", "Forecast rule  ·  Burberry · Gucci · Marc Jacobs",
+        "Monthly forecast per EAN, 8-month horizon",
+        [("BASE = same month last year + 25% of supply cuts - 50% of positive DAs", 11.2, True),
+         ("cuts and DAs of that same month last year", 8.8, False),
+         ("FORECAST = BASE × (1 + 12-month trend of house × size)", 13, True)],
+        ["<b>Trend</b> = sum of the last 12 closed months / sum of the 12 months before - 1, using actual shipments only.",
+         "<b>Group</b> = house × size: minis/pen sprays (up to 15 ml), 20-40 ml, 45-60 ml, 75-125 ml, 150 ml+/refills, ancillaries.",
+         "<b>Products included</b> in the trend: everything Central, launches included once they have 6+ months of shipments.",
+         "<b>Cap</b>: the trend is limited to ±30%. It multiplies: a -10% trend means base × 0.90.",
+         "<b>Each S&amp;OP cycle</b>: final number = average of this rule and consensus; then scale the remaining months by actual / forecast of the months just closed."],
+        "Example · one EAN, October",
+        [("Shipments last October", "1,000", False), ("+ 25% of last October's cuts (200)", "+50", False),
+         ("- 50% of last October's positive DAs (100)", "-50", False), ("Base", "1,000", True),
+         ("× (1 + trend -10%)", "× 0.90", False), ("Forecast this October", "900", True)],
+        [("Why last year's same month?",
+          "Fragrance has a strong seasonality that repeats every year: retailers load stock for Christmas from August to December. "
+          "Last year's month already carries that shape, so we don't have to model it."),
+         ("Why a 12-month trend, not 3 or 6?",
+          "Short windows overreact to one bad month: a supply cut or a shipment that moved from one month to the next. "
+          "Twelve months cover a full season, so the direction is real and not noise."),
+         ("Why house × size, not each EAN?",
+          "A single EAN's trend is noisy: one big order or one delisting changes it completely. Grouping similar products gives a stable signal, "
+          "and sizes really behave differently (minis do not move like 50 ml)."),
+         ("Why include recent launches in the trend?",
+          "New products partly replace older ones. Leaving them out would show only the decline of the old range and overstate the drop."),
+         ("Why only 25% of the cuts?",
+          "A cut month understates true demand, so we add some of it back. But cuts are inflated: retailers repeat the same order every week, "
+          "so only a quarter is real lost demand."),
+         ("Why remove 50% of the positive DAs?",
+          "Last year's promotions and one-off volumes should not repeat automatically. Only half, because part of the DAs are market inputs that do come back."),
+         ("Why average with consensus and correct each cycle?",
+          "The statistical rule tends to be conservative and consensus tends to be optimistic; the average balances both. "
+          "Scaling by actual / forecast lets the forecast react within months instead of waiting a year for the trend to catch up.")],
+        "Exceptions: Local items (under 6 months of shipments) keep the consensus. Items with 6-17 months of life: lean more on consensus (their last year includes the launch pipeline fill).",
     )
-    column(
-        c, m + cw + gap, cw, top, MU, MU_BG, "Makeup", "Propuesta  ·  Gucci Make up · Kylie Makeup",
-        [("MES AJUSTADO = envío + mín(10% cortes ; 10% envío) - 25% DAs positivos", 10.6, True),
-         ("BASE = media de los últimos 6 meses ajustados", 10.6, True),
-         ("FORECAST = BASE × (1 + 50% trend 12M de la función)", 12, True),
-         ("mismo número para todos los meses futuros", 8.4, False)],
-        ["<b>Cortes con tope</b>: se suma el menor entre el 10% de los cortes y el 10% del envío del mes (en makeup se corta mucho más que en fragancias).",
-         "<b>Trend</b> = suma últimos 12 meses / 12 anteriores - 1, por <b>función</b>: Face · Lips · Eyes. Se aplica el 50% y con tope ±30%.",
-         "<b>Sin estacionalidad</b>: los envíos no repiten patrón (correlación entre años 0,06 KYMU, 0,39 GUMU), aunque el sell-out sí (pico en diciembre).",
-         "<b>Entran</b> todos los Central (6 meses o más de envíos)."],
-        ["Recalcular la media de 6 meses y el trend con los últimos datos. Sin factor de corrección y sin media con el consenso."],
-        "Ejemplo: un mes de la media",
-        [("Envío", "1.000", False), ("+ mín(10% de 3.000; 10% de 1.000)", "+100", False),
-         ("- 25% DAs+ (200)", "-50", False), ("Mes ajustado", "1.050", True),
-         ("Base (media 6M, meses iguales)", "1.050", False), ("× (1 + 50% de -20%)", "× 0,90", False),
-         ("Forecast de cada mes", "945", True)],
-        "Error EAN-mes (menos = mejor)",
-        [("Regla: Kylie (KYMU)", 0.57, True), ("Regla: Gucci (GUMU)", 0.66, True),
-         ("Consenso", 0.81, False), ("Año pasado tal cual", 0.92, False)],
-        "Error medio por EAN y mes, 13 cortes mensuales (jul-25 a jul-26), sin forecast manual. Consenso: foto sep-25.",
+
+    page(
+        c, MU, MU_BG, "Makeup", "Forecast rule  ·  Gucci Make up · Kylie Makeup",
+        "Monthly forecast per EAN, 8-month horizon",
+        [("ADJUSTED MONTH = shipments + min(10% of cuts ; 10% of shipments) - 25% of positive DAs", 11.2, True),
+         ("BASE = average of the last 6 adjusted months", 11.2, True),
+         ("FORECAST = BASE × (1 + 50% of the 12-month trend of the category)", 13, True),
+         ("same number for every future month", 8.8, False)],
+        ["<b>Category</b> = Face, Lips or Eyes within each brand family.",
+         "<b>Trend</b> = sum of the last 12 closed months / sum of the 12 months before - 1, actual shipments only. Apply half of it, capped at ±30%.",
+         "<b>Cuts</b>: add the smaller of 10% of the month's cuts or 10% of the month's shipments.",
+         "<b>Products included</b>: everything Central (6+ months of shipments).",
+         "<b>Each S&amp;OP cycle</b>: recalculate the 6-month average and the trend with the latest months. No correction factor, no blend with consensus."],
+        "Example · one month inside the average",
+        [("Shipments", "1,000", False), ("+ min(10% of 3,000 cuts ; 10% of 1,000)", "+100", False),
+         ("- 25% of positive DAs (200)", "-50", False), ("Adjusted month", "1,050", True),
+         ("Base = average of 6 such months", "1,050", False), ("× (1 + 50% of a -20% trend)", "× 0.90", False),
+         ("Forecast for every future month", "945", True)],
+        [("Why no seasonality?",
+          "Consumers do buy more makeup in December, but our shipments don't follow a repeatable monthly pattern: they are driven by launches, "
+          "pipeline fills and order timing. Copying last year's month would copy that noise."),
+         ("Why the average of the last 6 months?",
+          "It shows the current selling pace and smooths out one-off spikes. Six months reacts to real changes without chasing a single big order."),
+         ("Why the same number for every month?",
+          "Without a stable seasonal shape, a flat run-rate is the honest forecast. Peaks and dips are corrected as the months arrive."),
+         ("Why only half of the trend?",
+          "The 6-month average already contains part of the recent trend. Applying the full trend on top would count the same movement twice."),
+         ("Why a trend by Face / Lips / Eyes?",
+          "The categories grow and decline at different speeds. One trend for the whole brand would hide that."),
+         ("Why so little of the cuts, and capped?",
+          "Makeup cuts are much bigger and more inflated than in fragrance (repeated weekly orders). We acknowledge them, "
+          "but cap them so a month with huge cuts cannot blow up the base."),
+         ("Why only 25% of the DAs?",
+          "The base is already an average of six months, so a single promotion is diluted. Removing more would cut growing lines too hard."),
+         ("Why recalculate instead of a correction factor?",
+          "A rolling average updates itself with the latest reality every cycle. An extra correction factor would add noise, not accuracy.")],
+        "Exceptions: Local items (under 6 months of shipments) keep the consensus. Rule status: proposal, pending final sign-off.",
     )
-    c.setStrokeColor(LINE); c.line(m, 30, W - m, 30)
-    c.setFillColor(MUTED); c.setFont("Helvetica", 7.4)
-    c.drawString(m, 18, "Excepciones: los Local (menos de 6 meses de envíos) se quedan con el consenso; EANs de 6 a 17 meses: apoyarse más en el consenso.")
-    c.drawRightString(W - m, 18, "Detalle: ESTRATEGIA_FRAGANCIAS.md · ESTRATEGIA_MAKEUP.md")
-    c.showPage(); c.save()
+    c.save()
     print(OUT)
 
 
