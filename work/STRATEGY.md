@@ -1,4 +1,12 @@
 # >>> ESTRATEGIA FRAGANCIAS DECIDIDA POR EL USUARIO (2026-10-09): ver ESTRATEGIA_FRAGANCIAS.md en la raíz. (LY + 25% cortes LY) x (1 + trend 12M house x tamaño, todo Central incl. lanzamientos >=6m, tope ±30%). <<<
+# >>> DA POSITIVOS (sesión 4e) — src/da_test.py, results/da_test.md (fragancias, regla con 25% cortes) <<<
+DA histórico solo existe desde ene-25 (cada versión guarda futuro + algunos meses pasados). En cada corte uso versiones <= corte.
+1. Sumar DA futuros al forecast: SIEMPRE peor (k=0 óptimo); el LY ya trae el nivel promo y la mitad consenso ya lleva DA. +/- igual de malo.
+2. Restar DA+ del LY (base): universo Central completo: k=0 74.8% bias +9.1% -> k=0.5 70.9% bias -1.9% (9/11 cortes) -> k=0.75 70.4% -5.9%.
+   maduros: k=0 61.9% -1.6% -> k=0.25 61.6% -3.8% -> k=0.5 61.6% -5.7%. Óptimo global: 50% (el grueso de la ganancia viene de EANs jóvenes, cuyos LY tienen DA de lanzamiento).
+3. Quitar DA+ del histórico para el trend: mejora WMAPE (maduros 59.1% k=1, 11/11) pero bias -11..-13% y es ARTEFACTO:
+   solo la ventana reciente tiene DA (no hay DA antes de ene-25) -> trend sesgado a la baja. No usar hasta tener 24 meses de DA (~ene-27) o volumen promo real.
+
 Propuesta usuario: base = LY + 33% de los cortes LY (EAN-mes). Probado con regla decidida, 13 cortes rolling, maduros:
  k=0: WMAPE 62.5% bias -6.3% (meses con cortes LY: -9.9%) | k=0.25 solo base: 62.2% bias -2.0% (+3.3%), gana 9/13 | k=0.33: 62.5% bias -0.7% (+7.5%), gana 8/13 | k=0.5 peor.
  Aplicar también al cálculo del trend: peor o neutro -> SOLO a la base.
