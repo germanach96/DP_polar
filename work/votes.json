@@ -270,6 +270,101 @@
     "q_total": 160,
     "real": 85884.0
    }
+  },
+  "Edad (meses con envíos en la última foto)": {
+   "12–17 meses": {
+    "eans": 76,
+    "regla": 14,
+    "consenso": 57,
+    "empate": 5,
+    "vol_regla": 0.047570318973001346,
+    "vol_cons": 0.9280817056786635,
+    "vol_emp": 0.024347975348335153,
+    "q_regla": 93,
+    "q_cons": 241,
+    "q_total": 380,
+    "real": 302941.0
+   },
+   "18–23 meses": {
+    "eans": 74,
+    "regla": 32,
+    "consenso": 41,
+    "empate": 1,
+    "vol_regla": 0.32725325044927506,
+    "vol_cons": 0.6727467495507249,
+    "vol_emp": 0.0,
+    "q_regla": 154,
+    "q_cons": 206,
+    "q_total": 370,
+    "real": 1563630.0
+   },
+   "24+ meses": {
+    "eans": 734,
+    "regla": 341,
+    "consenso": 389,
+    "empate": 4,
+    "vol_regla": 0.6164213166191775,
+    "vol_cons": 0.3830875406440059,
+    "vol_emp": 0.0004911427368165452,
+    "q_regla": 1677,
+    "q_cons": 1783,
+    "q_total": 3667,
+    "real": 5271380.0
+   },
+   "6–11 meses": {
+    "eans": 74,
+    "regla": 4,
+    "consenso": 43,
+    "empate": 27,
+    "vol_regla": 0.10722267273252058,
+    "vol_cons": 0.4185879021949778,
+    "vol_emp": 0.4741894250725016,
+    "q_regla": 25,
+    "q_cons": 95,
+    "q_total": 148,
+    "real": 363785.0
+   }
+  },
+  "Ignore System Forecast Flag": {
+   "Bandera 1": {
+    "eans": 155,
+    "regla": 43,
+    "consenso": 97,
+    "empate": 15,
+    "vol_regla": 0.09606968699203934,
+    "vol_cons": 0.9020008884705194,
+    "vol_emp": 0.0019294245374413066,
+    "q_regla": 178,
+    "q_cons": 324,
+    "q_total": 649,
+    "real": 983713.0
+   },
+   "Bandera 2": {
+    "eans": 46,
+    "regla": 11,
+    "consenso": 20,
+    "empate": 15,
+    "vol_regla": 0.11524143799191662,
+    "vol_cons": 0.3738359450707887,
+    "vol_emp": 0.5109226169372947,
+    "q_regla": 41,
+    "q_cons": 52,
+    "q_total": 137,
+    "real": 338472.0
+   },
+   "Sin bandera": {
+    "eans": 757,
+    "regla": 337,
+    "consenso": 413,
+    "empate": 7,
+    "vol_regla": 0.5956743459193071,
+    "vol_cons": 0.40308980377376935,
+    "vol_emp": 0.0012358503069235937,
+    "q_regla": 1730,
+    "q_cons": 1949,
+    "q_total": 3779,
+    "real": 6179551.0
+   }
   }
  },
  "casa_seg": {

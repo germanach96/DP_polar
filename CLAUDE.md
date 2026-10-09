@@ -117,6 +117,10 @@ Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infogra
 - **Resultado 2026-10-09:**
   - Regla + DAs gana 15/25 (fragancias 10/15, makeup 5/10).
   - WAPE90 medio ponderado: consenso 13%, regla + DAs 11,5%, regla sola 18%.
+- **Segunda comparación: votación por EAN** (`python3 src/votes.py`, PDF con `src/votes_report.py` → `reportes/REPORTE_VOTACION.pdf`).
+  - Cada EAN vota por el sistema que gana más de sus 5 quarters (menor |forecast − real| en el quarter); también se mide el volumen de los EANs que gana cada uno.
+  - Grupos: casa, tamaño, edad, Ignore System Forecast Flag. Colores: verde azulado = regla + DAs, azul marino = consenso (morado/naranja = fragancias/makeup).
+  - Resultado 2026-10-09: consenso 530 EANs vs regla + DAs 391 (37 empates); volumen 47% vs 51%.
 
 ## Decisiones / respuestas del usuario
 - **Local** = iniciativas con menos de ~6 meses de envíos; luego pasan a Central. Se ignoran en la regla.

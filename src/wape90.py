@@ -26,7 +26,7 @@ def fq(t):
 QNAME = {"FY26.Q2": "Q2 FY26 · oct–dic 25", "FY26.Q3": "Q3 FY26 · ene–mar 26", "FY26.Q4": "Q4 FY26 · abr–jun 26", "FY27.Q1": "Q1 FY27 · jul–ago 26*"}
 
 
-def quarters(house, snap, F, Cn, A, sel, months, Co, ids=None, seg=None, sink=None):
+def quarters(house, snap, F, Cn, A, sel, months, Co, ids=None, seg=None, sink=None, age=None, isf=None):
     rows = []
     qs = [fq(t) for t in months]
     for q in dict.fromkeys(qs):
@@ -35,7 +35,7 @@ def quarters(house, snap, F, Cn, A, sel, months, Co, ids=None, seg=None, sink=No
             continue
         f = F[sel][:, idx].sum(1); c = Cn[sel][:, idx].sum(1); a = A[sel][:, idx].sum(1); o = Co[sel][:, idx].sum(1)
         if sink is not None:
-            sink.append(pd.DataFrame(dict(ean=ids[sel], house=house, snap=snap, q=q, seg=seg[sel], real=a, consenso=c, regla_da=f, regla=o)))
+            sink.append(pd.DataFrame(dict(ean=ids[sel], house=house, snap=snap, q=q, seg=seg[sel], age=age[sel], isf=isf[sel], real=a, consenso=c, regla_da=f, regla=o)))
         rows.append(dict(house=house, snap=snap, q=q, label=QNAME[q], meses=len(idx), real=float(a.sum()),
                          consenso=float(c.sum()), regla=float(f.sum()),
                          wape_cons=float(abs(c.sum() - a.sum()) / a.sum()), wape_regla=float(abs(f.sum() - a.sum()) / a.sum()),
@@ -44,6 +44,12 @@ def quarters(house, snap, F, Cn, A, sel, months, Co, ids=None, seg=None, sink=No
                          ean_cons=float(np.abs(c - a).sum() / a.sum()), ean_regla=float(np.abs(f - a).sum() / a.sum()),
                          bias_cons=float(c.sum() / a.sum() - 1), bias_regla=float(f.sum() / a.sum() - 1), eans=int(sel.sum())))
     return rows
+
+
+def ages(H, m):
+    """Meses desde el primer envío hasta la foto (misma definición que house_compare.segments)."""
+    Hm = H.copy(); Hm[:, m:] = np.nan
+    return m - np.argmax(np.isfinite(Hm), 1)
 
 
 def cons_da(x, V, idx, months):
@@ -68,10 +74,11 @@ def main():
         x = d[d.version == s]
         Cn, Da = cons_da(x, V, H.index, months)
         Am = A[:, m + 1:m + 10]; in_snap = H.index.isin(set(x.ean))
-        seg = hc.segments(Hv, m, x.groupby("ean").isf.max().reindex(H.index).fillna(0).values)
+        isf = x.groupby("ean").isf.max().reindex(H.index).fillna(0).values; age = ages(Hv, m)
+        seg = hc.segments(Hv, m, isf)
         for house, lab in [("BURBERRY", "Burberry"), ("Gucci", "Gucci"), ("CP-Marc Jacobs", "Marc Jacobs")]:
             out += quarters(lab, s, np.clip(F + Da, 0, None), Cn, Am, (a.house == house).values & in_snap & central, months, F,
-                            H.index.values, seg, sink)
+                            H.index.values, seg, sink, age, isf)
     dm, Hdf, Edf, Cdf, attr, fac = mb.load()
     Hm_ = Hdf.values; Cm = Cdf.values; eans = Hdf.index; Am_ = np.nan_to_num(Hm_)
     for s in hc.SNAPS:
@@ -81,10 +88,11 @@ def main():
         x = dm[dm.version == s]
         Cn, Da = cons_da(x, V, eans, months)
         Am = Am_[:, m + 1:m + 10]; in_snap = eans.isin(set(x.ean))
-        seg = hc.segments(Hm_, m, x.groupby("ean").isf.max().reindex(eans).fillna(0).values)
+        isf = x.groupby("ean").isf.max().reindex(eans).fillna(0).values; age = ages(Hm_, m)
+        seg = hc.segments(Hm_, m, isf)
         for fam, lab in [("GUMU", "Gucci Make up"), ("KYMU", "Kylie Makeup")]:
             out += quarters(lab, s, np.clip(F + Da, 0, None), Cn, Am, (attr.fam == fam).values & in_snap & central, months, F,
-                            eans.values, seg, sink)
+                            eans.values, seg, sink, age, isf)
     pd.concat(sink).to_parquet(W / "wape90_ean.parquet")
     (W / "wape90.json").write_text(json.dumps(out, indent=1, ensure_ascii=False))
     df = pd.DataFrame(out)

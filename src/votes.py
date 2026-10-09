@@ -17,6 +17,8 @@ from ptype import add_types  # noqa
 
 W = Path(__file__).resolve().parents[1] / "work"
 FRAG = ("Burberry", "Gucci", "Marc Jacobs")
+AGES = ["6–11 meses", "12–17 meses", "18–23 meses", "24+ meses"]
+FLAGS = {0: "Sin bandera", 1: "Bandera 1", 2: "Bandera 2"}
 SEG = {"Maduros (18+ meses)": "Maduros (18+ meses)", "Jóvenes (6-17 meses)": "Jóvenes (6–17 meses)", "Forecast manual": "Forecast manual"}
 
 
@@ -29,6 +31,8 @@ def ean_votes():
     v = e.groupby("ean").agg(house=("house", "first"), quarters=("q", "size"), real=("real", "sum"), consenso=("consenso", "sum"),
                              regla_da=("regla_da", "sum"), p_cons=("p_cons", "sum"), p_regla=("p_regla", "sum"), act=("act", "any"))
     v["seg"] = last.seg.map(SEG)
+    v["edad"] = pd.cut(last.age, [0, 11, 17, 23, 999], labels=AGES).astype(str)
+    v["bandera"] = last.isf.map(FLAGS)
     v = v[v.act].copy()
     v["voto"] = np.where(v.p_regla > v.p_cons, "Regla + DAs", np.where(v.p_cons > v.p_regla, "Consenso", "Empate"))
     v["cat"] = np.where(v.house.isin(FRAG), "Fragancias", "Makeup")
@@ -55,7 +59,8 @@ def tally(g):
 def main():
     v, inactive = ean_votes()
     out = {"inactivos": inactive, "total": tally(v), "por": {}}
-    for col, name in [("cat", "Categoría"), ("house", "Casa"), ("seg", "Tipo de EAN"), ("abc", "ABC por volumen"), ("size", "Tamaño (fragancias)")]:
+    for col, name in [("cat", "Categoría"), ("house", "Casa"), ("seg", "Tipo de EAN"), ("abc", "ABC por volumen"), ("size", "Tamaño (fragancias)"),
+                      ("edad", "Edad (meses con envíos en la última foto)"), ("bandera", "Ignore System Forecast Flag")]:
         out["por"][name] = {str(k): tally(g) for k, g in v.dropna(subset=[col]).groupby(col)}
     out["casa_seg"] = {f"{h}|{s}": tally(g) for (h, s), g in v.groupby(["house", "seg"])}
     out["casa_abc"] = {f"{h}|{s}": tally(g) for (h, s), g in v.groupby(["house", "abc"])}
