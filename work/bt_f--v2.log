@@ -1,0 +1,343 @@
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-01 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-01 lvl6_brand             0.0s
+2025-01 house12_clean          0.0s
+2025-01 brand12_clean          0.0s
+2025-01 pline12_clean          0.0s
+2025-01 house6_clean           0.0s
+2025-01 house12_half           0.0s
+2025-01 house6_half            0.0s
+2025-01 ytd_house              0.0s
+2025-01 combo_h12_lvl6         0.0s
+2025-01 combo_h12c_lvl6        0.0s
+2025-01 combo_c12_lvl6         0.0s
+2025-01 combo_c12_h12          0.0s
+2025-01 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-02 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-02 lvl6_brand             0.0s
+2025-02 house12_clean          0.0s
+2025-02 brand12_clean          0.0s
+2025-02 pline12_clean          0.0s
+2025-02 house6_clean           0.0s
+2025-02 house12_half           0.0s
+2025-02 house6_half            0.0s
+2025-02 ytd_house              0.0s
+2025-02 combo_h12_lvl6         0.0s
+2025-02 combo_h12c_lvl6        0.0s
+2025-02 combo_c12_lvl6         0.0s
+2025-02 combo_c12_h12          0.0s
+2025-02 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-03 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-03 lvl6_brand             0.0s
+2025-03 house12_clean          0.0s
+2025-03 brand12_clean          0.0s
+2025-03 pline12_clean          0.0s
+2025-03 house6_clean           0.0s
+2025-03 house12_half           0.0s
+2025-03 house6_half            0.0s
+2025-03 ytd_house              0.0s
+2025-03 combo_h12_lvl6         0.0s
+2025-03 combo_h12c_lvl6        0.0s
+2025-03 combo_c12_lvl6         0.0s
+2025-03 combo_c12_h12          0.0s
+2025-03 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-04 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-04 lvl6_brand             0.0s
+2025-04 house12_clean          0.0s
+2025-04 brand12_clean          0.0s
+2025-04 pline12_clean          0.0s
+2025-04 house6_clean           0.0s
+2025-04 house12_half           0.0s
+2025-04 house6_half            0.0s
+2025-04 ytd_house              0.0s
+2025-04 combo_h12_lvl6         0.0s
+2025-04 combo_h12c_lvl6        0.0s
+2025-04 combo_c12_lvl6         0.0s
+2025-04 combo_c12_h12          0.0s
+2025-04 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-05 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-05 lvl6_brand             0.0s
+2025-05 house12_clean          0.0s
+2025-05 brand12_clean          0.0s
+2025-05 pline12_clean          0.0s
+2025-05 house6_clean           0.0s
+2025-05 house12_half           0.0s
+2025-05 house6_half            0.0s
+2025-05 ytd_house              0.0s
+2025-05 combo_h12_lvl6         0.0s
+2025-05 combo_h12c_lvl6        0.0s
+2025-05 combo_c12_lvl6         0.0s
+2025-05 combo_c12_h12          0.0s
+2025-05 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-06 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-06 lvl6_brand             0.0s
+2025-06 house12_clean          0.0s
+2025-06 brand12_clean          0.0s
+2025-06 pline12_clean          0.0s
+2025-06 house6_clean           0.0s
+2025-06 house12_half           0.0s
+2025-06 house6_half            0.0s
+2025-06 ytd_house              0.0s
+2025-06 combo_h12_lvl6         0.0s
+2025-06 combo_h12c_lvl6        0.0s
+2025-06 combo_c12_lvl6         0.0s
+2025-06 combo_c12_h12          0.0s
+2025-06 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-07 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-07 lvl6_brand             0.0s
+2025-07 house12_clean          0.0s
+2025-07 brand12_clean          0.0s
+2025-07 pline12_clean          0.0s
+2025-07 house6_clean           0.0s
+2025-07 house12_half           0.0s
+2025-07 house6_half            0.0s
+2025-07 ytd_house              0.0s
+2025-07 combo_h12_lvl6         0.0s
+2025-07 combo_h12c_lvl6        0.0s
+2025-07 combo_c12_lvl6         0.0s
+2025-07 combo_c12_h12          0.0s
+2025-07 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-08 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-08 lvl6_brand             0.0s
+2025-08 house12_clean          0.0s
+2025-08 brand12_clean          0.0s
+2025-08 pline12_clean          0.0s
+2025-08 house6_clean           0.0s
+2025-08 house12_half           0.0s
+2025-08 house6_half            0.0s
+2025-08 ytd_house              0.0s
+2025-08 combo_h12_lvl6         0.0s
+2025-08 combo_h12c_lvl6        0.0s
+2025-08 combo_c12_lvl6         0.0s
+2025-08 combo_c12_h12          0.0s
+2025-08 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-09 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-09 lvl6_brand             0.0s
+2025-09 house12_clean          0.0s
+2025-09 brand12_clean          0.0s
+2025-09 pline12_clean          0.0s
+2025-09 house6_clean           0.0s
+2025-09 house12_half           0.0s
+2025-09 house6_half            0.0s
+2025-09 ytd_house              0.0s
+2025-09 combo_h12_lvl6         0.0s
+2025-09 combo_h12c_lvl6        0.0s
+2025-09 combo_c12_lvl6         0.0s
+2025-09 combo_c12_h12          0.0s
+2025-09 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-10 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-10 lvl6_brand             0.0s
+2025-10 house12_clean          0.0s
+2025-10 brand12_clean          0.0s
+2025-10 pline12_clean          0.0s
+2025-10 house6_clean           0.0s
+2025-10 house12_half           0.0s
+2025-10 house6_half            0.0s
+2025-10 ytd_house              0.0s
+2025-10 combo_h12_lvl6         0.0s
+2025-10 combo_h12c_lvl6        0.0s
+2025-10 combo_c12_lvl6         0.0s
+2025-10 combo_c12_h12          0.0s
+2025-10 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-11 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-11 lvl6_brand             0.0s
+2025-11 house12_clean          0.0s
+2025-11 brand12_clean          0.0s
+2025-11 pline12_clean          0.0s
+2025-11 house6_clean           0.0s
+2025-11 house12_half           0.0s
+2025-11 house6_half            0.0s
+2025-11 ytd_house              0.0s
+2025-11 combo_h12_lvl6         0.0s
+2025-11 combo_h12c_lvl6        0.0s
+2025-11 combo_c12_lvl6         0.0s
+2025-11 combo_c12_h12          0.0s
+2025-11 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-12 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-12 lvl6_brand             0.0s
+2025-12 house12_clean          0.0s
+2025-12 brand12_clean          0.0s
+2025-12 pline12_clean          0.0s
+2025-12 house6_clean           0.0s
+2025-12 house12_half           0.0s
+2025-12 house6_half            0.0s
+2025-12 ytd_house              0.0s
+2025-12 combo_h12_lvl6         0.0s
+2025-12 combo_h12c_lvl6        0.0s
+2025-12 combo_c12_lvl6         0.0s
+2025-12 combo_c12_h12          0.0s
+2025-12 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-01 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-01 lvl6_brand             0.0s
+2026-01 house12_clean          0.0s
+2026-01 brand12_clean          0.0s
+2026-01 pline12_clean          0.0s
+2026-01 house6_clean           0.0s
+2026-01 house12_half           0.0s
+2026-01 house6_half            0.0s
+2026-01 ytd_house              0.0s
+2026-01 combo_h12_lvl6         0.0s
+2026-01 combo_h12c_lvl6        0.0s
+2026-01 combo_c12_lvl6         0.0s
+2026-01 combo_c12_h12          0.0s
+2026-01 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-02 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-02 lvl6_brand             0.0s
+2026-02 house12_clean          0.0s
+2026-02 brand12_clean          0.0s
+2026-02 pline12_clean          0.0s
+2026-02 house6_clean           0.0s
+2026-02 house12_half           0.0s
+2026-02 house6_half            0.0s
+2026-02 ytd_house              0.0s
+2026-02 combo_h12_lvl6         0.0s
+2026-02 combo_h12c_lvl6        0.0s
+2026-02 combo_c12_lvl6         0.0s
+2026-02 combo_c12_h12          0.0s
+2026-02 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-03 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-03 lvl6_brand             0.0s
+2026-03 house12_clean          0.0s
+2026-03 brand12_clean          0.0s
+2026-03 pline12_clean          0.0s
+2026-03 house6_clean           0.0s
+2026-03 house12_half           0.0s
+2026-03 house6_half            0.0s
+2026-03 ytd_house              0.0s
+2026-03 combo_h12_lvl6         0.0s
+2026-03 combo_h12c_lvl6        0.0s
+2026-03 combo_c12_lvl6         0.0s
+2026-03 combo_c12_h12          0.0s
+2026-03 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-04 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-04 lvl6_brand             0.0s
+2026-04 house12_clean          0.0s
+2026-04 brand12_clean          0.0s
+2026-04 pline12_clean          0.0s
+2026-04 house6_clean           0.0s
+2026-04 house12_half           0.0s
+2026-04 house6_half            0.0s
+2026-04 ytd_house              0.0s
+2026-04 combo_h12_lvl6         0.0s
+2026-04 combo_h12c_lvl6        0.0s
+2026-04 combo_c12_lvl6         0.0s
+2026-04 combo_c12_h12          0.0s
+2026-04 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-05 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-05 lvl6_brand             0.0s
+2026-05 house12_clean          0.0s
+2026-05 brand12_clean          0.0s
+2026-05 pline12_clean          0.0s
+2026-05 house6_clean           0.0s
+2026-05 house12_half           0.0s
+2026-05 house6_half            0.0s
+2026-05 ytd_house              0.0s
+2026-05 combo_h12_lvl6         0.0s
+2026-05 combo_h12c_lvl6        0.0s
+2026-05 combo_c12_lvl6         0.0s
+2026-05 combo_c12_h12          0.0s
+2026-05 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-06 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-06 lvl6_brand             0.0s
+2026-06 house12_clean          0.0s
+2026-06 brand12_clean          0.0s
+2026-06 pline12_clean          0.0s
+2026-06 house6_clean           0.0s
+2026-06 house12_half           0.0s
+2026-06 house6_half            0.0s
+2026-06 ytd_house              0.0s
+2026-06 combo_h12_lvl6         0.0s
+2026-06 combo_h12c_lvl6        0.0s
+2026-06 combo_c12_lvl6         0.0s
+2026-06 combo_c12_h12          0.0s
+2026-06 combo_3                0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-07 lvl3_brand             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-07 lvl6_brand             0.0s
+2026-07 house12_clean          0.0s
+2026-07 brand12_clean          0.0s
+2026-07 pline12_clean          0.0s
+2026-07 house6_clean           0.0s
+2026-07 house12_half           0.0s
+2026-07 house6_half            0.0s
+2026-07 ytd_house              0.0s
+2026-07 combo_h12_lvl6         0.0s
+2026-07 combo_h12c_lvl6        0.0s
+2026-07 combo_c12_lvl6         0.0s
+2026-07 combo_c12_h12          0.0s
+2026-07 combo_3                0.0s
+(800128, 7)

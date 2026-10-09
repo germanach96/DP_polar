@@ -1,0 +1,142 @@
+r09      isf
+         NaN           0.0
+Central  1.0      343169.0
+         2.0      885086.0
+         NaN    19822760.0
+Local    1.0      117929.0
+         2.0      398541.0
+         NaN         341.0
+Name: h, dtype: float64
+                                                                                                                                            h     fy26        fc  isf
+r03   r09     house          pline                                            ean           desc                                                                     
+Local Central BURBERRY       Burberry Her 8th (00006804)                      3616305947291 BBY HER 8TH PRFM 100ML 26IV               57694.0  54300.0   10256.0  2.0
+      Local   Gucci          Gucci Flora Gorgeous Orchid Intense (00007099)   3616306727632 GUCCI FLGO INT EDP 10 ML REG IV           51022.0  34489.0   72588.0  2.0
+                                                                              3616306727601 GUCCI FLGO INT EDP 100 ML REG IV          49302.0  32195.0   62241.0  2.0
+              BURBERRY       Goddess Amber Vanilla (00006869)                 3616307212861 BBY GODD A VNL EDP 100ML VL NCTR IV       44243.0  22267.0   84500.0  2.0
+                                                                              3616307212922 BBY GODD A VNL EDP 10ML VL NCTR PS IV     39828.0  28707.0  117500.0  2.0
+      Central BURBERRY       Burberry Hero ELIXIR (00006578)                  3616305947345 BBY HERO ELIXR PRFM 60ML 26IV             37785.0  34039.0    8319.0  2.0
+                             Burberry Hero EDP (00005823)                     3616307512930 BBY HERO EDP 10 ML PENSPRAY IV            34220.0  27605.0    8208.0  2.0
+              CP-Marc Jacobs Daisy Wild  EAU so Extra (00007093)              3616306701687 MJ D WILD ESE EDP 100 ML SO PARFUM IV     34121.0  33085.0    5006.0  2.0
+      Local   CP-Marc Jacobs Just Perfect (00006576)                          3616307505314 MJ PERFECT FLK EDP 100 ML IV              31874.0      0.0   40820.0  2.0
+                             Daisy Body MST (00007164)                        3616307653039 MJ D BDY MST BMIST 150ML VNLLA GOURMA IV  29868.0  26313.0   34850.0  1.0
+              Gucci          Gucci Guilty New27 pour Homme (00007262)         3616307953320 GG NEW27 PH EDT NS 90 ML INTENSE IV       28196.0      0.0   76345.0  2.0
+              CP-Marc Jacobs Just Perfect (00006576)                          3616307505284 MJ PERFECT FLK EDP 10 ML IV               28053.0      0.0   45968.0  2.0
+      Central Gucci          Gucci Bloom Ambrosia dOro (00006855)             3616306976207 GUCCI BM BQT PRFM 100 ML ABSOLU REG IV    27494.0  24512.0    9362.0  2.0
+              CP-Marc Jacobs Daisy Wild  EAU so Extra (00007093)              3616307111423 MJ D WILD ESE EDP 10 ML 10ML PEN SPRY IV  26895.0  24975.0   10207.0  2.0
+      Local   CP-Marc Jacobs Daisy Body MST (00007164)                        3616307653046 MJ D BDY MST BMIST 150ML TROPCAL GLOW IV  26745.0  21312.0   28900.0  1.0
+                                                                              3616307653022 MJ D BDY MST BMIST 150ML MANDARN FIZZ IV  25389.0  16290.0   36600.0  1.0
+                                                                              3616307653015 MJ D BDY MST BMIST 150 ML LEMON SPRTZ IV  25305.0  13290.0   34750.0  1.0
+      Central Gucci          Gucci Bloom Ambrosia dOro (00006855)             3616306976238 GUCCI BM BQT PRFM 10 ML IV                24037.0  23006.0    2863.0  2.0
+              BURBERRY       Burberry Her 8th (00006804)                      3616305947277 BBY HER 8TH PRFM 30ML 26IV                23533.0  21678.0    6605.0  2.0
+      Local   BURBERRY       Goddess Amber Vanilla (00006869)                 3616307212854 BBY GODD A VNL EDP 50ML VL NCTR IV        21495.0  14972.0   33600.0  2.0
+              Gucci          Gucci Flora Gorgeous Orchid Intense (00007099)   3616306727625 GUCCI FLGO INT EDP 30 ML REG IV           21066.0  17802.0   10328.0  2.0
+              BURBERRY       Goddess Amber Vanilla (00006869)                 3616307212847 BBY GODD A VNL EDP 30ML VL NCTR IV        20994.0  17954.0   25800.0  2.0
+      Central BURBERRY       Burberry Hero (00005343)                         3616307512923 BBY HERO EDT NS 10 ML PENSPRAY IV         19347.0  16806.0   27510.0  2.0
+      Local   CP-Marc Jacobs Just Perfect (00006576)                          3616307505291 MJ PERFECT FLK EDP 30 ML IV               18100.0      0.0   14520.0  2.0
+      Central BURBERRY       Burberry Her 8th (00006804)                      3616305947321 BBY HER 8TH PRFM 50ML 26IV                17610.0  16014.0    3182.0  2.0
+              CP-Marc Jacobs Daisy Wild  EAU so Extra (00007093)              3616306701663 MJ D WILD ESE EDP 30 ML SO PARFUM IV      17046.0  16331.0    3469.0  2.0
+      Local   CP-Marc Jacobs Just Perfect (00006576)                          3616307505307 MJ PERFECT FLK EDP 50 ML IV               15760.0      0.0   25464.0  2.0
+              Gucci          Gucci Guilty New27 pour Homme (00007262)         3616307953283 GG NEW27 PH EDT NS 50 ML INTENSE IV       14332.0      0.0   24236.0  2.0
+      Central Gucci          Gucci Bloom Ambrosia dOro (00006855)             3616306976221 Gucci Bloom Absolu 30ml REG               13447.0  12918.0     989.0  2.0
+      Local   Gucci          Gucci Flora Gorgeous Orchid Intense (00007099)   3616306727618 GUCCI FLGO INT EDP 50 ML REG IV           12649.0   8362.0   11583.0  2.0
+                             Gucci Guilty New27 pour Homme (00007262)         3616307953290 GG NEW27 PH EDT NS 10 ML INTENSE PS IV    10377.0      0.0   47864.0  1.0
+      Central Kylie Makeup   Face Multi (00006011)                            4064941200116 KJ MU FACE ML BRUSH KJCLIP REG IV          9626.0   9612.0    1432.0  2.0
+              CP-Marc Jacobs Daisy Wild  EAU so Extra (00007093)              3616306701670 MJ D WILD ESE EDP 50 ML SO PARFUM IV       8725.0   8579.0    2977.0  2.0
+              Gucci          Gucci Bloom Ambrosia dOro (00006855)             3616306976214 Gucci Bloom Absolu 50ml REG                8357.0   7276.0    2514.0  2.0
+                             Gucci Flora Gorgeous Orchid (00006613)           3616305259516 GUCCI FL G ORC EDP 150ML JUMBO Y4 IV       1750.0   1750.0     188.8  1.0
+      Local   Kylie Makeup   Face Multi (00006011)                            4064941192060 KJ MU FACE ML BRUSH PRS SCLP CMPLN 05 IV   1627.0    644.0    1137.0  2.0
+      Central Gucci          Gucci Flora Gorgeous Magnolia (00006454)         3616303470852 GUCCI FL G MAG RG EDP 150 ML REFILL IV      725.0    725.0      47.2  1.0
+NaN   Local   Gucci          Gucci Rush (00003480)                            3616306724518 GUCCI RUSH EDT NS 50 ML GAL IV              338.0    210.0     232.0  NaN
+Local Central Gucci          Gucci Luxury Collection SMALL SIZES (00006654)   3616306142916 GUCCI LUX SMLL EDP 50 ML NECTAR IV          320.0    290.0     187.0  1.0
+                                                                              3616306142954 GUCCI LUX SMLL EDP 50 ML HEARTWOOD IV       299.0    282.0     178.0  1.0
+      Local   Gucci          Gucci Luxury Collection (00004823)               3616307505963 GUCCI LUX EDP 100 ML COLL CHYPRE IV         210.0      0.0     564.0  1.0
+      Central Gucci          Gucci Luxury Collection (00004823)               3616306142909 GUCCI LUX EDP 100 ML NECTAR IV              192.0    187.0      79.0  1.0
+                                                                              3616306142947 GUCCI LUX EDP 100 ML HEARTWOOD IV           183.0    175.0      82.0  1.0
+                                                                              3616305910479 GUCCI LUX EDP 100ML WR MY HRT BEATS IV      160.0    134.0     239.0  NaN
+                                                                              3616305910226 GUCCI LUX EDP 100ML RG CHNTFTH NYMPH IV     122.0    112.0     245.0  NaN
+                                                                              3616305910578 GUCCI LUX EDP 100ML THE HEART OF LEO IV      48.0     16.0       4.0  NaN
+                                                                              3616305910172 GUCCI LUX EDP100 SONG FOR ROSE IV            48.0     48.0      48.0  NaN
+                                                                              3616305910325 GUCCI LUX EDP 100ML RG GLOAMIN NIGHT IV      26.0     25.0      49.0  NaN
+      Local   Gucci          Gucci Flora Gorgeous Orchid Intense (00007099)   3616306727663 GUCCI FLGO INT EDP 150 ML REFILL IV          20.0     20.0     134.0  1.0
+      Central Gucci          Gucci Luxury Collection (00004823)               3616305910424 GUCCI LUX EDP 100ML RG REASONTOLOVE IV       18.0     17.0      29.0  NaN
+      Local   BURBERRY       Goddess Amber Vanilla (00006869)                 3616307212915 BBY GODD A VNL EDP 150ML VL NCTR RF IV       15.0      0.0      85.0  1.0
+              Gucci          Gucci Luxury Collection (00004823)               3616305910523 GUCCI LUX EDP 100ML R FLORALVERSE IV          3.0      3.0      89.0  NaN
+              BURBERRY       BRIT RHYTHM 2 F (00004661)                       3614226906144 BBY BRIT RHYTHM WOMEN 2 EDT 90ML              0.0      0.0       0.0  NaN
+                             BODY ORIGINAL (00004656)                         3614226905376 BBY WOMAN BODY RG EDP 85ml                    0.0      0.0       0.0  NaN
+                             BRIT ORIGINAL F (00004659)                       3614226905123 BBY BRIT FOR HER EDP 30ML                     0.0      0.0       0.0  NaN
+                             BRIT SPLASH AND SHEER M (00004755)               3614226905093 BBY BRT SPLSH M EDTSPL 50ml 22IV              0.0      0.0       0.0  NaN
+                                                                              3614226905277 BBY BRT SPLSH M EDTSPL 100 ml 22IV            0.0      0.0       0.0  NaN
+                             BURBERRY ORIGINAL M (00004759)                   3614226905819 BBY ORGN M RG EDT NS 30ML REPACK 22IV         0.0      0.0       0.0  NaN
+                             Burberry Her Blossom (00006186)                  3614227413597 BBY HER BLOSS RG 7.5/0.25OZ 19 IV             0.0      0.0       0.0  NaN
+                             MR BURBERRY INDIGO (00004692)                    5045551783670 BBY MR. BURBERRY INDIGO EDT 50ML              0.0      0.0       0.0  NaN
+              CP-Marc Jacobs Daisy Love (00004272)                            3614225476693 MJ DAISY Love PRM LTD B/L 150ml 18 IV         0.0      0.0       0.0  NaN
+              Gucci          Flora by Gucci EDP (00003439)                    737052294667  GUCCI FLO EDP 30ml IV                         0.0      0.0       0.0  NaN
+                             Flora by Gucci EDT (00003440)                    8005610367149 GUCCI FLO EDT RG EDT NS 75ml                  0.0      0.0       0.0  NaN
+              BURBERRY       MR BURBERRY EDT (00004690)                       5045456747654 BBY B3 EDT 50ML                               0.0      0.0       0.0  NaN
+                                                                              5045456773318 BBY MR BBY EDT 150ML                          0.0      0.0       0.0  NaN
+                             MR BURBERRY INDIGO (00004692)                    3614227882928 MR. BBY INDIGO DEO SPRAY 150ML / 5.0 FL.      0.0      0.0       0.0  NaN
+                                                                              3614229840148 BBY MR INDIG RG EDT SPRY 150ml 20 IV          0.0      0.0       0.0  NaN
+      Local   BURBERRY       Prorsum Collection Relaunch (00007040)           3616306986367 BBY PRSM EDP 100 ML GABARD RLCH IV            0.0      0.0     691.0  NaN
+                                                                              3616306986312 BBY PRSM EDP 100 ML CASHMERE EMB RLCH IV      0.0      0.0     680.0  NaN
+                                                                              3616306986282 BBY PRSM EDP 100 ML GARDEN RAIN RLCH IV       0.0      0.0     571.0  NaN
+                                                                              3616306986251 BBY PRSM EDP 100 ML OPEN SKIES RLCH IV        0.0      0.0     506.0  NaN
+                                                                              3616306986244 BBY PRSM EDP 100 ML RLCH IV                   0.0      0.0     610.0  NaN
+                             MY BURBERRY BLUSH (00004694)                     5045498902189 My BBY Blush EDP 30 ML / 1.0 FL. OZ.          0.0      0.0       0.0  NaN
+                             MR BURBERRY EDT (00004690)                       5045492072703 BBY B3 EDT TRAVEL SPRAY 30ML                  0.0      0.0       0.0  NaN
+                             Burberry Hero HORIZON (00007115)                 3616308221169 BBY HERO HRZ EDP 100 ML HORIZON IV            0.0      0.0   58808.0  NaN
+                                                                              3616308221183 BBY HERO HRZ EDP 200 ML REFILL IV             0.0      0.0     209.0  NaN
+                                                                              3616308221176 BBY HERO HRZ EDP 150 ML HORIZON IV            0.0      0.0    5300.0  NaN
+                                                                              3616308221190 BBY HERO HRZ EDP 10 ML HORIZON IV             0.0      0.0   23793.0  NaN
+                             Burberry Her Wisteria (00007212)                 3616307107150 BBY HER WIST EDP WISTERIA 100 ML EDP IV       0.0      0.0   85358.0  NaN
+                                                                              3616307107174 BBY HER WIST EDP WISTERIA 50 ML EDP IV        0.0      0.0   30884.0  NaN
+                                                                              3616307107181 BBY HER WIST EDP WISTERIA 30 ML EDP IV        0.0      0.0   42518.0  NaN
+                                                                              3616307107198 BBY HER WIST EDP 10ML WISTERIA PS  IV         0.0      0.0  108800.0  NaN
+                             Burberry Hero HORIZON (00007115)                 3616308221152 BBY HERO HRZ EDP 50 ML HORIZON IV             0.0      0.0   22858.0  NaN
+              Gucci          Gucci Luxury Collection (00004823)               3614227576032 GUCCI LUX RG PRFM OIL VIOLET 20ml 18 IV       0.0      0.0       0.0  NaN
+                             Gucci Guilty Black (00003464)                    737052626062  GUCCI G BLK EDT NS 75ml GAL IV                0.0      0.0       0.0  NaN
+                                                                              737052625942  GUCCI G BLK EDT NS 30ml GAL IV                0.0      0.0       0.0  NaN
+                             Gucci Bamboo EDP (00003448)                      3614229386448 GUCCI BAM EDP RG RB 7.4ml GAL 19 IV           0.0      0.0       0.0  NaN
+      Local   BURBERRY       Prorsum Collection Relaunch (00007040)           3616307214360 BBY PRSM EDP 50 ML 1856 IV                    0.0      0.0     293.0  NaN
+                                                                              3616307214377 BBY PRSM EDP 50 ML GABARDINE IV               0.0      0.0     686.0  NaN
+                                                                              3616307214384 BBY PRSM EDP 50 ML LONDON IV                  0.0      0.0     814.0  NaN
+              Gucci          Gucci Bloom Signature (00007298)                 3616308224047 GUCCI BM SIGN EDP 100 ML GUCCIBLOOM IV        0.0      0.0   19016.0  NaN
+              BURBERRY       Prorsum Collection Relaunch (00007040)           3616307214414 BBY PRSM EDP 50 ML CASHMERE EMB IV            0.0      0.0     292.0  NaN
+                                                                              3616307214407 BBY PRSM EDP 50 ML KENS TRENCH IV             0.0      0.0    1200.0  NaN
+                                                                              3616307214421 BBY PRSM EDP 50 ML OPEN SKIES IV              0.0      0.0     220.0  NaN
+                                                                              3616307214353 BBY PRSM EDP 50 ML GARDEN RAIN IV             0.0      0.0     666.0  NaN
+                                                                              3616307214391 BBY PRSM EDP 50 ML KNIGHT IV                  0.0      0.0     216.0  NaN
+                                                                              3616306986374 BBY PRSM EDP 100 ML LONDON RLCH IV            0.0      0.0     694.0  NaN
+                                                                              3616306986398 BBY PRSM EDP 100 ML KENS TRENCH RLCH IV       0.0      0.0    1083.0  NaN
+                                                                              3616306986381 BBY PRSM EDP 100 ML KNIGHT RLCH IV            0.0      0.0     552.0  NaN
+              Gucci          Gucci Flora Gorgeous Magnolia EDPI (00007240)    3616308181784 GU FL MG EDPI EDP 10 ML IV                    0.0      0.0   29888.0  NaN
+                                                                              3616308181791 GU FL MG EDPI EDP 30 ML IV                    0.0      0.0   16917.0  NaN
+                                                                              3616308181807 GU FL MG EDPI EDP 50 ML IV                    0.0      0.0    9380.0  NaN
+                                                                              3616308181814 GU FL MG EDPI EDP 100 ML IV                   0.0      0.0   33799.0  NaN
+                             Gucci Bloom Signature (00007298)                 3616308224054 GUCCI BM SIGN EDP 50 ML GUCCIBLOOM IV         0.0      0.0    7823.0  NaN
+                                                                              3616308224061 GUCCI BM SIGN EDP 30 ML GUCCIBLOOM IV         0.0      0.0   13085.0  NaN
+                                                                              3616308224078 GUCCI BM SIGN EDP 10 ML GUCCIBLOOM IV         0.0      0.0   21387.0  NaN
+                             Gucci Flora Gorgeous Gardenia Intense (00007022) 3616307416610 GUCCI FLG EDPI EDP 150 ML INT GLS RFL IV      0.0      0.0      28.0  NaN
+                             Gucci Luxury Collection (00004823)               3616305909923 GUCCI LUX EDT NS 150ml A WINTER MLDY IV       0.0      0.0       0.0  NaN
+                                                                              3616305909879 GUCCI LUX EDT NS 150ml FADING AUTUMN  IV      0.0      0.0       0.0  1.0
+                                                                              3616305909671 GUCCI LUX PRFOIL 20ml ODE ON MELANC IV        0.0      0.0       0.0  NaN
+                                                                              3616305909978 GUCCI LUX EDT NS 150ml MNLIGHT SERND  IV      0.0      0.0       0.0  NaN
+                                                                              3616306639553 GUCCI LUX PRFOIL 20ml A NOCT WHISPER  IV      0.0      0.0       0.0  NaN
+NaN   Local   BURBERRY       Goddess Golden Flower (00007234)                 3616308224542 BBY GODD G FLW EDP 30 ML GOD IV               0.0      0.0   19800.0  NaN
+                                                                              3616308224559 BBY GODD G FLW EDP 50 ML GOD IV               0.0      0.0   15800.0  NaN
+Local Local   Gucci          Gucci Luxury Collection (00004823)               3616305909626 GUCCI LUX PRFOIL 20ml A FORGTTN ROSE  IV      0.0      0.0       0.0  NaN
+NaN   Local   BURBERRY       Goddess Golden Flower (00007234)                 3616308224566 BBY GODD G FLW EDP 100 ML GOD IV              0.0      0.0   22100.0  NaN
+                                                                              3616308224610 BBY GODD G FLW EDP 150 ML GOD REFILL IV       0.0      0.0       0.0  NaN
+                             Prorsum Collection Extension (00007331)          3616308589955 BBY PRSM EXT EDP 100ML IV                     0.0      0.0       0.0  NaN
+                             Goddess Golden Flower (00007234)                 3616308224627 BBY GODD G FLW EDP 10 ML GOD PENSPRAY IV      0.0      0.0   28000.0  NaN
+              CP-Marc Jacobs Daisy Wild Forever (00007105)                    3616308445848 MJ DAISY NEW EDP 10 ML YR4 PS IV              0.0      0.0   43942.0  NaN
+                                                                              3616308447156 MJ D WILD FRV EDP 30 ML IV                    0.0      0.0   25189.0  NaN
+                                                                              3616308447163 MJ D WILD FRV EDP 50 ML IV                    0.0      0.0   21710.0  NaN
+              BURBERRY       Prorsum Collection Relaunch (00007040)           3616308239324 BBY PRSM EDP 100 ML PRORSM EXT ENDRNC IV      0.0      0.0       0.0  NaN
+              CP-Marc Jacobs Daisy Wild Forever (00007105)                    3616308447170 MJ D WILD FRV EDP 100 ML IV                   0.0      0.0   82746.0  NaN
+              Gucci          Gucci Bamboo EDT (00003449)                      3616306986480 GUCCI BAM EDT EDT NS 50 ML GAL IV             0.0      0.0       0.0  NaN
+                             Gucci Bloom EDP (00004476)                       3616308110296 GUCCI BM EDP 50 ML IV                         0.0      0.0       0.0  NaN
+                                                                              3616308110289 GUCCI BM EDP 30ML GAL VP 24IV                 0.0      0.0       0.0  NaN
+                                                                              3616308110302 GUCCI BM EDP 100 ML IV                        0.0      0.0       0.0  NaN
+                             Gucci Guilty Absolute Pour Femme (00004475)      3616306986626 GUCCI G ABSOW EDP 50 ML IV                    0.0      0.0       0.0  NaN
+                                                                              3616306986633 GUCCI G ABSOW EDP 90 ML IV                    0.0      0.0       0.0  NaN
+                             Gucci Guilty Absolute Pour Homme (00003472)      3616306986664 GUCCI G ABSO EDP 90 ML IV                     0.0      0.0       0.0  NaN

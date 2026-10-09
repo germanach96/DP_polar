@@ -70,3 +70,66 @@ Para cada quarter futuro, muestra qué pasó en el quarter homólogo del año an
 - No inventes datos ni supuestos de negocio; si falta algo, pregúntame.
 - Si un resultado es sorprendente, compruébalo antes de reportarlo.
 - Prioriza métodos que pueda explicar en una reunión sobre métodos marginalmente mejores pero opacos.
+
+---
+
+# Estado del proyecto (actualizado 2026-10-09)
+
+## Reglas decididas
+Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infografía (inglés) en `INFOGRAFIA_REGLAS.pdf`.
+
+**Fragancias** (Burberry, Gucci, Marc Jacobs):
+- Base = mismo mes del año anterior + 25% de los supply cuts de ese mes − 50% de los DAs positivos de ese mes.
+- Forecast = Base × (1 + trend 12M de house × tamaño).
+- Trend = suma de los últimos 12 meses cerrados / suma de los 12 anteriores − 1.
+  - Se calcula sobre actuals puros, con todos los Central (incluidos lanzamientos con 6 o más meses de envíos), y tiene tope de ±30%.
+- Tamaños: ≤15 ml, 20–40, 45–60, 75–125, ≥150/refill, ancilares.
+- En cada foto: media con el consenso y factor real/forecast (sobre el total) aplicado al forecast restante.
+
+**Makeup** (GUMU = Gucci Make up, KYMU = Kylie Makeup):
+- Mes ajustado = envío + mín(10% cortes ; 10% envío) − 25% DAs positivos.
+- Base = media de los últimos 6 meses ajustados.
+- Forecast = Base × (1 + 50% del trend 12M de la función: Face, Lips o Eyes), con tope de ±30%. Es el mismo número para todos los meses.
+- Sin estacionalidad: los envíos no repiten patrón (el EPOS sí).
+- En cada foto se recalcula todo. Sin factor de corrección ni media con el consenso.
+
+**Excepciones:**
+- Local (menos de 6 meses de envíos): consenso.
+- EANs de 6 a 17 meses: apoyarse más en el consenso.
+
+## Decisiones / respuestas del usuario
+- **Local** = iniciativas con menos de ~6 meses de envíos; luego pasan a Central. Se ignoran en la regla.
+- **Ignore System Forecast Flag** = número de customers ignorados de los 2 seleccionados (1 = normalmente el más grande; 2 = ambos). Es forecast manual: darle poco peso.
+- **Supply cuts:** inflados por re-pedidos semanales.
+- **DAs:** pueden ser promos o inputs de mercado. Más adelante el usuario pasará el volumen de promos a restar.
+- **Pendiente:** probar el histórico corregido por outliers de o9 cuando el usuario lo extraiga, comparando regla actual, outliers puros e híbrido.
+
+## Datos (DATA.xlsx, GUMU.xlsx, KYMU.xlsx)
+- Una pestaña por foto S&OP.
+  - DATA: 2025-09, 2025-12, 2026-03, 2026-06, 2026-09.
+  - GUMU/KYMU: 2025-09, 2026-03, 2026-09.
+- Año fiscal de julio a junio. `cons` en meses pasados = actuals.
+- **El histórico se reexpresa entre fotos.** No es un 20% plano: oct/nov ~+44%, resto ~+15–20%; KYMU +18%.
+  - Verdad = última foto. En cada foto se usa el histórico reexpresado truncado.
+  - El consenso de las fotos viejas se ajusta por el factor del mes calendario.
+- EPOS desde 2024.M07. DAs solo desde ene-25.
+
+## Código (Python: pandas, statsmodels, reportlab, pyarrow)
+- **Carga:** `src/load.py` (fragancias) y `src/mu_load.py` (makeup).
+  - `src/panel.py` genera `work/*.pkl`; el parquet y los pkl no están versionados, se regeneran.
+- **Backtests:**
+  - Rolling por EAN: `src/backtest.py` + `src/evaluate.py` + `src/report.py`.
+  - Por foto: `src/snapshots.py` + `src/snap_eval.py`.
+  - Técnica inicial + corrección: `src/tracking.py`.
+  - Lanzamientos: `src/launch_trend.py`.
+  - Cortes / DAs: `src/cuts_test.py`, `src/da_test.py`.
+  - Makeup: `src/mu_season.py`, `src/mu_backtest.py`, `src/mu_cuts_da.py`, `src/mu_cuts2.py`.
+- **Resultados:** `work/results/*.md`. Memoria de trabajo: `work/STRATEGY.md` y `work/NOTES.md`.
+- **Infografía:** `src/infografia.py` (HTML + SVG → PDF con Chromium). Datos de los gráficos en `work/infog_data.json`.
+
+**Cómo regenerar:**
+```
+pip install pandas statsmodels openpyxl pyarrow tabulate reportlab
+python3 src/load.py && python3 src/panel.py && python3 src/mu_load.py
+python3 src/infografia.py
+```

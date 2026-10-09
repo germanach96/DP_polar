@@ -1,0 +1,3 @@
+work/*.pkl
+work/*.parquet
+__pycache__/

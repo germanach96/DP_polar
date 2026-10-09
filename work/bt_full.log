@@ -1,0 +1,915 @@
+2025-01 naive                  0.0s
+2025-01 flat6                  0.0s
+2025-01 flat3                  0.0s
+2025-01 flat12                 0.0s
+2025-01 flat6_cap              0.0s
+2025-01 median6                0.0s
+2025-01 median3                0.0s
+2025-01 median12               0.0s
+2025-01 trim6                  0.0s
+2025-01 trim12                 0.0s
+2025-01 pline6                 0.0s
+2025-01 brand6                 0.0s
+2025-01 house6                 0.0s
+2025-01 house3                 0.0s
+2025-01 house12                0.0s
+2025-01 brand12                0.0s
+2025-01 pline12                0.0s
+2025-01 blend_brand6           0.0s
+2025-01 blend_house6           0.0s
+2025-01 blend_house12          0.0s
+2025-01 clean40                0.0s
+2025-01 clean60                0.0s
+2025-01 clean100               0.0s
+2025-01 clean40_s              0.0s
+2025-01 clean60_s              0.0s
+2025-01 clean40_s12            0.0s
+2025-01 cutadj4                0.0s
+2025-01 cutadj4_trend_only     0.0s
+2025-01 epos6                  0.0s
+2025-01 epos3                  0.0s
+2025-01 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-01 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-01 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-01 lvl3_brand             0.0s
+2025-01 ets_house_share        0.8s
+2025-01 ets_damped             0.0s
+2025-02 naive                  0.0s
+2025-02 flat6                  0.0s
+2025-02 flat3                  0.0s
+2025-02 flat12                 0.0s
+2025-02 flat6_cap              0.0s
+2025-02 median6                0.0s
+2025-02 median3                0.0s
+2025-02 median12               0.0s
+2025-02 trim6                  0.0s
+2025-02 trim12                 0.0s
+2025-02 pline6                 0.0s
+2025-02 brand6                 0.0s
+2025-02 house6                 0.0s
+2025-02 house3                 0.0s
+2025-02 house12                0.0s
+2025-02 brand12                0.0s
+2025-02 pline12                0.0s
+2025-02 blend_brand6           0.0s
+2025-02 blend_house6           0.0s
+2025-02 blend_house12          0.0s
+2025-02 clean40                0.0s
+2025-02 clean60                0.1s
+2025-02 clean100               0.0s
+2025-02 clean40_s              0.0s
+2025-02 clean60_s              0.0s
+2025-02 clean40_s12            0.0s
+2025-02 cutadj4                0.0s
+2025-02 cutadj4_trend_only     0.0s
+2025-02 epos6                  0.0s
+2025-02 epos3                  0.0s
+2025-02 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-02 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-02 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2025-02 lvl3_brand             0.0s
+2025-02 ets_house_share        0.0s
+2025-02 ets_damped             0.0s
+2025-03 naive                  0.0s
+2025-03 flat6                  0.0s
+2025-03 flat3                  0.0s
+2025-03 flat12                 0.0s
+2025-03 flat6_cap              0.0s
+2025-03 median6                0.0s
+2025-03 median3                0.0s
+2025-03 median12               0.0s
+2025-03 trim6                  0.0s
+2025-03 trim12                 0.0s
+2025-03 pline6                 0.0s
+2025-03 brand6                 0.0s
+2025-03 house6                 0.0s
+2025-03 house3                 0.0s
+2025-03 house12                0.0s
+2025-03 brand12                0.0s
+2025-03 pline12                0.0s
+2025-03 blend_brand6           0.0s
+2025-03 blend_house6           0.0s
+2025-03 blend_house12          0.0s
+2025-03 clean40                0.0s
+2025-03 clean60                0.0s
+2025-03 clean100               0.0s
+2025-03 clean40_s              0.0s
+2025-03 clean60_s              0.0s
+2025-03 clean40_s12            0.0s
+2025-03 cutadj4                0.0s
+2025-03 cutadj4_trend_only     0.0s
+2025-03 epos6                  0.0s
+2025-03 epos3                  0.0s
+2025-03 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-03 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-03 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2025-03 lvl3_brand             0.0s
+2025-03 ets_house_share        0.0s
+2025-03 ets_damped             0.0s
+2025-04 naive                  0.0s
+2025-04 flat6                  0.0s
+2025-04 flat3                  0.0s
+2025-04 flat12                 0.0s
+2025-04 flat6_cap              0.0s
+2025-04 median6                0.0s
+2025-04 median3                0.0s
+2025-04 median12               0.0s
+2025-04 trim6                  0.0s
+2025-04 trim12                 0.0s
+2025-04 pline6                 0.0s
+2025-04 brand6                 0.0s
+2025-04 house6                 0.0s
+2025-04 house3                 0.0s
+2025-04 house12                0.0s
+2025-04 brand12                0.0s
+2025-04 pline12                0.0s
+2025-04 blend_brand6           0.0s
+2025-04 blend_house6           0.0s
+2025-04 blend_house12          0.0s
+2025-04 clean40                0.0s
+2025-04 clean60                0.0s
+2025-04 clean100               0.0s
+2025-04 clean40_s              0.0s
+2025-04 clean60_s              0.0s
+2025-04 clean40_s12            0.0s
+2025-04 cutadj4                0.0s
+2025-04 cutadj4_trend_only     0.0s
+2025-04 epos6                  0.0s
+2025-04 epos3                  0.0s
+2025-04 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-04 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-04 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2025-04 lvl3_brand             0.0s
+2025-04 ets_house_share        0.0s
+2025-04 ets_damped             0.0s
+2025-05 naive                  0.0s
+2025-05 flat6                  0.0s
+2025-05 flat3                  0.0s
+2025-05 flat12                 0.0s
+2025-05 flat6_cap              0.0s
+2025-05 median6                0.0s
+2025-05 median3                0.0s
+2025-05 median12               0.0s
+2025-05 trim6                  0.0s
+2025-05 trim12                 0.0s
+2025-05 pline6                 0.0s
+2025-05 brand6                 0.0s
+2025-05 house6                 0.0s
+2025-05 house3                 0.0s
+2025-05 house12                0.0s
+2025-05 brand12                0.0s
+2025-05 pline12                0.0s
+2025-05 blend_brand6           0.0s
+2025-05 blend_house6           0.0s
+2025-05 blend_house12          0.0s
+2025-05 clean40                0.0s
+2025-05 clean60                0.0s
+2025-05 clean100               0.0s
+2025-05 clean40_s              0.0s
+2025-05 clean60_s              0.0s
+2025-05 clean40_s12            0.0s
+2025-05 cutadj4                0.0s
+2025-05 cutadj4_trend_only     0.0s
+2025-05 epos6                  0.0s
+2025-05 epos3                  0.0s
+2025-05 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-05 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-05 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2025-05 lvl3_brand             0.0s
+2025-05 ets_house_share        0.0s
+2025-05 ets_damped             0.0s
+2025-06 naive                  0.0s
+2025-06 flat6                  0.0s
+2025-06 flat3                  0.0s
+2025-06 flat12                 0.0s
+2025-06 flat6_cap              0.0s
+2025-06 median6                0.0s
+2025-06 median3                0.0s
+2025-06 median12               0.0s
+2025-06 trim6                  0.0s
+2025-06 trim12                 0.0s
+2025-06 pline6                 0.0s
+2025-06 brand6                 0.0s
+2025-06 house6                 0.0s
+2025-06 house3                 0.0s
+2025-06 house12                0.0s
+2025-06 brand12                0.0s
+2025-06 pline12                0.0s
+2025-06 blend_brand6           0.0s
+2025-06 blend_house6           0.0s
+2025-06 blend_house12          0.0s
+2025-06 clean40                0.0s
+2025-06 clean60                0.0s
+2025-06 clean100               0.0s
+2025-06 clean40_s              0.0s
+2025-06 clean60_s              0.0s
+2025-06 clean40_s12            0.0s
+2025-06 cutadj4                0.0s
+2025-06 cutadj4_trend_only     0.0s
+2025-06 epos6                  0.0s
+2025-06 epos3                  0.0s
+2025-06 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-06 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-06 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2025-06 lvl3_brand             0.0s
+2025-06 ets_house_share        0.0s
+2025-06 ets_damped             0.0s
+2025-07 naive                  0.0s
+2025-07 flat6                  0.0s
+2025-07 flat3                  0.0s
+2025-07 flat12                 0.0s
+2025-07 flat6_cap              0.0s
+2025-07 median6                0.0s
+2025-07 median3                0.0s
+2025-07 median12               0.0s
+2025-07 trim6                  0.0s
+2025-07 trim12                 0.0s
+2025-07 pline6                 0.0s
+2025-07 brand6                 0.0s
+2025-07 house6                 0.0s
+2025-07 house3                 0.0s
+2025-07 house12                0.0s
+2025-07 brand12                0.0s
+2025-07 pline12                0.0s
+2025-07 blend_brand6           0.0s
+2025-07 blend_house6           0.0s
+2025-07 blend_house12          0.0s
+2025-07 clean40                0.0s
+2025-07 clean60                0.0s
+2025-07 clean100               0.0s
+2025-07 clean40_s              0.0s
+2025-07 clean60_s              0.0s
+2025-07 clean40_s12            0.0s
+2025-07 cutadj4                0.0s
+2025-07 cutadj4_trend_only     0.0s
+2025-07 epos6                  0.0s
+2025-07 epos3                  0.0s
+2025-07 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-07 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-07 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2025-07 lvl3_brand             0.0s
+2025-07 ets_house_share        0.2s
+2025-07 ets_damped            12.6s
+2025-08 naive                  0.0s
+2025-08 flat6                  0.0s
+2025-08 flat3                  0.0s
+2025-08 flat12                 0.0s
+2025-08 flat6_cap              0.0s
+2025-08 median6                0.0s
+2025-08 median3                0.0s
+2025-08 median12               0.0s
+2025-08 trim6                  0.0s
+2025-08 trim12                 0.0s
+2025-08 pline6                 0.0s
+2025-08 brand6                 0.0s
+2025-08 house6                 0.0s
+2025-08 house3                 0.0s
+2025-08 house12                0.0s
+2025-08 brand12                0.0s
+2025-08 pline12                0.0s
+2025-08 blend_brand6           0.0s
+2025-08 blend_house6           0.0s
+2025-08 blend_house12          0.0s
+2025-08 clean40                0.0s
+2025-08 clean60                0.0s
+2025-08 clean100               0.0s
+2025-08 clean40_s              0.0s
+2025-08 clean60_s              0.0s
+2025-08 clean40_s12            0.0s
+2025-08 cutadj4                0.0s
+2025-08 cutadj4_trend_only     0.0s
+2025-08 epos6                  0.0s
+2025-08 epos3                  0.0s
+2025-08 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-08 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-08 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2025-08 lvl3_brand             0.0s
+2025-08 ets_house_share        0.2s
+2025-08 ets_damped            30.7s
+2025-09 naive                  0.0s
+2025-09 flat6                  0.0s
+2025-09 flat3                  0.0s
+2025-09 flat12                 0.0s
+2025-09 flat6_cap              0.0s
+2025-09 median6                0.0s
+2025-09 median3                0.0s
+2025-09 median12               0.0s
+2025-09 trim6                  0.0s
+2025-09 trim12                 0.0s
+2025-09 pline6                 0.0s
+2025-09 brand6                 0.0s
+2025-09 house6                 0.0s
+2025-09 house3                 0.0s
+2025-09 house12                0.0s
+2025-09 brand12                0.0s
+2025-09 pline12                0.0s
+2025-09 blend_brand6           0.0s
+2025-09 blend_house6           0.0s
+2025-09 blend_house12          0.0s
+2025-09 clean40                0.0s
+2025-09 clean60                0.0s
+2025-09 clean100               0.0s
+2025-09 clean40_s              0.0s
+2025-09 clean60_s              0.0s
+2025-09 clean40_s12            0.0s
+2025-09 cutadj4                0.0s
+2025-09 cutadj4_trend_only     0.0s
+2025-09 epos6                  0.0s
+2025-09 epos3                  0.0s
+2025-09 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-09 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-09 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2025-09 lvl3_brand             0.0s
+2025-09 ets_house_share        0.4s
+2025-09 ets_damped            16.8s
+2025-10 naive                  0.0s
+2025-10 flat6                  0.0s
+2025-10 flat3                  0.0s
+2025-10 flat12                 0.0s
+2025-10 flat6_cap              0.0s
+2025-10 median6                0.0s
+2025-10 median3                0.0s
+2025-10 median12               0.0s
+2025-10 trim6                  0.0s
+2025-10 trim12                 0.0s
+2025-10 pline6                 0.0s
+2025-10 brand6                 0.0s
+2025-10 house6                 0.0s
+2025-10 house3                 0.0s
+2025-10 house12                0.0s
+2025-10 brand12                0.0s
+2025-10 pline12                0.0s
+2025-10 blend_brand6           0.0s
+2025-10 blend_house6           0.0s
+2025-10 blend_house12          0.0s
+2025-10 clean40                0.0s
+2025-10 clean60                0.0s
+2025-10 clean100               0.0s
+2025-10 clean40_s              0.0s
+2025-10 clean60_s              0.0s
+2025-10 clean40_s12            0.0s
+2025-10 cutadj4                0.0s
+2025-10 cutadj4_trend_only     0.0s
+2025-10 epos6                  0.0s
+2025-10 epos3                  0.0s
+2025-10 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-10 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-10 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2025-10 lvl3_brand             0.0s
+2025-10 ets_house_share        0.2s
+2025-10 ets_damped            14.5s
+2025-11 naive                  0.0s
+2025-11 flat6                  0.0s
+2025-11 flat3                  0.0s
+2025-11 flat12                 0.0s
+2025-11 flat6_cap              0.0s
+2025-11 median6                0.0s
+2025-11 median3                0.0s
+2025-11 median12               0.0s
+2025-11 trim6                  0.0s
+2025-11 trim12                 0.0s
+2025-11 pline6                 0.0s
+2025-11 brand6                 0.0s
+2025-11 house6                 0.0s
+2025-11 house3                 0.0s
+2025-11 house12                0.0s
+2025-11 brand12                0.0s
+2025-11 pline12                0.0s
+2025-11 blend_brand6           0.0s
+2025-11 blend_house6           0.0s
+2025-11 blend_house12          0.0s
+2025-11 clean40                0.0s
+2025-11 clean60                0.0s
+2025-11 clean100               0.0s
+2025-11 clean40_s              0.0s
+2025-11 clean60_s              0.0s
+2025-11 clean40_s12            0.0s
+2025-11 cutadj4                0.0s
+2025-11 cutadj4_trend_only     0.0s
+2025-11 epos6                  0.0s
+2025-11 epos3                  0.0s
+2025-11 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-11 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-11 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2025-11 lvl3_brand             0.0s
+2025-11 ets_house_share        0.3s
+2025-11 ets_damped            21.7s
+2025-12 naive                  0.0s
+2025-12 flat6                  0.0s
+2025-12 flat3                  0.0s
+2025-12 flat12                 0.0s
+2025-12 flat6_cap              0.0s
+2025-12 median6                0.0s
+2025-12 median3                0.0s
+2025-12 median12               0.0s
+2025-12 trim6                  0.0s
+2025-12 trim12                 0.0s
+2025-12 pline6                 0.0s
+2025-12 brand6                 0.0s
+2025-12 house6                 0.0s
+2025-12 house3                 0.0s
+2025-12 house12                0.0s
+2025-12 brand12                0.0s
+2025-12 pline12                0.0s
+2025-12 blend_brand6           0.0s
+2025-12 blend_house6           0.0s
+2025-12 blend_house12          0.0s
+2025-12 clean40                0.0s
+2025-12 clean60                0.0s
+2025-12 clean100               0.0s
+2025-12 clean40_s              0.0s
+2025-12 clean60_s              0.0s
+2025-12 clean40_s12            0.0s
+2025-12 cutadj4                0.0s
+2025-12 cutadj4_trend_only     0.0s
+2025-12 epos6                  0.0s
+2025-12 epos3                  0.0s
+2025-12 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-12 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2025-12 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2025-12 lvl3_brand             0.0s
+2025-12 ets_house_share        0.2s
+2025-12 ets_damped            15.7s
+2026-01 naive                  0.0s
+2026-01 flat6                  0.0s
+2026-01 flat3                  0.0s
+2026-01 flat12                 0.0s
+2026-01 flat6_cap              0.0s
+2026-01 median6                0.0s
+2026-01 median3                0.0s
+2026-01 median12               0.0s
+2026-01 trim6                  0.0s
+2026-01 trim12                 0.0s
+2026-01 pline6                 0.0s
+2026-01 brand6                 0.0s
+2026-01 house6                 0.0s
+2026-01 house3                 0.0s
+2026-01 house12                0.0s
+2026-01 brand12                0.0s
+2026-01 pline12                0.0s
+2026-01 blend_brand6           0.0s
+2026-01 blend_house6           0.0s
+2026-01 blend_house12          0.0s
+2026-01 clean40                0.0s
+2026-01 clean60                0.0s
+2026-01 clean100               0.0s
+2026-01 clean40_s              0.0s
+2026-01 clean60_s              0.0s
+2026-01 clean40_s12            0.0s
+2026-01 cutadj4                0.0s
+2026-01 cutadj4_trend_only     0.0s
+2026-01 epos6                  0.0s
+2026-01 epos3                  0.0s
+2026-01 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-01 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-01 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2026-01 lvl3_brand             0.0s
+2026-01 ets_house_share        0.2s
+2026-01 ets_damped            16.6s
+2026-02 naive                  0.0s
+2026-02 flat6                  0.0s
+2026-02 flat3                  0.0s
+2026-02 flat12                 0.0s
+2026-02 flat6_cap              0.0s
+2026-02 median6                0.0s
+2026-02 median3                0.0s
+2026-02 median12               0.0s
+2026-02 trim6                  0.0s
+2026-02 trim12                 0.0s
+2026-02 pline6                 0.0s
+2026-02 brand6                 0.0s
+2026-02 house6                 0.0s
+2026-02 house3                 0.0s
+2026-02 house12                0.0s
+2026-02 brand12                0.0s
+2026-02 pline12                0.0s
+2026-02 blend_brand6           0.0s
+2026-02 blend_house6           0.0s
+2026-02 blend_house12          0.0s
+2026-02 clean40                0.0s
+2026-02 clean60                0.0s
+2026-02 clean100               0.0s
+2026-02 clean40_s              0.0s
+2026-02 clean60_s              0.0s
+2026-02 clean40_s12            0.0s
+2026-02 cutadj4                0.0s
+2026-02 cutadj4_trend_only     0.0s
+2026-02 epos6                  0.0s
+2026-02 epos3                  0.0s
+2026-02 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-02 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-02 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2026-02 lvl3_brand             0.0s
+2026-02 ets_house_share        0.2s
+2026-02 ets_damped            15.8s
+2026-03 naive                  0.0s
+2026-03 flat6                  0.0s
+2026-03 flat3                  0.0s
+2026-03 flat12                 0.0s
+2026-03 flat6_cap              0.0s
+2026-03 median6                0.0s
+2026-03 median3                0.0s
+2026-03 median12               0.0s
+2026-03 trim6                  0.0s
+2026-03 trim12                 0.0s
+2026-03 pline6                 0.0s
+2026-03 brand6                 0.0s
+2026-03 house6                 0.0s
+2026-03 house3                 0.0s
+2026-03 house12                0.0s
+2026-03 brand12                0.0s
+2026-03 pline12                0.0s
+2026-03 blend_brand6           0.1s
+2026-03 blend_house6           0.0s
+2026-03 blend_house12          0.0s
+2026-03 clean40                0.0s
+2026-03 clean60                0.0s
+2026-03 clean100               0.0s
+2026-03 clean40_s              0.0s
+2026-03 clean60_s              0.0s
+2026-03 clean40_s12            0.0s
+2026-03 cutadj4                0.0s
+2026-03 cutadj4_trend_only     0.0s
+2026-03 epos6                  0.0s
+2026-03 epos3                  0.0s
+2026-03 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-03 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-03 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2026-03 lvl3_brand             0.0s
+2026-03 ets_house_share        0.2s
+2026-03 ets_damped            16.6s
+2026-04 naive                  0.0s
+2026-04 flat6                  0.0s
+2026-04 flat3                  0.0s
+2026-04 flat12                 0.0s
+2026-04 flat6_cap              0.0s
+2026-04 median6                0.0s
+2026-04 median3                0.0s
+2026-04 median12               0.0s
+2026-04 trim6                  0.0s
+2026-04 trim12                 0.0s
+2026-04 pline6                 0.0s
+2026-04 brand6                 0.0s
+2026-04 house6                 0.0s
+2026-04 house3                 0.0s
+2026-04 house12                0.0s
+2026-04 brand12                0.0s
+2026-04 pline12                0.0s
+2026-04 blend_brand6           0.0s
+2026-04 blend_house6           0.0s
+2026-04 blend_house12          0.0s
+2026-04 clean40                0.0s
+2026-04 clean60                0.0s
+2026-04 clean100               0.0s
+2026-04 clean40_s              0.0s
+2026-04 clean60_s              0.0s
+2026-04 clean40_s12            0.0s
+2026-04 cutadj4                0.0s
+2026-04 cutadj4_trend_only     0.0s
+2026-04 epos6                  0.0s
+2026-04 epos3                  0.0s
+2026-04 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-04 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-04 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2026-04 lvl3_brand             0.0s
+2026-04 ets_house_share        0.2s
+2026-04 ets_damped            17.5s
+2026-05 naive                  0.0s
+2026-05 flat6                  0.0s
+2026-05 flat3                  0.0s
+2026-05 flat12                 0.0s
+2026-05 flat6_cap              0.0s
+2026-05 median6                0.0s
+2026-05 median3                0.0s
+2026-05 median12               0.0s
+2026-05 trim6                  0.0s
+2026-05 trim12                 0.0s
+2026-05 pline6                 0.0s
+2026-05 brand6                 0.0s
+2026-05 house6                 0.0s
+2026-05 house3                 0.0s
+2026-05 house12                0.0s
+2026-05 brand12                0.0s
+2026-05 pline12                0.0s
+2026-05 blend_brand6           0.0s
+2026-05 blend_house6           0.0s
+2026-05 blend_house12          0.0s
+2026-05 clean40                0.0s
+2026-05 clean60                0.0s
+2026-05 clean100               0.0s
+2026-05 clean40_s              0.0s
+2026-05 clean60_s              0.0s
+2026-05 clean40_s12            0.0s
+2026-05 cutadj4                0.0s
+2026-05 cutadj4_trend_only     0.0s
+2026-05 epos6                  0.0s
+2026-05 epos3                  0.0s
+2026-05 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-05 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-05 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2026-05 lvl3_brand             0.0s
+2026-05 ets_house_share        0.2s
+2026-05 ets_damped            29.0s
+2026-06 naive                  0.0s
+2026-06 flat6                  0.0s
+2026-06 flat3                  0.0s
+2026-06 flat12                 0.0s
+2026-06 flat6_cap              0.0s
+2026-06 median6                0.0s
+2026-06 median3                0.0s
+2026-06 median12               0.0s
+2026-06 trim6                  0.0s
+2026-06 trim12                 0.0s
+2026-06 pline6                 0.0s
+2026-06 brand6                 0.0s
+2026-06 house6                 0.0s
+2026-06 house3                 0.0s
+2026-06 house12                0.0s
+2026-06 brand12                0.0s
+2026-06 pline12                0.0s
+2026-06 blend_brand6           0.0s
+2026-06 blend_house6           0.0s
+2026-06 blend_house12          0.0s
+2026-06 clean40                0.0s
+2026-06 clean60                0.0s
+2026-06 clean100               0.0s
+2026-06 clean40_s              0.0s
+2026-06 clean60_s              0.0s
+2026-06 clean40_s12            0.0s
+2026-06 cutadj4                0.0s
+2026-06 cutadj4_trend_only     0.0s
+2026-06 epos6                  0.0s
+2026-06 epos3                  0.0s
+2026-06 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-06 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-06 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2026-06 lvl3_brand             0.0s
+2026-06 ets_house_share        0.8s
+2026-06 ets_damped            38.7s
+2026-07 naive                  0.0s
+2026-07 flat6                  0.0s
+2026-07 flat3                  0.0s
+2026-07 flat12                 0.0s
+2026-07 flat6_cap              0.0s
+2026-07 median6                0.0s
+2026-07 median3                0.0s
+2026-07 median12               0.0s
+2026-07 trim6                  0.0s
+2026-07 trim12                 0.0s
+2026-07 pline6                 0.0s
+2026-07 brand6                 0.0s
+2026-07 house6                 0.0s
+2026-07 house3                 0.0s
+2026-07 house12                0.0s
+2026-07 brand12                0.0s
+2026-07 pline12                0.0s
+2026-07 blend_brand6           0.0s
+2026-07 blend_house6           0.0s
+2026-07 blend_house12          0.0s
+2026-07 clean40                0.0s
+2026-07 clean60                0.0s
+2026-07 clean100               0.0s
+2026-07 clean40_s              0.0s
+2026-07 clean60_s              0.0s
+2026-07 clean40_s12            0.0s
+2026-07 cutadj4                0.0s
+2026-07 cutadj4_trend_only     0.0s
+2026-07 epos6                  0.0s
+2026-07 epos3                  0.0s
+2026-07 epos6_blend            0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-07 lvl3_house             0.0s
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+2026-07 lvl6_house             0.0s
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: divide by zero encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:186: RuntimeWarning: invalid value encountered in divide
+  des = H[:, m - w:m] / S[:, m - w:m]
+/home/user/DP_polar/src/methods.py:187: RuntimeWarning: Mean of empty slice
+  lvl = np.nanmean(des, 1)
+/home/user/DP_polar/src/methods.py:189: RuntimeWarning: invalid value encountered in multiply
+  out = lvl[:, None] * idx
+2026-07 lvl3_brand             0.0s
+2026-07 ets_house_share        0.3s
+2026-07 ets_damped            22.9s
+/home/user/DP_polar/src/backtest.py:109: Pandas4Warning: Starting with pandas version 4.0 all arguments of sum will be keyword-only.
+  }
+/home/user/DP_polar/src/backtest.py:109: Pandas4Warning: Starting with pandas version 4.0 all arguments of sum will be keyword-only.
+  }
+/home/user/DP_polar/src/backtest.py:109: Pandas4Warning: Starting with pandas version 4.0 all arguments of sum will be keyword-only.
+  }
+/home/user/DP_polar/src/backtest.py:109: Pandas4Warning: Starting with pandas version 4.0 all arguments of sum will be keyword-only.
+  }
+(3039264, 7)
