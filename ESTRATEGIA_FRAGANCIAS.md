@@ -32,6 +32,20 @@ Fecha de decisión: 2026-10-09
    - Es × (1 + trend), no + trend.
    - Todos los meses del grupo llevan el mismo %. La estacionalidad la da la base del año anterior.
 
+## Sobre el grupo house × tamaño (revisado 2026-10-09)
+
+- **El tamaño no es un campo oficial.**
+  - Se lee de la descripción con `src/ptype.py`.
+  - Mapeo listo para revisar y reutilizar: `MAPEO_TAMANOS_FRAGANCIAS.csv`. Hay 453 de 456 EANs con tamaño leído, que cubren el 100% del volumen.
+- **Los EANs de un mismo house × tamaño NO se comportan igual.**
+  - El grupo explica solo el 12–19% de las diferencias de trend entre EANs. House sola explica el 3% y la product line el 57–60%.
+  - La product line no es usable para el trend: tiene grupos de 1–2 EANs y se distorsiona con los lanzamientos.
+- **Los trends por grupo no se mantienen de un año a otro.**
+  - El grupo que más cae un año tiende a rebotar al siguiente (correlación −0,69).
+  - Por eso conviene el tope de ±30% y no extrapolar caídas fuertes.
+- **El valor de house × tamaño es sobre todo estadístico:** junta suficientes EANs para que el ruido se compense y añade un poco de diferencia real por tamaño.
+- **Alternativa válida si no se quiere mantener el mapeo:** trend por house. Se pierde poco en promedio (~0,4 puntos de error por quarter), algo más en un año malo.
+
 ## Ajuste por supply cuts (añadido 2026-10-09)
 
 - **A la base** se le suma el **25%** de los cortes que tuvo ese EAN en ese mes del año anterior.
@@ -46,14 +60,13 @@ Fecha de decisión: 2026-10-09
   | 25% | −2,0% | +3,3% | 62,2% | 9 de 13 cortes |
   | 33% | −0,7% | +7,5% | 62,5% | 8 de 13 cortes |
 
-- Dentro del proceso completo (media con consenso y factor) el efecto es neutro. Aporta sobre todo cuando se usa la regla sola.
 
 ## Ajuste por DAs / promociones (añadido 2026-10-09)
 
 - **A la base** se le resta el **50% de los DAs positivos** que tuvo ese EAN en ese mes del año anterior.
   - Motivo: no repetir promos ni volúmenes puntuales del año pasado.
   - El 50%, y no el 100%, porque parte de los DAs son inputs de mercado que sí se repiten.
-- **No sumar los DAs de los meses futuros.** Empeora con cualquier %: la base ya incluye el nivel normal de promos, y la mitad del número que viene del consenso ya trae los DAs.
+- **No sumar los DAs de los meses futuros.** Empeora con cualquier %: la base ya incluye el nivel normal de promos.
 - **No quitar los DAs del cálculo del trend por ahora.** Solo hay DAs desde ene-25, así que la ventana anterior no tiene DAs y el trend saldría sesgado a la baja. Reevaluar con 24 meses de DAs o con el volumen real de promociones.
 - **Evidencia** (11 cortes, todos los Central):
 
@@ -65,25 +78,28 @@ Fecha de decisión: 2026-10-09
   En los maduros es prácticamente neutro (61,9% → 61,6%).
 - **Pendiente:** cuando haya volumen exacto de promos o un histórico corregido por outliers (o9), sustituir este ajuste y comparar las tres variantes: regla actual, outliers puros e híbrido.
 
-## Complementos validados en el backtest por fotos (sep-25 → sep-26)
+## Proceso mensual (decidido 2026-10-09)
 
-- **Número final** = media entre esta regla y el consenso.
-- **En cada foto nueva:**
-  - factor = real / forecast de los meses cerrados desde la foto anterior, calculado sobre el total;
-  - se multiplica todo el forecast restante por ese factor;
-  - los meses nuevos del horizonte se calculan con la regla y también se multiplican por el factor.
-- **Resultado de la cadena completa:** error EAN-mes 62,6%; desvío del total +2%, +9%, −7% y +5% en las 4 fotos.
+- **Horizonte:** los 9 meses siguientes al mes en curso.
+- **Cada mes se recalcula la regla completa** con los últimos 12 meses cerrados: base, cortes, DAs y trend. Los 9 meses se mueven con los números nuevos.
+- **No se usa factor de corrección.** Al recalcular cada mes, el trend de 12 meses ya incorpora lo último que ha pasado.
+- **Regla sola, recalculada cada mes** (13 cortes mensuales, EANs maduros): error EAN-mes 62,2%, desvío −2%.
+- **Datos necesarios cada mes:**
+  - Últimos 12 meses cerrados por EAN: actuals, actuals LY ("Consensus – Final LY M"), supply cuts y DAs.
+  - House y descripción, más el mapeo de tamaños.
+  - Los 9 meses del horizonte tienen su base dentro de esos 12 meses.
+  - Ojo con los DAs de meses pasados: o9 no los conserva todos en cada extracción, así que conviene guardarlos mes a mes.
 
-## Excepciones
+## Por qué 9 meses: la regla gana en cada mes del horizonte (`src/horizon9.py`)
 
-- **Local (menos de 6 meses de envíos):** no se aplica la regla; se usa el consenso.
-- **EANs de 6 a 17 meses de vida:** su año anterior incluye el llenado de canal y la regla los infla entre un 20% y un 47%. Apoyarse más en el consenso. Pendiente: definir una regla de ritmo de venta para ellos.
-- **Makeup:** no aplica esta regla. Ver `work/STRATEGY.md`: media de los últimos 12 meses del EAN, plana.
+Regla recalculada cada mes, 13 cortes mensuales (jul-25 a jul-26), EANs Central sin forecast manual. Error por EAN y mes:
 
-## Qué no hacer
+| Mes del horizonte | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+|---|---|---|---|---|---|---|---|---|---|
+| **Regla** | **75%** | **71%** | **74%** | **72%** | **71%** | **70%** | **66%** | **63%** | **64%** |
+| Año pasado tal cual | 83% | 79% | 85% | 86% | 86% | 86% | 75% | 69% | 72% |
+| Método actual (trend 6M EAN) | 83% | 83% | 89% | 89% | 87% | 94% | 82% | 81% | 81% |
 
-- Trend de 3 o 6 meses, o YTD: se van con los baches de supply.
-- Trend EAN a EAN o por product line.
-- Ajustar el nivel con los últimos 3 meses si hubo cortes.
-
-Evidencia y scripts: `src/snapshots.py`, `src/tracking.py`, `src/launch_trend.py`, `work/results/` y `work/STRATEGY.md`.
+- **Mejor que las dos alternativas en los 9 meses.**
+- **El error no crece con el horizonte:** el mes 9 es tan fiable como el mes 1, porque la base es el mismo mes del año anterior y el trend es de 12 meses.
+- **Desvío total de los 9 meses: 0%.** El año pasado tal cual se pasa un +23% y el método actual un +12%.

@@ -1,4 +1,7 @@
 # >>> ESTRATEGIAS DECIDIDAS (2026-10-09): ESTRATEGIA_FRAGANCIAS.md y ESTRATEGIA_MAKEUP.md en la raíz. Infografía: INFOGRAFIA_REGLAS.pdf (src/infografia.py). <<<
+# >>> VIGENTE (cierre 2026-10-09): forecast = SOLO la regla, recalculada cada mes, horizonte 9 meses. SIN consenso y SIN factor de corrección.
+#     Fragancias y makeup: ver ESTRATEGIA_*.md. Evidencia por mes del horizonte: src/horizon9.py / work/results/horizon9.md.
+#     Todo lo de abajo que mencione mezcla con consenso o factor real/forecast es HISTÓRICO (descartado por el usuario).
 # >>> MAKEUP GUMU/KYMU (sesión 5) — ver ESTRATEGIA_MAKEUP.md. Regla propuesta: media 6M x (1 + 50% trend12M función, tope ±30%), plana, recalcular en cada foto. <<<
    Bug corregido en mu_backtest.evaluate (A indexado por columnas del horizonte). Envíos sin estacionalidad estable; EPOS sí (dic pico) pero aplicarla empeora.
 

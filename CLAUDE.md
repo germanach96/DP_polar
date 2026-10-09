@@ -1,7 +1,7 @@
 # Contexto: estrategia de forecast de demanda
 
 ## Quién soy y qué necesito
-Soy demand planner en una empresa de consumo masivo (belleza / fragancias). Trabajamos con o9 como plataforma de forecast y un horizonte corto de 8 meses (excluyendo el mes en curso). La señal de supply se manda a nivel EAN.
+Soy demand planner en una empresa de consumo masivo (belleza / fragancias). Trabajamos con o9 como plataforma de forecast y un horizonte corto de 9 meses (excluyendo el mes en curso). La señal de supply se manda a nivel EAN.
 
 Mi objetivo: **encontrar el método de forecast más defendible con datos** y tener un número / rango objetivo que pueda usar como guía en la reunión de consenso.
 
@@ -35,7 +35,7 @@ Calcula todos sobre los mismos datos y el mismo horizonte:
 Si ves otro método razonable y simple de explicar, propónmelo.
 
 ## Backtesting (lo más importante)
-- Simula varios puntos de corte en el pasado (rolling origin): en cada corte, usa solo los datos disponibles hasta ese momento y pronostica los 8 meses siguientes.
+- Simula varios puntos de corte en el pasado (rolling origin): en cada corte, usa solo los datos disponibles hasta ese momento y pronostica los 9 meses siguientes.
 - Compara cada pronóstico contra los actuals reales.
 - Métricas:
   - **WMAPE** (principal), calculado a nivel EAN.
@@ -56,7 +56,7 @@ Para cada quarter futuro, muestra qué pasó en el quarter homólogo del año an
 ## Entregables
 1. Un **Excel** con:
    - Resumen: ranking de métodos por WMAPE y bias, global y por lag/quarter.
-   - Forecast de los próximos 8 meses del método ganador con su banda P10–P90.
+   - Forecast de los próximos 9 meses del método ganador con su banda P10–P90.
    - Comparación contra el trend plano actual.
    - Hoja de efecto base por quarter.
    - Lista de outliers detectados y la regla usada.
@@ -84,18 +84,20 @@ Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infogra
 - Trend = suma de los últimos 12 meses cerrados / suma de los 12 anteriores − 1.
   - Se calcula sobre actuals puros, con todos los Central (incluidos lanzamientos con 6 o más meses de envíos), y tiene tope de ±30%.
 - Tamaños: ≤15 ml, 20–40, 45–60, 75–125, ≥150/refill, ancilares.
-- En cada foto: media con el consenso y factor real/forecast (sobre el total) aplicado al forecast restante.
+- Cada mes se recalcula la regla para los 9 meses siguientes. Sin factor de corrección y sin consenso: el forecast es solo la regla.
 
 **Makeup** (GUMU = Gucci Make up, KYMU = Kylie Makeup):
 - Mes ajustado = envío + mín(10% cortes ; 10% envío) − 25% DAs positivos.
 - Base = media de los últimos 6 meses ajustados.
 - Forecast = Base × (1 + 50% del trend 12M de la función: Face, Lips o Eyes), con tope de ±30%. Es el mismo número para todos los meses.
 - Sin estacionalidad: los envíos no repiten patrón (el EPOS sí).
-- En cada foto se recalcula todo. Sin factor de corrección ni media con el consenso.
+- Cada mes se recalcula todo para los 9 meses siguientes. Sin factor de corrección ni consenso.
+
+**Horizonte:** 9 meses. La regla gana al año pasado y al método actual en cada uno de los 9 meses (`src/horizon9.py`, `work/results/horizon9.md`).
 
 **Excepciones:**
-- Local (menos de 6 meses de envíos): consenso.
-- EANs de 6 a 17 meses: apoyarse más en el consenso.
+- Local (menos de 6 meses de envíos): fuera de la regla, no tienen histórico.
+- EANs de 6 a 17 meses: su año anterior incluye el llenado de canal; revisarlos con cuidado.
 
 ## Decisiones / respuestas del usuario
 - **Local** = iniciativas con menos de ~6 meses de envíos; luego pasan a Central. Se ignoran en la regla.
