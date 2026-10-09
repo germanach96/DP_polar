@@ -71,7 +71,7 @@ def parties(H, C, DAp, group, line, m):
     return {"ly": ly, "rf": rf, "lyl": lyl, "rm": rm, "m3": m3, "m6s": m6s}, central, g_l, n_line
 
 
-def records(cat, lab_of, house_of, eans, s, P, Da, A, H, m, sel, isf, months, size):
+def records(cat, lab_of, house_of, eans, s, P, Da, A, H, m, sel, isf, months, size, Cn):
     P = {k: np.clip(v + Da, 0, None) for k, v in P.items()}
     age = ages(H, m); qs = [fq(t) for t in months]; out = []
     for q in dict.fromkeys(qs):
@@ -80,7 +80,7 @@ def records(cat, lab_of, house_of, eans, s, P, Da, A, H, m, sel, isf, months, si
             continue
         a = A[sel][:, idx]
         df = pd.DataFrame(dict(ean=eans[sel], cat=cat, house=[lab_of[h] for h in house_of[sel]], size=size[sel], snap=s, q=q,
-                               age=age[sel], isf=isf[sel], real=a.sum(1)))
+                               age=age[sel], isf=isf[sel], real=a.sum(1), cons=Cn[sel][:, idx].sum(1)))
         for k, v in P.items():
             df[k] = v[sel][:, idx].sum(1)
             df["mae_" + k] = np.abs(v[sel][:, idx] - a).sum(1)
@@ -101,10 +101,10 @@ def build():
         DAp = np.clip(np.nan_to_num(dt.da_known(d, Hd.index, V)[0].values), 0, None)
         P, central, _, _ = parties(Hv, C, DAp, group, line, m)
         x = d[d.version == s]
-        _, Da = cons_da(x, V, Hd.index, months)
+        Cn, Da = cons_da(x, V, Hd.index, months)
         isf = x.groupby("ean").isf.max().reindex(Hd.index).fillna(0).values
         sel = a.house.isin(FRAG).values & Hd.index.isin(set(x.ean)) & central
-        out += records("Fragancias", FRAG, a.house.values, Hd.index.values, s, P, Da, A[:, m + 1:m + 10], Hv, m, sel, isf, months, a.ptype.values)
+        out += records("Fragancias", FRAG, a.house.values, Hd.index.values, s, P, Da, A[:, m + 1:m + 10], Hv, m, sel, isf, months, a.ptype.values, Cn)
     dm, Hdf, Edf, Cdf, attr, fac = mb.load()
     Hm_ = Hdf.values; eans = Hdf.index; Am_ = np.nan_to_num(Hm_)
     group = attr.fam_brand.values; line = (attr.fam.astype(str) + "|" + attr.pline.astype(str)).values
@@ -113,11 +113,11 @@ def build():
         DAp = np.clip(np.nan_to_num(mb.da_known(dm, eans, V).values), 0, None); DAp[:, m:] = 0
         P, central, _, _ = parties(Hm_, Cdf.values, DAp, group, line, m)
         x = dm[dm.version == s]
-        _, Da = cons_da(x, V, eans, months)
+        Cn, Da = cons_da(x, V, eans, months)
         isf = x.groupby("ean").isf.max().reindex(eans).fillna(0).values
         sel = attr.fam.isin(MU).values & eans.isin(set(x.ean)) & central
         out += records("Makeup", MU, attr.fam.values, eans.values, s, P, Da, Am_[:, m + 1:m + 10], Hm_, m, sel, isf, months,
-                       np.full(len(eans), None))
+                       np.full(len(eans), None), Cn)
     e = pd.concat(out, ignore_index=True)
     e["qlab"] = [QLAB[(s, q)] for s, q in zip(e.snap, e.q)]
     return e

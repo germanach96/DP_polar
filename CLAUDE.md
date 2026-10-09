@@ -145,6 +145,17 @@ Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infogra
     - Media 3M es la primera fuerza en EANs: 374 (38%), pero solo el 21% del volumen. Regla makeup: 193 EANs, 23% del volumen.
     - WAPE90 ponderado: Regla fragancias 14%, Año pasado × línea 16%, Regla makeup 19%, el resto 30–31%.
     - Año pasado, Media 6M estacional y Media 3M se pasan un +27–30% en el total: no tienen trend y suman DAs encima de actuals con promos.
+- **Consenso vs Parlamento + DAs** (`python3 src/parliament_vs_cons.py`, solo chat).
+  - Cada EAN elige su partido con sep-25 Q2+Q3 y se prueba con mar-26 Q4 FY26 + Q1 FY27.
+  - Resultado 2026-10-09: el parlamento pierde.
+    - WAPE90: parlamento 28,5% contra 14,3% del consenso. Error EAN: 66,8% contra 48,6%.
+    - Duelo EAN a EAN: consenso 478 contra parlamento 362; volumen 66% contra 34%.
+    - Ni eligiendo a posteriori con los 5 quarters se gana al consenso: WAPE90 15,3%.
+    - El partido elegido repite como el mejor solo el 20% de las veces (al azar sería 17%).
+    - Mejor partido único: Regla fragancias para todos, WAPE90 13,8%, pero error EAN 65%.
+- **DAs (hablado 2026-10-09):**
+  - Suben el forecast unos 16 puntos: ayudan en el total solo a las reglas con trend y empeoran el error EAN de todos los partidos.
+  - La foto sep-26 solo conserva DAs desde ene-26. Propuesta pendiente: base limpia de DAs del pasado + DAs futuros para todos, medir la precisión de los DAs y guardar los DAs de cada foto.
 
 ## Decisiones / respuestas del usuario
 - **Local** = iniciativas con menos de ~6 meses de envíos; luego pasan a Central. Se ignoran en la regla.
