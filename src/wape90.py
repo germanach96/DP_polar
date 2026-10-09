@@ -6,7 +6,7 @@ Foto sep-25: Q2 (oct-dic 25), Q3 (ene-mar 26), Q4 (abr-jun 26). Foto mar-26: Q4 
 Universo: EANs donde se aplica la regla (Central, 6+ meses de envíos en la foto).
 Consenso = tal cual en la foto (ya incluye los DAs). Regla + DAs = regla + todos los DAs de la foto en esos meses (positivos y negativos), suelo 0 por EAN-mes.
 Se guarda también la regla sin DAs (orig_*) como referencia.
-Salida: work/wape90.json"""
+Salida: work/wape90.json (casa x quarter) y work/wape90_ean.parquet (EAN x quarter, para la votación de src/votes.py)"""
 import sys, json, warnings
 import numpy as np, pandas as pd
 from pathlib import Path
@@ -26,7 +26,7 @@ def fq(t):
 QNAME = {"FY26.Q2": "Q2 FY26 · oct–dic 25", "FY26.Q3": "Q3 FY26 · ene–mar 26", "FY26.Q4": "Q4 FY26 · abr–jun 26", "FY27.Q1": "Q1 FY27 · jul–ago 26*"}
 
 
-def quarters(house, snap, F, Cn, A, sel, months, Co):
+def quarters(house, snap, F, Cn, A, sel, months, Co, ids=None, seg=None, sink=None):
     rows = []
     qs = [fq(t) for t in months]
     for q in dict.fromkeys(qs):
@@ -34,6 +34,8 @@ def quarters(house, snap, F, Cn, A, sel, months, Co):
         if not idx:
             continue
         f = F[sel][:, idx].sum(1); c = Cn[sel][:, idx].sum(1); a = A[sel][:, idx].sum(1); o = Co[sel][:, idx].sum(1)
+        if sink is not None:
+            sink.append(pd.DataFrame(dict(ean=ids[sel], house=house, snap=snap, q=q, seg=seg[sel], real=a, consenso=c, regla_da=f, regla=o)))
         rows.append(dict(house=house, snap=snap, q=q, label=QNAME[q], meses=len(idx), real=float(a.sum()),
                          consenso=float(c.sum()), regla=float(f.sum()),
                          wape_cons=float(abs(c.sum() - a.sum()) / a.sum()), wape_regla=float(abs(f.sum() - a.sum()) / a.sum()),
@@ -53,7 +55,7 @@ def cons_da(x, V, idx, months):
 
 
 def main():
-    out = []
+    out = []; sink = []
     d = pd.read_parquet(W / "data.parquet")
     H = pd.read_pickle(W / "hist.pkl").reindex(columns=M)
     C = pd.read_pickle(W / "cuts.pkl").reindex(index=H.index, columns=M).fillna(0).values
@@ -66,8 +68,10 @@ def main():
         x = d[d.version == s]
         Cn, Da = cons_da(x, V, H.index, months)
         Am = A[:, m + 1:m + 10]; in_snap = H.index.isin(set(x.ean))
+        seg = hc.segments(Hv, m, x.groupby("ean").isf.max().reindex(H.index).fillna(0).values)
         for house, lab in [("BURBERRY", "Burberry"), ("Gucci", "Gucci"), ("CP-Marc Jacobs", "Marc Jacobs")]:
-            out += quarters(lab, s, np.clip(F + Da, 0, None), Cn, Am, (a.house == house).values & in_snap & central, months, F)
+            out += quarters(lab, s, np.clip(F + Da, 0, None), Cn, Am, (a.house == house).values & in_snap & central, months, F,
+                            H.index.values, seg, sink)
     dm, Hdf, Edf, Cdf, attr, fac = mb.load()
     Hm_ = Hdf.values; Cm = Cdf.values; eans = Hdf.index; Am_ = np.nan_to_num(Hm_)
     for s in hc.SNAPS:
@@ -77,8 +81,11 @@ def main():
         x = dm[dm.version == s]
         Cn, Da = cons_da(x, V, eans, months)
         Am = Am_[:, m + 1:m + 10]; in_snap = eans.isin(set(x.ean))
+        seg = hc.segments(Hm_, m, x.groupby("ean").isf.max().reindex(eans).fillna(0).values)
         for fam, lab in [("GUMU", "Gucci Make up"), ("KYMU", "Kylie Makeup")]:
-            out += quarters(lab, s, np.clip(F + Da, 0, None), Cn, Am, (attr.fam == fam).values & in_snap & central, months, F)
+            out += quarters(lab, s, np.clip(F + Da, 0, None), Cn, Am, (attr.fam == fam).values & in_snap & central, months, F,
+                            eans.values, seg, sink)
+    pd.concat(sink).to_parquet(W / "wape90_ean.parquet")
     (W / "wape90.json").write_text(json.dumps(out, indent=1, ensure_ascii=False))
     df = pd.DataFrame(out)
     pd.set_option("display.width", 250)
