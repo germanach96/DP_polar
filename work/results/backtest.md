@@ -7,27 +7,38 @@ verdad = última versión. WMAPE = sum|F-A|/sum A a nivel EAN-mes. Bias = sum(F-
 
 | method             |   wmape |   bias |   wmape_nocut |   bias_nocut |
 |:-------------------|--------:|-------:|--------------:|-------------:|
+| clean_median_h12   |   0.549 | -0.142 |         0.529 |       -0.163 |
 | combo_h12c_lvl6    |   0.549 |  0.009 |         0.528 |       -0.013 |
 | house12_clean_x30  |   0.554 | -0.15  |         0.535 |       -0.172 |
+| resc_median        |   0.555 | -0.028 |         0.53  |       -0.056 |
 | combo_3            |   0.556 | -0.008 |         0.535 |       -0.031 |
 | house12_lfl_clean  |   0.558 | -0.294 |         0.544 |       -0.313 |
 | house12_clean      |   0.559 | -0.156 |         0.539 |       -0.179 |
 | house9_clean       |   0.566 | -0.151 |         0.548 |       -0.172 |
 | house12_clean_x60  |   0.567 | -0.183 |         0.549 |       -0.202 |
+| resc_x40_cap       |   0.568 | -0.029 |         0.543 |       -0.059 |
 | house12_clean_resc |   0.569 | -0.031 |         0.544 |       -0.061 |
+| resc_x40           |   0.569 | -0.031 |         0.544 |       -0.061 |
 | combo_c12_lvl6     |   0.57  |  0.016 |         0.548 |       -0.004 |
 | combo_h12_lvl6     |   0.571 |  0.059 |         0.548 |        0.035 |
 | pline12_clean      |   0.572 | -0.233 |         0.557 |       -0.25  |
 | brand12_clean      |   0.573 | -0.145 |         0.555 |       -0.166 |
+| resc_x40_w9        |   0.576 | -0.028 |         0.552 |       -0.054 |
 | house6_clean       |   0.58  | -0.118 |         0.563 |       -0.137 |
 | house12_clean_x100 |   0.586 | -0.197 |         0.567 |       -0.216 |
 | combo_c12_h12      |   0.586 | -0.098 |         0.566 |       -0.122 |
+| resc_x40_w6        |   0.595 |  0.009 |         0.572 |       -0.015 |
+| resc_x40_2y_cap    |   0.595 |  0.024 |         0.571 |       -0.001 |
+| resc_x40_2y        |   0.597 |  0.021 |         0.574 |       -0.003 |
+| resc_x40_brand     |   0.602 | -0.033 |         0.578 |       -0.061 |
 | house12_lfl        |   0.604 | -0.207 |         0.587 |       -0.228 |
 | clean40_s12        |   0.613 | -0.141 |         0.593 |       -0.161 |
 | brand12_lfl        |   0.616 | -0.193 |         0.599 |       -0.213 |
 | house6_lfl         |   0.621 | -0.189 |         0.607 |       -0.205 |
 | lvl6_house         |   0.628 |  0.173 |         0.604 |        0.152 |
+| young_lvl6         |   0.628 |  0.173 |         0.604 |        0.152 |
 | house12            |   0.63  | -0.056 |         0.607 |       -0.083 |
+| resc_none          |   0.63  | -0.056 |         0.607 |       -0.083 |
 | ytd_house          |   0.636 | -0.041 |         0.614 |       -0.067 |
 | pline12            |   0.637 | -0.145 |         0.619 |       -0.164 |
 | epos_house3        |   0.643 | -0.032 |         0.615 |       -0.067 |
@@ -44,6 +55,8 @@ verdad = última versión. WMAPE = sum|F-A|/sum A a nivel EAN-mes. Bias = sum(F-
 | clean60_s          |   0.668 | -0.132 |         0.655 |       -0.141 |
 | epos_brand6        |   0.67  |  0.037 |         0.64  |        0.002 |
 | clean100           |   0.677 | -0.171 |         0.666 |       -0.178 |
+| young_lvl3         |   0.683 |  0.194 |         0.658 |        0.172 |
+| young_lvl3_skip2   |   0.683 |  0.194 |         0.658 |        0.172 |
 | lvl3_house         |   0.683 |  0.194 |         0.658 |        0.172 |
 | epos6              |   0.684 |  0.068 |         0.653 |        0.032 |
 | pline6             |   0.684 | -0.088 |         0.671 |       -0.1   |
@@ -437,31 +450,31 @@ verdad = última versión. WMAPE = sum|F-A|/sum A a nivel EAN-mes. Bias = sum(F-
 
 | method             |   wmape |   bias |
 |:-------------------|--------:|-------:|
+| resc_x40_cap       |   0.33  | -0.029 |
+| resc_median        |   0.332 | -0.028 |
+| resc_x40           |   0.332 | -0.031 |
 | house12_clean_resc |   0.332 | -0.031 |
 | combo_c12_h12      |   0.343 | -0.098 |
+| resc_x40_w9        |   0.343 | -0.028 |
 | combo_3            |   0.344 | -0.008 |
 | blend_house12      |   0.346 | -0.039 |
 | epos_house3        |   0.351 | -0.032 |
 | house12_clean_x30  |   0.352 | -0.15  |
 | house12_clean      |   0.352 | -0.156 |
+| resc_none          |   0.353 | -0.056 |
 | house12            |   0.353 | -0.056 |
 | clean40_s12        |   0.354 | -0.141 |
+| clean_median_h12   |   0.355 | -0.142 |
 | combo_h12c_lvl6    |   0.356 |  0.009 |
 | epos_house6        |   0.356 |  0.033 |
 | combo_h12_lvl6     |   0.356 |  0.059 |
+| resc_x40_2y_cap    |   0.358 |  0.024 |
 | house12_clean_x60  |   0.359 | -0.183 |
 | ytd_house          |   0.359 | -0.041 |
 | house12_half       |   0.36  |  0.033 |
 | house12_lfl        |   0.361 | -0.207 |
+| resc_x40_2y        |   0.362 |  0.021 |
 | house9_clean       |   0.363 | -0.151 |
-| epos_brand6        |   0.363 |  0.037 |
-| combo_c12_lvl6     |   0.363 |  0.016 |
-| flat12             |   0.363 | -0.008 |
-| epos6              |   0.366 |  0.068 |
-| flat6_cap          |   0.368 | -0.058 |
-| brand12_clean      |   0.372 | -0.145 |
-| median12           |   0.373 | -0.138 |
-| brand12_lfl        |   0.373 | -0.193 |
 
 ## WMAPE agregado a house-mes
 
@@ -469,9 +482,15 @@ verdad = última versión. WMAPE = sum|F-A|/sum A a nivel EAN-mes. Bias = sum(F-
 |:-------------------|--------:|-------:|
 | blend_house12      |   0.248 | -0.039 |
 | flat12             |   0.249 | -0.008 |
+| resc_x40_cap       |   0.251 | -0.029 |
+| resc_x40_brand     |   0.253 | -0.033 |
+| resc_x40           |   0.253 | -0.031 |
 | house12_clean_resc |   0.253 | -0.031 |
+| resc_median        |   0.256 | -0.028 |
 | house12            |   0.261 | -0.056 |
+| resc_none          |   0.261 | -0.056 |
 | brand12            |   0.262 | -0.045 |
+| resc_x40_w9        |   0.267 | -0.028 |
 | ytd_house          |   0.269 | -0.041 |
 | combo_c12_h12      |   0.269 | -0.098 |
 | house12_half       |   0.27  |  0.033 |
@@ -483,15 +502,9 @@ verdad = última versión. WMAPE = sum|F-A|/sum A a nivel EAN-mes. Bias = sum(F-
 | flat6_cap          |   0.276 | -0.058 |
 | median12           |   0.278 | -0.138 |
 | combo_3            |   0.278 | -0.008 |
+| resc_x40_2y_cap    |   0.279 |  0.024 |
 | epos6_blend        |   0.28  | -0.016 |
-| brand12_lfl        |   0.285 | -0.193 |
-| clean40_s12        |   0.29  | -0.141 |
-| brand12_clean      |   0.291 | -0.145 |
-| house6_half        |   0.291 |  0.041 |
-| house12_lfl        |   0.293 | -0.207 |
-| blend_house6       |   0.293 | -0.016 |
-| house12_clean      |   0.293 | -0.156 |
-| house12_clean_x30  |   0.294 | -0.15  |
+| resc_x40_2y        |   0.283 |  0.021 |
 
 ## WMAPE a nivel EAN-quarter (suma de meses del quarter dentro del horizonte)
 
@@ -499,35 +512,39 @@ verdad = última versión. WMAPE = sum|F-A|/sum A a nivel EAN-mes. Bias = sum(F-
 |:-------------------|--------:|-------:|
 | combo_h12c_lvl6    |   0.408 |  0.009 |
 | combo_3            |   0.409 | -0.008 |
+| resc_median        |   0.413 | -0.028 |
+| clean_median_h12   |   0.415 | -0.142 |
+| resc_x40_cap       |   0.419 | -0.029 |
 | house12_clean_x30  |   0.42  | -0.15  |
 | house12_clean_resc |   0.42  | -0.031 |
+| resc_x40           |   0.42  | -0.031 |
 | combo_h12_lvl6     |   0.421 |  0.059 |
 | house12_clean      |   0.424 | -0.156 |
 | combo_c12_lvl6     |   0.428 |  0.016 |
+| resc_x40_w9        |   0.429 | -0.028 |
 | house9_clean       |   0.433 | -0.151 |
 | house12_clean_x60  |   0.436 | -0.183 |
 | combo_c12_h12      |   0.44  | -0.098 |
 | brand12_clean      |   0.441 | -0.145 |
 | house12            |   0.444 | -0.056 |
+| resc_none          |   0.444 | -0.056 |
 | house6_clean       |   0.446 | -0.118 |
+| resc_x40_2y_cap    |   0.448 |  0.024 |
+| resc_x40_w6        |   0.448 |  0.009 |
 | ytd_house          |   0.449 | -0.041 |
 | epos_house3        |   0.451 | -0.032 |
 | house12_clean_x100 |   0.451 | -0.197 |
-| house12_lfl_clean  |   0.452 | -0.294 |
-| house12_lfl        |   0.455 | -0.207 |
-| house12_half       |   0.457 |  0.033 |
-| pline12_clean      |   0.459 | -0.233 |
-| epos_house6        |   0.462 |  0.033 |
-| brand12_lfl        |   0.465 | -0.193 |
-| brand12            |   0.465 | -0.045 |
-| epos_brand6        |   0.468 |  0.037 |
-| house6_half        |   0.469 |  0.041 |
+| resc_x40_2y        |   0.451 |  0.021 |
 
 ## WMAPE a nivel house-quarter
 
 | method             |   wmape |   bias |
 |:-------------------|--------:|-------:|
+| resc_x40_cap       |   0.129 | -0.029 |
+| resc_x40           |   0.134 | -0.031 |
 | house12_clean_resc |   0.134 | -0.031 |
+| resc_x40_brand     |   0.138 | -0.033 |
+| resc_median        |   0.138 | -0.028 |
 | blend_house12      |   0.143 | -0.039 |
 | epos_house6        |   0.147 |  0.033 |
 | epos_brand6        |   0.147 |  0.037 |
@@ -535,23 +552,19 @@ verdad = última versión. WMAPE = sum|F-A|/sum A a nivel EAN-mes. Bias = sum(F-
 | house12_half       |   0.148 |  0.033 |
 | epos6              |   0.15  |  0.068 |
 | house12            |   0.15  | -0.056 |
+| resc_none          |   0.15  | -0.056 |
 | brand12            |   0.151 | -0.045 |
 | epos_house3        |   0.153 | -0.032 |
 | combo_c12_h12      |   0.155 | -0.098 |
+| resc_x40_w9        |   0.157 | -0.028 |
 | ytd_house          |   0.161 | -0.041 |
 | pline12            |   0.171 | -0.145 |
 | combo_3            |   0.176 | -0.008 |
 | house6_half        |   0.177 |  0.041 |
 | median12           |   0.18  | -0.138 |
+| resc_x40_2y_cap    |   0.183 |  0.024 |
 | naive              |   0.183 |  0.122 |
 | epos6_blend        |   0.186 | -0.016 |
-| flat6_cap          |   0.187 | -0.058 |
-| clean40_s12        |   0.19  | -0.141 |
-| brand12_clean      |   0.191 | -0.145 |
-| house12_clean      |   0.196 | -0.156 |
-| combo_h12c_lvl6    |   0.198 |  0.009 |
-| house12_clean_x30  |   0.198 | -0.15  |
-| combo_c12_lvl6     |   0.201 |  0.016 |
 
 ## Consenso real vs métodos — todos los EANs (4 versiones)
 

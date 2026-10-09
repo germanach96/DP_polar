@@ -365,3 +365,62 @@ def make_clean_rescaled(level="house", w=12, x=0.4, total_level="house", lfl_tot
                 out[sel, j] = Fc[sel, j] * sc
         return out
     return f
+
+
+def make_young_level(w=3, skip_first=1, level="house"):
+    """Para EANs jóvenes (lanzamientos): ritmo post-lanzamiento = media desestacionalizada de los últimos w meses
+    sin contar los `skip_first` primeros meses de vida (llenado de canal), x índice estacional del grupo."""
+    def f(ctx, m):
+        H = ctx["H"]
+        S = seasonal_index(H, m, ctx["attr"][level].values, ctx["months"])
+        out = np.full((H.shape[0], H_LAGS), np.nan)
+        for i in range(H.shape[0]):
+            y = H[i, :m]
+            idx = np.where(np.isfinite(y))[0]
+            if len(idx) <= skip_first:
+                continue
+            post = idx[skip_first:][-w:]
+            lvl = np.mean(y[post] / S[i, post])
+            out[i] = lvl * S[i, m + 1:m + 1 + H_LAGS]
+        return np.clip(out, 0, None)
+    return f
+
+
+def make_resc_general(w=12, x=0.4, cap=None, base_years=1, level="house", smooth="clean"):
+    """Versión general del ganador:
+    total grupo-mes = base LY (o media 2 años ajustada) x (1+g) ; reparto EAN por base limpia.
+    smooth: 'clean' (regla outliers x) | 'median' (mediana móvil 5m completa) | 'none'."""
+    def f(ctx, m):
+        H = ctx["H"]
+        if m - w - 12 < 0:
+            return np.full((H.shape[0], H_LAGS), np.nan)
+        if smooth == "clean":
+            Hc, _ = clean_history(H, m, x, 5, True, ctx)
+        elif smooth == "median":
+            Hc, _ = clean_history(H, m, 0.0, 5, True, ctx)
+        else:
+            Hc = H[:, :m]
+        keys = ctx["attr"][level].values
+        g = _group_g(Hc, m, w, keys)
+        if cap is not None:
+            g = np.clip(g, cap[0], cap[1])
+        lyr = np.nan_to_num(_ly(H, m)); lyc = np.nan_to_num(_ly(Hc, m))
+        if base_years == 2:
+            ly2 = np.full_like(lyr, np.nan)
+            for k in range(1, H_LAGS + 1):
+                j = m + k - 24
+                if j >= 0:
+                    ly2[:, k - 1] = np.nan_to_num(H[:, j])
+        out = np.zeros_like(lyr)
+        for kk in np.unique(keys):
+            sel = keys == kk
+            gg = g[sel][0] if np.isfinite(g[sel][0]) else 0.0
+            for j in range(H_LAGS):
+                tot = lyr[sel, j].sum() * (1 + gg)
+                if base_years == 2 and np.isfinite(ly2[sel, j]).all():
+                    tot = 0.5 * tot + 0.5 * ly2[sel, j].sum() * (1 + gg) ** 2
+                share = lyc[sel, j] / max(lyc[sel, j].sum(), 1e-9)
+                out[sel, j] = share * tot
+        alive = np.isfinite(_ly(H, m))
+        return np.where(alive, np.clip(out, 0, None), np.nan)
+    return f

@@ -41,3 +41,14 @@
 ## Estructura de código
 - src/load.py: Excel -> work/data.parquet (largo, todas las versiones).
 - src/panel.py: panel EAN x mes de la última versión -> work/hist.pkl, cuts.pkl, epos.pkl, attr.pkl, snaps.pkl (consenso por versión), fut_latest.pkl.
+
+## Experimentos y archivos de resultados (sesión 1)
+- src/methods.py: todos los métodos (naive, flat/median/trim por ventana, grupo house/brand/pline, blend, clean (regla 40% mediana móvil 5m, opcional desestacionalizada),
+  cut-adjusted, EPOS (EAN y grupo), nivel x estacionalidad, ETS, LFL, combos, resc_general (ganador), young_level (lanzamientos)).
+- src/backtest.py: `python3 src/backtest.py [--fast|--v2|--v3|--v4]` -> work/bt*.parquet (registries v1..v4). Orígenes 2025-01..2026-07.
+- src/evaluate.py: `python3 src/evaluate.py bt.parquet bt_v2.parquet bt_v3.parquet bt_v4.parquet` -> work/ev.parquet (fallback naive, madurez>=18m, cut_flag, ABC, volat, segmentos).
+- src/report.py -> work/results/backtest.md (rankings y desgloses; KEY list de métodos en el archivo).
+- src/descriptive.py -> work/results/descriptive.md (YoY house x quarter, EPOS, cortes, LFL, estacionalidad).
+- src/launches.py -> work/results/launches.md (curva de vida, consenso en jóvenes).
+- src/final_forecast.py -> work/results/forecast.md + work/forecast_winner.parquet (forecast desde 2026-09, bandas, efecto base).
+- CONCLUSIONES: work/STRATEGY.md  <- leer primero.

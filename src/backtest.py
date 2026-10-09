@@ -106,7 +106,26 @@ def method_registry_v3():
         "house12_clean_x60": mt.make_group_trend_clean("house", 12, x=0.6),
         "house12_clean_x100": mt.make_group_trend_clean("house", 12, x=1.0),
         "house9_clean": mt.make_group_trend_clean("house", 9),
+        "young_lvl3": mt.make_young_level(3, 1),
+        "young_lvl3_skip2": mt.make_young_level(3, 2),
+        "young_lvl6": mt.make_young_level(6, 1),
     }
+
+
+def method_registry_v4():
+    R = {
+        "resc_x40": mt.make_resc_general(),
+        "resc_x40_cap": mt.make_resc_general(cap=(-0.3, 0.3)),
+        "resc_median": mt.make_resc_general(smooth="median"),
+        "resc_none": mt.make_resc_general(smooth="none"),
+        "resc_x40_2y": mt.make_resc_general(base_years=2),
+        "resc_x40_2y_cap": mt.make_resc_general(base_years=2, cap=(-0.3, 0.3)),
+        "resc_x40_brand": mt.make_resc_general(level="brand"),
+        "resc_x40_w6": mt.make_resc_general(w=6),
+        "resc_x40_w9": mt.make_resc_general(w=9),
+        "clean_median_h12": mt.make_group_trend_clean("house", 12, x=0.0),
+    }
+    return R
 
 
 def run(origins, methods, ctx):
@@ -158,6 +177,11 @@ def consensus_rows(ctx, origins):
 if __name__ == "__main__":
     ctx = context()
     origins = pd.date_range("2025-01-01", "2026-07-01", freq="MS")
+    if "--v4" in sys.argv:
+        bt = run(origins, method_registry_v4(), ctx)
+        bt.to_parquet(W / "bt_v4.parquet")
+        print(bt.shape)
+        sys.exit()
     if "--v3" in sys.argv:
         bt = run(origins, method_registry_v3(), ctx)
         bt.to_parquet(W / "bt_v3.parquet")
