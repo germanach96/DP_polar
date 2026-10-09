@@ -67,6 +67,26 @@ Base probada = media 6M de (actual + kc × cortes − kd × DAs positivos), en 1
 | Regla de fragancias | 82–100% | 80–90% | – | – | 101–116% | 80–81% |
 | Consenso | – | – | 75% / 77% | 87% / 102% | 70% / 70% | 78% / 65% |
 
+## Estacionalidad revisada EAN a EAN (`src/mu_season_ean.py`, `work/results/mu_season_ean.md`)
+
+Se analizaron los EANs con FY24, FY25 y FY26 completos y al menos 50 unidades al mes de media: 113 de Gucci Make up, 139 de Kylie y 170 de fragancias como referencia.
+
+| | Gucci Make up | Kylie Makeup | Fragancias |
+|---|---|---|---|
+| Parecido del perfil mensual entre años (correlación; 1 = idéntico) | 0,08 | 0,10 | 0,36 |
+| % de EANs con estacionalidad real (test de permutación) | 16% | 15% | 32% |
+| % del volumen con estacionalidad real | 10% | 12% | 53% |
+| % de EANs donde el reparto del año pasado predice mejor que plano | 14% | 13% | 38% |
+| Índice de diciembre en envíos (1 = mes medio) | 0,85 | 0,71 | 0,91 |
+
+- **Sin estacionalidad en makeup, confirmado.**
+  - Por azar ya saldría alrededor de un 5% de EANs "estacionales".
+  - En 6 de cada 7 EANs, copiar el reparto del año pasado es peor que repartir plano.
+- **Diciembre no es pico en los envíos:** solo 1 EAN tiene su pico en diciembre.
+  - El pico de Navidad del sell-out se abastece de forma estable a lo largo del año.
+  - Los picos de los envíos caen en julio–septiembre (cargas y lanzamientos) y están repartidos sin patrón.
+- **Única excepción menor:** algunos Skin Tint de Kylie (bases ligeras) tienden a pico en junio. Es poco volumen y no justifica cambiar la regla.
+
 ## Notas
 
 - **Media con el consenso:** no se recomienda de forma general. En GUMU ayuda un poco al sesgo; en KYMU empeora. El consenso de makeup es débil (75–102% de error en sep-25).
