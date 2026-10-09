@@ -1,7 +1,7 @@
 # Contexto: estrategia de forecast de demanda
 
 ## Quién soy y qué necesito
-Soy demand planner en una empresa de consumo masivo (belleza / fragancias). Trabajamos con o9 como plataforma de forecast y un horizonte corto de 8 meses (excluyendo el mes en curso). La señal de supply se manda a nivel EAN.
+Soy demand planner en una empresa de consumo masivo (belleza / fragancias). Trabajamos con o9 como plataforma de forecast y un horizonte corto de 9 meses (excluyendo el mes en curso). La señal de supply se manda a nivel EAN.
 
 Mi objetivo: **encontrar el método de forecast más defendible con datos** y tener un número / rango objetivo que pueda usar como guía en la reunión de consenso.
 
@@ -35,7 +35,7 @@ Calcula todos sobre los mismos datos y el mismo horizonte:
 Si ves otro método razonable y simple de explicar, propónmelo.
 
 ## Backtesting (lo más importante)
-- Simula varios puntos de corte en el pasado (rolling origin): en cada corte, usa solo los datos disponibles hasta ese momento y pronostica los 8 meses siguientes.
+- Simula varios puntos de corte en el pasado (rolling origin): en cada corte, usa solo los datos disponibles hasta ese momento y pronostica los 9 meses siguientes.
 - Compara cada pronóstico contra los actuals reales.
 - Métricas:
   - **WMAPE** (principal), calculado a nivel EAN.
@@ -56,7 +56,7 @@ Para cada quarter futuro, muestra qué pasó en el quarter homólogo del año an
 ## Entregables
 1. Un **Excel** con:
    - Resumen: ranking de métodos por WMAPE y bias, global y por lag/quarter.
-   - Forecast de los próximos 8 meses del método ganador con su banda P10–P90.
+   - Forecast de los próximos 9 meses del método ganador con su banda P10–P90.
    - Comparación contra el trend plano actual.
    - Hoja de efecto base por quarter.
    - Lista de outliers detectados y la regla usada.

@@ -13,7 +13,7 @@ Basada en GUMU (Gucci Make up) y KYMU (Kylie Makeup). Fotos: sep-25 (forecast in
 - **Función** = Face / Lips / Eyes (campo Brand) dentro de cada familia.
 - **Trend** = suma de los últimos 12 meses / suma de los 12 anteriores − 1, calculado con todos los EANs Central (6 meses o más de envíos). Tope de ±30%.
 - **Mismo número para todos los meses futuros.** No se aplica estacionalidad.
-- **En cada foto nueva: recalcular la media de 6 meses y el trend.** No corregir con el factor real/forecast: la media móvil ya absorbe la realidad reciente, y el factor añade ruido.
+- **Cada mes: recalcular la media de 6 meses y el trend, y dar los 9 meses siguientes.** No hay factor de corrección ni consenso: la media móvil ya absorbe la realidad reciente.
 
 ## Ajuste de cortes y DAs (probado, `src/mu_cuts_da.py`, `work/results/mu_cuts_da.md`)
 
