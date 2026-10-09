@@ -4,7 +4,7 @@ Basada en GUMU (Gucci Make up) y KYMU (Kylie Makeup). Fotos: sep-25 (forecast in
 
 ## Regla
 
-> **Base = media de los últimos 6 meses cerrados de (envíos − 25% de los DAs positivos)**
+> **Base = media de los últimos 6 meses cerrados de (envíos + 10% de los cortes, con tope del 10% del envío de ese mes − 25% de los DAs positivos)**
 >
 > **Forecast EAN, cada mes futuro = Base × (1 + 50% del trend de 12 meses de su función)**
 
@@ -21,6 +21,19 @@ Base probada = media 6M de (actual + kc × cortes − kd × DAs positivos), en 1
   - En makeup los cortes son enormes (FY26: 68% de los envíos en GUMU y 42% en KYMU), claramente inflados por pedidos repetidos.
   - Sumar el 25% empeora GUMU de 67% a 75% de error.
   - En KYMU mejora un poco (58% → 56%), pero sobre todo porque compensa que KYMU va por debajo al estar creciendo.
+- **Cortes con tope (decisión: los cortes no se ignoran, `src/mu_cuts2.py`):** se suma el 10% de los cortes del mes, pero nunca más del 10% de lo enviado ese mes.
+  - Es la forma de incluirlos que menos daña.
+  - Error medio −0,1 puntos; peor caso −0,5 puntos (GUMU todos). En KYMU mejora ~1 punto.
+  - Sin tope, cualquier % empeora más:
+
+    | % de cortes sin tope | Empeora de media |
+    |---|---|
+    | 5% | 0,1 puntos |
+    | 10% | 0,8 puntos |
+    | 15% | 1,8 puntos |
+    | 25% | 4,5 puntos |
+
+  - Motivo: en algunos meses los cortes multiplican varias veces lo enviado. El tope evita que un mes con cortes desproporcionados dispare la base.
 - **DAs positivos: restar el 25% en la base.** Es la única opción que no empeora en ningún caso:
 
   | Variante | GUMU sin manual | GUMU todos | KYMU sin manual | KYMU todos |
