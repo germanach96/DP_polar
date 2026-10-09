@@ -32,6 +32,20 @@ Fecha de decisión: 2026-10-09
    - Es × (1 + trend), no + trend.
    - Todos los meses del grupo llevan el mismo %. La estacionalidad la da la base del año anterior.
 
+## Sobre el grupo house × tamaño (revisado 2026-10-09)
+
+- **El tamaño no es un campo oficial.**
+  - Se lee de la descripción con `src/ptype.py`.
+  - Mapeo listo para revisar y reutilizar: `MAPEO_TAMANOS_FRAGANCIAS.csv`. Hay 453 de 456 EANs con tamaño leído, que cubren el 100% del volumen.
+- **Los EANs de un mismo house × tamaño NO se comportan igual.**
+  - El grupo explica solo el 12–19% de las diferencias de trend entre EANs. House sola explica el 3% y la product line el 57–60%.
+  - La product line no es usable para el trend: tiene grupos de 1–2 EANs y se distorsiona con los lanzamientos.
+- **Los trends por grupo no se mantienen de un año a otro.**
+  - El grupo que más cae un año tiende a rebotar al siguiente (correlación −0,69).
+  - Por eso conviene el tope de ±30% y no extrapolar caídas fuertes.
+- **El valor de house × tamaño es sobre todo estadístico:** junta suficientes EANs para que el ruido se compense y añade un poco de diferencia real por tamaño.
+- **Alternativa válida si no se quiere mantener el mapeo:** trend por house. Se pierde poco en promedio (~0,4 puntos de error por quarter), algo más en un año malo.
+
 ## Ajuste por supply cuts (añadido 2026-10-09)
 
 - **A la base** se le suma el **25%** de los cortes que tuvo ese EAN en ese mes del año anterior.
