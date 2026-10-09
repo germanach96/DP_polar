@@ -1,194 +1,292 @@
-"""Infographic PDF (English): one landscape A4 page per rule (Fragrances, Makeup).
-Formula + how it works + the reasoning behind each piece. No accuracy results on purpose.
-Usage: python3 src/infografia.py  -> INFOGRAFIA_REGLAS.pdf"""
+"""Infographic (English, 2 landscape A4 pages): formula + reasoning + charts for the Fragrance and Makeup rules.
+Builds HTML with inline SVG charts and prints it to PDF with headless Chromium.
+Chart data: work/infog_data.json. Usage: python3 src/infografia.py  -> INFOGRAFIA_REGLAS.pdf (+ work/infografia.html)"""
+import json
+import subprocess
 from pathlib import Path
-from reportlab.lib.pagesizes import A4, landscape
-from reportlab.lib import colors
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import Paragraph
-from reportlab.pdfgen import canvas
 
-OUT = Path(__file__).resolve().parents[1] / "INFOGRAFIA_REGLAS.pdf"
-W, H = landscape(A4)
-INK = colors.HexColor("#1F2430")
-MUTED = colors.HexColor("#5B6170")
-LINE = colors.HexColor("#D9DCE3")
-FRAG = colors.HexColor("#6B3FA0")
-FRAG_BG = colors.HexColor("#F3EEFA")
-MU = colors.HexColor("#C2410C")
-MU_BG = colors.HexColor("#FDF1EA")
-M = 32  # page margin
+ROOT = Path(__file__).resolve().parents[1]
+DATA = json.loads((ROOT / "work" / "infog_data.json").read_text())
+HTML = ROOT / "work" / "infografia.html"
+OUT = ROOT / "INFOGRAFIA_REGLAS.pdf"
+CHROME = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
+FONT = "/usr/share/fonts/opentype/inter"
+MONTHS = ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun"]
+
+INK, INK2, MUTED, GRID = "#1C1A24", "#4A4756", "#8A8796", "#E7E3EC"
+PLUM = {"light": "#C9B3E6", "mid": "#8E62C4", "dark": "#4B1F7A", "bg": "#F4EEFB"}
+CLAY = {"light": "#F2B48E", "mid": "#DD6B2B", "dark": "#9A3412", "bg": "#FCEFE6"}
 
 
-def st(size=9.6, color=INK, bold=False, lead=None):
-    return ParagraphStyle("s", fontName="Helvetica-Bold" if bold else "Helvetica", fontSize=size,
-                          leading=lead or size * 1.34, textColor=color)
+# ---------------------------------------------------------------- SVG helpers
+def scale(v, lo, hi, a, b):
+    return a + (v - lo) / (hi - lo) * (b - a)
 
 
-def para(c, text, x, y, w, style):
-    p = Paragraph(text, style)
-    _, h = p.wrap(w, 2000)
-    p.drawOn(c, x, y - h)
-    return y - h
+def line_chart(series, w, h, ylo, yhi, yticks, xlabels, fmt, ref=None, pad=(30, 14, 22, 8), notes=()):
+    """series: list of dict(values, color, width, label, dy). Returns an SVG string."""
+    L, R, B, T = pad
+    n = len(xlabels)
+    X = lambda i: scale(i, 0, n - 1, L, w - R)
+    Y = lambda v: scale(v, ylo, yhi, h - B, T)
+    s = [f'<svg viewBox="0 0 {w} {h}" width="100%" xmlns="http://www.w3.org/2000/svg">']
+    for t in yticks:
+        s.append(f'<line x1="{L}" x2="{w - R}" y1="{Y(t):.1f}" y2="{Y(t):.1f}" stroke="{GRID}" stroke-width="1"/>')
+        s.append(f'<text x="{L - 6}" y="{Y(t) + 3:.1f}" text-anchor="end" class="ax">{fmt(t)}</text>')
+    if ref is not None:
+        s.append(f'<line x1="{L}" x2="{w - R}" y1="{Y(ref):.1f}" y2="{Y(ref):.1f}" stroke="{MUTED}" stroke-width="1" stroke-dasharray="3 3"/>')
+    for i, lab in enumerate(xlabels):
+        if lab:
+            s.append(f'<text x="{X(i):.1f}" y="{h - 6}" text-anchor="middle" class="ax">{lab}</text>')
+    for x0, x1, txt in notes:
+        s.append(f'<rect x="{X(x0) - 7:.1f}" y="{T}" width="{X(x1) - X(x0) + 14:.1f}" height="{h - B - T}" fill="#1C1A24" opacity="0.045" rx="5"/>')
+        s.append(f'<text x="{(X(x0) + X(x1)) / 2:.1f}" y="{h - B - 4}" text-anchor="middle" class="note">{txt}</text>')
+    for se in series:
+        pts = " ".join(f"{X(i):.1f},{Y(v):.1f}" for i, v in enumerate(se["values"]) if v is not None)
+        s.append(f'<polyline points="{pts}" fill="none" stroke="{se["color"]}" stroke-width="{se.get("width", 2)}" '
+                 f'stroke-linejoin="round" stroke-linecap="round"/>')
+        if se.get("label"):
+            i, v = [(i, v) for i, v in enumerate(se["values"]) if v is not None][-1]
+            s.append(f'<circle cx="{X(i):.1f}" cy="{Y(v):.1f}" r="3.2" fill="{se["color"]}" stroke="#fff" stroke-width="1.5"/>')
+            s.append(f'<text x="{X(i) + 7:.1f}" y="{Y(v) + se.get("dy", 0) + 3:.1f}" class="lab">{se["label"]}</text>')
+    s.append("</svg>")
+    return "".join(s)
 
 
-def section(c, title, x, y, w, color):
-    c.setFillColor(color); c.setFont("Helvetica-Bold", 10)
-    c.drawString(x, y - 11, title.upper())
-    c.setStrokeColor(color); c.setLineWidth(0.7); c.line(x, y - 15, x + w, y - 15)
-    return y - 22
+def bar_chart(rows, w, xmax, color_for):
+    """rows: (label, value, note). Horizontal bars; values and labels in ink."""
+    L, R, bh, gap = 92, 74, 12, 5
+    h = len(rows) * (bh + gap)
+    s = [f'<svg viewBox="0 0 {w} {h}" width="100%" xmlns="http://www.w3.org/2000/svg">']
+    for i, (lab, v, note) in enumerate(rows):
+        y = i * (bh + gap) + 2
+        bw = scale(v, 0, xmax, 0, w - L - R)
+        s.append(f'<text x="0" y="{y + 9}" class="blab">{lab}</text>')
+        s.append(f'<rect x="{L}" y="{y}" width="{w - L - R}" height="{bh}" rx="4" fill="#F2EFF5"/>')
+        s.append(f'<rect x="{L}" y="{y}" width="{bw:.1f}" height="{bh}" rx="4" fill="{color_for(lab)}"/>')
+        s.append(f'<text x="{L + bw + 6:.1f}" y="{y + 9}" class="bval">{v * 100:.0f}%</text>')
+        s.append(f'<text x="{w}" y="{y + 9}" text-anchor="end" class="bsub">{note}</text>')
+    s.append("</svg>")
+    return "".join(s)
 
 
-def bullets(c, items, x, y, w, color, size=9.6, gap=4):
-    for it in items:
-        c.setFillColor(color); c.circle(x + 2.4, y - 6.2, 1.8, fill=1, stroke=0)
-        y = para(c, it, x + 10, y, w - 10, st(size)) - gap
-    return y
+pct = lambda t: f"{t * 100:+.0f}%" if abs(t) > 1e-9 else "0%"
+idx = lambda t: f"{t:.1f}×"
 
 
-def why_cards(c, items, x, y, w, color, bg):
-    """items: (title, text). Each reason in a light card with a coloured left bar."""
-    for title, text in items:
-        p = Paragraph(f"<b>{title}</b><br/>{text}", st(9.2, lead=12))
-        _, h = p.wrap(w - 22, 2000)
-        hh = h + 10
-        c.setFillColor(bg); c.roundRect(x, y - hh, w, hh, 4, fill=1, stroke=0)
-        c.setFillColor(color); c.rect(x, y - hh, 3.2, hh, fill=1, stroke=0)
-        p.drawOn(c, x + 12, y - 5 - h)
-        y -= hh + 5
-    return y
+# ---------------------------------------------------------------- charts
+def chart_frag_season():
+    fs = DATA["frag_season"]
+    ser = [dict(values=fs["FY24"], color=PLUM["light"], width=1.8, label=None),
+           dict(values=fs["FY25"], color=PLUM["mid"], width=1.8, label=None),
+           dict(values=fs["FY26"], color=PLUM["dark"], width=2.2, label=None)]
+    return line_chart(ser, 245, 128, 0.3, 2.15, [0.5, 1.0, 1.5, 2.0],
+                      [m if m in ("Jul", "Sep", "Dec", "Mar", "Jun") else "" for m in MONTHS], idx, ref=1.0,
+                      pad=(26, 8, 18, 14), notes=[(0, 2, "Xmas load")])
 
 
-def formula_box(c, lines, x, y, w, color, bg):
-    pad = 12
-    ps = [Paragraph(t, st(s, color if b else INK, bold=b, lead=s * 1.28)) for t, s, b in lines]
-    hs = [p.wrap(w - 2 * pad, 2000)[1] for p in ps]
-    h = sum(hs) + 2 * pad + 5 * (len(ps) - 1)
-    c.setFillColor(bg); c.setStrokeColor(color); c.setLineWidth(1.2)
-    c.roundRect(x, y - h, w, h, 7, fill=1, stroke=1)
-    yy = y - pad
-    for p, hh in zip(ps, hs):
-        p.drawOn(c, x + pad, yy - hh); yy -= hh + 5
-    return y - h
+def chart_trend_windows():
+    y3, y12 = DATA["yoy3"], DATA["yoy12"]
+    keys = [k for k in y3 if k >= "2025-06"]
+    lab = [{"2025-06": "Jun 25", "2025-12": "Dec 25", "2026-06": "Jun 26"}.get(k, "") for k in keys]
+    ser = [dict(values=[y3[k] for k in keys], color=PLUM["light"], width=1.8, label=None),
+           dict(values=[y12.get(k) for k in keys], color=PLUM["dark"], width=2.4, label=None)]
+    return line_chart(ser, 245, 132, -0.4, 0.25, [-0.3, -0.15, 0.0, 0.15], lab, pct, ref=0.0, pad=(28, 8, 18, 6))
 
 
-def example(c, title, rows, x, y, w, color):
-    c.setFillColor(MUTED); c.setFont("Helvetica-Bold", 9); c.drawString(x, y - 10, title.upper())
-    y -= 16
-    for lab, val, strong in rows:
-        c.setFont("Helvetica-Bold" if strong else "Helvetica", 9.4)
-        c.setFillColor(color if strong else INK)
-        c.drawString(x + 4, y - 10, lab); c.drawRightString(x + w - 4, y - 10, val)
-        y -= 15
-        c.setStrokeColor(LINE); c.setLineWidth(0.5); c.line(x + 4, y + 2, x + w - 4, y + 2)
-    return y
+def chart_mu_season(kind):
+    if kind == "ship":
+        d = DATA["mu_ship"]
+        ser = [dict(values=d["FY24"], color=CLAY["light"], width=1.8, label=None),
+               dict(values=d["FY25"], color=CLAY["mid"], width=1.8, label=None),
+               dict(values=d["FY26"], color=CLAY["dark"], width=2.3, label=None)]
+    else:
+        d = DATA["mu_epos"]
+        ser = [dict(values=d["FY25"], color=CLAY["mid"], width=1.8, label=None),
+               dict(values=d["FY26"], color=CLAY["dark"], width=2.3, label=None)]
+    lab = [m if m in ("Jul", "Dec", "Jun") else "" for m in MONTHS]
+    notes = [(5, 5, "Dec")] if kind == "epos" else []
+    return line_chart(ser, 245, 88, 0.3, 2.3, [0.5, 1.0, 1.5, 2.0], lab, idx, ref=1.0, pad=(26, 8, 16, 10), notes=notes)
 
 
-def page(c, color, bg, title, tag, subtitle, formula, how, ex_title, ex_rows, whys, footer):
-    c.setFillColor(colors.white); c.rect(0, 0, W, H, fill=1, stroke=0)
-    # header band
-    c.setFillColor(color); c.rect(0, H - 62, W, 62, fill=1, stroke=0)
-    c.setFillColor(colors.white); c.setFont("Helvetica-Bold", 24); c.drawString(M, H - 40, title)
-    c.setFont("Helvetica", 10.5); c.drawRightString(W - M, H - 30, tag)
-    c.setFont("Helvetica", 9.5); c.drawRightString(W - M, H - 45, subtitle)
-    top = H - 80
-    gap = 26
-    lw = (W - 2 * M - gap) * 0.47
-    rw = (W - 2 * M - gap) - lw
-    xl, xr = M, M + lw + gap
-    # left: formula, how it works, example
-    y = formula_box(c, formula, xl, top, lw, color, bg) - 16
-    y = section(c, "How it works", xl, y, lw, color)
-    y = bullets(c, how, xl, y, lw, color) - 10
-    example(c, ex_title, ex_rows, xl, y, lw, color)
-    # right: why
-    y = section(c, "Why each piece is there", xr, top, rw, color)
-    why_cards(c, whys, xr, y, rw, color, bg)
-    c.setStrokeColor(LINE); c.setLineWidth(0.8); c.line(M, 30, W - M, 30)
-    c.setFillColor(MUTED); c.setFont("Helvetica", 8.2); c.drawString(M, 18, footer)
-    c.showPage()
+def chart_cuts():
+    c = DATA["cuts"]
+    rows = [("Fragrances", c["Fragrances"], "we count 25%"), ("Gucci Make up", c["Gucci Make up"], "we count 10%"),
+            ("Kylie Makeup", c["Kylie Makeup"], "we count 10%")]
+    return bar_chart(rows, 500, 0.8, lambda lab: PLUM["mid"] if lab == "Fragrances" else CLAY["mid"])
+
+
+# ---------------------------------------------------------------- content
+FRAG = dict(
+    key="frag", acc=PLUM, title="Fragrances", kicker="Forecast rule",
+    tagline="Keep last year's shape. Apply this year's direction.",
+    formula=[("BASE", "= same month last year <span class='op'>+</span> <b>25%</b> of its supply cuts <span class='op'>−</span> <b>50%</b> of its positive DAs"),
+             ("FORECAST", "= BASE <span class='op'>×</span> (1 + <b>12-month trend</b> of house × size)")],
+    eg="1,000 shipped last October &nbsp;+50 cuts &nbsp;−50 DAs &nbsp;→ base 1,000 &nbsp;× 0.90 (trend −10%) &nbsp;= <b>900</b>",
+    how=["<b>Trend</b> = last 12 closed months ÷ the 12 before − 1, on actual shipments only. Capped at ±30%.",
+         "<b>Size groups</b>: minis ≤15 ml · 20–40 · 45–60 · 75–125 · 150 ml+ / refills · ancillaries.",
+         "<b>In the trend</b>: every Central item, launches included once they have 6 months of shipments.",
+         "<b>Each S&amp;OP cycle</b>: average the rule with consensus, then scale what is left by actual ÷ forecast of the months just closed."],
+    why=[("Last year's month as the base", "Fragrance repeats the same calendar every year: retailers load for Christmas from July to September. Last year's month already carries that shape."),
+         ("A 12-month trend", "A 3-month window jumps with every supply cut or shifted order. Twelve months cover a full season, so what moves is the real direction."),
+         ("Grouped by house × size", "One EAN's trend is noise: a big order or a delisting flips it. Similar products together give a stable signal, and sizes move differently."),
+         ("Launches inside the trend", "New products partly replace old ones. Leaving them out shows only the decline of the old range."),
+         ("Only 25% of the cuts", "A cut month understates demand, so some of it goes back. But retailers re-order weekly while an item is cut, so most of the figure is duplicated."),
+         ("Remove 50% of the positive DAs", "Last year's promotions should not repeat by default. Only half, because part of the DAs are market inputs that do come back."),
+         ("Blend with consensus, correct each cycle", "The rule leans conservative and consensus leans optimistic; together they balance. The actual ÷ forecast factor reacts within months, not a year.")],
+    foot="Local items (under 6 months of shipments) keep the consensus. Items with 6–17 months of life lean more on consensus: their last year includes the launch pipeline fill.",
+)
+
+MU = dict(
+    key="mu", acc=CLAY, title="Makeup", kicker="Forecast rule",
+    tagline="No calendar to copy. Follow the current pace.",
+    formula=[("MONTH", "= shipments <span class='op'>+</span> min(<b>10%</b> of cuts ; 10% of shipments) <span class='op'>−</span> <b>25%</b> of positive DAs"),
+             ("BASE", "= average of the last <b>6</b> adjusted months"),
+             ("FORECAST", "= BASE <span class='op'>×</span> (1 + <b>½</b> × 12-month trend of Face · Lips · Eyes) <span class='same'>same every month</span>")],
+    eg="1,000 shipped &nbsp;+100 cuts (capped) &nbsp;−50 DAs &nbsp;→ 1,050 a month &nbsp;× 0.90 (½ of −20%) &nbsp;= <b>945</b> every month",
+    how=["<b>Category</b> = Face, Lips or Eyes within each brand family.",
+         "<b>Trend</b> = last 12 closed months ÷ the 12 before − 1, actual shipments only. Apply half of it, capped at ±30%.",
+         "<b>In the average</b>: every Central item (6+ months of shipments).",
+         "<b>Each S&amp;OP cycle</b>: recalculate the 6-month average and the trend. No correction factor, no consensus blend."],
+    why=[("No seasonality", "Shoppers do buy more in December, but our shipments follow launches, pipeline fills and order timing, not the calendar. Copying last year's month copies noise."),
+         ("Average of the last 6 months", "It reflects the current selling pace and smooths one-off spikes, without chasing a single big order."),
+         ("Same number for every month", "With no stable monthly shape, a flat run-rate is the honest call. Peaks and dips get corrected as months arrive."),
+         ("Only half of the trend", "The 6-month average already holds part of the recent trend. The full trend on top would count it twice."),
+         ("Only 10% of the cuts", "When an item is cut, retailers keep re-ordering the same quantity week after week. In makeup that re-ordering is far heavier, so the cuts are heavily inflated."),
+         ("Only 25% of the DAs", "A six-month average already dilutes a single promotion. Removing more would cut growing lines too hard."),
+         ("Recalculate, don't correct", "A rolling average refreshes itself with the latest months every cycle. An extra correction factor would add noise.")],
+    foot="Local items (under 6 months of shipments) keep the consensus.",
+)
+
+
+def legend(items):
+    return "<div class='lg'>" + "".join(f"<span><i style='background:{c}'></i>{t}</span>" for t, c in items) + "</div>"
+
+
+def card(title, sub, svg, cls="", leg=None):
+    head = f"<div class='ct'>{title}</div><div class='cs'>{sub}</div>{legend(leg) if leg else ''}"
+    return f"<div class='card {cls}'>{head}{svg}</div>"
+
+
+def charts_for(p):
+    if p["key"] == "frag":
+        return ("<div class='charts c2'>"
+                + card("The year repeats itself", "Monthly shipments ÷ the year's average", chart_frag_season(),
+                       leg=[("FY24", PLUM["light"]), ("FY25", PLUM["mid"]), ("FY26", PLUM["dark"])])
+                + card("12 months see the direction", "Year-on-year change, rolling window", chart_trend_windows(),
+                       leg=[("3-month window", PLUM["light"]), ("12-month window", PLUM["dark"])])
+                + "</div>")
+    return ("<div class='charts c3'>"
+            + card("Shoppers are seasonal…", "Sell-out (EPOS) ÷ year's average", chart_mu_season("epos"),
+                   leg=[("FY25", CLAY["mid"]), ("FY26", CLAY["dark"])])
+            + card("…our shipments are not", "Shipments ÷ year's average", chart_mu_season("ship"),
+                   leg=[("FY24", CLAY["light"]), ("FY25", CLAY["mid"]), ("FY26", CLAY["dark"])])
+            + "</div>"
+            + card("Cuts are inflated by re-ordering", "Supply cuts as a share of shipments, FY26", chart_cuts(), "cuts"))
+
+
+def page_html(p, num):
+    acc = p["acc"]
+    formula = "".join(f"<div class='fl'><span class='fk'>{k}</span><span class='fv'>{v}</span></div>" for k, v in p["formula"])
+    how = "".join(f"<li>{h}</li>" for h in p["how"])
+    why = "".join(f"<div class='why'><div class='n'>{i + 1:02d}</div><div><div class='wt'>{t}</div><div class='wx'>{x}</div></div></div>"
+                  for i, (t, x) in enumerate(p["why"]))
+    extra = ""
+    return f"""
+<section class="page {p['key']}" style="--acc:{acc['mid']};--accd:{acc['dark']};--accl:{acc['light']};--accbg:{acc['bg']}">
+  <div class="blob"></div><div class="blob2"></div>
+  <header>
+    <div class="kick"><span class="pill">{num:02d}</span>{p['kicker']}</div>
+    <h1>{p['title']}<span class="dot">.</span></h1>
+    <div class="tag">{p['tagline']}</div>
+  </header>
+  <div class="grid">
+    <div class="left">
+      <div class="formula">{formula}<div class="eg"><span>e.g.</span> {p['eg']}</div></div>
+      <ul class="how">{how}</ul>
+      {charts_for(p)}
+    </div>
+    <div class="right">
+      <div class="wh">Why each piece is there</div>
+      {why}
+      {extra}
+    </div>
+  </div>
+  <footer>{p['foot']}</footer>
+</section>"""
+
+
+CSS = f"""
+@font-face {{ font-family: Inter; src: url('file://{FONT}/Inter-Regular.otf'); font-weight: 400; }}
+@font-face {{ font-family: Inter; src: url('file://{FONT}/Inter-Medium.otf'); font-weight: 500; }}
+@font-face {{ font-family: Inter; src: url('file://{FONT}/Inter-SemiBold.otf'); font-weight: 600; }}
+@font-face {{ font-family: Inter; src: url('file://{FONT}/Inter-Bold.otf'); font-weight: 700; }}
+@font-face {{ font-family: InterDisplay; src: url('file://{FONT}/InterDisplay-Bold.otf'); font-weight: 700; }}
+@page {{ size: 297mm 210mm; margin: 0; }}
+* {{ box-sizing: border-box; margin: 0; padding: 0; }}
+body {{ font-family: Inter, sans-serif; color: {INK}; background: #FBF9F6; -webkit-print-color-adjust: exact; print-color-adjust: exact; }}
+.page {{ width: 297mm; height: 210mm; padding: 12mm 14mm 10mm; position: relative; overflow: hidden; page-break-after: always; background: #FBF9F6; }}
+.blob {{ position: absolute; right: -55mm; top: -75mm; width: 165mm; height: 165mm; border-radius: 50%;
+        background: radial-gradient(circle at 40% 40%, var(--accl) 0%, var(--accbg) 50%, rgba(255,255,255,0) 70%); opacity: .7; }}
+.blob2 {{ position: absolute; left: -40mm; bottom: -60mm; width: 110mm; height: 110mm; border-radius: 50%;
+         background: radial-gradient(circle, var(--accbg) 0%, rgba(255,255,255,0) 68%); }}
+header {{ position: relative; margin-bottom: 4mm; }}
+.kick {{ display: flex; align-items: center; gap: 2.4mm; font-size: 8.5pt; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accd); }}
+.pill {{ font-family: InterDisplay, Inter; letter-spacing: 0; font-size: 8pt; color: #fff; background: var(--accd); border-radius: 20px; padding: .5mm 2.2mm; }}
+h1 {{ font-family: InterDisplay, Inter; font-weight: 700; font-size: 36pt; letter-spacing: -.025em; line-height: 1; margin-top: 1.6mm; }}
+h1 .dot {{ color: var(--acc); }}
+.tag {{ font-size: 12pt; color: {INK2}; margin-top: 1.4mm; }}
+.grid {{ position: relative; display: grid; grid-template-columns: 1.1fr .9fr; gap: 8mm; }}
+.formula {{ background: {INK}; color: #fff; border-radius: 16px; padding: 5mm 6mm 4.2mm; box-shadow: 0 10px 28px rgba(28,26,36,.16); position: relative; overflow: hidden; }}
+.formula:after {{ content: ''; position: absolute; right: -14mm; top: -14mm; width: 40mm; height: 40mm; border-radius: 50%; background: var(--acc); opacity: .22; }}
+.fl {{ position: relative; display: flex; gap: 3mm; align-items: baseline; margin-bottom: 2.2mm; font-size: 11pt; line-height: 1.38; z-index: 1; }}
+.fk {{ flex: 0 0 23mm; font-family: InterDisplay, Inter; font-weight: 700; font-size: 10pt; letter-spacing: .08em; color: var(--accl); }}
+.fv {{ color: #D9D6E0; }}
+.fv b {{ color: #fff; font-weight: 700; }}
+.op {{ color: var(--accl); font-weight: 700; padding: 0 .5mm; }}
+.same {{ display: inline-block; font-size: 7pt; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: {INK};
+         background: var(--accl); border-radius: 20px; padding: .3mm 2mm; margin-left: 1mm; vertical-align: 1px; }}
+.eg {{ position: relative; z-index: 1; border-top: 1px solid rgba(255,255,255,.14); margin-top: 3mm; padding-top: 2.6mm; font-size: 8.5pt; color: #B9B5C4; }}
+.eg span {{ font-weight: 700; color: var(--accl); margin-right: 1mm; }}
+.eg b {{ color: #fff; }}
+.how {{ list-style: none; margin: 4.5mm 0 4mm; display: grid; grid-template-columns: 1fr 1fr; gap: 2.4mm 6mm; }}
+.how li {{ font-size: 8.3pt; line-height: 1.42; color: {INK2}; padding-left: 4mm; position: relative; }}
+.how li:before {{ content: ''; position: absolute; left: 0; top: 1.5mm; width: 1.8mm; height: 1.8mm; border-radius: 50%; background: var(--acc); }}
+.how b {{ color: {INK}; }}
+.charts {{ display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }}
+.card {{ background: rgba(255,255,255,.92); border-radius: 14px; border: 1px solid #EEEAF2; padding: 3.4mm 4mm 2.4mm; }}
+.ct {{ font-weight: 700; font-size: 9.6pt; }}
+.cs {{ font-size: 7.4pt; color: {MUTED}; margin: .4mm 0 1.4mm; }}
+.cuts {{ margin-top: 2.6mm; }}
+.ch {{ display: flex; justify-content: space-between; align-items: flex-start; gap: 2mm; }}
+.lg {{ display: flex; gap: 3mm; font-size: 6.8pt; font-weight: 600; color: {INK2}; margin: -.4mm 0 .8mm; white-space: nowrap; }}
+.lg i {{ display: inline-block; width: 2.2mm; height: 2.2mm; border-radius: 50%; margin-right: .8mm; vertical-align: -0.2mm; }}
+.mu .how {{ margin: 3.2mm 0 3mm; gap: 1.6mm 6mm; }}
+.mu .formula {{ padding: 4.2mm 6mm 3.6mm; }}
+.mu .card {{ padding: 2.8mm 4mm 2mm; }}
+svg {{ display: block; }}
+svg .ax {{ font-family: Inter; font-size: 7.5px; fill: {MUTED}; }}
+svg .lab {{ font-family: Inter; font-size: 8px; font-weight: 600; fill: {INK2}; }}
+svg .note {{ font-family: Inter; font-size: 7px; font-weight: 700; fill: {INK2}; letter-spacing: .06em; text-transform: uppercase; }}
+svg .blab {{ font-family: Inter; font-size: 9px; font-weight: 600; fill: {INK}; }}
+svg .bval {{ font-family: Inter; font-size: 9px; font-weight: 700; fill: {INK}; }}
+svg .bsub {{ font-family: Inter; font-size: 8.5px; font-weight: 600; fill: {MUTED}; }}
+.right {{ display: flex; flex-direction: column; gap: 2.3mm; }}
+.wh {{ font-size: 8.5pt; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--accd); margin: .4mm 0 .4mm; }}
+.why {{ display: grid; grid-template-columns: 9.5mm 1fr; gap: 1.6mm; background: rgba(255,255,255,.92); border: 1px solid #EEEAF2; border-radius: 12px; padding: 2.3mm 3.4mm 2.3mm 3mm; }}
+.why .n {{ font-family: InterDisplay, Inter; font-weight: 700; font-size: 14pt; color: var(--acc); line-height: 1.05; }}
+.wt {{ font-weight: 700; font-size: 9.2pt; margin-bottom: .4mm; }}
+.wx {{ font-size: 7.9pt; line-height: 1.4; color: {INK2}; }}
+footer {{ position: absolute; left: 14mm; right: 14mm; bottom: 6.5mm; font-size: 7.4pt; color: {MUTED}; border-top: 1px solid #E7E3EC; padding-top: 2mm; }}
+"""
 
 
 def main():
-    c = canvas.Canvas(str(OUT), pagesize=(W, H))
-    c.setTitle("Forecast rules: Fragrances and Makeup")
-
-    page(
-        c, FRAG, FRAG_BG, "Fragrances", "Forecast rule  ·  Burberry · Gucci · Marc Jacobs",
-        "Monthly forecast per EAN, 8-month horizon",
-        [("BASE = same month last year + 25% of supply cuts - 50% of positive DAs", 11.2, True),
-         ("cuts and DAs of that same month last year", 8.8, False),
-         ("FORECAST = BASE × (1 + 12-month trend of house × size)", 13, True)],
-        ["<b>Trend</b> = sum of the last 12 closed months / sum of the 12 months before - 1, using actual shipments only.",
-         "<b>Group</b> = house × size: minis/pen sprays (up to 15 ml), 20-40 ml, 45-60 ml, 75-125 ml, 150 ml+/refills, ancillaries.",
-         "<b>Products included</b> in the trend: everything Central, launches included once they have 6+ months of shipments.",
-         "<b>Cap</b>: the trend is limited to ±30%. It multiplies: a -10% trend means base × 0.90.",
-         "<b>Each S&amp;OP cycle</b>: final number = average of this rule and consensus; then scale the remaining months by actual / forecast of the months just closed."],
-        "Example · one EAN, October",
-        [("Shipments last October", "1,000", False), ("+ 25% of last October's cuts (200)", "+50", False),
-         ("- 50% of last October's positive DAs (100)", "-50", False), ("Base", "1,000", True),
-         ("× (1 + trend -10%)", "× 0.90", False), ("Forecast this October", "900", True)],
-        [("Why last year's same month?",
-          "Fragrance has a strong seasonality that repeats every year: retailers load stock for Christmas from August to December. "
-          "Last year's month already carries that shape, so we don't have to model it."),
-         ("Why a 12-month trend, not 3 or 6?",
-          "Short windows overreact to one bad month: a supply cut or a shipment that moved from one month to the next. "
-          "Twelve months cover a full season, so the direction is real and not noise."),
-         ("Why house × size, not each EAN?",
-          "A single EAN's trend is noisy: one big order or one delisting changes it completely. Grouping similar products gives a stable signal, "
-          "and sizes really behave differently (minis do not move like 50 ml)."),
-         ("Why include recent launches in the trend?",
-          "New products partly replace older ones. Leaving them out would show only the decline of the old range and overstate the drop."),
-         ("Why only 25% of the cuts?",
-          "A cut month understates true demand, so we add some of it back. But cuts are inflated: retailers repeat the same order every week, "
-          "so only a quarter is real lost demand."),
-         ("Why remove 50% of the positive DAs?",
-          "Last year's promotions and one-off volumes should not repeat automatically. Only half, because part of the DAs are market inputs that do come back."),
-         ("Why average with consensus and correct each cycle?",
-          "The statistical rule tends to be conservative and consensus tends to be optimistic; the average balances both. "
-          "Scaling by actual / forecast lets the forecast react within months instead of waiting a year for the trend to catch up.")],
-        "Exceptions: Local items (under 6 months of shipments) keep the consensus. Items with 6-17 months of life: lean more on consensus (their last year includes the launch pipeline fill).",
-    )
-
-    page(
-        c, MU, MU_BG, "Makeup", "Forecast rule  ·  Gucci Make up · Kylie Makeup",
-        "Monthly forecast per EAN, 8-month horizon",
-        [("ADJUSTED MONTH = shipments + min(10% of cuts ; 10% of shipments) - 25% of positive DAs", 11.2, True),
-         ("BASE = average of the last 6 adjusted months", 11.2, True),
-         ("FORECAST = BASE × (1 + 50% of the 12-month trend of the category)", 13, True),
-         ("same number for every future month", 8.8, False)],
-        ["<b>Category</b> = Face, Lips or Eyes within each brand family.",
-         "<b>Trend</b> = sum of the last 12 closed months / sum of the 12 months before - 1, actual shipments only. Apply half of it, capped at ±30%.",
-         "<b>Cuts</b>: add the smaller of 10% of the month's cuts or 10% of the month's shipments.",
-         "<b>Products included</b>: everything Central (6+ months of shipments).",
-         "<b>Each S&amp;OP cycle</b>: recalculate the 6-month average and the trend with the latest months. No correction factor, no blend with consensus."],
-        "Example · one month inside the average",
-        [("Shipments", "1,000", False), ("+ min(10% of 3,000 cuts ; 10% of 1,000)", "+100", False),
-         ("- 25% of positive DAs (200)", "-50", False), ("Adjusted month", "1,050", True),
-         ("Base = average of 6 such months", "1,050", False), ("× (1 + 50% of a -20% trend)", "× 0.90", False),
-         ("Forecast for every future month", "945", True)],
-        [("Why no seasonality?",
-          "Consumers do buy more makeup in December, but our shipments don't follow a repeatable monthly pattern: they are driven by launches, "
-          "pipeline fills and order timing. Copying last year's month would copy that noise."),
-         ("Why the average of the last 6 months?",
-          "It shows the current selling pace and smooths out one-off spikes. Six months reacts to real changes without chasing a single big order."),
-         ("Why the same number for every month?",
-          "Without a stable seasonal shape, a flat run-rate is the honest forecast. Peaks and dips are corrected as the months arrive."),
-         ("Why only half of the trend?",
-          "The 6-month average already contains part of the recent trend. Applying the full trend on top would count the same movement twice."),
-         ("Why a trend by Face / Lips / Eyes?",
-          "The categories grow and decline at different speeds. One trend for the whole brand would hide that."),
-         ("Why only 10% of the cuts?",
-          "When an item is cut, retailers keep re-ordering the same quantity week after week, so the recorded cuts count the same demand "
-          "several times. In makeup this re-ordering is much heavier than in fragrance, so the cuts are heavily inflated and only about "
-          "one tenth of them is real lost demand."),
-         ("Why only 25% of the DAs?",
-          "The base is already an average of six months, so a single promotion is diluted. Removing more would cut growing lines too hard."),
-         ("Why recalculate instead of a correction factor?",
-          "A rolling average updates itself with the latest reality every cycle. An extra correction factor would add noise, not accuracy.")],
-        "Exceptions: Local items (under 6 months of shipments) keep the consensus.",
-    )
-    c.save()
+    html = (f"<!doctype html><html><head><meta charset='utf-8'><title>Forecast rules</title><style>{CSS}</style></head>"
+            f"<body>{page_html(FRAG, 1)}{page_html(MU, 2)}</body></html>")
+    HTML.write_text(html, encoding="utf-8")
+    subprocess.run([CHROME, "--headless", "--no-sandbox", "--disable-gpu", "--no-pdf-header-footer",
+                    "--allow-file-access-from-files", f"--print-to-pdf={OUT}", f"file://{HTML}"], check=True, capture_output=True)
     print(OUT)
 
 
