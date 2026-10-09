@@ -137,6 +137,14 @@ Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infogra
     - EANs de fragancias: 151–169 en EANs, 54%–46% en volumen.
     - EANs de makeup: 229–424 en EANs, 39%–61% en volumen.
   - Pendiente: ampliar a 9 quarters con las fotos dic-25 y jun-26, que solo existen para fragancias.
+- **Parlamento de 6 reglas** (`python3 src/parliament.py` + `src/parliament_report.py` → `reportes/REPORTE_PARLAMENTO.pdf`).
+  - Partidos: Año pasado, Regla fragancias, Año pasado × línea (trend de la product line; grupo si la line tiene <5 EANs), Media 6M estacional, Regla makeup, Media 3M.
+  - Todos suman los DAs de la foto. Mismo sistema de elección, mismos 5 quarters, todos los EANs.
+  - Colores: gris oscuro, morado, azul, frambuesa, naranja y verde azulado.
+  - Resultado 2026-10-09: parlamento fragmentado.
+    - Media 3M es la primera fuerza en EANs: 374 (38%), pero solo el 21% del volumen. Regla makeup: 193 EANs, 23% del volumen.
+    - WAPE90 ponderado: Regla fragancias 14%, Año pasado × línea 16%, Regla makeup 19%, el resto 30–31%.
+    - Año pasado, Media 6M estacional y Media 3M se pasan un +27–30% en el total: no tienen trend y suman DAs encima de actuals con promos.
 
 ## Decisiones / respuestas del usuario
 - **Local** = iniciativas con menos de ~6 meses de envíos; luego pasan a Central. Se ignoran en la regla.
