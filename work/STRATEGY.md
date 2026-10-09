@@ -1,3 +1,14 @@
+# >>> TÉCNICA VIGENTE (sesión 4) — lo que el usuario quiere: PROCEDIMIENTO, no resultados por house <<<
+Evidencia: src/tracking.py (main = técnica por foto sin memoria; --chain = inicio sep-25 + corrección encadenada). results/tracking.md.
+PASO 1 (foto inicial): número = media( consenso , LY x (1 + 50% trend YoY 12M de house x tipo de tamaño, tope ±30%) ).
+   sep-25: mix50 bias +4.6% / WMAPE EAN 71.3% (mejor); consenso +28%; LY -9%; trend completo -29%; trend 50% -19%.
+   NO calibrar con los últimos 3 meses si tuvieron cortes (sep-25: -45% de bias).
+PASO 2 (cada foto nueva): factor = real / forecast anterior de los meses cerrados desde la foto anterior, a nivel TOTAL;
+   forecast nuevo = (meses ya pronosticados: forecast anterior x factor) + (meses nuevos: regla paso 1 x factor).
+   Cadena mix50 + factor 100% total: bias -7..+10% en las 4 fotos, WMAPE medio 63.2% (mejor). Factores observados: 0.93 (dic), 0.82 (mar), 1.14 (jun).
+   Recalcular desde cero sin corrección: bias deriva a +12..+14%. Congelar: +19..+22%. Corregir por tipo o EAN: más ruido.
+   Sin consenso: trend 50% + factor al 50% total (bias -19% inicio, luego +3/+4/-1%).
+
 # >>> GUÍA VIGENTE (sesión 3) — backtest POR FOTO (src/snapshots.py, snap_eval.py, guide.py) <<<
 Método: en cada foto S&OP (sep-25, dic-25, mar-26, jun-26) solo info disponible entonces (histórico reexpresado truncado;
 consenso de fotos viejas x factor de reexpresión del mes calendario: ~1.15-1.21, oct 1.44, nov 1.43, dic 1.26 — NO es 20% plano),
