@@ -121,6 +121,13 @@ Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infogra
   - Cada EAN vota por el sistema que gana más de sus 5 quarters (menor |forecast − real| en el quarter); también se mide el volumen de los EANs que gana cada uno.
   - Grupos: casa, tamaño, edad, Ignore System Forecast Flag. Colores: verde azulado = regla + DAs, azul marino = consenso (morado/naranja = fragancias/makeup).
   - Resultado 2026-10-09: consenso 530 EANs vs regla + DAs 391 (37 empates); volumen 47% vs 51%.
+- **Votación con varios partidos** (`python3 src/multivote.py`, solo resultados en chat).
+  - Cada EAN elige su método con sep-25 Q2+Q3 y se prueba con mar-26 Q4 FY26 + Q1 FY27.
+  - Partidos: consenso, regla + DAs, año pasado + DAs, trend 6M + DAs, media 6M + DAs.
+  - Resultado 2026-10-09:
+    - 5 partidos empeora (WAPE90 14,7% contra 14,3% del consenso): la media 6M gana en oct–mar y duplica en abr–jun por la estacionalidad.
+    - 2 partidos (consenso / regla + DAs): WAPE90 11,3% contra 14,3% del consenso; error EAN 47,6% contra 48,6%.
+    - El ganador del pasado repite solo en el 53% de los EANs (al azar sería 50%). Un solo corte: falta confirmarlo.
 
 ## Decisiones / respuestas del usuario
 - **Local** = iniciativas con menos de ~6 meses de envíos; luego pasan a Central. Se ignoran en la regla.
