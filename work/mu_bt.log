@@ -1,0 +1,80 @@
+===== GUMU sin_manual mensual
+                                                             wmape   bias  bias_abs  gana_a_LY
+tecnica                                                                                       
+media6M x trend12M@función                                   0.648 -0.013     0.194         13
+media6M x 50%trend12M@familia                                0.660  0.066     0.182         13
+media6M x 50%trend12M@función                                0.666  0.093     0.194         13
+media3M x trend12M@función                                   0.666 -0.022     0.191         13
+media12M x trend12M@función                                  0.668  0.057     0.164         13
+media3M x 50%trend12M@familia                                0.676  0.052     0.180         13
+media3M x 50%trend12M@función                                0.685  0.082     0.196         13
+media6M_plana                                                0.703  0.199     0.231         13
+media12M x trend12M@función x estacionalidad_EPOS@familia    0.717 -0.093     0.129         13
+media12M x trend12M@función x estacionalidad_EPOS@función    0.722 -0.096     0.130         13
+media3M_plana                                                0.724  0.186     0.237         13
+media12M_plana                                               0.739  0.286     0.293         13
+media12M x trend12M@función x estacionalidad_envíos@familia  0.750  0.054     0.209         13
+media12M x trend12M@función x estacionalidad_envíos@función  0.760  0.053     0.208         13
+media12M x estacionalidad_EPOS@familia                       0.776  0.115     0.134         13
+          wmape   bias  bias_abs  gana_a_LY
+tecnica                                    
+LY_plano  0.952  0.276     0.301          0
+===== KYMU sin_manual mensual
+                                                             wmape   bias  bias_abs  gana_a_LY
+tecnica                                                                                       
+media3M x 50%trend12M@función                                0.573 -0.181     0.181         13
+media3M x 50%trend12M@familia                                0.574 -0.206     0.195         13
+media6M x 50%trend12M@función                                0.577 -0.216     0.199         13
+media3M x trend12M@función                                   0.579 -0.289     0.275         13
+media6M x trend12M@función                                   0.580 -0.321     0.296         13
+media6M x 50%trend12M@familia                                0.582 -0.238     0.213         13
+media3M_plana                                                0.589 -0.074     0.103         13
+media6M_plana                                                0.595 -0.111     0.119         13
+media12M x trend12M@función                                  0.643 -0.313     0.264         13
+media6M(desest.) x estacionalidad_envíos@familia             0.681 -0.111     0.199         13
+media12M_plana                                               0.684 -0.094     0.128         13
+media12M x trend12M@función x estacionalidad_envíos@familia  0.695 -0.330     0.294         13
+media12M x trend12M@función x estacionalidad_EPOS@familia    0.723 -0.404     0.356         13
+media12M x trend12M@función x estacionalidad_envíos@función  0.735 -0.326     0.280         13
+media12M x trend12M@función x estacionalidad_EPOS@función    0.737 -0.402     0.353         13
+          wmape   bias  bias_abs  gana_a_LY
+tecnica                                    
+LY_plano   0.89 -0.096     0.208          0
+===== GUMU sin_manual foto sep-25
+                                               wmape   bias
+tecnica                                                    
+media3M x trend12M@función                     0.591 -0.195
+media3M x 50%trend12M@familia                  0.595 -0.087
+media3M x 50%trend12M@función                  0.600 -0.063
+media6M x 50%trend12M@familia                  0.628 -0.090
+media6M x trend12M@función                     0.628 -0.197
+mix50(consenso,media3M x 50%trend12M@familia)  0.629 -0.084
+mix50(consenso,media3M x trend12M@función)     0.631 -0.138
+media6M x 50%trend12M@función                  0.632 -0.066
+media3M_plana                                  0.632  0.069
+mix50(consenso,media3M x 50%trend12M@función)  0.633 -0.072
+media12M x trend12M@función                    0.633 -0.077
+mix50(consenso,media3M_plana)                  0.639 -0.006
+          wmape   bias
+tecnica               
+LY_plano  0.911  0.285
+consenso  0.751 -0.081
+===== KYMU sin_manual foto sep-25
+                                                  wmape   bias
+tecnica                                                       
+media6M x 50%trend12M@familia                     0.649 -0.306
+media6M x 50%trend12M@función                     0.655 -0.281
+media6M x trend12M@función                        0.659 -0.378
+media6M_plana                                     0.661 -0.185
+media3M x 50%trend12M@familia                     0.692 -0.224
+media6M(desest.) x estacionalidad_envíos@familia  0.695 -0.300
+media3M x 50%trend12M@función                     0.697 -0.200
+media3M x trend12M@función                        0.698 -0.310
+media3M_plana                                     0.710 -0.090
+mix50(consenso,media6M x 50%trend12M@familia)     0.712 -0.116
+mix50(consenso,media6M x trend12M@función)        0.712 -0.152
+mix50(consenso,media6M x 50%trend12M@función)     0.715 -0.104
+          wmape   bias
+tecnica               
+LY_plano  0.844 -0.254
+consenso  0.873  0.074

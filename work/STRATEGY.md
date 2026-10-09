@@ -1,4 +1,7 @@
 # >>> ESTRATEGIA FRAGANCIAS DECIDIDA POR EL USUARIO (2026-10-09): ver ESTRATEGIA_FRAGANCIAS.md en la raíz. Base = LY + 25% cortes LY − 50% DA+ LY; forecast = base x (1 + trend 12M actuals house x tamaño, todo Central incl. lanzamientos >=6m, tope ±30%). <<<
+# >>> MAKEUP GUMU/KYMU (sesión 5) — ver ESTRATEGIA_MAKEUP.md. Regla propuesta: media 6M x (1 + 50% trend12M función, tope ±30%), plana, recalcular en cada foto. <<<
+   Bug corregido en mu_backtest.evaluate (A indexado por columnas del horizonte). Envíos sin estacionalidad estable; EPOS sí (dic pico) pero aplicarla empeora.
+
 # >>> DA POSITIVOS (sesión 4e) — src/da_test.py, results/da_test.md (fragancias, regla con 25% cortes) <<<
 DA histórico solo existe desde ene-25 (cada versión guarda futuro + algunos meses pasados). En cada corte uso versiones <= corte.
 1. Sumar DA futuros al forecast: SIEMPRE peor (k=0 óptimo); el LY ya trae el nivel promo y la mitad consenso ya lleva DA. +/- igual de malo.
