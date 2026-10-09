@@ -1,3 +1,10 @@
+# >>> MAKEUP (sesión 4c) — src/makeup.py, results/makeup.md (Kylie, 19 cortes rolling, EANs >=6m) <<<
+En makeup NO funciona "LY x (1+trend)" a ningún nivel (EAN, función/brand, house, categoría, empresa): WMAPE 0.76-0.79 ≈ LY plano 0.759.
+Mejor: RITMO PLANO = media de los últimos 12 meses del EAN, igual para todos los meses futuros: WMAPE 0.459, gana a LY en 19/19 cortes,
+bias -17% (Kylie creciendo), error total 8m medio 24% (P10 -37%, P90 +11%). media 6M: 0.467 / bias -22%. medianas peores (subestiman).
+media12M x trend12M house tope30: 0.495, bias -15.5%. Motivo: sin estacionalidad navideña; mes LY = ruido (picos de llenado de canal de lanzamientos).
+Recomendación: media 12M plana + corrección por factor real/forecast en cada foto (corrige el sesgo de crecimiento).
+
 # >>> AJUSTE (sesión 4b): definición Local = <6 meses de envíos (luego pasan a Central) — src/launch_trend.py <<<
 Trend del grupo (house x tamaño) calculado con TODO lo Central en la foto (>=6 meses de envíos, incluye lanzamientos y manuales)
 y aplicado COMPLETO (100%) ≈ equivale a "medio trend LFL" pero algo mejor y más simple:
