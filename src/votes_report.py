@@ -30,28 +30,52 @@ def n0(x):
     return f"{x:,.0f}".replace(",", ".")
 
 
-def hemicycle(r, e, c, w=300, big=False):
-    """Un punto por EAN; izquierda regla + DAs, centro empate, derecha consenso."""
-    n = r + e + c
-    rows = max(2, min(15, round(math.sqrt(n / 2.3))))
-    R0, R1 = 0.52, 1.0
-    radii = [R0 + (R1 - R0) * i / (rows - 1) for i in range(rows)]
-    per = [round(n * x / sum(radii)) for x in radii]; per[-1] += n - sum(per)
+def seats(n, R0=0.5):
+    """Posiciones de un hemiciclo con separación uniforme: (ángulo, radio) por escaño y diámetro relativo del punto.
+    Usa el menor número de filas en el que caben los n escaños; cada fila lleva escaños según su longitud."""
+    opts = []   # (d, huecos, filas); se elige el punto más grande con pocos huecos (≤15% de n)
+    for rows in range(1 if n <= 10 else 2, 40):
+        for i in range(20, 1001):
+            d = i / 1000
+            r0 = 1 - (rows - 1) * d
+            if rows > 1 and not 0.479 <= r0 <= 0.641:
+                continue
+            if rows == 1 and d < math.pi / max(n - 1, 1):
+                continue
+            cap = sum(int(math.pi * (r0 + (1 - r0) * j / (rows - 1)) / d) + 1 for j in range(rows)) if rows > 1 else int(math.pi / d) + 1
+            if cap >= n:
+                opts.append((d, cap - n, rows))
+    ok = [o for o in opts if o[1] <= max(1, 0.15 * n)] or [min(opts, key=lambda o: o[1])]
+    d, _, rows = max(ok); R0 = 1 - (rows - 1) * d
+    radii = [1.0] if rows == 1 else [R0 + (1 - R0) * i / (rows - 1) for i in range(rows)]
+    cap = [int(math.pi * r / d) + 1 for r in radii]
+    k = [n * c / sum(cap) for c in cap]
+    k = [int(x) for x in k]
+    rest = sorted(range(rows), key=lambda i: -(n * cap[i] / sum(cap) - k[i]))
+    for i in rest[: n - sum(k)]:
+        k[i] += 1
     pts = []
-    for rad, k in zip(radii, per):
-        for j in range(k):
-            pts.append((math.pi * (1 - j / (k - 1)) if k > 1 else math.pi / 2, rad))
-    pts.sort(key=lambda p: -p[0])
-    cx, S = w / 2, w / 2 * 0.95; cy = S + 4
-    arc = min(math.pi * rad * S / max(k - 1, 1) for rad, k in zip(radii, per) if k > 0)
-    dot = min(S * (R1 - R0) / (rows - 1), arc, 24) * 0.42
-    s = [f'<svg viewBox="0 0 {w} {cy + 4:.0f}" width="100%" xmlns="http://www.w3.org/2000/svg">']
+    for r, ki in zip(radii, k):
+        for j in range(ki):
+            pts.append((math.pi * (1 - j / (ki - 1)) if ki > 1 else math.pi / 2, r))
+    pts.sort(key=lambda p: (-round(p[0], 6), p[1]))
+    return pts, min(d, min(math.pi * r / max(ki - 1, 1) for r, ki in zip(radii, k) if ki))
+
+
+def hemicycle(r, e, c, w=300, big=False):
+    """Hemiciclo: un punto por EAN; izquierda regla + DAs, centro empate, derecha consenso."""
+    n = r + e + c
+    pts, d = seats(n)
+    S0 = w / 2
+    dot = min(0.40 * d * (S0 - 2) / (1 + 0.40 * d), 24)   # radio del punto = 40% de la separación, ya descontado el margen
+    S = S0 - dot - 2; cx = w / 2; cy = S + dot + 2
+    s = [f'<svg viewBox="0 0 {w} {cy + dot + 2:.0f}" width="100%" xmlns="http://www.w3.org/2000/svg">']
     for i, (a, rad) in enumerate(pts):
         col = RG if i < r else (EM if i < r + e else CS)
         s.append(f'<circle cx="{cx + S * rad * math.cos(a):.1f}" cy="{cy - S * rad * math.sin(a):.1f}" r="{dot:.2f}" fill="{col}"/>')
     fs = 40 if big else 26
-    s.append(f'<text x="{cx}" y="{cy - (30 if big else 16)}" text-anchor="middle" class="hc1" style="font-size:{fs}px">{n}</text>')
-    s.append(f'<text x="{cx}" y="{cy - (12 if big else 3)}" text-anchor="middle" class="hc2">EANs</text>')
+    s.append(f'<text x="{cx}" y="{cy - (28 if big else 15)}" text-anchor="middle" class="hc1" style="font-size:{fs}px">{n}</text>')
+    s.append(f'<text x="{cx}" y="{cy - (10 if big else 2)}" text-anchor="middle" class="hc2">EANs</text>')
     s.append("</svg>")
     return "".join(s)
 
