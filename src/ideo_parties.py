@@ -139,6 +139,12 @@ def dist_to(FQ, p, cols, chunk=20000):
 
 
 # ---------------------------------------------------------------- selección
+def _pair(FQ, i, j, cols):
+    a = FQ[i][cols]; b = FQ[j][cols]
+    num = np.abs(a - b).sum(1); den = ((a + b) / 2).sum(1)
+    return np.where(den > 0, num / np.where(den > 0, den, 1), 0)
+
+
 def objective(Sc, w, ids):
     return float((Sc[ids].min(0) * w).sum())
 
@@ -192,6 +198,63 @@ def select(Sc, w, st, FQ, cols, fixed, cand, n_new=N_NEW, verbose=True, refine=T
         if not changed:
             break
     return chosen, steps
+
+
+FORMS = ["LY", "M3", "M6", "M12", "M3e", "M6e", "M12e", "LY+M6e", "CV"]
+
+
+def select_forms(Sc, w, st, fixed, cand, dfix, n_new=N_NEW, verbose=True):
+    """Un partido por forma de base. Dentro de cada forma, la configuración (estacionalidad, trend, DAs, cortes) que más baja
+    el error del parlamento, con los demás partidos fijos (afinado por turnos hasta que nada cambia). Luego se quita, de una en
+    una, la forma que menos aporta hasta quedar n_new. Ninguna puede ser casi igual a una regla fija (distancia < 15%)."""
+    cx = complexity(st)
+    form = st.base.values
+    okfix = np.ones(len(st), bool)
+    for d in dfix:
+        okfix &= d >= MIN_DIST
+    rows = {f: np.where((form == f) & cand & okfix)[0] for f in FORMS}
+
+    def best_in(f, others):
+        r = rows[f]
+        rest = Sc[others].min(0)
+        tot = (np.minimum(rest[None], Sc[r]) * w[None]).sum(1)
+        mn = tot.min()
+        near = np.where(tot <= mn + SIMPLE_TOL)[0]
+        k = near[np.lexsort((tot[near], cx[r][near]))[0]]
+        return int(r[k]), float(tot[k])
+
+    def lloyd(P):
+        for it in range(12):
+            changed = False
+            for f in list(P):
+                others = list(fixed) + [P[g] for g in P if g != f]
+                s_, _ = best_in(f, others)
+                if s_ != P[f]:
+                    P[f] = s_; changed = True
+            if not changed:
+                break
+        return P
+
+    P = {}
+    for f in FORMS:                                # arranque: cada forma por su cuenta junto a las reglas
+        if len(rows[f]):
+            P[f] = best_in(f, list(fixed))[0]
+    P = lloyd(P)
+    drops = []
+    while len(P) > n_new:
+        cost = {f: objective(Sc, w, list(fixed) + [P[g] for g in P if g != f]) for f in P}
+        f = min(cost, key=cost.get)
+        drops.append(dict(forma=f, id=P[f], obj_sin=cost[f], obj_con=objective(Sc, w, list(fixed) + list(P.values()))))
+        if verbose:
+            print(f"  fuera {f}: {describe(st.loc[P[f]])} (sin ella {cost[f]:.4f})")
+        del P[f]
+        P = lloyd(P)
+    chosen = list(fixed) + list(P.values())
+    if verbose:
+        for f, s_ in P.items():
+            print(f"  {f}: {describe(st.loc[s_])}")
+        print(f"  objetivo {objective(Sc, w, chosen):.4f}")
+    return chosen, drops
 
 
 # ---------------------------------------------------------------- elección (formato fijo)
@@ -301,46 +364,57 @@ def main():
     cand = ((st.fuente != "ninguna") | (st.base == "CV")).values
     print(f"carga {time.time() - t0:.0f}s · {len(st)} estrategias · {n} EANs con real")
 
-    # ---- 2. mejor estrategia por EAN (desempate: la más simple)
+    # ---- 2-3. mejor estrategia por EAN, importancia de cada idea y perfiles (caché: es lo más lento)
+    cache = W / "ideo_stage1.pkl"
     cx = complexity(st)
-    best = np.empty(n, int); best_sc = np.empty(n)
-    for j in range(n):
-        col = Sc[:, j]; mn = col.min()
-        near = np.where(col <= mn + 1e-6)[0]
-        best[j] = near[np.argmin(cx[near])]; best_sc[j] = mn
-    imp = importance(Sc, st, best, best_sc)
-    print(f"mejores por EAN {time.time() - t0:.0f}s")
-
-    # ---- 3. perfiles
     K = int(len(st) * TOPK)
-    prof, top = profiles(Sc, st, K)
-    # popularidad de cada valor de idea entre las mejores estrategias de cada EAN (top 1%) y en la mejor
+    if cache.exists():
+        best, best_sc, imp, prof, dfix = pd.read_pickle(cache)
+    else:
+        best = np.empty(n, int); best_sc = np.empty(n)
+        for j in range(n):
+            col = Sc[:, j]; mn = col.min()
+            near = np.where(col <= mn + 1e-6)[0]
+            best[j] = near[np.argmin(cx[near])]; best_sc[j] = mn
+        imp = importance(Sc, st, best, best_sc)
+        print(f"mejores por EAN {time.time() - t0:.0f}s")
+        prof, _ = profiles(Sc, st, K)
+        print(f"perfiles {time.time() - t0:.0f}s")
+        dfix = [dist_to(FQ, p, cols) for p in (rf, rm)]
+        print(f"distancias a las reglas {time.time() - t0:.0f}s")
+        pd.to_pickle((best, best_sc, imp, prof, dfix), cache)
     ID = pd.DataFrame([ideas(r) for r in st[["base", "estac", "fuente", "tventana", "fuerza", "tope", "dap", "cortes", "daf"]].to_dict("records")])
-    print(f"perfiles {time.time() - t0:.0f}s")
 
-    # ---- 4. partidos
-    dcache = {}
+    # ---- 4. partidos: uno por forma de base
     print("Selección (todos los EANs):")
-    chosen, steps = select(Sc, w, st, FQ, cols, [rf, rm], cand, dcache=dcache)
+    chosen, drops = select_forms(Sc, w, st, [rf, rm], cand, dfix)
     obj_rules = objective(Sc, w, [rf, rm]); obj_final = objective(Sc, w, chosen)
-    # curva de aportes en orden voraz (sobre la lista final afinada)
+    # selección libre (sin una forma por partido), solo para medir cuánto cuesta la estructura
+    free, _ = select(Sc, w, st, FQ, cols, [rf, rm], cand, verbose=False, refine=False, dcache={rf: dfix[0], rm: dfix[1]})
+    obj_free = objective(Sc, w, free)
+    print(f"objetivo: reglas {obj_rules:.4f} · 10 partidos {obj_final:.4f} · libre {obj_free:.4f} · oráculo {float((Sc.min(0) * w).sum()):.4f}")
+    # orden por aporte (voraz sobre la lista final)
     order = [rf, rm]; contrib = [dict(id=-1, obj=obj_rules)]
     rest = chosen[2:]
     while rest:
         g = [objective(Sc, w, order + [p]) for p in rest]
         p = rest[int(np.argmin(g))]; order.append(p); rest.remove(p); contrib.append(dict(id=p, obj=min(g)))
     chosen = order
-    # ---- robustez: mitad de EANs (elige con una mitad, mide en la otra)
+    # distancias entre partidos (comprobación de que no son casi iguales)
+    dmat = np.array([[float(np.median(_pair(FQ, i, j, cols))) for j in chosen] for i in chosen])
+    # ---- robustez: elige con una mitad de EANs, mide en la otra
     rng = np.random.default_rng(7); rob = []
-    for rep in range(4):
+    for rep in range(10):
         perm = rng.permutation(n); A_, B_ = perm[: n // 2], perm[n // 2:]
-        chA, _ = select(Sc[:, A_], w[A_], st, FQ, cols[A_], [rf, rm], cand, verbose=False, refine=False)
-        chB, _ = select(Sc[:, B_], w[B_], st, FQ, cols[B_], [rf, rm], cand, verbose=False, refine=False)
+        dA = [d for d in dfix]   # la distancia a las reglas se mide con todos los EANs
+        chA, _ = select_forms(Sc[:, A_], w[A_], st, [rf, rm], cand, dA, verbose=False)
+        chB, _ = select_forms(Sc[:, B_], w[B_], st, [rf, rm], cand, dA, verbose=False)
         ob = lambda ch, S_: float((Sc[ch][:, S_].min(0) * w[S_]).sum() / w[S_].sum())
         rob.append(dict(rep=rep, dentro=ob(chA, A_), fuera=ob(chA, B_), techo_fuera=ob(chB, B_), solo_reglas=ob([rf, rm], B_),
-                        familias_A=sorted(FAM[st.base[i]] for i in chA[2:]), familias_B=sorted(FAM[st.base[i]] for i in chB[2:]),
-                        final_fuera=ob(chosen, B_)))
-        print(f"  robustez {rep}: dentro {rob[-1]['dentro']:.3f} fuera {rob[-1]['fuera']:.3f} techo {rob[-1]['techo_fuera']:.3f} reglas {rob[-1]['solo_reglas']:.3f}")
+                        final_fuera=ob(chosen, B_), formas_A=sorted(st.base[i] for i in chA[2:]),
+                        iguales=int(len(set(chA[2:]) & set(chosen[2:]))), formas_iguales=int(len(set(st.base[chA[2:]]) & set(st.base[chosen[2:]])))))
+        print(f"  robustez {rep}: dentro {rob[-1]['dentro']:.3f} fuera {rob[-1]['fuera']:.3f} techo {rob[-1]['techo_fuera']:.3f} "
+              f"reglas {rob[-1]['solo_reglas']:.3f} · formas {rob[-1]['formas_A']} · mismos partidos {rob[-1]['iguales']}")
     print(f"partidos {time.time() - t0:.0f}s")
 
     # ---- 5. elección con los 10 partidos (todos los votantes, también los muertos)
@@ -370,11 +444,13 @@ def main():
 
     # ---- resúmenes
     out = dict(n_estrategias=int(len(st)), n_votantes=int(len(a)), n_con_real=int(n), n_muertos=int((~alive).sum()), topk=K,
-               obj_reglas=obj_rules, obj_final=obj_final, oraculo=float((Sc.min(0) * w).sum()),
+               obj_reglas=obj_rules, obj_final=obj_final, obj_libre=obj_free, oraculo=float((Sc.min(0) * w).sum()),
+               libre=[describe(st.loc[i]) for i in free[2:]], descartes=[dict(d, formula=describe(st.loc[d["id"]])) for d in drops],
+               distancias=dmat.tolist(),
                partidos=[], aportes=[], robustez=rob, pop={}, imp={}, dims_cat={}, prof={})
     for i, (p, s) in enumerate(zip(names, chosen)):
         r = st.loc[s]
-        out["partidos"].append(dict(nombre=p, id=int(s), fijo=i < 2, formula=describe(r), **ideas(r), **{k: (str(r[k]) if k in ("cortes", "estac", "base", "fuente", "pool") else float(r[k])) for k in DIMS}))
+        out["partidos"].append(dict(nombre=p, id=int(s), fijo=i < 2, formula=describe(r), ideas=ideas(r), **{k: (str(r[k]) if k in ("cortes", "estac", "base", "fuente", "pool") else float(r[k])) for k in DIMS}))
     for c in contrib:
         out["aportes"].append(dict(partido=(names[chosen.index(c["id"])] if c["id"] >= 0 else "Reglas fijas"), obj=c["obj"]))
     # popularidad de ideas en la mejor estrategia (solo donde la idea importa) por categoría
