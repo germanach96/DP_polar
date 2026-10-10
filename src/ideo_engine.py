@@ -49,6 +49,8 @@ DAP = [0.0, 0.25, 0.5, 0.75, 1.0]
 CUTS = ["0", "10%·tope", "25%", "50%"]
 DAF = [0.0, 0.5, 1.0]
 CURVE_MAX_AGE = 18          # la curva solo mientras haya pares que ya llegaron a esa edad + 9 meses; desde 18 meses manda la fase
+CURVE_LEVELS = {"casa×seg": ["seg", "casa", "cat"], "casa": ["casa", "cat"], "categoría": ["cat"],
+                "categoría×seg": ["catseg", "cat"], "franquicia": ["franq", "casa", "cat"], "línea": ["linea", "seg", "casa", "cat"]}
 CURVE_POOLS = ["categoría", "casa", "casa×seg"]
 
 
@@ -60,7 +62,7 @@ class Ctx:
         self.central = a.central.values
         self.keys = dict(casa=(a.cat + "|" + a.casa).values, seg=(a.casa + "|" + a.seg).values, linea=(a.casa + "|" + a.linea).values,
                          franq=(a.casa + "|" + a.brand).values, cat=a.cat.values, fase=(a.casa + "|" + a.fase).values,
-                         catfase=(a.cat + "|" + a.fase).values)
+                         catfase=(a.cat + "|" + a.fase).values, catseg=(a.cat + "|" + a.seg).values)
         self.vote = a.votante.values
         self.month_of = np.array([t.month for t in M])
 
@@ -135,8 +137,9 @@ class Ctx:
             idx = S[:, self.month_of[:m]]           # n x m
             Y[:, :m] = Y[:, :m] / idx
         peers = np.where(L >= 1)[0]               # lanzamiento visto en los datos
-        pools = {"casa×seg": ["seg", "casa", "cat"], "casa": ["casa", "cat"], "categoría": ["cat"]}[pool]
+        pools = CURVE_LEVELS[pool]
         out = np.full((len(Y), 9), np.nan)
+        self.curve_level = np.full(len(Y), "", dtype=object)        # nivel de pares usado por EAN (auditoría)
         cache = {}
         for i in np.where(self.vote)[0]:
             ai = age[i]
@@ -166,6 +169,7 @@ class Ctx:
                         if not np.isfinite(r[h]):
                             r[h] = r[h - 1]
                     out[i] = np.clip(r, 0.2, 5)
+                    self.curve_level[i] = lev
                     break
         # madurez: sin curva (26+ / edad desconocida o sin pares) -> trend 12M de los códigos en su misma fase (casa × fase, tope ±30%)
         gf = np.clip(self.trend("fase", 12), -0.3, 0.3)
