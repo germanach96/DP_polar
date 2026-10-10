@@ -113,5 +113,8 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - `src/parliament_vs_cons.py`: prueba contra el consenso.
 - **Ideologías (propuesta de 10 partidos, foto sep-25):** `python3 src/ideo_panel.py && python3 src/ideo_engine.py && python3 src/ideo_parties.py && python3 src/ideo_compass.py && python3 src/ideo_report.py && python3 src/ideo_infografia.py`
   - `ideo_engine.py`: banco de 203k estrategias por EAN; `ideo_parties.py`: mejor por EAN, partidos (uno por forma de base), elección, robustez; `ideo_viz.py`: colores y piezas visuales de 10 partidos.
-- **Parlamento de 6 (vigente):** `python3 src/da_conversion.py && python3 src/ideo_brujulas6.py && python3 src/six_multi.py && python3 src/six_report.py && python3 src/six_infografia.py` (requiere antes el bloque de ideologías).
+- **Parlamento de 6 (vigente):** `python3 src/da_conversion.py && python3 src/ideo_brujulas6.py && python3 src/six_multi.py && python3 src/six_sin_consenso.py && python3 src/ideologia_report.py` (requiere antes el bloque de ideologías).
+  - `six_sin_consenso.py`: prueba honesta sin consenso (regla, un partido, grupo, media de 6, coalición de 2).
+  - `ideologia_report.py` → `reportes/REPORTE_IDEOLOGIA.pdf`: concepto (DNI y 3 preguntas), los 6 partidos, brújulas, coalición y elección.
+  - `six_report.py` / `six_infografia.py`: versiones anteriores que comparan con el consenso (históricas).
 - **Resto de scripts y reportes:** ver `HISTORIAL.md`.
