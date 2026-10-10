@@ -206,3 +206,20 @@ Resultados de todas las pruebas hasta 2026-10-10. El contexto vigente está en `
 - **Decisión con el pasado:** Ciclo de vida para todos (los partidos quedan como referencia).
 - **Confirmación con sep-26** (voto con las 6 urnas, foto sep-25 → Q2–Q4 FY26): regla 64% / 53% / 55% (total 57%) · un partido 64% / 55% / 55% (total 58%) · coalición 64% / 51% / 50% (total 54%) · media de los 6 64% / 50% / 49% (total 53%) · **Ciclo de vida 63% / 50% / 49% (total 53%)**. WAPE90 casa: regla 12%, Ciclo 11%, media de los 6 8% (pero en el pasado la media de los 6 era de las peores).
 - El partido ganador del pasado repite en FY26 en el 18% de los EANs (azar 17%).
+
+## 12. Ciclo de vida contra el consenso de o9 (`src/ciclo_vs_cons.py`) — solo comparación
+- Foto sep-25 → real sep-26. A todos los métodos se les suman los DAs futuros de la foto; el consenso va tal cual.
+- Error EAN a EAN a 7–9 / 4–6 / 1–3 meses:
+  - Ciclo de vida (DAs según bandera): 63 / 50 / 49%.
+  - Consenso: 73 / 55 / 54%.
+  - Ciclo + 100% DAs: 72 / 56 / 54%.
+  - Regla + 100% DAs: 71 / 58 / 62%.
+- WAPE90 de la casa:
+  - Ciclo de vida: 17.5 / 12.5 / 15.3% (sesgo −10 / −6 / −13%; gana al consenso en 3 / 1 / 1 de 5 casas).
+  - Consenso: 19.1 / 7.2 / 11.8%.
+  - Ciclo + 100% DAs: 16.0 / 8.7 / 10.7%.
+  - Regla + 100% DAs: 13.9 / 6.2 / 7.8%.
+- Por grupo (9 meses, EAN a EAN, Ciclo de vida vs consenso):
+  - Por edad: 6–11 98 vs 128% · 12–17 63 vs 64% · 18–25 45 vs 44% · 26+ 37 vs 40%.
+  - Por bandera: 0 42 vs 46% · 1 77 vs 57% (con 100% DAs, 102%) · 2 82 vs 121%.
+- Conclusión: gana código a código, no en el total de la casa; la bandera 1 es su punto débil.

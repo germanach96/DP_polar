@@ -80,9 +80,19 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - Ensayo, error EAN a 7–9 / 4–6 / 1–3 meses: regla 115% / 107% / 88% (total 103%), un partido 99% / 119% / 105% (total 108%), coalición 104% / 113% / 86% (total 100%), **Ciclo de vida solo 98% / 83% / 65% (total 81%)**.
   - Elegir partido por EAN no mejora a la regla: el ganador del pasado repite en FY26 en el 18% de los EANs (azar 17%).
   - **Propuesta de Claude: Ciclo de vida para todos**; confirmada con sep-26: 63% / 50% / 49% (total 53%) vs regla 64% / 53% / 55% (total 57%). Pendiente de que el usuario la apruebe.
+- **Ciclo de vida contra el consenso** (solo como comparación, no para decidir; `src/ciclo_vs_cons.py`, `HISTORIAL.md` §12; foto sep-25 → real sep-26, 7–9 / 4–6 / 1–3 meses):
+  - EAN a EAN gana en los 3 plazos: 63 / 50 / 49% vs consenso 73 / 55 / 54%.
+  - En el total de la casa NO: WAPE90 17.5 / 12.5 / 15.3% vs consenso 19.1 / 7.2 / 11.8% (gana en 3, 1 y 1 de 5 casas); se queda corto (sesgo −10 / −6 / −13%).
+  - En el total de la casa acierta más la regla + 100% DAs: 13.9 / 6.2 / 7.8%.
+  - Falla con bandera 1: 77% vs 57% del consenso; sumarle el 100% de los DAs lo empeora (102%). Gana en nuevos 6–11 (98 vs 128%) y bandera 2 (82 vs 121%).
 - **No repetir:** quarters desbalanceados o incompletos · partidos sin trend · DAs contados dos veces · partidos casi iguales que dividen el voto · usar el consenso como referencia.
 - Propuestas anteriores (reemplazadas): 10 partidos (`HISTORIAL.md` §7) y 8 partidos EAN/Línea/Segmento/Casa.
-- **En pausa:** reportes del parlamento. Foco en el concepto.
+- **Estado al cerrar la conversación (2026-10-10):** el usuario quiere dar un paso atrás y seguir en otra conversación. Abierto:
+  - Aprobar o no el Ciclo de vida como base para todos (propuesta de Claude).
+  - Por qué el Ciclo de vida acierta EAN a EAN pero se queda corto en el total de la casa, donde la regla + DAs acierta más.
+  - Qué hacer con la bandera 1 (ni el 50% ni el 100% de los DAs funcionan).
+  - Si elegir por EAN sigue teniendo sentido con un solo año de voto (el ganador no se repite).
+- **Reportes:** `reportes/REPORTE_IDEOLOGIA.pdf` es el vigente; el resto, en pausa.
 
 ## Reportes (preferencias)
 - PDF A4 horizontal: HTML + SVG impreso con Chromium (`/opt/pw-browsers/chromium-1194/chrome-linux/chrome`), fuente Inter. Diseño cuidado, con gráficos, nada que parezca hecho con prisa.
@@ -115,6 +125,7 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - `ideo_engine.py`: banco de 203k estrategias por EAN; `ideo_parties.py`: mejor por EAN, partidos (uno por forma de base), elección, robustez; `ideo_viz.py`: colores y piezas visuales de 10 partidos.
 - **Parlamento de 6 (vigente):** `python3 src/fy25_eleccion.py && python3 src/decision_sep25.py && python3 src/fy25_brujulas.py && python3 src/ideologia_report.py` (las posiciones de los partidos salen de `ideo_brujulas6.py`, que requiere antes el bloque de ideologías).
   - `decision_sep25.py`: ensayo con el pasado y decisión. `fy25_eleccion.py`: voto con FY25 (6 urnas), prueba desde sep-25, coalición, parecidos para los nuevos. `fy25_brujulas.py`: posición de cada EAN en las brújulas con FY25.
+  - `ciclo_vs_cons.py`: comparación histórica Ciclo de vida vs consenso (no se usa para decidir).
   - `six_multi.py` / `six_sin_consenso.py`: diseño anterior (votar con quarters de FY26 de varias fotos), reemplazado.
   - `ideologia_report.py` → `reportes/REPORTE_IDEOLOGIA.pdf`: concepto (DNI, 3 preguntas, diseño de la prueba), los 6 partidos, brújulas, coalición, prueba honesta y elección.
   - `six_report.py` / `six_infografia.py`: versiones anteriores que comparan con el consenso (históricas).
