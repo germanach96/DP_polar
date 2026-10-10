@@ -3,7 +3,8 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
 
 ## Usuario y objetivo
 - Demand planner en belleza (fragancias y makeup). Usa o9; horizonte de 9 meses sin el mes en curso; la señal a supply va por EAN.
-- Quiere una **regla base defendible con datos** a la que agarrarse. El consenso es el trabajo de su departamento: es referencia, no rival.
+- Quiere una **regla base defendible con datos** a la que agarrarse.
+- **El "consenso" (`cons`) es lo que calcula o9 (el programa) y es lo que quiere sustituir con el parlamento: no se usa como referencia ni como parte de la solución** (corregido 2026-10-10). Las referencias son las 2 reglas y los propios partidos.
 - Hoy el equipo aplica un trend YoY 6M plano y es el peor método medido.
 - Idea en curso: un **sistema de elecciones** (como el best-fit de o9) donde cada EAN elige su modelo por su rendimiento pasado, comparando también con casa, product line, tamaño y función.
 
@@ -38,7 +39,7 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - Forecast = media de 6 meses ajustados × (1 + 50% trend 12M de la función Face/Lips/Eyes, tope ±30%). Plano, sin estacionalidad.
 - Se recalcula cada mes para 9 meses; sin factor de corrección ni consenso.
 
-## Comparación estándar contra el consenso (`src/wape90.py`; solo resultados en chat, sin PDF)
+## Comparación contra el consenso (histórica; ya NO se usa: el consenso es la salida de o9 que se quiere sustituir)
 - Consenso de la foto tal cual (ya lleva DAs) contra **regla + todos los DAs de la foto** (positivos y negativos, suelo 0).
 - **WAPE90** = |Σ forecast − Σ real| / Σ real, por casa × quarter.
 - **SPP3** = (Σ real − Σ forecast) / Σ real. Negativo = overforecast.
