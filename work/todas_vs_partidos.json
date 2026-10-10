@@ -1,31 +1,42 @@
 {
- "La mejor de todas (en oct–mar)": {
-  "abr_jun": 0.5132393836975098,
-  "oct_mar": 0.17156410217285156
+ "elige oct–dic + ene–mar -> prueba abr–jun": {
+  "La mejor de todas": 0.5132393836975098,
+  "Media de sus 10 mejores de todas": 0.5044546127319336,
+  "La mejor de los 6 partidos": 0.5079969763755798,
+  "Coalición de sus 2 mejores partidos": 0.5279444456100464,
+  "Regla de su categoría": 0.6152960658073425,
+  "_dentro_todas": 0.17156410217285156,
+  "_dentro_6": 0.2764072120189667,
+  "_eans": 690
  },
- "Media de sus 3 mejores": {
-  "abr_jun": 0.5093449354171753
+ "elige oct–dic + abr–jun -> prueba ene–mar": {
+  "La mejor de todas": 0.43655896186828613,
+  "Media de sus 10 mejores de todas": 0.4259950518608093,
+  "La mejor de los 6 partidos": 0.39415472745895386,
+  "Coalición de sus 2 mejores partidos": 0.3919528126716614,
+  "Regla de su categoría": 0.49456098675727844,
+  "_dentro_todas": 0.1653241664171219,
+  "_dentro_6": 0.2974452078342438,
+  "_eans": 718
  },
- "Media de sus 10 mejores": {
-  "abr_jun": 0.5044546127319336
+ "elige ene–mar + abr–jun -> prueba oct–dic": {
+  "La mejor de todas": 0.5083304047584534,
+  "Media de sus 10 mejores de todas": 0.4915494918823242,
+  "La mejor de los 6 partidos": 0.3990941643714905,
+  "Coalición de sus 2 mejores partidos": 0.4003863036632538,
+  "Regla de su categoría": 0.5364212393760681,
+  "_dentro_todas": 0.1737893521785736,
+  "_dentro_6": 0.3044990599155426,
+  "_eans": 709
  },
- "Media de sus 100 mejores": {
-  "abr_jun": 0.5053291320800781
+ "media de las 3 pruebas": {
+  "La mejor de todas": 0.48604291677474976,
+  "Media de sus 10 mejores de todas": 0.4739997188250224,
+  "La mejor de los 6 partidos": 0.43374862273534137,
+  "Coalición de sus 2 mejores partidos": 0.4400945206483205,
+  "Regla de su categoría": 0.5487594306468964,
+  "_dentro_todas": 0.17022587358951569,
+  "_dentro_6": 0.29278382658958435
  },
- "Media de sus 1000 mejores": {
-  "abr_jun": 0.5201995372772217
- },
- "6 partidos: el mejor para él": {
-  "abr_jun": 0.5079969763755798,
-  "oct_mar": 0.2764072120189667
- },
- "6 partidos: coalición de sus 2 mejores": {
-  "abr_jun": 0.5279444456100464
- },
- "Regla de su categoría": {
-  "abr_jun": 0.6152960658073425
- },
- "_percentil_mediano_en_abr_jun_de_la_mejor_de_oct_mar": 0.31743092298647857,
- "_n_estrategias": 34020,
- "_n_eans": 690
+ "_n_estrategias": 34020
 }
