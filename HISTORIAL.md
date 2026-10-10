@@ -159,3 +159,12 @@ Resultados de todas las pruebas hasta 2026-10-10. El contexto vigente está en `
 - Prueba limpia (partidos y elección con oct–mar, medida abr–jun): error EAN 51% vs reglas 71% vs consenso 73% (fragancias 49% = regla; makeup 53% vs 100%). En el total de casa no siempre: Burberry 31% vs regla 4%.
 - La regla de makeup falla 100% EAN a EAN en abr–jun por los DAs de la foto (sin ellos, 69%).
 - WAPE90 como regla única: consenso 12,2%; Media 12M estacional · casa 12,2%; regla fragancias 13,7%.
+
+## 8. Parlamento de 6 y lógica de DAs reconstruida (vigente)
+- Scripts: `src/da_conversion.py`, `src/ideo_brujulas6.py`, `src/six_multi.py`, `src/six_report.py` (`reportes/REPORTE_6_PARTIDOS.pdf`), `src/six_infografia.py` (`reportes/INFOGRAFIA_6_PARTIDOS.pdf`); detalle en `reportes/PARTIDOS6_EAN.xlsx`.
+- 6 partidos (sin 3M): Regla fragancias, Regla makeup, Ciclo de vida (curva por edad hasta 17 meses; después trend de su fase), Media 6M prudente (trend 6M categoría ±60%), Media 6M estacional (perfil casa × trend fase ±60%), Media 12M estacional (perfil línea × 50% trend propio).
+- DAs: trend con actuals; base limpia con el DA planificado (última foto en la que el mes aún no estaba cerrado: `ideo_panel.da_plan`); DAs futuros según la bandera de la foto: 100% / 50% / 0% (con bandera 2 el consenso es 100% DAs y se pasa un 84%).
+- Conversión de DAs planificados en envío extra (hasta ago-26): fragancias 42% (sin bandera 23%; a 7–9 meses 17%), makeup 80%. Solo el 36–57% del DA planificado sigue en la foto siguiente.
+- Urnas: sep-25 Q2–Q4, dic-25 Q3–Q4 (fragancias), mar-26 Q4. 929 EANs. Con trampa: WAPE90 parlamento 12,7% vs consenso 12,4%; error EAN 40% vs 54%.
+- Prueba honesta (voto con oct–mar, medido abr–jun), error EAN: a 7–9 meses parlamento 53% vs consenso 73%; a 4–6 meses 60% vs 54%; a 1–3 meses 64% vs 42%. Votar por horizonte no lo arregla (62%); mejor partido único a 1–3 meses 54%.
+- Propuesta: híbrido (consenso meses 1–6, partido del EAN meses 7–9); ciclo de vida para códigos nuevos; guardar los DAs de cada foto.

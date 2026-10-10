@@ -3,7 +3,8 @@
 Por EAN (todos los EANs de la foto sep-25; los votantes se filtran después):
   H    histórico de la última foto (sep-26), NaN antes del primer envío; solo se usan columnas < sep-25
   C    cortes de la última foto
-  DAp  DAs positivos conocidos en sep-25 (pasado desde ene-25)       -> para limpiar la base
+  DAp  DAs+ planificados de los meses pasados (src: da_plan): el de la última foto en la que el mes aún no estaba cerrado;
+       antes de la primera foto (sep-25), el que guarda esa foto como pasado      -> para limpiar la base
   DAf  DAs de la foto sep-25 en oct-25..jun-26 (positivos y negativos) -> se suman al forecast
   cons consenso de la foto sep-25 tal cual en oct-25..jun-26
   A    real oct-25..jun-26 (foto sep-26)
@@ -15,7 +16,8 @@ Tramos: 6–11, 12–17, 18–25, 26+ meses.
 Fase (madurez): crecimiento / estable / declive según el trend 6M propio frente al año anterior, relativo al de su casa (±15%):
   el mercado cayó un 36–51% en mar–ago 25, así que en absoluto casi todo saldría "declive". Solo con 18+ meses;
 con menos de 18 meses la fase es la de su tramo de edad (lanzamiento o consolidación).
-Salida: work/ideo_panel.pkl"""
+build(snap) sirve para cualquier foto (2025-09, 2025-12, 2026-03, 2026-06; makeup solo 2025-09 y 2026-03).
+Salida: work/ideo_panel.pkl (sep-25) o work/ideo_panel_<foto>.pkl"""
 import sys
 import warnings
 from pathlib import Path
@@ -62,16 +64,41 @@ def launch_idx(H):
     return out
 
 
-def build():
+VERS_F = ["2025-09", "2025-12", "2026-03", "2026-06", "2026-09"]
+VERS_M = ["2025-09", "2026-03", "2026-09"]
+
+
+def da_plan(d, eans, V, vers):
+    """DA planificado de cada mes (EAN x M) visto desde la foto V: el de la última foto W <= V en la que el mes todavía no estaba
+    cerrado (W <= mes). Meses anteriores a la primera foto: el que registra la primera foto (o9 los guarda como pasado).
+    Devuelve (DA, fuente) con fuente = foto usada por mes (str) para auditar."""
+    vs = [v for v in vers if pd.Timestamp(v + "-01") <= V]
+    piv = {v: d[d.version == v].pivot_table(index="ean", columns="date", values="da", aggfunc="sum").reindex(index=eans, columns=M).fillna(0)
+           for v in vs}
+    out = pd.DataFrame(0.0, index=eans, columns=M); src = pd.Series("", index=M)
+    for t in M:
+        if t > V:
+            continue
+        cand = [v for v in vs if pd.Timestamp(v + "-01") <= t]
+        w = cand[-1] if cand else vs[0]
+        out[t] = piv[w][t].values; src[t] = w
+    return out, src
+
+
+def build(snap=SNAP, save=True):
+    V = pd.Timestamp(snap + "-01"); m = M.get_loc(V); MONTHS = list(M[m + 1:m + 10])
+    QS = [fq(t) for t in MONTHS]
+    QLIST = list(dict.fromkeys(QS)); QIDX = [[i for i, q in enumerate(QS) if q == x] for x in QLIST]
+    SNAP_ = snap
     # fragancias
     d = pd.read_parquet(W / "data.parquet")
     Hf = pd.read_pickle(W / "hist.pkl").reindex(columns=M)
     Cf = pd.read_pickle(W / "cuts.pkl").reindex(index=Hf.index, columns=M).fillna(0)
     a = add_types(pd.read_pickle(W / "attr.pkl")).reindex(Hf.index)
-    x = d[d.version == SNAP]
+    x = d[d.version == SNAP_]
     keep = a.house.isin(FRAG).values             # todos: los que no están en la foto también cuentan para trends de grupo
     Hf, Cf, a = Hf[keep], Cf[keep], a[keep]
-    DAf_all = dt.da_known(d, Hf.index, V)[0]
+    DAf_all = da_plan(d, Hf.index, V, VERS_F)[0]
     Cn, Da = cons_da(x, V, Hf.index, MONTHS)
     isf = x.groupby("ean").isf.max().reindex(Hf.index).fillna(0).values
     fr = pd.DataFrame(dict(cat="Fragancias", casa=a.house.map(FRAG).values, brand=a.brand.astype(str).values,
@@ -80,10 +107,10 @@ def build():
     parts = [(fr, Hf.values, Cf.values, np.clip(np.nan_to_num(DAf_all.values), 0, None), Da, Cn)]
     # makeup
     dm, Hdf, Edf, Cdf, attr, fac = mb.load()
-    xm = dm[dm.version == SNAP]
+    xm = dm[dm.version == SNAP_]
     keep = attr.fam.isin(MU).values
     Hm, Cm, at = Hdf[keep], Cdf[keep], attr[keep]
-    DAm = np.clip(np.nan_to_num(mb.da_known(dm, Hm.index, V).values), 0, None)
+    DAm = np.clip(np.nan_to_num(da_plan(dm, Hm.index, V, VERS_M)[0].values), 0, None)
     Cnm, Dam = cons_da(xm, V, Hm.index, MONTHS)
     isfm = xm.groupby("ean").isf.max().reindex(Hm.index).fillna(0).values
     desc = dm.groupby("ean").desc.last().reindex(Hm.index).astype(str).values
@@ -121,8 +148,10 @@ def build():
     attr["real"] = A.sum(1)
     for k, ix in zip(QLIST, QIDX):
         attr["real_" + k] = A[:, ix].sum(1)
-    P = dict(attr=attr, H=H, C=C, DAp=DAp, DAf=DAf, cons=cons, A=A, m=m)
-    pd.to_pickle(P, W / "ideo_panel.pkl")
+    valid = np.array([t <= hc.LAST for t in MONTHS])
+    P = dict(attr=attr, H=H, C=C, DAp=DAp, DAf=DAf, cons=cons, A=A, m=m, snap=snap, months=MONTHS, qlist=QLIST, qidx=QIDX, valid=valid)
+    if save:
+        pd.to_pickle(P, W / ("ideo_panel.pkl" if snap == SNAP else f"ideo_panel_{snap}.pkl"))
     return P
 
 

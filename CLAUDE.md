@@ -56,7 +56,10 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - Base: "año pasado" o "nivel reciente".
   - De quién toma el trend: EAN, product line, segmento (tamaño o función) o casa.
   - DAs y cuts son "ideas políticas" que cada partido maneja a su manera (por definir).
-- **Propuesta vigente: 10 partidos** (2 reglas fijas + 8 nuevos, uno por forma de base), pendiente de confirmar; ver `reportes/INFOGRAFIA_IDEOLOGIAS.pdf` y `HISTORIAL.md` §7.
+- **Modelo vigente: 6 partidos** (decidido por el usuario): Regla fragancias, Regla makeup, Ciclo de vida (edad), Media 6M prudente, Media 6M estacional, Media 12M estacional. Vetado usar solo los últimos 3 meses. Ver `reportes/INFOGRAFIA_6_PARTIDOS.pdf` y `HISTORIAL.md` §8.
+- **DAs (decidido):** el trend usa actuals. Base: el DA de cada mes se lee de la última foto en la que ese mes aún no estaba cerrado (o9 borra los viejos; `ideo_panel.da_plan`); cuánto restar es ideología del partido. DAs futuros de la foto = insight, se suman según la bandera de la foto: sin bandera 100%, bandera 1 50%, bandera 2 0% (el consenso ya son los DAs).
+- **Urnas con varias fotos:** sep-25 (Q2–Q4), dic-25 (Q3–Q4, solo fragancias), mar-26 (Q4); jun-26 no tiene quarters completos.
+- Propuesta anterior de 10 partidos (reemplazada): `reportes/INFOGRAFIA_IDEOLOGIAS.pdf`, `HISTORIAL.md` §7.
 - **Propuesta anterior de 8 partidos (reemplazada):**
   - Fragancia · EAN / Línea / Segmento / Casa = año pasado × (1 + trend 12M de la fuente, ±30%).
   - Makeup · EAN / Línea / Segmento / Casa = media 6M × (1 + 50% del trend de la fuente, ±30%).
@@ -96,4 +99,5 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - `src/parliament_vs_cons.py`: prueba contra el consenso.
 - **Ideologías (propuesta de 10 partidos, foto sep-25):** `python3 src/ideo_panel.py && python3 src/ideo_engine.py && python3 src/ideo_parties.py && python3 src/ideo_compass.py && python3 src/ideo_report.py && python3 src/ideo_infografia.py`
   - `ideo_engine.py`: banco de 203k estrategias por EAN; `ideo_parties.py`: mejor por EAN, partidos (uno por forma de base), elección, robustez; `ideo_viz.py`: colores y piezas visuales de 10 partidos.
+- **Parlamento de 6 (vigente):** `python3 src/da_conversion.py && python3 src/ideo_brujulas6.py && python3 src/six_multi.py && python3 src/six_report.py && python3 src/six_infografia.py` (requiere antes el bloque de ideologías).
 - **Resto de scripts y reportes:** ver `HISTORIAL.md`.
