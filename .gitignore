@@ -1,3 +1,5 @@
 work/*.pkl
 work/*.parquet
 __pycache__/
+work/*.npy
+work/*.npz
