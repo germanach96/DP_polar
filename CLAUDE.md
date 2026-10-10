@@ -167,7 +167,14 @@ Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infogra
   - Partidos sin trend o con DAs contados dos veces.
   - Voto dividido entre partidos casi iguales.
 - **Siguiente paso:** redefinir los partidos. Idea del usuario: aprovechar que se compara con casa, product line, tamaño y función, no solo con el EAN como hace o9.
-- **Pendiente de decidir:** definición de empate (exacto o a X puntos), voto entero o repartido, quarters balanceados.
+- **Decidido 2026-10-10:**
+  - Empate en el recuento del EAN → se suman los WAPE de los partidos empatados en sus quarters y gana el menor.
+  - Votos enteros: un quarter puede dar hasta 3 votos y cada uno vale 1.
+  - Por ahora solo la foto sep-25: Q2, Q3 y Q4 FY26, completos y balanceados (cercano, medio, lejano), contra la foto sep-26.
+  - 8 partidos que parten de las dos reglas.
+    - Propuesta: familia Fragancias (año pasado × trend) y familia Makeup (media 6M × 50% trend), cada una con trend de EAN, línea, segmento o casa.
+    - Pendiente de confirmar.
+  - DAs y cuts = "ideas políticas": cada partido las maneja a su manera; se definen después.
 
 ## Decisiones / respuestas del usuario
 - **Local** = iniciativas con menos de ~6 meses de envíos; luego pasan a Central. Se ignoran en la regla.
