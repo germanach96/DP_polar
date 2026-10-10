@@ -147,3 +147,15 @@ Resultados de todas las pruebas hasta 2026-10-10. El contexto vigente está en `
 - El usuario busca una regla base defendible (como el best-fit de o9, pero comparando también con casa, línea, tamaño y función).
 - Hoy la regla fija de cada categoría es la referencia más sólida.
 - El motor de selección necesita un año completo de competición y partidos bien planteados: es el trabajo en curso con el nuevo formato de elecciones.
+
+## 7. Ideologías por EAN y propuesta de 10 partidos (foto sep-25 → real sep-26, «con trampa»)
+- Scripts: `src/ideo_panel.py` → `src/ideo_engine.py` → `src/ideo_parties.py` → `src/ideo_compass.py`; reportes `src/ideo_report.py` (`reportes/REPORTE_IDEOLOGIAS.pdf`) e `src/ideo_infografia.py` (`reportes/INFOGRAFIA_IDEOLOGIAS.pdf`); detalle por EAN en `reportes/IDEOLOGIAS_EAN.xlsx`.
+- Banco: 203.160 estrategias por EAN (base, temporada, fuente/ventana/fuerza/tope del trend, DAs pasado, cortes, DAs foto); reproduce exactamente las dos reglas.
+- 850 votantes (777 con real oct–jun). Edad: lanzamiento = primer mes de 2 seguidos con envío; tramos 6–11 / 12–17 / 18–25 / 26+. Fase (18+ meses): trend 6M propio vs su casa ±15%.
+- Qué importa en la mejor estrategia de cada EAN: base 94% (fragancias) / 91% (makeup); trend 78% / 82%; DAs pasado 46% / 32%; cortes 35% / 22%; DAs foto 36% / 60%. En makeup el 59% del volumen acierta más sin DAs de la foto.
+- En sep-25 los trends de grupo se amontonan entre −20% y −30% por el tope (6M: casa en el suelo para el 100% de fragancias): la fuente del trend no se puede juzgar bien con esta foto.
+- 8 partidos nuevos, uno por forma de base (sale la media 12M plana). Error del parlamento 65% → 36% (libre 35%, techo 25%). Mitades de EANs: 65% → 39% fuera de muestra; formas estables, detalle no.
+- Elección: Media 3M · categoría 189 EANs (5% vol); Media 3M estacional · fase 20% del volumen; ninguno pasa del 22% de los EANs.
+- Prueba limpia (partidos y elección con oct–mar, medida abr–jun): error EAN 51% vs reglas 71% vs consenso 73% (fragancias 49% = regla; makeup 53% vs 100%). En el total de casa no siempre: Burberry 31% vs regla 4%.
+- La regla de makeup falla 100% EAN a EAN en abr–jun por los DAs de la foto (sin ellos, 69%).
+- WAPE90 como regla única: consenso 12,2%; Media 12M estacional · casa 12,2%; regla fragancias 13,7%.

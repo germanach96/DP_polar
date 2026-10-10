@@ -56,7 +56,8 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - Base: "año pasado" o "nivel reciente".
   - De quién toma el trend: EAN, product line, segmento (tamaño o función) o casa.
   - DAs y cuts son "ideas políticas" que cada partido maneja a su manera (por definir).
-- **Propuesta de 8 partidos, pendiente de confirmar:**
+- **Propuesta vigente: 10 partidos** (2 reglas fijas + 8 nuevos, uno por forma de base), pendiente de confirmar; ver `reportes/INFOGRAFIA_IDEOLOGIAS.pdf` y `HISTORIAL.md` §7.
+- **Propuesta anterior de 8 partidos (reemplazada):**
   - Fragancia · EAN / Línea / Segmento / Casa = año pasado × (1 + trend 12M de la fuente, ±30%).
   - Makeup · EAN / Línea / Segmento / Casa = media 6M × (1 + 50% del trend de la fuente, ±30%).
   - Product line con menos de 5 EANs Central → usa el trend de su segmento.
@@ -93,4 +94,6 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - `src/parliament.py`: partidos y elección; base para el nuevo parlamento.
   - `src/parliament_report.py`: reporte.
   - `src/parliament_vs_cons.py`: prueba contra el consenso.
+- **Ideologías (propuesta de 10 partidos, foto sep-25):** `python3 src/ideo_panel.py && python3 src/ideo_engine.py && python3 src/ideo_parties.py && python3 src/ideo_compass.py && python3 src/ideo_report.py && python3 src/ideo_infografia.py`
+  - `ideo_engine.py`: banco de 203k estrategias por EAN; `ideo_parties.py`: mejor por EAN, partidos (uno por forma de base), elección, robustez; `ideo_viz.py`: colores y piezas visuales de 10 partidos.
 - **Resto de scripts y reportes:** ver `HISTORIAL.md`.

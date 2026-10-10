@@ -138,13 +138,36 @@ def compass(P, pts, xl, yl, title, quads, w=330, h=330, ylim=(-1, 1), xlim=(-1, 
         r = 1.3 + 4.2 * math.sqrt(p["vol"] / vmax)
         s.append(f'<circle cx="{X(p["x"]):.1f}" cy="{Y(p["y"]):.1f}" r="{r:.2f}" fill="{P.col[p["party"]]}" fill-opacity=".55" stroke="#fff" stroke-width=".5"/>')
     if cent:
+        C = []
         for n in P.names:
             sel = [p for p in pts if p["party"] == n]
             if len(sel) < 3:
                 continue
-            cxp = float(np.median([p["x"] for p in sel])); cyp = float(np.median([p["y"] for p in sel]))
-            s.append(f'<circle cx="{X(cxp):.1f}" cy="{Y(cyp):.1f}" r="7.2" fill="{P.col[n]}" stroke="#fff" stroke-width="2"/>')
-            s.append(f'<text x="{X(cxp):.1f}" y="{Y(cyp) + 2.9:.1f}" text-anchor="middle" class="cn">{P.num[n]}</text>')
+            C.append([X(float(np.median([p["x"] for p in sel]))), Y(float(np.median([p["y"] for p in sel]))), n])
+        orig = [(c[0], c[1]) for c in C]
+        for _ in range(200):                      # separa los círculos que se pisan (mínimo 15 px entre centros)
+            moved = False
+            for i in range(len(C)):
+                for j in range(i + 1, len(C)):
+                    dx, dy = C[j][0] - C[i][0], C[j][1] - C[i][1]
+                    dd = math.hypot(dx, dy)
+                    if dd < 15:
+                        if dd < 1e-6:
+                            dx, dy, dd = 1.0, 0.3, 1.04
+                        push = (15 - dd) / 2
+                        C[i][0] -= dx / dd * push; C[i][1] -= dy / dd * push
+                        C[j][0] += dx / dd * push; C[j][1] += dy / dd * push
+                        moved = True
+            for c in C:
+                c[0] = min(max(c[0], ml + 8), ml + W - 8); c[1] = min(max(c[1], mt + 8), mt + H - 8)
+            if not moved:
+                break
+        for (cx_, cy_, n), (ox, oy) in zip(C, orig):
+            if math.hypot(cx_ - ox, cy_ - oy) > 3:
+                s.append(f'<line x1="{ox:.1f}" y1="{oy:.1f}" x2="{cx_:.1f}" y2="{cy_:.1f}" stroke="{P.col[n]}" stroke-width="1"/>'
+                         f'<circle cx="{ox:.1f}" cy="{oy:.1f}" r="1.8" fill="{P.col[n]}"/>')
+            s.append(f'<circle cx="{cx_:.1f}" cy="{cy_:.1f}" r="7.2" fill="{P.col[n]}" stroke="#fff" stroke-width="2"/>')
+            s.append(f'<text x="{cx_:.1f}" y="{cy_ + 2.9:.1f}" text-anchor="middle" class="cn">{P.num[n]}</text>')
     s.append(f'<rect x="{ml}" y="{mt}" width="{W}" height="{H}" fill="none" stroke="#D5DAE0"/>')
     fa = 7.4 if small else 8
     s.append(f'<text x="{ml}" y="{h - 8}" class="ca" style="font-size:{fa}px">← {xl[0]}</text>')
@@ -160,7 +183,7 @@ def compass(P, pts, xl, yl, title, quads, w=330, h=330, ylim=(-1, 1), xlim=(-1, 
 
 CSS_EXTRA = f"""
 .dt {{ display: inline-block; border-radius: 50%; margin-right: 1.6mm; vertical-align: -.3mm; }}
-.nb {{ display: inline-flex; align-items: center; justify-content: center; width: 3.6mm; height: 3.6mm; border-radius: 50%; color: #fff;
+.nb, .leg i.nb, .verd i.nb {{ display: inline-flex; align-items: center; justify-content: center; width: 3.6mm; height: 3.6mm; border-radius: 50%; color: #fff;
   font-style: normal; font-size: 5.6pt; font-weight: 700; margin-right: 1.4mm; vertical-align: -.5mm; }}
 .leg {{ flex-wrap: wrap; gap: 1.6mm 3.6mm; }}
 .sr {{ display: grid; text-align: center; margin: 1mm 0 1.6mm; }}
@@ -168,7 +191,7 @@ CSS_EXTRA = f"""
 .sr span {{ display: block; font-size: 5.6pt; color: {MUTED}; line-height: 1.15; }}
 .c4 .sr b {{ font-size: 8.4pt; }}
 .verd b {{ font-weight: 700; }}
-.verd .nb {{ width: 3mm; height: 3mm; font-size: 5pt; }}
+.verd i.nb {{ width: 3mm; height: 3mm; font-size: 5pt; }}
 svg.cmp .cq {{ font-family: Inter; font-weight: 600; fill: #8792A0; letter-spacing: .02em; }}
 svg.cmp .ca {{ font-family: Inter; font-weight: 600; fill: {INK2}; }}
 svg.cmp .cn {{ font-family: Inter; font-weight: 700; font-size: 7.6px; fill: #fff; }}
