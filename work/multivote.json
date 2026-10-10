@@ -1,0 +1,523 @@
+{
+ "5 partidos": {
+  "seats": {
+   "Consenso": 488,
+   "Regla + DAs": 193,
+   "Año pasado + DAs": 112,
+   "Trend 6M + DAs": 135,
+   "Media 6M + DAs": 127
+  },
+  "seats_cat": {
+   "Fragancias": {
+    "Consenso": 183,
+    "Regla + DAs": 35,
+    "Año pasado + DAs": 29,
+    "Trend 6M + DAs": 40,
+    "Media 6M + DAs": 66
+   },
+   "Makeup": {
+    "Consenso": 305,
+    "Regla + DAs": 158,
+    "Año pasado + DAs": 83,
+    "Trend 6M + DAs": 95,
+    "Media 6M + DAs": 61
+   }
+  },
+  "seats_house": {
+   "Burberry": {
+    "Consenso": 60,
+    "Regla + DAs": 12,
+    "Año pasado + DAs": 11,
+    "Trend 6M + DAs": 12,
+    "Media 6M + DAs": 17
+   },
+   "Gucci": {
+    "Consenso": 89,
+    "Regla + DAs": 14,
+    "Año pasado + DAs": 12,
+    "Trend 6M + DAs": 21,
+    "Media 6M + DAs": 32
+   },
+   "Gucci Make up": {
+    "Consenso": 132,
+    "Regla + DAs": 68,
+    "Año pasado + DAs": 53,
+    "Trend 6M + DAs": 30,
+    "Media 6M + DAs": 35
+   },
+   "Kylie Makeup": {
+    "Consenso": 173,
+    "Regla + DAs": 90,
+    "Año pasado + DAs": 30,
+    "Trend 6M + DAs": 65,
+    "Media 6M + DAs": 26
+   },
+   "Marc Jacobs": {
+    "Consenso": 34,
+    "Regla + DAs": 9,
+    "Año pasado + DAs": 6,
+    "Trend 6M + DAs": 7,
+    "Media 6M + DAs": 17
+   }
+  },
+  "vol_seats": {
+   "Consenso": 0.40171369891674247,
+   "Regla + DAs": 0.17245016033236407,
+   "Año pasado + DAs": 0.11567841298713498,
+   "Trend 6M + DAs": 0.08600198120417932,
+   "Media 6M + DAs": 0.22415574655957918
+  },
+  "wape90": {
+   "Consenso": 0.1425714569014555,
+   "Regla + DAs": 0.1507814192944794,
+   "Año pasado + DAs": 0.34614711294998735,
+   "Trend 6M + DAs": 0.5441694936029776,
+   "Media 6M + DAs": 0.41150176557743134,
+   "Selección": 0.1471030546321951,
+   "Óptimo a posteriori": 0.07741766016586167
+  },
+  "ean_error": {
+   "Consenso": 0.4861178598250601,
+   "Regla + DAs": 0.6047293702152733,
+   "Año pasado + DAs": 0.7200666663820109,
+   "Trend 6M + DAs": 0.9476417478653199,
+   "Media 6M + DAs": 0.6742334694462353,
+   "Selección": 0.5346608423189496,
+   "Óptimo a posteriori": 0.32144547779290167
+  },
+  "w90_rows": [
+   {
+    "house": "Burberry",
+    "q": "FY26.Q4",
+    "real": 302981.0,
+    "w:Consenso": 0.0714632270670438,
+    "w:Regla + DAs": 0.051010547031496906,
+    "w:Año pasado + DAs": 0.28333129800218493,
+    "w:Trend 6M + DAs": 0.31979083425701854,
+    "w:Media 6M + DAs": 1.099229544646914,
+    "w:Selección": 0.38006904593361907,
+    "w:Óptimo a posteriori": 0.034599590092296226,
+    "e:Consenso": 0.31702317967133253,
+    "e:Regla + DAs": 0.48457883550347924,
+    "e:Año pasado + DAs": 0.5257755436809569,
+    "e:Trend 6M + DAs": 0.5545011923455666,
+    "e:Media 6M + DAs": 1.1521448539677406,
+    "e:Selección": 0.5697738258167375,
+    "e:Óptimo a posteriori": 0.21452625516691626
+   },
+   {
+    "house": "Burberry",
+    "q": "FY27.Q1",
+    "real": 412102.0,
+    "w:Consenso": 0.0678278678579575,
+    "w:Regla + DAs": 0.006843140339949385,
+    "w:Año pasado + DAs": 0.2704743000519289,
+    "w:Trend 6M + DAs": 0.24872431533260977,
+    "w:Media 6M + DAs": 0.14404443560089492,
+    "w:Selección": 0.07919569316751049,
+    "w:Óptimo a posteriori": 0.01459943790385324,
+    "e:Consenso": 0.29366030739962434,
+    "e:Regla + DAs": 0.3716159960388229,
+    "e:Año pasado + DAs": 0.4413543249001461,
+    "e:Trend 6M + DAs": 0.42904120102790844,
+    "e:Media 6M + DAs": 0.30115117131195673,
+    "e:Selección": 0.29731357588888196,
+    "e:Óptimo a posteriori": 0.19510365037524932
+   },
+   {
+    "house": "Gucci",
+    "q": "FY26.Q4",
+    "real": 276721.0,
+    "w:Consenso": 0.10006468609176752,
+    "w:Regla + DAs": 0.32034925802060027,
+    "w:Año pasado + DAs": 0.4725806859616726,
+    "w:Trend 6M + DAs": 0.9787510188991302,
+    "w:Media 6M + DAs": 0.43141949231656906,
+    "w:Selección": 0.015235738098027182,
+    "w:Óptimo a posteriori": 0.004449380965533479,
+    "e:Consenso": 0.3540750430939466,
+    "e:Regla + DAs": 0.9543860639314562,
+    "e:Año pasado + DAs": 0.9712562472671029,
+    "e:Trend 6M + DAs": 1.5908326803133717,
+    "e:Media 6M + DAs": 0.7302668271170843,
+    "e:Selección": 0.5293767726180122,
+    "e:Óptimo a posteriori": 0.25014239260605203
+   },
+   {
+    "house": "Gucci",
+    "q": "FY27.Q1",
+    "real": 253753.0,
+    "w:Consenso": 0.35280371069504596,
+    "w:Regla + DAs": 0.17781752190583552,
+    "w:Año pasado + DAs": 0.42741563646538167,
+    "w:Trend 6M + DAs": 0.6065335872186889,
+    "w:Media 6M + DAs": 0.2200722750075861,
+    "w:Selección": 0.1077279555433636,
+    "w:Óptimo a posteriori": 0.10265165620083697,
+    "e:Consenso": 0.6667940871635015,
+    "e:Regla + DAs": 0.633420172794136,
+    "e:Año pasado + DAs": 0.8418422639338254,
+    "e:Trend 6M + DAs": 1.0531449703738167,
+    "e:Media 6M + DAs": 0.6435444441379345,
+    "e:Selección": 0.5585673340431743,
+    "e:Óptimo a posteriori": 0.42634618344303293
+   },
+   {
+    "house": "Gucci Make up",
+    "q": "FY26.Q4",
+    "real": 78343.0,
+    "w:Consenso": 0.14775793625467498,
+    "w:Regla + DAs": 0.2938639498645377,
+    "w:Año pasado + DAs": 0.0036889064753711245,
+    "w:Trend 6M + DAs": 0.10819486201756617,
+    "w:Media 6M + DAs": 0.40709869845848806,
+    "w:Selección": 0.056869479678792696,
+    "w:Óptimo a posteriori": 0.12720370391211858,
+    "e:Consenso": 0.5522407873070982,
+    "e:Regla + DAs": 0.6355578351853794,
+    "e:Año pasado + DAs": 0.6357300588438023,
+    "e:Trend 6M + DAs": 0.5713604380135844,
+    "e:Media 6M + DAs": 0.6737934467661437,
+    "e:Selección": 0.4856574713173318,
+    "e:Óptimo a posteriori": 0.3659984776236656
+   },
+   {
+    "house": "Gucci Make up",
+    "q": "FY27.Q1",
+    "real": 48520.0,
+    "w:Consenso": 0.43758724924429765,
+    "w:Regla + DAs": 0.3727870526099109,
+    "w:Año pasado + DAs": 1.2532563891178896,
+    "w:Trend 6M + DAs": 1.1541606546860532,
+    "w:Media 6M + DAs": 0.48707405880736426,
+    "w:Selección": 0.3372597617922122,
+    "w:Óptimo a posteriori": 0.3435122029325887,
+    "e:Consenso": 0.681538884308876,
+    "e:Regla + DAs": 0.8596202309338583,
+    "e:Año pasado + DAs": 1.6011953833470733,
+    "e:Trend 6M + DAs": 1.5322436252466831,
+    "e:Media 6M + DAs": 0.9096558120362735,
+    "e:Selección": 0.770821236440348,
+    "e:Óptimo a posteriori": 0.5022575187023742
+   },
+   {
+    "house": "Kylie Makeup",
+    "q": "FY26.Q4",
+    "real": 565722.0,
+    "w:Consenso": 0.036855558030269284,
+    "w:Regla + DAs": 0.26599192633379043,
+    "w:Año pasado + DAs": 0.30308879626388935,
+    "w:Trend 6M + DAs": 0.6875600230846725,
+    "w:Media 6M + DAs": 0.41685639471919667,
+    "w:Selección": 0.028919743371824617,
+    "w:Óptimo a posteriori": 0.04889259817197671,
+    "e:Consenso": 0.44569947783540326,
+    "e:Regla + DAs": 0.536165104527302,
+    "e:Año pasado + DAs": 0.6315363376357999,
+    "e:Trend 6M + DAs": 0.9990217112303671,
+    "e:Media 6M + DAs": 0.6180223384159239,
+    "e:Selección": 0.4064484166039913,
+    "e:Óptimo a posteriori": 0.26066103645473815
+   },
+   {
+    "house": "Kylie Makeup",
+    "q": "FY27.Q1",
+    "real": 439339.0,
+    "w:Consenso": 0.1270749922041978,
+    "w:Regla + DAs": 0.030310040294181707,
+    "w:Año pasado + DAs": 0.26301329952496794,
+    "w:Trend 6M + DAs": 0.6549699679438094,
+    "w:Media 6M + DAs": 0.1654686548049075,
+    "w:Selección": 0.0870803198977814,
+    "w:Óptimo a posteriori": 0.12386808053527205,
+    "e:Consenso": 0.6386207461664001,
+    "e:Regla + DAs": 0.6167596490821036,
+    "e:Año pasado + DAs": 0.7812008494579357,
+    "e:Trend 6M + DAs": 1.2228512171145904,
+    "e:Media 6M + DAs": 0.6277092784083969,
+    "e:Selección": 0.6592388645409374,
+    "e:Óptimo a posteriori": 0.46120329027247214
+   },
+   {
+    "house": "Marc Jacobs",
+    "q": "FY26.Q4",
+    "real": 233291.0,
+    "w:Consenso": 0.40926139456730004,
+    "w:Regla + DAs": 0.2620425728609901,
+    "w:Año pasado + DAs": 0.39316990368252525,
+    "w:Trend 6M + DAs": 0.27328686003221586,
+    "w:Media 6M + DAs": 0.6601319096464644,
+    "w:Selección": 0.461269102506508,
+    "w:Óptimo a posteriori": 0.2683988319938569,
+    "e:Consenso": 0.5374103587365137,
+    "e:Regla + DAs": 0.6083464383044235,
+    "e:Año pasado + DAs": 0.6422236605784192,
+    "e:Trend 6M + DAs": 0.6582919305338022,
+    "e:Media 6M + DAs": 0.756710860398958,
+    "e:Selección": 0.6511343521438863,
+    "e:Óptimo a posteriori": 0.31836193624427744
+   },
+   {
+    "house": "Marc Jacobs",
+    "q": "FY27.Q1",
+    "real": 199640.0,
+    "w:Consenso": 0.14477058705670207,
+    "w:Regla + DAs": 0.02843950462046179,
+    "w:Año pasado + DAs": 0.4830795431777199,
+    "w:Trend 6M + DAs": 0.5021349940696201,
+    "w:Media 6M + DAs": 0.3546650637814735,
+    "w:Selección": 0.2556102536224194,
+    "w:Óptimo a posteriori": 0.012368170092513769,
+    "e:Consenso": 0.7389400921658986,
+    "e:Regla + DAs": 0.8366904206831131,
+    "e:Año pasado + DAs": 1.1135443798837907,
+    "e:Trend 6M + DAs": 1.181633168034209,
+    "e:Media 6M + DAs": 0.7886495692246043,
+    "e:Selección": 0.863139798343836,
+    "e:Óptimo a posteriori": 0.5168691893465137
+   }
+  ],
+  "duel_cons": {
+   "eans": {
+    "Empate": 725,
+    "Consenso": 188,
+    "Selección": 142
+   },
+   "vol": {
+    "Consenso": 0.16299567465553094,
+    "Empate": 0.6982015448268795,
+    "Selección": 0.1388027805175896
+   }
+  },
+  "duel_regla": {
+   "eans": {
+    "Empate": 600,
+    "Selección": 267,
+    "Regla + DAs": 188
+   },
+   "vol": {
+    "Empate": 0.5296344450564544,
+    "Regla + DAs": 0.1607202075709896,
+    "Selección": 0.30964534737255606
+   }
+  },
+  "persist": 0.2994413407821229,
+  "n_persist": 895,
+  "eans_test": 1055,
+  "sin_historia": 82
+ },
+ "2 partidos": {
+  "seats": {
+   "Consenso": 651,
+   "Regla + DAs": 404
+  },
+  "seats_cat": {
+   "Fragancias": {
+    "Consenso": 244,
+    "Regla + DAs": 109
+   },
+   "Makeup": {
+    "Consenso": 407,
+    "Regla + DAs": 295
+   }
+  },
+  "seats_house": {
+   "Burberry": {
+    "Consenso": 80,
+    "Regla + DAs": 32
+   },
+   "Gucci": {
+    "Consenso": 119,
+    "Regla + DAs": 49
+   },
+   "Gucci Make up": {
+    "Consenso": 186,
+    "Regla + DAs": 132
+   },
+   "Kylie Makeup": {
+    "Consenso": 221,
+    "Regla + DAs": 163
+   },
+   "Marc Jacobs": {
+    "Consenso": 45,
+    "Regla + DAs": 28
+   }
+  },
+  "vol_seats": {
+   "Consenso": 0.5699068321655331,
+   "Regla + DAs": 0.430093167834467
+  },
+  "wape90": {
+   "Consenso": 0.1425714569014555,
+   "Regla + DAs": 0.1507814192944794,
+   "Selección": 0.11314629917621902,
+   "Óptimo a posteriori": 0.08082327207592413
+  },
+  "ean_error": {
+   "Consenso": 0.4861178598250601,
+   "Regla + DAs": 0.6047293702152733,
+   "Selección": 0.47552683213850777,
+   "Óptimo a posteriori": 0.3814774699587965
+  },
+  "w90_rows": [
+   {
+    "house": "Burberry",
+    "q": "FY26.Q4",
+    "real": 302981.0,
+    "w:Consenso": 0.0714632270670438,
+    "w:Regla + DAs": 0.051010547031496906,
+    "w:Selección": 0.03796309456565925,
+    "w:Óptimo a posteriori": 0.004464700626100328,
+    "e:Consenso": 0.31702317967133253,
+    "e:Regla + DAs": 0.48457883550347924,
+    "e:Selección": 0.30038486051439783,
+    "e:Óptimo a posteriori": 0.2706139754169648
+   },
+   {
+    "house": "Burberry",
+    "q": "FY27.Q1",
+    "real": 412102.0,
+    "w:Consenso": 0.0678278678579575,
+    "w:Regla + DAs": 0.006843140339949385,
+    "w:Selección": 0.02774007679092289,
+    "w:Óptimo a posteriori": 0.000333752059201393,
+    "e:Consenso": 0.29366030739962434,
+    "e:Regla + DAs": 0.3716159960388229,
+    "e:Selección": 0.27139077159655817,
+    "e:Óptimo a posteriori": 0.2316365305439049
+   },
+   {
+    "house": "Gucci",
+    "q": "FY26.Q4",
+    "real": 276721.0,
+    "w:Consenso": 0.10006468609176752,
+    "w:Regla + DAs": 0.32034925802060027,
+    "w:Selección": 0.11621588452183251,
+    "w:Óptimo a posteriori": 0.00840514861097234,
+    "e:Consenso": 0.3540750430939466,
+    "e:Regla + DAs": 0.9543860639314562,
+    "e:Selección": 0.5000076097233671,
+    "e:Óptimo a posteriori": 0.2873467144986075
+   },
+   {
+    "house": "Gucci",
+    "q": "FY27.Q1",
+    "real": 253753.0,
+    "w:Consenso": 0.35280371069504596,
+    "w:Regla + DAs": 0.17781752190583552,
+    "w:Selección": 0.158285905291965,
+    "w:Óptimo a posteriori": 0.16628760243638738,
+    "e:Consenso": 0.6667940871635015,
+    "e:Regla + DAs": 0.633420172794136,
+    "e:Selección": 0.5817078347690532,
+    "e:Óptimo a posteriori": 0.5038587479040808
+   },
+   {
+    "house": "Gucci Make up",
+    "q": "FY26.Q4",
+    "real": 78343.0,
+    "w:Consenso": 0.14775793625467498,
+    "w:Regla + DAs": 0.2938639498645377,
+    "w:Selección": 0.1936308490531185,
+    "w:Óptimo a posteriori": 0.14516291144989843,
+    "e:Consenso": 0.5522407873070982,
+    "e:Regla + DAs": 0.6355578351853794,
+    "e:Selección": 0.5695594359699238,
+    "e:Óptimo a posteriori": 0.4755552998871544
+   },
+   {
+    "house": "Gucci Make up",
+    "q": "FY27.Q1",
+    "real": 48520.0,
+    "w:Consenso": 0.43758724924429765,
+    "w:Regla + DAs": 0.3727870526099109,
+    "w:Selección": 0.3978516701652237,
+    "w:Óptimo a posteriori": 0.30948856352510146,
+    "e:Consenso": 0.681538884308876,
+    "e:Regla + DAs": 0.8596202309338583,
+    "e:Selección": 0.6984123199702117,
+    "e:Óptimo a posteriori": 0.5819173857974576
+   },
+   {
+    "house": "Kylie Makeup",
+    "q": "FY26.Q4",
+    "real": 565722.0,
+    "w:Consenso": 0.036855558030269284,
+    "w:Regla + DAs": 0.26599192633379043,
+    "w:Selección": 0.024691800617616888,
+    "w:Óptimo a posteriori": 0.0031259396371772024,
+    "e:Consenso": 0.44569947783540326,
+    "e:Regla + DAs": 0.536165104527302,
+    "e:Selección": 0.4112431245569884,
+    "e:Óptimo a posteriori": 0.3164295300447955
+   },
+   {
+    "house": "Kylie Makeup",
+    "q": "FY27.Q1",
+    "real": 439339.0,
+    "w:Consenso": 0.1270749922041978,
+    "w:Regla + DAs": 0.030310040294181707,
+    "w:Selección": 0.17972888352139998,
+    "w:Óptimo a posteriori": 0.1873925572923789,
+    "e:Consenso": 0.6386207461664001,
+    "e:Regla + DAs": 0.6167596490821036,
+    "e:Selección": 0.5982612566174664,
+    "e:Óptimo a posteriori": 0.4840957266884928
+   },
+   {
+    "house": "Marc Jacobs",
+    "q": "FY26.Q4",
+    "real": 233291.0,
+    "w:Consenso": 0.40926139456730004,
+    "w:Regla + DAs": 0.2620425728609901,
+    "w:Selección": 0.38696677717487554,
+    "w:Óptimo a posteriori": 0.28888816500872144,
+    "e:Consenso": 0.5374103587365137,
+    "e:Regla + DAs": 0.6083464383044235,
+    "e:Selección": 0.5877448976541487,
+    "e:Óptimo a posteriori": 0.4495963808982905
+   },
+   {
+    "house": "Marc Jacobs",
+    "q": "FY27.Q1",
+    "real": 199640.0,
+    "w:Consenso": 0.14477058705670207,
+    "w:Regla + DAs": 0.02843950462046179,
+    "w:Selección": 0.02529115673076675,
+    "w:Óptimo a posteriori": 0.016296392162996,
+    "e:Consenso": 0.7389400921658986,
+    "e:Regla + DAs": 0.8366904206831131,
+    "e:Selección": 0.6836789997503949,
+    "e:Óptimo a posteriori": 0.6272211034284881
+   }
+  ],
+  "duel_cons": {
+   "eans": {
+    "Empate": 815,
+    "Consenso": 123,
+    "Selección": 117
+   },
+   "vol": {
+    "Consenso": 0.08276153104954007,
+    "Empate": 0.772069006252464,
+    "Selección": 0.14516946269799588
+   }
+  },
+  "duel_regla": {
+   "eans": {
+    "Empate": 724,
+    "Selección": 203,
+    "Regla + DAs": 128
+   },
+   "vol": {
+    "Empate": 0.6423257515268224,
+    "Regla + DAs": 0.09615992245976747,
+    "Selección": 0.2615143260134101
+   }
+  },
+  "persist": 0.5272727272727272,
+  "n_persist": 880,
+  "eans_test": 1055,
+  "sin_historia": 82
+ }
+}

@@ -73,7 +73,7 @@ Para cada quarter futuro, muestra qué pasó en el quarter homólogo del año an
 
 ---
 
-# Estado del proyecto (actualizado 2026-10-09)
+# Estado del proyecto (actualizado 2026-10-10)
 
 ## Reglas decididas
 Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infografía (inglés) en `INFOGRAFIA_REGLAS.pdf`.
@@ -98,6 +98,119 @@ Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infogra
 **Excepciones:**
 - Local (menos de 6 meses de envíos): fuera de la regla, no tienen histórico.
 - EANs de 6 a 17 meses: su año anterior incluye el llenado de canal; revisarlos con cuidado.
+
+## Comparación estándar contra el consenso (decidida 2026-10-09)
+- **Script:** `python3 src/wape90.py` → imprime la tabla y guarda `work/wape90.json`.
+  - El usuario NO quiere más reportes PDF de esto: solo calcular y darle los resultados en el chat.
+  - `src/wape90_report.py` queda solo por si lo pide.
+- **Qué se compara:**
+  - Consenso de la foto tal cual (ya lleva los DAs).
+  - Contra **regla + todos los DAs de la foto** (positivos y negativos, suelo 0 por EAN-mes). Regla sola como referencia.
+- **Fotos y quarters:** fotos de cierre de mes, así que el mes de la foto no entra.
+  - Sep-25 → Q2 (oct–dic), Q3 (ene–mar), Q4 (abr–jun).
+  - Mar-26 → Q4 (abr–jun), Q1 FY27 (jul–sep; sep-26 sin cerrar → jul–ago).
+- **Real:** última foto.
+- **Universo:** EANs Central de cada casa.
+- **Métricas por casa × quarter:**
+  - **WAPE90** = |Σ forecast − Σ actuals| / Σ actuals.
+  - **SPP3** = (Σ actuals − Σ forecast) / Σ actuals. Negativo = overforecast, positivo = underforecast.
+- **Resultado 2026-10-09:**
+  - Regla + DAs gana 15/25 (fragancias 10/15, makeup 5/10).
+  - WAPE90 medio ponderado: consenso 13%, regla + DAs 11,5%, regla sola 18%.
+- **Segunda comparación: votación por EAN** (`python3 src/votes.py`, PDF con `src/votes_report.py` → `reportes/REPORTE_VOTACION.pdf`).
+  - Cada EAN vota por el sistema que gana más de sus 5 quarters (menor |forecast − real| en el quarter); también se mide el volumen de los EANs que gana cada uno.
+  - Grupos: casa, tamaño, edad, Ignore System Forecast Flag. Colores: verde azulado = regla + DAs, azul marino = consenso (morado/naranja = fragancias/makeup).
+  - Resultado 2026-10-09: consenso 530 EANs vs regla + DAs 391 (37 empates); volumen 47% vs 51%.
+- **Votación con varios partidos** (`python3 src/multivote.py`, solo resultados en chat).
+  - Cada EAN elige su método con sep-25 Q2+Q3 y se prueba con mar-26 Q4 FY26 + Q1 FY27.
+  - Partidos: consenso, regla + DAs, año pasado + DAs, trend 6M + DAs, media 6M + DAs.
+  - Resultado 2026-10-09:
+    - 5 partidos empeora (WAPE90 14,7% contra 14,3% del consenso): la media 6M gana en oct–mar y duplica en abr–jun por la estacionalidad.
+    - 2 partidos (consenso / regla + DAs): WAPE90 11,3% contra 14,3% del consenso; error EAN 47,6% contra 48,6%.
+    - El ganador del pasado repite solo en el 53% de los EANs (al azar sería 50%). Un solo corte: falta confirmarlo.
+- **Votación entre reglas** (`python3 src/rulevote.py` + `src/rulevote_report.py` → `reportes/REPORTE_VOTACION_REGLAS.pdf`).
+  - Regla de fragancias vs regla de makeup, aplicadas a todos los EANs Central.
+  - 5 quarters comunes: sep-25 Q2/Q3/Q4 FY26 y mar-26 Q4 FY26/Q1 FY27. Las dos reglas llevan los DAs de la foto.
+  - Grupo del trend: casa × tamaño (fragancias) o casa × función (makeup).
+  - Empate en quarters → decide el error mes a mes. Colores: morado = regla fragancias, naranja = regla makeup.
+  - Resultado 2026-10-09: makeup 593 EANs vs fragancias 380 (4 empates); volumen 51% vs 49%.
+    - EANs de fragancias: 151–169 en EANs, 54%–46% en volumen.
+    - EANs de makeup: 229–424 en EANs, 39%–61% en volumen.
+  - Pendiente: ampliar a 9 quarters con las fotos dic-25 y jun-26, que solo existen para fragancias.
+- **Parlamento de 6 reglas** (`python3 src/parliament.py` + `src/parliament_report.py` → `reportes/REPORTE_PARLAMENTO.pdf`).
+  - Partidos: Año pasado, Regla fragancias, Año pasado × línea (trend de la product line; grupo si la line tiene <5 EANs), Media 6M estacional, Regla makeup, Media 3M.
+  - Todos suman los DAs de la foto. Mismo sistema de elección, mismos 5 quarters, todos los EANs.
+  - Colores: gris oscuro, morado, azul, frambuesa, naranja y verde azulado.
+  - Resultado 2026-10-09: parlamento fragmentado.
+    - Media 3M es la primera fuerza en EANs: 374 (38%), pero solo el 21% del volumen. Regla makeup: 193 EANs, 23% del volumen.
+    - WAPE90 ponderado: Regla fragancias 14%, Año pasado × línea 16%, Regla makeup 19%, el resto 30–31%.
+    - Año pasado, Media 6M estacional y Media 3M se pasan un +27–30% en el total: no tienen trend y suman DAs encima de actuals con promos.
+- **Consenso vs Parlamento + DAs** (`python3 src/parliament_vs_cons.py`, solo chat).
+  - Cada EAN elige su partido con sep-25 Q2+Q3 y se prueba con mar-26 Q4 FY26 + Q1 FY27.
+  - Resultado 2026-10-09: el parlamento pierde.
+    - WAPE90: parlamento 28,5% contra 14,3% del consenso. Error EAN: 66,8% contra 48,6%.
+    - Duelo EAN a EAN: consenso 478 contra parlamento 362; volumen 66% contra 34%.
+    - Ni eligiendo a posteriori con los 5 quarters se gana al consenso: WAPE90 15,3%.
+    - El partido elegido repite como el mejor solo el 20% de las veces (al azar sería 17%).
+    - Mejor partido único: Regla fragancias para todos, WAPE90 13,8%, pero error EAN 65%.
+- **DAs (hablado 2026-10-09):**
+  - Suben el forecast unos 16 puntos: ayudan en el total solo a las reglas con trend y empeoran el error EAN de todos los partidos.
+  - La foto sep-26 solo conserva DAs desde ene-26. Propuesta pendiente: base limpia de DAs del pasado + DAs futuros para todos, medir la precisión de los DAs y guardar los DAs de cada foto.
+
+## Sistema de elecciones (formato fijo, definido por el usuario 2026-10-10)
+La forma de comparar métodos es una elección: cada EAN vota por el modelo ("partido") que mejor le habría funcionado. Es la misma idea que el best-fit de o9 (el pasado decide), con una ventaja: los partidos no solo miran al EAN, también a su casa, product line, tamaño o función.
+
+### Quién vota y dónde
+- **Votantes:** cada EAN Central con actividad. Fuera quedan los Local y los EANs sin actividad (real y forecasts en 0 en todos sus quarters).
+- **Urnas:** cada quarter evaluado.
+- **Fotos y quarters (por ahora):** solo la foto sep-25 y sus 3 quarters completos: Q2 FY26 (oct–dic), Q3 FY26 (ene–mar) y Q4 FY26 (abr–jun).
+  - Cada EAN tiene un quarter cercano, uno medio y uno lejano, así ningún tipo de modelo parte con ventaja.
+- **Real:** actuals de la foto sep-26, que es la vara. Historia usada por los partidos = la reexpresada, truncada en la foto.
+
+### Cómo se decide cada quarter
+- Cada partido pronostica con la información de la foto. Se suma el forecast del quarter y el real del quarter del EAN.
+- **WAPE del EAN en el quarter** = |forecast del quarter − real del quarter| / real del quarter. Si el real es 0, se compara el error absoluto.
+- **Gana el quarter** el partido con menor WAPE: el EAN le da 1 voto.
+- **Empate en el quarter:** si varios partidos tienen exactamente el mismo WAPE mínimo, el EAN vota a todos, hasta 3. Cada voto vale 1, no se reparte.
+
+### Cómo se decide cada votante
+1. Se suman los votos que recibió cada partido en los quarters del EAN.
+2. El EAN elige el partido con más votos.
+3. **Desempate:** si dos o más partidos tienen el mismo total de votos, se suma el WAPE de cada uno en todos los quarters del EAN y gana el menor.
+4. Si aun así siguen empatados, el EAN queda como "Empate".
+
+### Partidos con ideologías
+- Los partidos son modelos con ideologías distintas: unos parecidos (mismo bloque) y otros muy distintos.
+- **Ejes de ideología:**
+  - **Base / visión del futuro:** "el año que viene se parece al año pasado" (familia Fragancias) o "el futuro se parece a lo último que pasó" (familia Makeup).
+  - **A quién le cree el EAN para el trend:** el propio EAN, su product line, su segmento (tamaño en fragancias, función en makeup) o su casa.
+- **"Ideas políticas" (DAs y supply cuts):** cada partido declara cómo los maneja: cuánto resta de los DAs del pasado, cuánto suma de los DAs de la foto y qué parte de los cuts añade. Se definen después; mientras tanto cada partido lleva la postura de su familia.
+- **Propuesta de 8 partidos (pendiente de confirmar):**
+  - Fragancia · EAN / Línea / Segmento / Casa = año pasado × (1 + trend 12M de la fuente, tope ±30%).
+  - Makeup · EAN / Línea / Segmento / Casa = media 6M × (1 + 50% del trend 12M de la fuente, tope ±30%).
+  - Product line con menos de 5 EANs Central → usa el trend de su segmento.
+- **Lecciones de los parlamentos anteriores** (no repetir):
+  - Quarters desbalanceados (más cercanos que lejanos, el último incompleto).
+  - Partidos sin trend que no recogen la caída frente al año pasado.
+  - DAs contados dos veces (base con promos + DAs de la foto).
+  - Voto dividido entre partidos casi iguales.
+
+### Cómo se presentan los resultados (preferencias del usuario)
+- **PDF A4 horizontal** (HTML + SVG impreso con Chromium, fuente Inter). Diseño cuidado, nada que parezca "hecho con IA flojamente", con gráficos.
+- **Gráfico principal: hemiciclo de escaños.** Un punto = un EAN.
+  - Filas con separación uniforme, nada cortado, número de EANs en el centro.
+  - Partidos ordenados de izquierda a derecha por bloque ideológico; Empate en gris.
+- **Debajo de cada hemiciclo: barra de volumen**, con el % del volumen real de los EANs que gana cada partido.
+  - Ganar EANs y ganar volumen pueden no coincidir, y eso es parte del mensaje.
+- **Tarjetas por grupo:** total, por quarter, por categoría y casa, por tamaño, por edad del EAN y por Ignore System Forecast Flag.
+  - Cada tarjeta lleva: título, unidades reales, hemiciclo, votos por partido, barra de volumen, quién gana en EANs y quién en volumen.
+- **Tabla de WAPE90 por casa × quarter** con todos los partidos, resaltando el mejor.
+- **Colores:** cada color significa una sola cosa en todos los reportes.
+  - Morado = fragancias / regla fragancias. Naranja = makeup / regla makeup.
+  - Verde azulado y azul marino = regla + DAs y consenso en las comparaciones contra el consenso.
+- **Titulares:** dicen el hallazgo con cifras y se comprueban con los datos antes de enviarlos; nada que los números no respalden.
+- **Revisión:** renderizar en alta resolución y revisar todas las páginas antes de mandar el PDF.
+- **Comparaciones contra el consenso:** solo resultados en el chat, sin PDF, salvo que el usuario lo pida.
 
 ## Decisiones / respuestas del usuario
 - **Local** = iniciativas con menos de ~6 meses de envíos; luego pasan a Central. Se ignoran en la regla.
@@ -127,6 +240,7 @@ Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infogra
   - Cortes / DAs: `src/cuts_test.py`, `src/da_test.py`.
   - Makeup: `src/mu_season.py`, `src/mu_backtest.py`, `src/mu_cuts_da.py`, `src/mu_cuts2.py`.
 - **Resultados:** `work/results/*.md`. Memoria de trabajo: `work/STRATEGY.md` y `work/NOTES.md`.
+- **Reportes por casa (consenso vs regla, fotos sep-25 y mar-26):** `src/house_compare.py` + `src/house_report.py` → `reportes/REPORTE_<casa>.pdf`.
 - **Infografía:** `src/infografia.py` (HTML + SVG → PDF con Chromium). Datos de los gráficos en `work/infog_data.json`.
 
 **Cómo regenerar:**
