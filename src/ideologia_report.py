@@ -70,8 +70,8 @@ def main():
            "Solo el 42% del DA planificado de fragancias se convirtió en envío extra (80% en makeup). A 3 de cada 4 EANs les cambia poco.", "Media (DAs) · baja (cortes)")]
     qh = "".join(f"<div class='qc'><div class='qn'>{n}</div><div class='qt'>{t}</div><div class='qs'>{s_}</div><p>{o}</p><div class='qf'><b>En qué se sustenta.</b> {f}</div>"
                  f"<div class='qk'>Firmeza: <b>{k}</b></div></div>" for n, t, s_, o, f, k in qs)
-    steps = [("Vota con FY25", f"Foto simulada en sep-24 (solo histórico hasta ago-24). Cada partido pronostica oct-24 a jun-25 y el EAN vota en 3 urnas: Q2, Q3 y Q4 de FY25. "
-              f"Votan {D['n_votantes_fy25']} EANs Central."),
+    steps = [("Vota con FY25", f"Fotos simuladas en sep-24, dic-24 y mar-25 (solo histórico). Cada partido pronostica los quarters de FY25 y el EAN vota en las 6 urnas "
+              f"cerradas antes de sep-25. Votan {D['n_votantes_fy25']} EANs Central."),
              ("Pronostica desde sep-25", "Con la foto sep-25 tal cual (DAs de la base y DAs futuros según la bandera), el partido elegido pronostica los 9 meses: oct-25 a jun-26."),
              ("Se compara con sep-26", "El real de la foto sep-26: Q2 FY26 está a 1–3 meses de la foto, Q3 a 4–6 y Q4 a 7–9. Sin consenso: las referencias son las reglas y los partidos."),
              ("Sin historia: sus parecidos", f"{nsin} de los {nprue} EANs de sep-25 no tenían FY25. Toman lo que votaron los códigos de su casa × tamaño/función que en sep-24 tenían su edad.")]
@@ -95,8 +95,10 @@ def main():
                   f"<div class='ir'><span>1 · Parto de</span><b>{r1}</b></div><div class='ir'><span>2 · Sigo a</span><b>{r2}</b></div><div class='ir'><span>3 · Limpio</span><b>{r3}</b></div>"
                   f"<div class='pm'><div><span>EANs que lo eligen</span><b>{T['seats'][nm]}</b><i style='width:{T['seats'][nm] / smax * 100:.0f}%'></i></div>"
                   f"<div><span>Volumen</span><b>{pc(T['vol'][nm])}</b></div><div><span>Solo, a 7–9 / 4–6 / 1–3 m</span><b class='sm3'>{' / '.join(pc(x) for x in se)}</b></div></div></div>")
-    best = min(N, key=lambda n: H["total"]["F:" + n]["ean"])
-    p2 = sec("Los 6 partidos", f"Dos reglas fijas, el ciclo de vida y tres partidos de nivel reciente. Usado solo para todos, el {best} es el que menos falla ({pc(H['total']['F:' + best]['ean'])} contra {pc(H['total']['regla']['ean'])} de la regla).",
+    R1 = json.loads((W / "decision_sep25.json").read_text())["ensayo"]
+    best = min(N, key=lambda n: R1["total"]["F:" + n]["ean"])
+    p2 = sec("Los 6 partidos", f"Dos reglas fijas, el ciclo de vida y tres partidos de nivel reciente. Usado solo para todos, el {best} es el que menos falla: "
+             f"{pc(R1['total']['F:' + best]['ean'])} contra {pc(R1['total']['regla']['ean'])} de la regla con el pasado, y {pc(H['total']['F:' + best]['ean'])} contra {pc(H['total']['regla']['ean'])} con el real de sep-26.",
              f"<div class='cards c3'>{cards}</div><div class='foot'>«EANs que lo eligen» = EANs de la foto sep-25 que se quedan con ese partido (su voto de FY25 o, sin historia, el de sus parecidos). "
              f"«Solo» = error EAN a EAN desde la foto sep-25 si ese partido se usara para todos: Q4 FY26 (7–9 meses), Q3 (4–6) y Q2 (1–3). "
              f"Regla de su categoría: {' / '.join(pc(x) for x in he('regla'))}. A todos se les suman los DAs futuros según la bandera.</div>")
@@ -137,7 +139,8 @@ def main():
     # ejemplo: 4.º EAN de fragancias con más volumen FY26 entre los que votaron en FY25
     cand = E[(E.cat == "Fragancias") & (E.historia == "Con historia FY25")].real.sort_values(ascending=False)
     ex = cand.index[3]
-    tr = U[U.ean == ex].sort_values("q")
+    tr = U[U.ean == ex].sort_values(["foto", "q"])
+    ulab = lambda r: f"{ {'2024-09': 'sep-24', '2024-12': 'dic-24', '2025-03': 'mar-25'}[r.foto]}<br/>{r.q[-2:]}"
     etr = {n: float(np.mean(np.minimum(sm.wq(tr["F:" + n].values, tr.real.values), 2))) for n in N}
     o2 = sorted(N, key=lambda n: etr[n])[:2]
     xe = B[B.ean == ex]; f26 = {n: float(xe["F:" + n].sum()) for n in N}; r26 = float(xe.real.sum())
@@ -147,14 +150,14 @@ def main():
     win = E.loc[ex, "voto"]
     p4 = sec("La coalición", "Gobierno de coalición: el forecast del EAN es la media de los 2 partidos que menos fallaron con él en FY25. Si uno se equivoca, el otro amortigua.",
              f"<div class='g3'><div class='box'><div class='ct'>Cómo funciona</div><ul class='ul'>"
-             f"<li>Con la foto simulada de sep-24, cada partido pronostica Q2, Q3 y Q4 de FY25 y se mide su error con el EAN en cada quarter.</li>"
+             f"<li>Con las fotos simuladas de sep-24, dic-24 y mar-25, cada partido pronostica los quarters de FY25 y se mide su error con el EAN en cada uno (6 urnas).</li>"
              f"<li><b>Un partido:</b> el EAN se queda con el que gana más quarters. Si se equivoca de partido, se equivoca del todo.</li>"
              f"<li><b>Coalición:</b> se queda con los 2 de menor error medio y usa la media de sus dos forecasts.</li>"
              f"<li>Sin historia en FY25: errores medios de sus parecidos (casa × tamaño/función con su edad).</li></ul>"
              f"<div class='ct' style='margin-top:2.4mm'>Coaliciones más frecuentes</div><table class='t6 s'><tr><th>Coalición</th><th>EANs</th><th>Volumen</th></tr>{prow}</table></div>"
-             f"<div class='box'><div class='ct'>Ejemplo: {desc.get(ex, ex)}</div><div class='cs'>EAN {ex}. Error de cada partido en los quarters de FY25 (foto simulada sep-24); "
+             f"<div class='box'><div class='ct'>Ejemplo: {desc.get(ex, ex)}</div><div class='cs'>EAN {ex}. Error de cada partido en las 6 urnas de FY25 (foto simulada · quarter); "
              f"los 2 de menor error medio forman la coalición. Forecast = oct-25 a jun-26 desde la foto sep-25.</div>"
-             f"<table class='t6 s'><tr><th>Partido</th><th>Q2 FY25</th><th>Q3</th><th>Q4</th><th>Media</th><th>Forecast FY26</th></tr>{erow}</table>"
+             f"<table class='t6 s ex'><tr><th>Partido</th>{''.join(f'<th>{ulab(r)}</th>' for _, r in tr.iterrows())}<th>Media</th><th>Forecast FY26</th></tr>{erow}</table>"
              f"<p class='sm'>Coalición = media de <b>{o2[0]}</b> y <b>{o2[1]}</b>: <b>{n0(coal)}</b> unidades para oct-25 a jun-26. Real: <b>{n0(r26)}</b> "
              f"(con un solo partido, {win}: {n0(f26[win]) if win in f26 else '—'}).</p></div>"
              f"<div class='box'><div class='ct'>Qué consigue (desde la foto sep-25)</div><div class='cs'>Error EAN a EAN según lo lejos que estaba la foto</div>"
@@ -164,34 +167,38 @@ def main():
              + f"</table><p class='sm'>La coalición falla menos que el voto de un solo partido en todos los plazos ({pc(H['total']['coalicion']['ean'])} contra {pc(H['total']['un_partido']['ean'])}) "
              f"y algo menos que la regla ({pc(H['total']['regla']['ean'])}). Pero arrastra el pesimismo de FY25: en el total de la casa queda por debajo del real "
              f"(sesgo {pc(H['total']['coalicion']['sesgo'])}) y su WAPE90 ({pc(H['total']['coalicion']['wape90'])}) es peor que el de la regla ({pc(H['total']['regla']['wape90'])}).</p></div></div>")
-    # ---------------- 5. la prueba honesta
-    rows5 = [("regla", "Regla de su categoría"), ("un_partido", "Un partido (su voto FY25)"), ("coalicion", "Coalición de 2"), ("media6", "Media de los 6")] + [("F:" + n, "Solo " + n) for n in N]
-    bestc = min([c for c, _ in rows5], key=lambda c: H["total"][c]["ean"])
-    t5 = "".join(f"<tr class='{'hl' if c in ('media6', 'F:Ciclo de vida') else ''}'><td>{P.dot(c[2:], num=True) if c.startswith('F:') else ''}<b>{lab}</b></td>"
-                 + "".join(f"<td class='n'>{pc(H[h][c]['ean'])}</td>" for h in HZ + ["total"]) + f"<td class='n'>{pc(H['total'][c]['wape90'])} <i>({'+' if H['total'][c]['sesgo'] > 0 else '−'}{pc(abs(H['total'][c]['sesgo']))})</i></td></tr>"
-                 for c, lab in rows5)
-    hs = D["historia"]; kh = list(hs)
-    th = "".join(f"<tr><td><b>{lab}</b></td>" + "".join(f"<td class='n'>{pc(hs[k]['total'][c])}</td>" for k in kh) + "</tr>"
-                 for c, lab in [("regla", "Regla de su categoría"), ("un_partido", "Un partido"), ("coalicion", "Coalición de 2"), ("media6", "Media de los 6")])
-    sg = D["sesgo_fy25"]; pe = D["persistencia"]
-    sgb = "".join(f"<div class='sgr'><span>{P.dot(n, num=True)}{n}</span><i class='bar' style='width:{min(sg[n], 1.2) / 1.2 * 100:.0f}%;background:{P.col[n]}'></i><b>+{pc(sg[n])}</b></div>" for n in N)
-    p5 = sec("La prueba honesta · voto con FY25, forecast desde sep-25, real sep-26",
-             f"Elegir con FY25 no mejora a la regla: el ganador de FY25 repite en FY26 en el {pc(pe['igual'])} de los EANs, casi lo mismo que al azar ({pc(pe['azar'])}).",
-             f"<div class='g2w'><div class='box'><div class='ct'>Error EAN a EAN y WAPE90 de la casa</div><div class='cs'>Foto sep-25 contra el real de sep-26 · resaltado: las dos mejores opciones</div>"
-             f"<table class='t6 s'><tr><th></th>{''.join(f'<th>{h} m</th>' for h in HZ)}<th>Total</th><th>WAPE90 (sesgo)</th></tr>{t5}</table>"
-             f"<p class='sm'>Lo que más acierta no es elegir, sino promediar: la <b>media de los 6 partidos</b> falla {pc(H['total']['media6']['ean'])} EAN a EAN y {pc(H['total']['media6']['wape90'])} en la casa, "
-             f"y el <b>Ciclo de vida</b> solo, {pc(H['total']['F:Ciclo de vida']['ean'])}; la regla, {pc(H['total']['regla']['ean'])} y {pc(H['total']['regla']['wape90'])}.</p>"
-             f"<div class='ct' style='margin-top:2.4mm'>Qué nos dice</div><ul class='ul'>"
-             f"<li>EAN a EAN, la media de los 6 iguala a la regla a 7–9 meses ({pc(H['7–9']['media6']['ean'])} contra {pc(H['7–9']['regla']['ean'])}) y la mejora a 4–6 y 1–3 "
-             f"({pc(H['4–6']['media6']['ean'])} y {pc(H['1–3']['media6']['ean'])} contra {pc(H['4–6']['regla']['ean'])} y {pc(H['1–3']['regla']['ean'])}).</li>"
-             f"<li>Los partidos sirven, pero un solo año de voto no basta para elegir por EAN: el ganador cambia con el mercado.</li>"
-             f"<li>Con un año de voto, la coalición es la forma de elegir que menos falla EAN a EAN, pero hereda el sesgo del año de voto.</li></ul></div>"
-             f"<div><div class='box'><div class='ct'>Por qué el voto de FY25 acierta poco</div><div class='cs'>Sobrepronóstico de cada partido en FY25 desde la foto simulada sep-24</div>{sgb}"
-             f"<p class='sm'>FY25 fue un año de caída para los códigos que ya existían: todos los partidos se pasaron entre un {pc(min(sg.values()))} y un {pc(max(sg.values()))}. "
-             f"El voto premió al menos optimista, no al que mejor entiende al EAN. En FY26 los partidos acertaron mejor el nivel (regla {pc(abs(H['total']['regla']['sesgo']))} por debajo) "
-             f"y el pesimismo premiado se paga: Media 6M prudente queda un {pc(abs(H['total']['F:Media 6M prudente']['sesgo']))} por debajo del real.</p></div>"
-             f"<div class='box' style='margin-top:3mm'><div class='ct'>Con y sin historia en FY25</div><table class='t6 s'><tr><th></th>{''.join(f'<th>{k}</th>' for k in kh)}</tr>{th}</table>"
-             f"<p class='sm'>Sin historia (nuevos) todo falla mucho; ahí la coalición de lo que votaron sus parecidos es la mejor opción.</p></div></div></div>")
+    # ---------------- 5. la decisión en sep-25 (solo con el pasado) y su confirmación
+    DS = json.loads((W / "decision_sep25.json").read_text()); R1 = DS["ensayo"]; R2 = DS["aplicacion"]
+    rows5 = [("regla", "Regla de su categoría"), ("un_partido", "Un partido (su voto)"), ("coalicion", "Coalición de 2"), ("media6", "Media de los 6")] + [("F:" + n, "Solo " + n) for n in N]
+    bc = min([c for c, _ in rows5], key=lambda c: R1["total"][c]["ean"]); bn = bc[2:] if bc.startswith("F:") else dict(rows5)[bc]
+    always = all(R1[h][bc]["ean"] <= min(R1[h][c]["ean"] for c, _ in rows5) for h in HZ)
+    sgn = lambda x: f"{'+' if x > 0 else '−'}{pc(abs(x))}"
+    def tab(R, hl):
+        return "".join(f"<tr class='{'hl' if c == hl else ''}'><td>{P.dot(c[2:], num=True) if c.startswith('F:') else ''}<b>{lab}</b></td>"
+                       + "".join(f"<td class='n'>{pc(R[h][c]['ean'])}</td>" for h in HZ + ["total"]) + f"<td class='n'>{pc(R['total'][c]['wape90'])} <i>({sgn(R['total'][c]['sesgo'])})</i></td></tr>"
+                       for c, lab in rows5)
+    hdr = f"<tr><th></th>{''.join(f'<th>{h} m</th>' for h in HZ)}<th>Total</th><th>WAPE90 (sesgo)</th></tr>"
+    conf = [("regla", "Regla de su categoría"), ("coalicion", "Coalición de 2"), ("media6", "Media de los 6"), (bc, bn + (" (la decisión)" if bc.startswith("F:") else ""))]
+    tc = "".join(f"<tr class='{'hl' if c == bc else ''}'><td><b>{lab}</b></td>" + "".join(f"<td class='n'>{pc(R2[h][c]['ean'])}</td>" for h in HZ + ["total"])
+                 + f"<td class='n'>{pc(R2['total'][c]['wape90'])}</td></tr>" for c, lab in conf)
+    sg = D["sesgo_fy25"]; pe = DS["persistencia"]
+    p5 = sec("La decisión en sep-25 · solo con lo que había: el pasado",
+             f"Con lo que sabíamos en sep-25, la mejor apuesta es el {bn} para todos: en el ensayo con FY25 es el que menos falla"
+             f"{' en los 3 plazos' if always else ''} ({pc(R1['total'][bc]['ean'])} contra {pc(R1['total']['regla']['ean'])} de la regla).",
+             f"<div class='g2w'><div class='box'><div class='ct'>Ensayo con el pasado: elegir con Q2–Q3 de FY25, medir en Q4 de FY25</div>"
+             f"<div class='cs'>Fotos simuladas sep-24 (Q4 a 7–9 meses), dic-24 (4–6) y mar-25 (1–3) · error EAN a EAN · todo cerrado antes de sep-25</div>"
+             f"<table class='t6 s'>{hdr}{tab(R1, bc)}</table>"
+             f"<p class='sm'>FY25 fue un año de caída para los códigos que ya existían: todos los partidos se pasan (sesgo de la regla {sgn(R1['total']['regla']['sesgo'])}) y por eso los errores son altos. "
+             f"Aun así el orden es claro: elegir partido por EAN no mejora a la regla (un partido {pc(R1['total']['un_partido']['ean'])}, coalición {pc(R1['total']['coalicion']['ean'])}, "
+             f"regla {pc(R1['total']['regla']['ean'])}) y el {bn} la mejora en los tres plazos " + " / ".join(f"({pc(R1[h][bc]['ean'])} contra {pc(R1[h]['regla']['ean'])})" for h in HZ) + ".</p></div>"
+             f"<div><div class='box'><div class='ct'>Por qué no elegir partido por EAN</div><ul class='ul'>"
+             f"<li>El partido que gana en el pasado vuelve a ganar en FY26 en el <b>{pc(pe['igual'])}</b> de los EANs: lo mismo que al azar (17%).</li>"
+             f"<li>Un año de voto premia al que acertó ese año (en FY25, al más pesimista), no al que mejor entiende al EAN.</li>"
+             f"<li>El {bn} ya lleva dentro el DNI del EAN: la curva de los códigos de su edad mientras es joven y el trend de su fase cuando madura.</li></ul></div>"
+             f"<div class='box' style='margin-top:3mm'><div class='ct'>Confirmación con el real de sep-26</div><div class='cs'>No estaba disponible al decidir · foto sep-25 → Q2–Q4 FY26 · error EAN a EAN</div>"
+             f"<table class='t6 s'><tr><th></th>{''.join(f'<th>{h} m</th>' for h in HZ)}<th>Total</th><th>WAPE90</th></tr>{tc}</table>"
+             f"<p class='sm'>La decisión se sostiene: el {bn} sigue siendo el que menos falla EAN a EAN ({pc(R2['total'][bc]['ean'])} contra {pc(R2['total']['regla']['ean'])}). "
+             f"En el total de la casa la media de los 6 acertó más ({pc(R2['total']['media6']['wape90'])}), pero en el pasado era de las peores ({pc(R1['total']['media6']['ean'])}): con lo que sabíamos, no se podía elegir.</p></div></div></div>")
     # ---------------- 6. elección
     po = D["por"]
     items = [("Fragancias", "Burberry, Gucci, Marc Jacobs", po["Categoría"]["Fragancias"]), ("Makeup", "Gucci Make up, Kylie", po["Categoría"]["Makeup"])] + \
@@ -201,7 +208,7 @@ def main():
         return max(P.names, key=lambda x: d[k][x])
     lect = "".join(f"<li><b>{t}:</b> más EANs con <b>{top(d, 'seats')}</b> ({d['seats'][top(d, 'seats')]}); más volumen con <b>{top(d, 'vol')}</b> ({pc(d['vol'][top(d, 'vol')])}).</li>" for t, _, d in items)
     lect += f"<li>{T['eans'] - nsin} EANs eligen con su propio FY25 y {nsin} con el de sus parecidos. Empate (se queda la regla): {T['seats']['Empate']}.</li>"
-    p6 = (f"<section class='page'><div class='blob'></div><div class='kick'>La elección · 3 urnas por EAN (Q2, Q3 y Q4 de FY25) · {T['eans']} EANs de la foto sep-25</div>"
+    p6 = (f"<section class='page'><div class='blob'></div><div class='kick'>La elección · 6 urnas por EAN (quarters de FY25 desde sep-24, dic-24 y mar-25) · {T['eans']} EANs de la foto sep-25</div>"
           f"<h2>Ningún partido tiene mayoría: el más elegido se queda con el {pc(max(T['seats'][x] for x in P.names) / T['eans'])} de los EANs.</h2>"
           f"{iv.legend(P)}<div class='el'><div class='box'>{iv.hemicycle(P, T['seats'], w=520, big=True)}<div class='vl'>Volumen real FY26 (oct–jun) de los EANs que elige cada partido</div>"
           f"{iv.volbar(P, T['vol'], h=6)}{iv.seatrow(P, T)}<ul class='ul' style='margin-top:4mm'>{lect}</ul></div><div class='grid c2x'>{''.join(iv.card(P, t, s_, d) for t, s_, d in items)}</div></div></section>")
@@ -233,6 +240,7 @@ def main():
 .g2w {{ position: relative; display: grid; grid-template-columns: 1.35fr 1fr; gap: 3.4mm; }}
 .sgr {{ display: grid; grid-template-columns: 46mm 1fr 11mm; white-space: nowrap; align-items: center; gap: 2mm; font-size: 7.2pt; margin: 1.1mm 0; }}
 .sgr span {{ display: flex; align-items: center; gap: 1.2mm; }} .sgr i.bar {{ display: block; height: 3.2mm; border-radius: 2px; }} .sgr b {{ text-align: right; font-variant-numeric: tabular-nums; }}
+.t6.ex th, .t6.ex td {{ padding: .8mm 1mm; }} .t6.ex th {{ font-size: 5.6pt; }}
 .grid.c2x {{ grid-template-columns: repeat(2, 1fr); gap: 3mm; }}
 .c2x .sr span {{ font-size: 5pt; }}
 """

@@ -61,7 +61,7 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
 
 ## Sistema de elecciones (formato fijo)
 - **Votantes:** EANs Central con actividad. **Urnas:** quarters completos de cada foto.
-- **Diseño (corregido por el usuario 2026-10-10):** los EANs **votan con FY25** (foto simulada sep-24: cada partido pronostica Q2–Q4 FY25 = 3 urnas) y el partido elegido pronostica **desde la foto sep-25** los 9 meses (Q2 = 1–3 meses, Q3 = 4–6, Q4 = 7–9 de FY26). La foto sep-26 solo da el real. Sin FY25 (nuevos): lo que votaron sus parecidos (casa × tamaño/función con su edad).
+- **Diseño (corregido por el usuario 2026-10-10):** los EANs **votan con FY25** (fotos simuladas sep-24, dic-24 y mar-25: 6 urnas = quarters cerrados antes de sep-25) y el partido elegido pronostica **desde la foto sep-25** los 9 meses (Q2 = 1–3 meses, Q3 = 4–6, Q4 = 7–9 de FY26). La foto sep-26 solo da el real. Sin FY25 (nuevos): lo que votaron sus parecidos (casa × tamaño/función con su edad).
 - **FY23 recuperado:** jul-22..jun-23 = «Consensus - Final LY M» de la foto sep-26 (coincide al 100% con el histórico). En sep-24 no hay DAs ni bandera.
 - **Quién gana cada quarter:**
   - WAPE del EAN en el quarter = |forecast − real| / real (si el real es 0, error absoluto). Gana el menor.
@@ -76,11 +76,10 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - El trend usa actuals.
   - Base: el DA de cada mes se lee de la última foto en la que ese mes aún no estaba cerrado (o9 borra los viejos; `ideo_panel.da_plan`). Cuánto restar es ideología del partido.
   - DAs futuros de la foto = insight, se suman según la bandera de la foto: sin bandera 100%, bandera 1 50%, bandera 2 0% (con bandera 2 el forecast de o9 ya son los DAs: sumarlos duplica).
-- **Resultado (voto FY25 → foto sep-25 → real sep-26, error EAN a 7–9 / 4–6 / 1–3 meses; `HISTORIAL.md` §10):**
-  - Regla de su categoría 64% / 53% / 55% · un partido 67% / 55% / 55% · coalición de 2 63% / 52% / 51% · media de los 6 64% / 50% / 49% · Ciclo de vida solo 63% / 50% / 49%.
-  - WAPE90 casa total: regla 12%, un partido 14%, coalición 15%, media de los 6 8%.
-  - Elegir con un año no gana a la regla: el ganador de FY25 repite en FY26 en el 18% de los EANs (azar 17%); FY25 sobrepronosticado +65–105% en todos los partidos, el voto premió al más pesimista.
-  - Pendiente de decidir con el usuario: cómo elegir (un partido, coalición o media de los 6).
+- **Decisión (solo con el pasado, `HISTORIAL.md` §11):** en sep-25 no existe la foto sep-26, así que se ensaya con el pasado: elegir con Q2–Q3 FY25 y medir en Q4 FY25.
+  - Ensayo, error EAN a 7–9 / 4–6 / 1–3 meses: regla 115% / 107% / 88% (total 103%), un partido 99% / 119% / 105% (total 108%), coalición 104% / 113% / 86% (total 100%), **Ciclo de vida solo 98% / 83% / 65% (total 81%)**.
+  - Elegir partido por EAN no mejora a la regla: el ganador del pasado repite en FY26 en el 18% de los EANs (azar 17%).
+  - **Propuesta de Claude: Ciclo de vida para todos**; confirmada con sep-26: 63% / 50% / 49% (total 53%) vs regla 64% / 53% / 55% (total 57%). Pendiente de que el usuario la apruebe.
 - **No repetir:** quarters desbalanceados o incompletos · partidos sin trend · DAs contados dos veces · partidos casi iguales que dividen el voto · usar el consenso como referencia.
 - Propuestas anteriores (reemplazadas): 10 partidos (`HISTORIAL.md` §7) y 8 partidos EAN/Línea/Segmento/Casa.
 - **En pausa:** reportes del parlamento. Foco en el concepto.
@@ -114,8 +113,8 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - `src/parliament_vs_cons.py`: prueba contra el consenso.
 - **Ideologías (propuesta de 10 partidos, foto sep-25):** `python3 src/ideo_panel.py && python3 src/ideo_engine.py && python3 src/ideo_parties.py && python3 src/ideo_compass.py && python3 src/ideo_report.py && python3 src/ideo_infografia.py`
   - `ideo_engine.py`: banco de 203k estrategias por EAN; `ideo_parties.py`: mejor por EAN, partidos (uno por forma de base), elección, robustez; `ideo_viz.py`: colores y piezas visuales de 10 partidos.
-- **Parlamento de 6 (vigente):** `python3 src/fy25_eleccion.py && python3 src/fy25_brujulas.py && python3 src/ideologia_report.py` (las posiciones de los partidos salen de `ideo_brujulas6.py`, que requiere antes el bloque de ideologías).
-  - `fy25_eleccion.py`: voto con FY25 (foto simulada sep-24), prueba desde sep-25, coalición, parecidos para los nuevos. `fy25_brujulas.py`: posición de cada EAN en las brújulas con FY25.
+- **Parlamento de 6 (vigente):** `python3 src/fy25_eleccion.py && python3 src/decision_sep25.py && python3 src/fy25_brujulas.py && python3 src/ideologia_report.py` (las posiciones de los partidos salen de `ideo_brujulas6.py`, que requiere antes el bloque de ideologías).
+  - `decision_sep25.py`: ensayo con el pasado y decisión. `fy25_eleccion.py`: voto con FY25 (6 urnas), prueba desde sep-25, coalición, parecidos para los nuevos. `fy25_brujulas.py`: posición de cada EAN en las brújulas con FY25.
   - `six_multi.py` / `six_sin_consenso.py`: diseño anterior (votar con quarters de FY26 de varias fotos), reemplazado.
   - `ideologia_report.py` → `reportes/REPORTE_IDEOLOGIA.pdf`: concepto (DNI, 3 preguntas, diseño de la prueba), los 6 partidos, brújulas, coalición, prueba honesta y elección.
   - `six_report.py` / `six_infografia.py`: versiones anteriores que comparan con el consenso (históricas).

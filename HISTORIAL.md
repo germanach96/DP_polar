@@ -185,7 +185,7 @@ Resultados de todas las pruebas hasta 2026-10-10. El contexto vigente está en `
 ## 10. Elección con FY25 y prueba en FY26 (`src/fy25_eleccion.py`, `src/fy25_brujulas.py`) — diseño vigente (2026-10-10)
 - Corrección del usuario: los códigos **votan con FY25** y se mide **desde la foto sep-25** sobre Q2, Q3 y Q4 de FY26; la foto sep-26 solo da el real. Las fotos dic-25 y mar-26 ya no se usan para votar.
 - Para votar con FY25 se simula una foto en sep-24 (histórico hasta ago-24). El trend 12M y la temporada piden 24 meses: FY23 (jul-22..jun-23) se recupera de «Consensus - Final LY M» de la foto sep-26, que coincide al 100% con el histórico del año anterior (fragancias y makeup). En sep-24 no hay DAs ni bandera guardados: base sin limpiar y sin DAs futuros.
-- Votan 786 EANs Central (3 urnas). En la prueba hay 851 EANs de la foto sep-25; 148 sin FY25 toman lo que votaron sus parecidos (casa × tamaño/función con su edad en sep-24; si no hay 5, casa × edad, categoría × edad).
+- (Primera versión: solo la foto sep-24, 3 urnas; luego ampliado a las 6 urnas del pasado, abajo.) Votan 786 EANs Central (3 urnas). En la prueba hay 851 EANs de la foto sep-25; 148 sin FY25 toman lo que votaron sus parecidos (casa × tamaño/función con su edad en sep-24; si no hay 5, casa × edad, categoría × edad).
 - Error EAN a EAN a 7–9 / 4–6 / 1–3 meses:
   - Regla de su categoría: 64% / 53% / 55% (total 57%, WAPE90 casa 12%, sesgo -7%).
   - Un partido (voto FY25): 67% / 55% / 55% (total 58%, WAPE90 casa 14%, sesgo -12%).
@@ -195,3 +195,14 @@ Resultados de todas las pruebas hasta 2026-10-10. El contexto vigente está en `
 - El ganador de FY25 repite en FY26 en el 18% de los EANs (azar 17%). En FY25 todos los partidos sobrepronosticaron entre +65% y +105% (caída de los códigos existentes): el voto premió al más pesimista.
 - Escaños: Regla fragancias 164, Regla makeup 79, Ciclo de vida 145, Media 6M prudente 202, Media 6M estacional 142, Media 12M estacional 107, Empate 12.
 - Los resultados de §8–9 se calcularon con histórico desde jul-23; desde §10 el panel (`ideo_panel`) arranca en jul-22.
+
+## 11. La decisión en sep-25, solo con el pasado (`src/decision_sep25.py`) — vigente
+- El usuario: en sep-25 no existe la foto sep-26; hay que decidir solo con el pasado.
+- Fotos simuladas sep-24, dic-24 y mar-25 (solo histórico; urnas = quarters cerrados antes de sep-25: sep-24 Q2–Q4, dic-24 Q3–Q4, mar-25 Q4 = 6 urnas).
+- **Ensayo:** elegir con Q2–Q3 FY25 y medir en Q4 FY25 (7–9 / 4–6 / 1–3 meses), error EAN a EAN:
+  - Regla de su categoría 115% / 107% / 88% (total 103%) · un partido 99% / 119% / 105% (total 108%) · coalición 104% / 113% / 86% (total 100%) · media de los 6 116% / 125% / 84% (total 108%).
+  - Ciclo de vida solo 98% / 83% / 65% (total 81%): el mejor en total, mejor que la regla en los 3 plazos (en 1–3 meses gana Media 6M prudente, 57%).
+  - Gana a la regla en fragancias y makeup, jóvenes y maduros, y en las 5 casas (WAPE casa × quarter).
+- **Decisión con el pasado:** Ciclo de vida para todos (los partidos quedan como referencia).
+- **Confirmación con sep-26** (voto con las 6 urnas, foto sep-25 → Q2–Q4 FY26): regla 64% / 53% / 55% (total 57%) · un partido 64% / 55% / 55% (total 58%) · coalición 64% / 51% / 50% (total 54%) · media de los 6 64% / 50% / 49% (total 53%) · **Ciclo de vida 63% / 50% / 49% (total 53%)**. WAPE90 casa: regla 12%, Ciclo 11%, media de los 6 8% (pero en el pasado la media de los 6 era de las peores).
+- El partido ganador del pasado repite en FY26 en el 18% de los EANs (azar 17%).

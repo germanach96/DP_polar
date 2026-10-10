@@ -1,8 +1,8 @@
 """Elección con FY25 y prueba en FY26 (diseño acordado con el usuario 2026-10-10).
 
-- Voto: foto simulada sep-24 (solo histórico hasta ago-24; FY23 recuperado del LY, ver ideo_panel.extend). Cada partido pronostica
-  oct-24..jun-25 y cada EAN vota en 3 urnas (Q2, Q3, Q4 de FY25) con el formato fijo (sm.elect). En sep-24 no hay DAs ni bandera
-  guardados (o9 los borra y solo existen desde ene-25): la base no se limpia y no hay DAs futuros.
+- Voto: fotos simuladas sep-24, dic-24 y mar-25 (solo histórico; FY23 recuperado del LY, ver ideo_panel.extend). Cada EAN vota en las
+  6 urnas cerradas antes de sep-25 (sep-24: Q2–Q4 FY25 · dic-24: Q3–Q4 · mar-25: Q4) con el formato fijo (sm.elect). En esas fotos no hay
+  DAs ni bandera guardados como plan (o9 los borra): la base no se limpia y no hay DAs futuros.
 - Prueba: foto sep-25 tal cual (DAs de base de la foto en la que el mes era futuro; DAs futuros según la bandera), pronóstico de
   oct-25..jun-26 = Q2 (1–3 meses), Q3 (4–6) y Q4 (7–9) de FY26 contra el real de la foto sep-26. Sin consenso.
 - EANs sin historia en FY25 (no votaron): lo que votaron sus parecidos = códigos de su casa × tamaño/función que en sep-24 tenían
@@ -22,40 +22,46 @@ import six_multi as sm  # noqa
 
 W = ip.W
 N = sm.NAMES_UNO
-LAG = {"Q2": "1–3", "Q3": "4–6", "Q4": "7–9"}
 MIN_G = 5
+PAST = ["2024-09", "2024-12", "2025-03"]               # fotos simuladas (solo histórico); urnas = quarters cerrados antes de sep-25
+KNOWN = "2025-08-01"
 
 
-def ballots(snap, sp):
+def ballots(snap, sp, hasta=None):
+    """Urnas (EAN × quarter completo) de la foto snap; con hasta, solo quarters cerrados hasta ese mes (lo que se sabía entonces)."""
     P = ip.build(snap, save=False); a = P["attr"]; v = a.votante.values
     F0 = sm.forecasts(P, sp)[:, v]
     flag = a.isf.values[v].astype(int).clip(0, 2)
     wf = np.array([sm.FLAGW[f] for f in flag])[:, None]
     F = np.clip(F0 + wf[None] * P["DAf"][v][None], 0, None)
     A = P["A"][v]; av = a[v]; out = []
-    for q, ix in zip(P["qlist"], P["qidx"]):
-        df = pd.DataFrame(dict(ean=av.index, foto=snap, q=q, lag=LAG[q[-2:]], cat=av.cat.values, casa=av.casa.values, seg=av.seg.values,
+    for k_q, (q, ix) in enumerate(zip(P["qlist"], P["qidx"])):
+        if len(ix) < 3 or (hasta is not None and P["months"][ix[-1]] > pd.Timestamp(hasta)):
+            continue
+        df = pd.DataFrame(dict(ean=av.index, foto=snap, q=q, lag=["1–3", "4–6", "7–9"][k_q], cat=av.cat.values, casa=av.casa.values, seg=av.seg.values,
                                tramo=av.tramo.values, fase=av.fase.values, isf=flag, desc=av.desc.values, real=A[:, ix].sum(1)))
         for k, nm in enumerate(N):
             df["F:" + nm] = F[k][:, ix].sum(1)
         out.append(df)
-    print(f"{snap}: {v.sum()} votantes · urnas {P['qlist']}")
+    print(f"{snap}: {v.sum()} votantes · urnas {sorted(set(pd.concat(out).q))}")
     return pd.concat(out, ignore_index=True)
 
 
-def main():
-    sp = sm.specs()
-    B24 = ballots(ip.VOTE_SNAP, sp)
-    B25 = ballots(ip.SNAP, sp)
-    voto, Bv = sm.elect(B24)
+HIST = ("Con historia FY25", "Sin historia FY25 (parecidos)")
+
+
+def choose(Btr, Bte):
+    """Cada EAN de Bte elige con las urnas de Btr (formato fijo): un partido, coalición (sus 2 de menor error medio) y media de 6.
+    Sin urnas en Btr: lo que votaron/erraron sus parecidos (casa × tamaño/función × edad en la última foto de Btr)."""
+    voto, Bv = sm.elect(Btr)
     # error medio por EAN y partido en FY25 (tope 200%) -> coalición
-    Wq = np.stack([sm.wq(B24["F:" + n].values, B24.real.values) for n in N], 1)
-    err = pd.DataFrame(np.minimum(Wq, 2), columns=N); err["ean"] = B24.ean.values
+    Wq = np.stack([sm.wq(Btr["F:" + n].values, Btr.real.values) for n in N], 1)
+    err = pd.DataFrame(np.minimum(Wq, 2), columns=N); err["ean"] = Btr.ean.values
     e_ean = err.groupby("ean")[N].mean()
-    a24 = B24.drop_duplicates("ean").set_index("ean")[["cat", "casa", "seg", "tramo"]]
+    a24 = Btr.sort_values("foto").drop_duplicates("ean", keep="last").set_index("ean")[["cat", "casa", "seg", "tramo"]]
     # parecidos: grupo en sep-24 (casa × tamaño/función × edad) -> votos y errores medios del grupo
     LEVELS = [["casa", "seg", "tramo"], ["casa", "tramo"], ["cat", "tramo"], ["cat"]]
-    te = B25.drop_duplicates("ean").set_index("ean")[["cat", "casa", "seg", "tramo"]]
+    te = Bte.drop_duplicates("ean").set_index("ean")[["cat", "casa", "seg", "tramo"]]
     con = te.index.isin(voto.index)
     vt = a24.join(voto.rename("voto"))
     eg = a24.join(e_ean)
@@ -75,7 +81,7 @@ def main():
     for i, v in pick_e.items():
         E2.loc[i] = v
     top2 = pd.DataFrame(np.argsort(np.where(np.isfinite(E2.values), E2.values, 1.0), 1)[:, :2], index=te.index)
-    B = B25.copy()
+    B = Bte.copy()
     FF = np.stack([B["F:" + n].values for n in N], 1); n_ = np.arange(len(B))
     B["regla"] = np.where(B.cat == "Fragancias", B["F:Regla fragancias"], B["F:Regla makeup"])
     p = B.ean.map(partido).values
@@ -85,8 +91,16 @@ def main():
     B["coal1"] = [N[k] for k in o[:, 0]]; B["coal2"] = [N[k] for k in o[:, 1]]
     B["coalicion"] = np.take_along_axis(FF, o, 1).mean(1)
     B["media6"] = FF.mean(1)
-    B["historia"] = np.where(B.ean.isin(voto.index), "Con historia FY25", "Sin historia FY25 (parecidos)")
+    B["historia"] = np.where(B.ean.isin(voto.index), HIST[0], HIST[1])
     B["nivel"] = B.ean.map(nivel).values
+    return B, voto, Bv, partido
+
+
+def main():
+    sp = sm.specs()
+    B24 = pd.concat([ballots(f, sp, hasta=KNOWN) for f in PAST], ignore_index=True)
+    B25 = ballots(ip.SNAP, sp)
+    B, voto, Bv, partido = choose(B24, B25)
     B.to_parquet(W / "fy25_eleccion.parquet")
     OPTS = {"regla": "Regla de su categoría", "un_partido": "Un partido (su voto FY25)", "coalicion": "Coalición de sus 2 mejores", "media6": "Media de los 6"}
     cols = list(OPTS) + ["F:" + n for n in N]
