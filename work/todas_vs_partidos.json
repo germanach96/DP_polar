@@ -1,0 +1,31 @@
+{
+ "La mejor de todas (en oct–mar)": {
+  "abr_jun": 0.5132393836975098,
+  "oct_mar": 0.17156410217285156
+ },
+ "Media de sus 3 mejores": {
+  "abr_jun": 0.5093449354171753
+ },
+ "Media de sus 10 mejores": {
+  "abr_jun": 0.5044546127319336
+ },
+ "Media de sus 100 mejores": {
+  "abr_jun": 0.5053291320800781
+ },
+ "Media de sus 1000 mejores": {
+  "abr_jun": 0.5201995372772217
+ },
+ "6 partidos: el mejor para él": {
+  "abr_jun": 0.5079969763755798,
+  "oct_mar": 0.2764072120189667
+ },
+ "6 partidos: coalición de sus 2 mejores": {
+  "abr_jun": 0.5279444456100464
+ },
+ "Regla de su categoría": {
+  "abr_jun": 0.6152960658073425
+ },
+ "_percentil_mediano_en_abr_jun_de_la_mejor_de_oct_mar": 0.31743092298647857,
+ "_n_estrategias": 34020,
+ "_n_eans": 690
+}
