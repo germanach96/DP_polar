@@ -157,6 +157,18 @@ Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infogra
   - Suben el forecast unos 16 puntos: ayudan en el total solo a las reglas con trend y empeoran el error EAN de todos los partidos.
   - La foto sep-26 solo conserva DAs desde ene-26. Propuesta pendiente: base limpia de DAs del pasado + DAs futuros para todos, medir la precisión de los DAs y guardar los DAs de cada foto.
 
+## Sistema de elecciones (concepto fijo, definido por el usuario 2026-10-10)
+- **Votantes:** cada EAN. **Urnas:** cada quarter evaluado. Métrica: WAPE del EAN en el quarter = |forecast − real| / real.
+- **Voto por quarter:** al partido con menor WAPE. Si hay empate, el EAN vota a todos los empatados, hasta 3 partidos.
+- **Recuento:** se suman los votos del EAN en todos sus quarters; su partido es el que más votos acumula.
+- **Resultado:** escaños (EANs) más barra de volumen; por casa, tamaño, función, edad y bandera.
+- **Lo que falló en los parlamentos anteriores es el planteamiento, no el sistema:**
+  - Quarters desbalanceados (más quarters inmediatos que lejanos, el último incompleto).
+  - Partidos sin trend o con DAs contados dos veces.
+  - Voto dividido entre partidos casi iguales.
+- **Siguiente paso:** redefinir los partidos. Idea del usuario: aprovechar que se compara con casa, product line, tamaño y función, no solo con el EAN como hace o9.
+- **Pendiente de decidir:** definición de empate (exacto o a X puntos), voto entero o repartido, quarters balanceados.
+
 ## Decisiones / respuestas del usuario
 - **Local** = iniciativas con menos de ~6 meses de envíos; luego pasan a Central. Se ignoran en la regla.
 - **Ignore System Forecast Flag** = número de customers ignorados de los 2 seleccionados (1 = normalmente el más grande; 2 = ambos). Es forecast manual: darle poco peso.
