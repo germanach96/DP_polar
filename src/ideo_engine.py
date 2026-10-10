@@ -19,7 +19,8 @@ fase -> categoría × fase. Perfil estacional: línea -> casa×segmento -> casa 
 Curva de vida (edad decidida con el usuario): para un EAN de a meses, pares que en su día tuvieron a±2 meses;
 multiplicador del mes h = Σ venta de los pares a la edad a+h / Σ su media de las edades a−6..a−1 (sin temporada si se pide).
 Mínimo 5 pares; si no, pool más grande (casa×segmento -> casa -> categoría); si la edad a+h aún no se ha visto en nadie,
-se mantiene el último multiplicador visto. Ciclo de vida completo: si no hay curva (26+ con edad desconocida, o sin pares),
+se mantiene el último multiplicador visto. Ciclo de vida completo: la curva solo hasta 17 meses (con 18+ nadie en los datos llegó aún a su edad + 9 meses);
+si no hay curva (18+ meses, 26+ con edad desconocida, o sin pares),
 manda la madurez: trend 12M de los códigos de su misma fase (casa × fase: crecimiento / estable / declive), tope ±30%.
 Salida: work/ideo_bank.npz (forecast EAN × quarter de cada estrategia y real) y work/ideo_strats.parquet"""
 import itertools
@@ -47,6 +48,7 @@ STRENGTH = [0.25, 0.5, 0.75, 1.0]
 DAP = [0.0, 0.25, 0.5, 0.75, 1.0]
 CUTS = ["0", "10%·tope", "25%", "50%"]
 DAF = [0.0, 0.5, 1.0]
+CURVE_MAX_AGE = 18          # la curva solo mientras haya pares que ya llegaron a esa edad + 9 meses; desde 18 meses manda la fase
 CURVE_POOLS = ["categoría", "casa", "casa×seg"]
 
 
@@ -138,7 +140,7 @@ class Ctx:
         cache = {}
         for i in np.where(self.vote)[0]:
             ai = age[i]
-            if L[i] < 1 or ai < 6:
+            if L[i] < 1 or ai < 6 or ai >= CURVE_MAX_AGE:
                 continue
             for lev in pools:
                 key = (lev, self.keys[lev][i], ai)
