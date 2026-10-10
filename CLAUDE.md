@@ -73,7 +73,7 @@ Para cada quarter futuro, muestra qué pasó en el quarter homólogo del año an
 
 ---
 
-# Estado del proyecto (actualizado 2026-10-09)
+# Estado del proyecto (actualizado 2026-10-10)
 
 ## Reglas decididas
 Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infografía (inglés) en `INFOGRAFIA_REGLAS.pdf`.
@@ -157,24 +157,60 @@ Detalle completo en `ESTRATEGIA_FRAGANCIAS.md` y `ESTRATEGIA_MAKEUP.md`. Infogra
   - Suben el forecast unos 16 puntos: ayudan en el total solo a las reglas con trend y empeoran el error EAN de todos los partidos.
   - La foto sep-26 solo conserva DAs desde ene-26. Propuesta pendiente: base limpia de DAs del pasado + DAs futuros para todos, medir la precisión de los DAs y guardar los DAs de cada foto.
 
-## Sistema de elecciones (concepto fijo, definido por el usuario 2026-10-10)
-- **Votantes:** cada EAN. **Urnas:** cada quarter evaluado. Métrica: WAPE del EAN en el quarter = |forecast − real| / real.
-- **Voto por quarter:** al partido con menor WAPE. Si hay empate, el EAN vota a todos los empatados, hasta 3 partidos.
-- **Recuento:** se suman los votos del EAN en todos sus quarters; su partido es el que más votos acumula.
-- **Resultado:** escaños (EANs) más barra de volumen; por casa, tamaño, función, edad y bandera.
-- **Lo que falló en los parlamentos anteriores es el planteamiento, no el sistema:**
-  - Quarters desbalanceados (más quarters inmediatos que lejanos, el último incompleto).
-  - Partidos sin trend o con DAs contados dos veces.
+## Sistema de elecciones (formato fijo, definido por el usuario 2026-10-10)
+La forma de comparar métodos es una elección: cada EAN vota por el modelo ("partido") que mejor le habría funcionado. Es la misma idea que el best-fit de o9 (el pasado decide), con una ventaja: los partidos no solo miran al EAN, también a su casa, product line, tamaño o función.
+
+### Quién vota y dónde
+- **Votantes:** cada EAN Central con actividad. Fuera quedan los Local y los EANs sin actividad (real y forecasts en 0 en todos sus quarters).
+- **Urnas:** cada quarter evaluado.
+- **Fotos y quarters (por ahora):** solo la foto sep-25 y sus 3 quarters completos: Q2 FY26 (oct–dic), Q3 FY26 (ene–mar) y Q4 FY26 (abr–jun).
+  - Cada EAN tiene un quarter cercano, uno medio y uno lejano, así ningún tipo de modelo parte con ventaja.
+- **Real:** actuals de la foto sep-26, que es la vara. Historia usada por los partidos = la reexpresada, truncada en la foto.
+
+### Cómo se decide cada quarter
+- Cada partido pronostica con la información de la foto. Se suma el forecast del quarter y el real del quarter del EAN.
+- **WAPE del EAN en el quarter** = |forecast del quarter − real del quarter| / real del quarter. Si el real es 0, se compara el error absoluto.
+- **Gana el quarter** el partido con menor WAPE: el EAN le da 1 voto.
+- **Empate en el quarter:** si varios partidos tienen exactamente el mismo WAPE mínimo, el EAN vota a todos, hasta 3. Cada voto vale 1, no se reparte.
+
+### Cómo se decide cada votante
+1. Se suman los votos que recibió cada partido en los quarters del EAN.
+2. El EAN elige el partido con más votos.
+3. **Desempate:** si dos o más partidos tienen el mismo total de votos, se suma el WAPE de cada uno en todos los quarters del EAN y gana el menor.
+4. Si aun así siguen empatados, el EAN queda como "Empate".
+
+### Partidos con ideologías
+- Los partidos son modelos con ideologías distintas: unos parecidos (mismo bloque) y otros muy distintos.
+- **Ejes de ideología:**
+  - **Base / visión del futuro:** "el año que viene se parece al año pasado" (familia Fragancias) o "el futuro se parece a lo último que pasó" (familia Makeup).
+  - **A quién le cree el EAN para el trend:** el propio EAN, su product line, su segmento (tamaño en fragancias, función en makeup) o su casa.
+- **"Ideas políticas" (DAs y supply cuts):** cada partido declara cómo los maneja: cuánto resta de los DAs del pasado, cuánto suma de los DAs de la foto y qué parte de los cuts añade. Se definen después; mientras tanto cada partido lleva la postura de su familia.
+- **Propuesta de 8 partidos (pendiente de confirmar):**
+  - Fragancia · EAN / Línea / Segmento / Casa = año pasado × (1 + trend 12M de la fuente, tope ±30%).
+  - Makeup · EAN / Línea / Segmento / Casa = media 6M × (1 + 50% del trend 12M de la fuente, tope ±30%).
+  - Product line con menos de 5 EANs Central → usa el trend de su segmento.
+- **Lecciones de los parlamentos anteriores** (no repetir):
+  - Quarters desbalanceados (más cercanos que lejanos, el último incompleto).
+  - Partidos sin trend que no recogen la caída frente al año pasado.
+  - DAs contados dos veces (base con promos + DAs de la foto).
   - Voto dividido entre partidos casi iguales.
-- **Siguiente paso:** redefinir los partidos. Idea del usuario: aprovechar que se compara con casa, product line, tamaño y función, no solo con el EAN como hace o9.
-- **Decidido 2026-10-10:**
-  - Empate en el recuento del EAN → se suman los WAPE de los partidos empatados en sus quarters y gana el menor.
-  - Votos enteros: un quarter puede dar hasta 3 votos y cada uno vale 1.
-  - Por ahora solo la foto sep-25: Q2, Q3 y Q4 FY26, completos y balanceados (cercano, medio, lejano), contra la foto sep-26.
-  - 8 partidos que parten de las dos reglas.
-    - Propuesta: familia Fragancias (año pasado × trend) y familia Makeup (media 6M × 50% trend), cada una con trend de EAN, línea, segmento o casa.
-    - Pendiente de confirmar.
-  - DAs y cuts = "ideas políticas": cada partido las maneja a su manera; se definen después.
+
+### Cómo se presentan los resultados (preferencias del usuario)
+- **PDF A4 horizontal** (HTML + SVG impreso con Chromium, fuente Inter). Diseño cuidado, nada que parezca "hecho con IA flojamente", con gráficos.
+- **Gráfico principal: hemiciclo de escaños.** Un punto = un EAN.
+  - Filas con separación uniforme, nada cortado, número de EANs en el centro.
+  - Partidos ordenados de izquierda a derecha por bloque ideológico; Empate en gris.
+- **Debajo de cada hemiciclo: barra de volumen**, con el % del volumen real de los EANs que gana cada partido.
+  - Ganar EANs y ganar volumen pueden no coincidir, y eso es parte del mensaje.
+- **Tarjetas por grupo:** total, por quarter, por categoría y casa, por tamaño, por edad del EAN y por Ignore System Forecast Flag.
+  - Cada tarjeta lleva: título, unidades reales, hemiciclo, votos por partido, barra de volumen, quién gana en EANs y quién en volumen.
+- **Tabla de WAPE90 por casa × quarter** con todos los partidos, resaltando el mejor.
+- **Colores:** cada color significa una sola cosa en todos los reportes.
+  - Morado = fragancias / regla fragancias. Naranja = makeup / regla makeup.
+  - Verde azulado y azul marino = regla + DAs y consenso en las comparaciones contra el consenso.
+- **Titulares:** dicen el hallazgo con cifras y se comprueban con los datos antes de enviarlos; nada que los números no respalden.
+- **Revisión:** renderizar en alta resolución y revisar todas las páginas antes de mandar el PDF.
+- **Comparaciones contra el consenso:** solo resultados en el chat, sin PDF, salvo que el usuario lo pida.
 
 ## Decisiones / respuestas del usuario
 - **Local** = iniciativas con menos de ~6 meses de envíos; luego pasan a Central. Se ignoran en la regla.
