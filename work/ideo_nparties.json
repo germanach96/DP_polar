@@ -1,0 +1,520 @@
+{
+ "limpia": [
+  {
+   "k": 2,
+   "partidos": [],
+   "obj": 0.5753140449523926,
+   "2": {
+    "ean": 0.7317913770675659,
+    "w90": 0.277501995632413,
+    "gana": 1,
+    "ean_da": 0.7317913770675659,
+    "w90_da": 0.277501995632413,
+    "gana_da": 1,
+    "acierto": 0.49176470588235294
+   }
+  },
+  {
+   "k": 3,
+   "partidos": [
+    "Media de los últimos 6 meses, plana × (1 + 100% del trend 3M de su casa, tope ±60%) · base + 50% cortes − 50% DAs+ del pasado · sin DAs de la foto"
+   ],
+   "obj": 0.4457659125328064,
+   "2": {
+    "ean": 0.5941822528839111,
+    "w90": 0.28075670263422364,
+    "gana": 3,
+    "ean_da": 0.6813299059867859,
+    "w90_da": 0.2633318337685518,
+    "gana_da": 1,
+    "acierto": 0.4588235294117647
+   }
+  },
+  {
+   "k": 4,
+   "partidos": [
+    "Media de los últimos 6 meses, plana × (1 + 100% del trend 6M de su categoría, tope ±60%) · base − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media 6M sin temporada × perfil mensual de su casa × segmento × (1 + 100% del trend 12M de su franquicia, tope ±30%) · base + 25% cortes · sin DAs de la foto"
+   ],
+   "obj": 0.38989952206611633,
+   "2": {
+    "ean": 0.5413578152656555,
+    "w90": 0.22031552981730412,
+    "gana": 3,
+    "ean_da": 0.695254385471344,
+    "w90_da": 0.22536693834676605,
+    "gana_da": 2,
+    "acierto": 0.42823529411764705
+   }
+  },
+  {
+   "k": 5,
+   "partidos": [
+    "Media de los últimos 3 meses, plana × (1 + 100% del trend 12M de su fase (casa × fase), tope ±30%) · base + 50% cortes · sin DAs de la foto",
+    "Media de los últimos 6 meses, plana × (1 + 100% del trend 6M de su categoría, tope ±60%) · base + 25% cortes − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media 6M sin temporada × perfil mensual de su casa × (1 + 50% del trend 12M de su segmento, tope ±30%) · base + 50% cortes · sin DAs de la foto"
+   ],
+   "obj": 0.36174365878105164,
+   "2": {
+    "ean": 0.47543054819107056,
+    "w90": 0.1716533123898205,
+    "gana": 3,
+    "ean_da": 0.6233577132225037,
+    "w90_da": 0.20004375577406652,
+    "gana_da": 2,
+    "acierto": 0.3941176470588235
+   }
+  },
+  {
+   "k": 6,
+   "partidos": [
+    "Mismo mes del año pasado × (1 + 50% del trend 12M de su casa, tope ±30%) · base + 50% cortes − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media de los últimos 3 meses, plana × (1 + 100% del trend 12M de su fase (casa × fase), tope ±60%) · base + 25% cortes · sin DAs de la foto",
+    "Media de los últimos 6 meses, plana × (1 + 100% del trend 6M de su categoría, tope ±60%) · base − 50% DAs+ del pasado · sin DAs de la foto",
+    "Media 6M sin temporada × perfil mensual de su casa × (1 + 50% del trend 12M de su segmento, tope ±30%) · base + 50% cortes · sin DAs de la foto"
+   ],
+   "obj": 0.3446558713912964,
+   "2": {
+    "ean": 0.4755687713623047,
+    "w90": 0.14208703001422018,
+    "gana": 3,
+    "ean_da": 0.6065871119499207,
+    "w90_da": 0.1743751639316135,
+    "gana_da": 3,
+    "acierto": 0.36941176470588233
+   }
+  },
+  {
+   "k": 7,
+   "partidos": [
+    "Mismo mes del año pasado × (1 + 100% del trend 12M de su franquicia, tope ±30%) · base + 50% cortes − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media de los últimos 3 meses, plana × (1 + 100% del trend 12M de su fase (casa × fase), tope ±60%) · base + 25% cortes · sin DAs de la foto",
+    "Media de los últimos 6 meses, plana × (1 + 100% del trend 6M de su categoría, tope ±60%) · base − 50% DAs+ del pasado · sin DAs de la foto",
+    "Media 3M sin temporada × perfil mensual de su casa × segmento × (1 + 50% del trend 12M del propio EAN, tope ±30%) · base sin ajustes · sin DAs de la foto",
+    "Media 6M sin temporada × perfil mensual de su casa × (1 + 50% del trend 12M de su segmento, tope ±30%) · base + 50% cortes · sin DAs de la foto"
+   ],
+   "obj": 0.33202487230300903,
+   "2": {
+    "ean": 0.47573718428611755,
+    "w90": 0.13763022041762868,
+    "gana": 4,
+    "ean_da": 0.6144986152648926,
+    "w90_da": 0.1634856619982973,
+    "gana_da": 3,
+    "acierto": 0.2988235294117647
+   }
+  },
+  {
+   "k": 8,
+   "partidos": [
+    "Mismo mes del año pasado × (1 + 100% del trend 12M de su franquicia, tope ±60%) · base − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media de los últimos 3 meses, plana × (1 + 100% del trend 12M de su fase (casa × fase), tope ±30%) · base + 25% cortes · sin DAs de la foto",
+    "Media de los últimos 6 meses, plana × (1 + 100% del trend 6M de su categoría, tope ±60%) · base sin ajustes · sin DAs de la foto",
+    "Media 3M sin temporada × perfil mensual de su línea × (1 + 100% del trend 12M del propio EAN, tope ±60%) · base − 25% DAs+ del pasado · sin DAs de la foto",
+    "Media 6M sin temporada × perfil mensual de su casa × (1 + 50% del trend 12M de su segmento, tope ±30%) · base + 50% cortes · sin DAs de la foto",
+    "Nivel 6M × ciclo de vida: jóvenes, curva de los códigos de su casa × segmento a su edad; maduros, trend 12M de su fase · base − 100% DAs+ del pasado · sin DAs de la foto"
+   ],
+   "obj": 0.32242751121520996,
+   "2": {
+    "ean": 0.4837155044078827,
+    "w90": 0.1613973744618281,
+    "gana": 3,
+    "ean_da": 0.6265442371368408,
+    "w90_da": 0.17043883907055743,
+    "gana_da": 3,
+    "acierto": 0.26
+   }
+  },
+  {
+   "k": 9,
+   "partidos": [
+    "Mismo mes del año pasado × (1 + 100% del trend 12M de su franquicia, tope ±60%) · base − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media de los últimos 3 meses, plana × (1 + 100% del trend 12M de su fase (casa × fase), tope ±30%) · base + 25% cortes · sin DAs de la foto",
+    "Media de los últimos 6 meses, plana × (1 + 100% del trend 6M de su categoría, tope ±60%) · base sin ajustes · sin DAs de la foto",
+    "Media 3M sin temporada × perfil mensual de su línea × (1 + 100% del trend 12M del propio EAN, tope ±60%) · base − 25% DAs+ del pasado · sin DAs de la foto",
+    "Media 6M sin temporada × perfil mensual de su casa × (1 + 50% del trend 12M de su segmento, tope ±30%) · base + 50% cortes · sin DAs de la foto",
+    "Mitad año pasado, mitad media 6M sin temporada × perfil de su casa × (1 + 100% del trend 6M del propio EAN, tope ±60%) · base + 50% cortes · sin DAs de la foto",
+    "Nivel 6M × ciclo de vida: jóvenes, curva de los códigos de su casa × segmento a su edad; maduros, trend 12M de su fase · base − 100% DAs+ del pasado · sin DAs de la foto"
+   ],
+   "obj": 0.31143176555633545,
+   "2": {
+    "ean": 0.4808237552642822,
+    "w90": 0.1651762842365321,
+    "gana": 3,
+    "ean_da": 0.624183177947998,
+    "w90_da": 0.1811242628364611,
+    "gana_da": 3,
+    "acierto": 0.24352941176470588
+   }
+  },
+  {
+   "k": 10,
+   "partidos": [
+    "Mismo mes del año pasado × (1 + 100% del trend 12M de su franquicia, tope ±60%) · base − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media de los últimos 3 meses, plana × (1 + 100% del trend 12M de su fase (casa × fase), tope ±30%) · base + 25% cortes · sin DAs de la foto",
+    "Media de los últimos 6 meses, plana × (1 + 100% del trend 6M de su categoría, tope ±60%) · base sin ajustes · sin DAs de la foto",
+    "Media 3M sin temporada × perfil mensual de su línea × (1 + 100% del trend 12M del propio EAN, tope ±60%) · base − 25% DAs+ del pasado · sin DAs de la foto",
+    "Media 6M sin temporada × perfil mensual de su casa × (1 + 50% del trend 12M de su segmento, tope ±30%) · base + 50% cortes · sin DAs de la foto",
+    "Media 12M sin temporada × perfil mensual de su casa × segmento × (1 + 25% del trend 12M del propio EAN, tope ±30%) · base sin ajustes · sin DAs de la foto",
+    "Mitad año pasado, mitad media 6M sin temporada × perfil de su casa × (1 + 100% del trend 6M del propio EAN, tope ±60%) · base + 50% cortes · sin DAs de la foto",
+    "Nivel 6M × ciclo de vida: jóvenes, curva de los códigos de su casa × segmento a su edad; maduros, trend 12M de su fase · base − 100% DAs+ del pasado · sin DAs de la foto"
+   ],
+   "obj": 0.30328723788261414,
+   "2": {
+    "ean": 0.4808298647403717,
+    "w90": 0.15861493378742214,
+    "gana": 3,
+    "ean_da": 0.6210516095161438,
+    "w90_da": 0.17717845455842512,
+    "gana_da": 3,
+    "acierto": 0.22
+   }
+  }
+ ],
+ "trampa": [
+  {
+   "k": 2,
+   "partidos": [],
+   "obj": 0.6479716897010803,
+   "0": {
+    "ean": 0.4741385877132416,
+    "w90": 0.06124866415807547,
+    "gana": 3,
+    "ean_da": 0.4741385877132416,
+    "w90_da": 0.06124866415807547,
+    "gana_da": 3,
+    "acierto": 0.7917647058823529
+   },
+   "1": {
+    "ean": 0.5085622668266296,
+    "w90": 0.09936057583262815,
+    "gana": 1,
+    "ean_da": 0.5085622668266296,
+    "w90_da": 0.09936057583262815,
+    "gana_da": 1,
+    "acierto": 0.7588235294117647
+   },
+   "2": {
+    "ean": 0.6640079021453857,
+    "w90": 0.23915733682481335,
+    "gana": 1,
+    "ean_da": 0.6640079021453857,
+    "w90_da": 0.23915733682481335,
+    "gana_da": 1,
+    "acierto": 0.6988235294117647
+   }
+  },
+  {
+   "k": 3,
+   "partidos": [
+    "Media 3M sin temporada × perfil mensual de su categoría × (1 + 100% del trend 12M de su fase (casa × fase), tope ±30%) · base + 25% cortes − 100% DAs+ del pasado · sin DAs de la foto"
+   ],
+   "obj": 0.48593783378601074,
+   "0": {
+    "ean": 0.3259107768535614,
+    "w90": 0.13909471233718412,
+    "gana": 1,
+    "ean_da": 0.39353352785110474,
+    "w90_da": 0.08987034256350478,
+    "gana_da": 3,
+    "acierto": 0.7305882352941176
+   },
+   "1": {
+    "ean": 0.3588220775127411,
+    "w90": 0.10936007766245198,
+    "gana": 1,
+    "ean_da": 0.4268917739391327,
+    "w90_da": 0.05434353867867749,
+    "gana_da": 3,
+    "acierto": 0.7070588235294117
+   },
+   "2": {
+    "ean": 0.42988017201423645,
+    "w90": 0.1278586371638387,
+    "gana": 4,
+    "ean_da": 0.5466002225875854,
+    "w90_da": 0.14096194219321032,
+    "gana_da": 4,
+    "acierto": 0.7082352941176471
+   }
+  },
+  {
+   "k": 4,
+   "partidos": [
+    "Media de los últimos 3 meses, plana × (1 + 100% del trend 6M de su categoría, tope ±60%) · base − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media 3M sin temporada × perfil mensual de su casa × (1 + 50% del trend 12M de su segmento, tope ±30%) · base + 25% cortes · sin DAs de la foto"
+   ],
+   "obj": 0.4333201050758362,
+   "0": {
+    "ean": 0.3116322159767151,
+    "w90": 0.1770973715330164,
+    "gana": 1,
+    "ean_da": 0.4124591052532196,
+    "w90_da": 0.09183239499877315,
+    "gana_da": 2,
+    "acierto": 0.6541176470588236
+   },
+   "1": {
+    "ean": 0.3161526918411255,
+    "w90": 0.1276020167416235,
+    "gana": 1,
+    "ean_da": 0.41997453570365906,
+    "w90_da": 0.06669277938340641,
+    "gana_da": 2,
+    "acierto": 0.6717647058823529
+   },
+   "2": {
+    "ean": 0.3643951117992401,
+    "w90": 0.11409820408244056,
+    "gana": 3,
+    "ean_da": 0.5305468440055847,
+    "w90_da": 0.13879307389859682,
+    "gana_da": 4,
+    "acierto": 0.6658823529411765
+   }
+  },
+  {
+   "k": 5,
+   "partidos": [
+    "Media de los últimos 3 meses, plana × (1 + 100% del trend 6M de su categoría, tope ±60%) · base sin ajustes · sin DAs de la foto",
+    "Media de los últimos 6 meses, plana × (1 + 100% del trend 6M de su casa, tope ±60%) · base − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media 3M sin temporada × perfil mensual de su casa × (1 + 50% del trend 12M de su fase (casa × fase), tope ±30%) · base + 25% cortes · sin DAs de la foto"
+   ],
+   "obj": 0.40945595502853394,
+   "0": {
+    "ean": 0.30402272939682007,
+    "w90": 0.15779018225564403,
+    "gana": 0,
+    "ean_da": 0.40399670600891113,
+    "w90_da": 0.10378309800361331,
+    "gana_da": 2,
+    "acierto": 0.5941176470588235
+   },
+   "1": {
+    "ean": 0.30759570002555847,
+    "w90": 0.101506715819639,
+    "gana": 1,
+    "ean_da": 0.41542208194732666,
+    "w90_da": 0.07675907505312742,
+    "gana_da": 1,
+    "acierto": 0.6270588235294118
+   },
+   "2": {
+    "ean": 0.32651498913764954,
+    "w90": 0.08867863131412249,
+    "gana": 4,
+    "ean_da": 0.4839378297328949,
+    "w90_da": 0.13897270089063937,
+    "gana_da": 3,
+    "acierto": 0.6282352941176471
+   }
+  },
+  {
+   "k": 6,
+   "partidos": [
+    "Media de los últimos 3 meses, plana × (1 + 100% del trend 6M de su categoría, tope ±60%) · base sin ajustes · sin DAs de la foto",
+    "Media de los últimos 6 meses, plana × (1 + 100% del trend 6M de su casa, tope ±60%) · base − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media 3M sin temporada × perfil mensual de su categoría × (1 + 50% del trend 12M de su fase (casa × fase), tope ±30%) · base + 25% cortes · sin DAs de la foto",
+    "Mitad año pasado, mitad media 6M sin temporada × perfil de su casa × (1 + 100% del trend 12M de su fase (casa × fase), tope ±60%) · base + 50% cortes · sin DAs de la foto"
+   ],
+   "obj": 0.39288413524627686,
+   "0": {
+    "ean": 0.2870367467403412,
+    "w90": 0.16329966289123568,
+    "gana": 1,
+    "ean_da": 0.38785409927368164,
+    "w90_da": 0.06614897359037307,
+    "gana_da": 3,
+    "acierto": 0.5517647058823529
+   },
+   "1": {
+    "ean": 0.30003488063812256,
+    "w90": 0.1204550550778469,
+    "gana": 2,
+    "ean_da": 0.40245765447616577,
+    "w90_da": 0.0667512113083602,
+    "gana_da": 2,
+    "acierto": 0.5905882352941176
+   },
+   "2": {
+    "ean": 0.31006619334220886,
+    "w90": 0.08093038087431209,
+    "gana": 5,
+    "ean_da": 0.47287943959236145,
+    "w90_da": 0.12313932935249022,
+    "gana_da": 3,
+    "acierto": 0.5964705882352941
+   }
+  },
+  {
+   "k": 7,
+   "partidos": [
+    "Media de los últimos 3 meses, plana × (1 + 100% del trend 6M de su categoría, tope ±60%) · base sin ajustes · sin DAs de la foto",
+    "Media de los últimos 6 meses, plana × (1 + 100% del trend 6M de su casa, tope ±60%) · base − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media 3M sin temporada × perfil mensual de su categoría × (1 + 50% del trend 12M de su fase (casa × fase), tope ±30%) · base + 25% cortes · sin DAs de la foto",
+    "Mitad año pasado, mitad media 6M sin temporada × perfil de su casa × (1 + 100% del trend 12M de su fase (casa × fase), tope ±60%) · base + 50% cortes · sin DAs de la foto",
+    "Nivel 6M sin temporada × ciclo de vida: jóvenes, curva de los códigos de su casa × segmento a su edad; maduros, trend 12M de su fase × perfil mensual de su casa · base sin ajustes · sin DAs de la foto"
+   ],
+   "obj": 0.38208240270614624,
+   "0": {
+    "ean": 0.29109102487564087,
+    "w90": 0.1683681348431939,
+    "gana": 1,
+    "ean_da": 0.4037277400493622,
+    "w90_da": 0.06957304149180127,
+    "gana_da": 3,
+    "acierto": 0.5317647058823529
+   },
+   "1": {
+    "ean": 0.30454719066619873,
+    "w90": 0.12475137205213227,
+    "gana": 1,
+    "ean_da": 0.40491005778312683,
+    "w90_da": 0.07067947202094596,
+    "gana_da": 2,
+    "acierto": 0.5623529411764706
+   },
+   "2": {
+    "ean": 0.28089436888694763,
+    "w90": 0.08235555992256514,
+    "gana": 5,
+    "ean_da": 0.4633331000804901,
+    "w90_da": 0.10917588728866255,
+    "gana_da": 4,
+    "acierto": 0.5835294117647059
+   }
+  },
+  {
+   "k": 8,
+   "partidos": [
+    "Mismo mes del año pasado × (1 + 100% del trend 12M de su casa, tope ±30%) · base + 25% cortes − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media de los últimos 3 meses, plana × (1 + 100% del trend 6M de su categoría, tope ±60%) · base sin ajustes · sin DAs de la foto",
+    "Media de los últimos 6 meses, plana × (1 + 100% del trend 6M de su casa, tope ±60%) · base − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media 3M sin temporada × perfil mensual de su categoría × (1 + 50% del trend 12M de su fase (casa × fase), tope ±30%) · base + 25% cortes · sin DAs de la foto",
+    "Mitad año pasado, mitad media 6M sin temporada × perfil de su casa × (1 + 100% del trend 12M de su fase (casa × fase), tope ±60%) · base + 50% cortes · sin DAs de la foto",
+    "Nivel 6M sin temporada × ciclo de vida: jóvenes, curva de los códigos de su casa × segmento a su edad; maduros, trend 12M de su fase × perfil mensual de su casa · base sin ajustes · sin DAs de la foto"
+   ],
+   "obj": 0.3725462555885315,
+   "0": {
+    "ean": 0.2911285161972046,
+    "w90": 0.16472987758059301,
+    "gana": 0,
+    "ean_da": 0.4019313156604767,
+    "w90_da": 0.076634226451317,
+    "gana_da": 3,
+    "acierto": 0.5188235294117647
+   },
+   "1": {
+    "ean": 0.2889519929885864,
+    "w90": 0.1350321514205999,
+    "gana": 1,
+    "ean_da": 0.40210846066474915,
+    "w90_da": 0.06726591311623245,
+    "gana_da": 3,
+    "acierto": 0.5470588235294118
+   },
+   "2": {
+    "ean": 0.2710821330547333,
+    "w90": 0.07682668792407354,
+    "gana": 3,
+    "ean_da": 0.4532548189163208,
+    "w90_da": 0.09990263439793462,
+    "gana_da": 4,
+    "acierto": 0.5564705882352942
+   }
+  },
+  {
+   "k": 9,
+   "partidos": [
+    "Mismo mes del año pasado × (1 + 100% del trend 12M de su franquicia, tope ±60%) · base − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media de los últimos 3 meses, plana × (1 + 100% del trend 6M de su categoría, tope ±60%) · base sin ajustes · sin DAs de la foto",
+    "Media de los últimos 6 meses, plana × (1 + 100% del trend 6M del propio EAN, tope ±60%) · base − 100% DAs+ del pasado · + 100% DAs de la foto",
+    "Media 3M sin temporada × perfil mensual de su categoría × (1 + 50% del trend 12M de su fase (casa × fase), tope ±30%) · base + 25% cortes · sin DAs de la foto",
+    "Media 12M sin temporada × perfil mensual de su casa × (1 + 100% del trend 12M de su segmento, tope ±30%) · base sin ajustes · sin DAs de la foto",
+    "Mitad año pasado, mitad media 6M sin temporada × perfil de su casa × (1 + 100% del trend 12M de su fase (casa × fase), tope ±60%) · base + 50% cortes · sin DAs de la foto",
+    "Nivel 6M × ciclo de vida: jóvenes, curva de los códigos de su casa × segmento a su edad; maduros, trend 12M de su fase · base − 50% DAs+ del pasado · sin DAs de la foto"
+   ],
+   "obj": 0.3630162179470062,
+   "0": {
+    "ean": 0.26982787251472473,
+    "w90": 0.14904195354640745,
+    "gana": 1,
+    "ean_da": 0.3914474546909332,
+    "w90_da": 0.07714282623714779,
+    "gana_da": 3,
+    "acierto": 0.4894117647058824
+   },
+   "1": {
+    "ean": 0.29749390482902527,
+    "w90": 0.14209401962247592,
+    "gana": 1,
+    "ean_da": 0.3955637514591217,
+    "w90_da": 0.08898599454542015,
+    "gana_da": 2,
+    "acierto": 0.5352941176470588
+   },
+   "2": {
+    "ean": 0.2646690309047699,
+    "w90": 0.07209751849441856,
+    "gana": 3,
+    "ean_da": 0.42457759380340576,
+    "w90_da": 0.0841440963406993,
+    "gana_da": 4,
+    "acierto": 0.571764705882353
+   }
+  },
+  {
+   "k": 10,
+   "partidos": [
+    "Mismo mes del año pasado × (1 + 100% del trend 12M de su franquicia, tope ±60%) · base − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media de los últimos 3 meses, plana × (1 + 100% del trend 6M de su categoría, tope ±60%) · base sin ajustes · sin DAs de la foto",
+    "Media de los últimos 6 meses, plana × (1 + 100% del trend 6M del propio EAN, tope ±60%) · base − 100% DAs+ del pasado · sin DAs de la foto",
+    "Media 3M sin temporada × perfil mensual de su categoría × (1 + 50% del trend 12M de su fase (casa × fase), tope ±30%) · base + 25% cortes · sin DAs de la foto",
+    "Media 6M sin temporada × perfil mensual de su casa × (1 + 50% del trend 12M del propio EAN, tope ±30%) · base sin ajustes · sin DAs de la foto",
+    "Media 12M sin temporada × perfil mensual de su casa × (1 + 100% del trend 12M de su casa, tope ±30%) · base − 50% DAs+ del pasado · + 100% DAs de la foto",
+    "Mitad año pasado, mitad media 6M sin temporada × perfil de su casa × (1 + 100% del trend 12M de su fase (casa × fase), tope ±60%) · base + 50% cortes · sin DAs de la foto",
+    "Nivel 6M × ciclo de vida: jóvenes, curva de los códigos de su casa × segmento a su edad; maduros, trend 12M de su fase · base − 50% DAs+ del pasado · sin DAs de la foto"
+   ],
+   "obj": 0.35743167996406555,
+   "0": {
+    "ean": 0.26881688833236694,
+    "w90": 0.15744073247608514,
+    "gana": 1,
+    "ean_da": 0.3942534923553467,
+    "w90_da": 0.08466020197365848,
+    "gana_da": 3,
+    "acierto": 0.5011764705882353
+   },
+   "1": {
+    "ean": 0.2897007167339325,
+    "w90": 0.1473337104206172,
+    "gana": 1,
+    "ean_da": 0.39724910259246826,
+    "w90_da": 0.0914537748798989,
+    "gana_da": 2,
+    "acierto": 0.528235294117647
+   },
+   "2": {
+    "ean": 0.2549963891506195,
+    "w90": 0.07119306958171046,
+    "gana": 4,
+    "ean_da": 0.4245263934135437,
+    "w90_da": 0.07570344102354915,
+    "gana_da": 4,
+    "acierto": 0.5576470588235294
+   }
+  }
+ ],
+ "ref": {
+  "reglas_DAs": [
+   0.7079979181289673,
+   0.1393548293323076,
+   3
+  ],
+  "consenso": [
+   0.7281489001270521,
+   0.19132246331680824,
+   0
+  ]
+ }
+}
