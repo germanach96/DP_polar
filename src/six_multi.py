@@ -1,4 +1,4 @@
-"""Parlamento de 6 partidos en todas las fotos con quarters completos, con la lógica de DAs reconstruida.
+"""Parlamento de 7 partidos (6 + el ciclo de vida partido en fragancias y makeup) en todas las fotos con quarters completos, con la lógica de DAs reconstruida.
 
 DAs:
   - Base: cada partido limpia sus meses base con los DAs+ PLANIFICADOS (src/ideo_panel.da_plan: el de la última foto en la que el mes
@@ -26,7 +26,16 @@ import ideo_parties as ipp  # noqa
 
 W = ie.W
 SNAPS = ["2025-09", "2025-12", "2026-03"]
-NAMES = ["Regla fragancias", "Regla makeup", "Ciclo de vida", "Media 6M prudente", "Media 6M estacional", "Media 12M estacional"]
+NAMES_DOS = ["Regla fragancias", "Regla makeup", "Ciclo de vida fragancias", "Ciclo de vida makeup", "Media 6M prudente", "Media 6M estacional",
+             "Media 12M estacional"]
+NAMES_UNO = ["Regla fragancias", "Regla makeup", "Ciclo de vida", "Media 6M prudente", "Media 6M estacional", "Media 12M estacional"]
+# Ciclo de vida (src/ciclo_vida.py): fragancias = parecidos de toda su categoría + temporada de su casa; makeup = parecidos de su línea, plano.
+# Los dos: base sin restar DAs (los DAs de lanzamiento se repiten como llenado de canal); desde 18 meses, trend 12M de su fase.
+import os
+CICLO_MODE = os.environ.get("CICLO_MODE", "uno")      # "uno": un partido con receta por tipo · "dos": un partido por tipo
+NAMES = NAMES_UNO if CICLO_MODE == "uno" else NAMES_DOS
+CICLO = [dict(base="CV", estac="casa", fuente="ninguna", tventana=0, fuerza=0.0, tope=0.0, dap=0.0, cortes="0", daf=1.0, pool="categoría"),
+         dict(base="CV", estac="sin", fuente="ninguna", tventana=0, fuerza=0.0, tope=0.0, dap=0.0, cortes="0", daf=1.0, pool="línea")]
 FLAGW = {0: 1.0, 1: 0.5, 2: 0.0}
 HOUSES = ["Burberry", "Gucci", "Marc Jacobs", "Gucci Make up", "Kylie Makeup"]
 
@@ -34,7 +43,10 @@ HOUSES = ["Burberry", "Gucci", "Marc Jacobs", "Gucci Make up", "Kylie Makeup"]
 def specs():
     st = pd.read_parquet(W / "ideo_strats.parquet")
     ids = json.loads((W / "ideo_brujulas6.json").read_text())["ids"]
-    return [st.loc[i].to_dict() for i in ids]
+    sp = [st.loc[i].to_dict() for i in ids]
+    if CICLO_MODE == "uno":
+        return sp[:2] + [dict(CICLO[0], pool="por tipo")] + sp[3:]
+    return sp[:2] + CICLO + sp[3:]
 
 
 def forecasts(P, sp):
@@ -44,7 +56,12 @@ def forecasts(P, sp):
     for r in sp:
         X = ie.adjusted(ctx, float(r["dap"]), r["cortes"])
         S = ctx.season(r["estac"]) if r["estac"] != "sin" else None
-        if r["base"] == "CV":
+        if r["base"] == "CV" and r["pool"] == "por tipo":          # receta según el tipo del EAN
+            Bf = ie.base_matrix(ctx, X, "CV", ctx.season("casa"), ctx.curve("categoría", "casa"))
+            Bm = ie.base_matrix(ctx, X, "CV", None, ctx.curve("línea", None))
+            B = np.where((P["attr"].cat.values == "Fragancias")[:, None], Bf, Bm)
+            mult = np.ones(len(B))
+        elif r["base"] == "CV":
             CV = ctx.curve(r["pool"], None if r["estac"] == "sin" else r["estac"])
             B = ie.base_matrix(ctx, X, "CV", S, CV)
             mult = np.ones(len(B))

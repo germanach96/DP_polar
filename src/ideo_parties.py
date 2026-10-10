@@ -59,7 +59,8 @@ def describe(r):
     elif b == "LY+M6e":
         base = f"Mitad año pasado, mitad media 6M sin temporada × perfil de {eg}"
     else:
-        pool = {"categoría": "su categoría", "casa": "su casa", "casa×seg": "su casa × segmento"}[r["pool"]]
+        pool = {"categoría": "su categoría", "casa": "su casa", "casa×seg": "su casa × segmento", "línea": "su línea",
+                "categoría×seg": "su categoría × segmento", "franquicia": "su franquicia", "por tipo": "su categoría (fragancias) o su línea (makeup)"}[r["pool"]]
         base = (f"Nivel 6M{' sin temporada' if e != 'sin' else ''} × ciclo de vida: jóvenes, curva de los códigos de {pool} a su edad; "
                 f"maduros, trend 12M de su fase" + (" × perfil mensual de su casa" if e != "sin" else ""))
     src = {"EAN": "del propio EAN", "línea": "de su línea", "franquicia": "de su franquicia", "segmento": "de su segmento",
