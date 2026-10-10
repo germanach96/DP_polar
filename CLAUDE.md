@@ -66,7 +66,11 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - WAPE del EAN en el quarter = |forecast − real| / real (si el real es 0, error absoluto). Gana el menor.
   - Empate exacto → el EAN vota a todos los empatados, hasta 3. Cada voto vale 1.
 - **Quién gana cada votante:** el partido con más votos; si empatan, el de menor WAPE sumado; si siguen empatados, "Empate".
-- **Modelo vigente: 6 partidos** (decidido por el usuario): Regla fragancias, Regla makeup, Ciclo de vida, Media 6M prudente, Media 6M estacional, Media 12M estacional. Vetado usar solo los últimos 3 meses (base y trend). Detalle: `HISTORIAL.md` §8.
+- **Modelo vigente: 6 partidos** (decidido por el usuario): Regla fragancias, Regla makeup, Ciclo de vida, Media 6M prudente, Media 6M estacional, Media 12M estacional. Vetado usar solo los últimos 3 meses (base y trend). Detalle: `HISTORIAL.md` §8–9.
+  - **Ciclo de vida = un partido con receta según el tipo** (elegido por Claude con autorización del usuario; probado contra dos partidos separados, que empeoran la elección):
+    - Fragancias: parecidos = toda su categoría con su edad (±2 meses, mínimo 5) + temporada de su casa.
+    - Makeup: parecidos = lanzamientos anteriores de su línea (si no hay 5: función, luego casa), plano.
+    - Los dos: base sin restar DAs (los de lanzamiento se repiten como llenado de canal); curva hasta 17 meses; desde 18, trend 12M de su fase.
 - **DAs (decidido):**
   - El trend usa actuals.
   - Base: el DA de cada mes se lee de la última foto en la que ese mes aún no estaba cerrado (o9 borra los viejos; `ideo_panel.da_plan`). Cuánto restar es ideología del partido.
@@ -74,7 +78,8 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
 - **Quién elige (prueba honesta, oct–mar → abr–jun, sin consenso):**
   - El voto de un solo partido por EAN gana a la regla lejos (7–9 meses: 53% vs 64%) y pierde cerca (1–3 meses: 64% vs 51%).
   - Los similares solo aportan cuando el EAN no tiene historia (lanzamientos, sin ventas).
-  - **Propuesta pendiente de confirmar:** coalición = media de sus 2 mejores partidos (55 / 55 / 53% a 7–9 / 4–6 / 1–3 meses; la más estable).
+  - **Propuesta pendiente de confirmar:** coalición = media de sus 2 mejores partidos (56 / 55 / 52% a 7–9 / 4–6 / 1–3 meses con el ciclo de vida por tipo; WAPE90 casa 20 / 17 / 12% vs reglas 19 / 21 / 13%).
+  - El Ciclo de vida por tipo, aplicado solo a todos los EANs, ya gana a la regla de su categoría en los tres horizontes (62 / 54 / 48% vs 64 / 61 / 51%).
 - **No repetir:** quarters desbalanceados o incompletos · partidos sin trend · DAs contados dos veces · partidos casi iguales que dividen el voto · usar el consenso como referencia.
 - Propuestas anteriores (reemplazadas): 10 partidos (`HISTORIAL.md` §7) y 8 partidos EAN/Línea/Segmento/Casa.
 - **En pausa:** reportes del parlamento. Foco en el concepto.

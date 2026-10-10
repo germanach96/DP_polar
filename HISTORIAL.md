@@ -177,3 +177,7 @@ Resultados de todas las pruebas hasta 2026-10-10. El contexto vigente está en `
 - **Fragancias:** mejor = parecidos de toda la categoría + temporada de su casa, sin restar los DAs de lanzamiento de la base: 65% (sesgo +13%). Tamaño no aporta (66%).
 - **Makeup:** mejor = parecidos de su misma línea (lanzamientos anteriores de la línea) + temporada: 61% restando DAs de la base (sesgo −42%) o 71% sin restarlos (sesgo −20%).
 - Restar el 100% de los DAs de la base en los jóvenes los deja muy cortos (los DAs de lanzamiento sí se repiten en forma de pipeline).
+- **Decisión:** un solo partido Ciclo de vida con receta por tipo (fragancias: categoría + temporada de casa; makeup: su línea, plano; sin restar DAs). Prueba honesta (oct–mar → abr–jun, error EAN a 7–9 / 4–6 / 1–3 meses):
+  - Ciclo de vida solo: antes 67 / 63 / 54% → ahora 62 / 54 / 48% (regla 64 / 61 / 51%).
+  - Dos partidos de ciclo (7 partidos): voto 56 / 63 / 64%, coalición 57 / 56 / 53% → peor que uno por tipo: voto 55 / 60 / 62%, coalición 56 / 55 / 52%, voto del grupo 53 / 59 / 54%.
+  - WAPE90 casa, coalición 20 / 17 / 12% vs reglas 19 / 21 / 13%.
