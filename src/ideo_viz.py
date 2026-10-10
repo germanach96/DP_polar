@@ -110,7 +110,7 @@ def legend(P, note="Un punto = un EAN · la barra reparte el volumen real · nú
 
 
 # ------------------------------------------------------------------ brújula
-def compass(P, pts, xl, yl, title, quads, w=330, h=330, ylim=(-1, 1), xlim=(-1, 1), yband=None, cent=True, yticks=None, small=False):
+def compass(P, pts, xl, yl, title, quads, w=330, h=330, ylim=(-1, 1), xlim=(-1, 1), yband=None, cent=True, yticks=None, small=False, fixed=None):
     """pts: lista de dict(x, y, party, vol). xl/yl: (izquierda, derecha) / (abajo, arriba). quads: (sup-izq, sup-der, inf-izq, inf-der).
     Cuadrantes con fondo suave, EANs como puntos de su partido (tamaño por volumen) y el centro de cada partido (mediana de sus votantes)."""
     ml, mr, mt, mb = 26, 10, 14, 26
@@ -137,13 +137,17 @@ def compass(P, pts, xl, yl, title, quads, w=330, h=330, ylim=(-1, 1), xlim=(-1, 
     for p in order:
         r = 1.3 + 4.2 * math.sqrt(p["vol"] / vmax)
         s.append(f'<circle cx="{X(p["x"]):.1f}" cy="{Y(p["y"]):.1f}" r="{r:.2f}" fill="{P.col[p["party"]]}" fill-opacity=".55" stroke="#fff" stroke-width=".5"/>')
+    if fixed:                                     # posición del partido por su ideología (no por sus votantes)
+        cent = True
     if cent:
         C = []
-        for n in P.names:
+        for n in (P.names if not fixed else []):
             sel = [p for p in pts if p["party"] == n]
             if len(sel) < 3:
                 continue
             C.append([X(float(np.median([p["x"] for p in sel]))), Y(float(np.median([p["y"] for p in sel]))), n])
+        for n, (fx, fy) in (fixed or {}).items():
+            C.append([X(fx), Y(fy), n])
         orig = [(c[0], c[1]) for c in C]
         for _ in range(200):                      # separa los círculos que se pisan (mínimo 15 px entre centros)
             moved = False
@@ -166,7 +170,8 @@ def compass(P, pts, xl, yl, title, quads, w=330, h=330, ylim=(-1, 1), xlim=(-1, 
             if math.hypot(cx_ - ox, cy_ - oy) > 3:
                 s.append(f'<line x1="{ox:.1f}" y1="{oy:.1f}" x2="{cx_:.1f}" y2="{cy_:.1f}" stroke="{P.col[n]}" stroke-width="1"/>'
                          f'<circle cx="{ox:.1f}" cy="{oy:.1f}" r="1.8" fill="{P.col[n]}"/>')
-            s.append(f'<circle cx="{cx_:.1f}" cy="{cy_:.1f}" r="7.2" fill="{P.col[n]}" stroke="#fff" stroke-width="2"/>')
+            rr_ = 8.6 if fixed else 7.2
+            s.append(f'<circle cx="{cx_:.1f}" cy="{cy_:.1f}" r="{rr_}" fill="{P.col[n]}" stroke="{INK if fixed else "#fff"}" stroke-width="{1.4 if fixed else 2}"/>')
             s.append(f'<text x="{cx_:.1f}" y="{cy_ + 2.9:.1f}" text-anchor="middle" class="cn">{P.num[n]}</text>')
     s.append(f'<rect x="{ml}" y="{mt}" width="{W}" height="{H}" fill="none" stroke="#D5DAE0"/>')
     fa = 7.4 if small else 8

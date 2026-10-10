@@ -1,0 +1,208 @@
+{
+ "ids": [
+  108392,
+  57938,
+  10156,
+  169790,
+  28600,
+  9140
+ ],
+ "partidos": [
+  "Mismo mes del año pasado × (1 + 100% del trend 12M de su segmento, tope ±30%) · base + 25% cortes − 50% DAs+ del pasado · + 100% DAs de la foto",
+  "Media de los últimos 6 meses, plana × (1 + 50% del trend 12M de su segmento, tope ±30%) · base + mín(10% cortes; 10% envío) − 25% DAs+ del pasado · + 100% DAs de la foto",
+  "Nivel 6M × ciclo de vida: jóvenes, curva de los códigos de su casa × segmento a su edad; maduros, trend 12M de su fase · base sin ajustes · + 100% DAs de la foto",
+  "Media de los últimos 6 meses, plana × (1 + 100% del trend 6M de su categoría, tope ±60%) · base − 100% DAs+ del pasado · + 100% DAs de la foto",
+  "Media 6M sin temporada × perfil mensual de su casa × (1 + 100% del trend 12M de su fase (casa × fase), tope ±60%) · base + 25% cortes · + 100% DAs de la foto",
+  "Media 12M sin temporada × perfil mensual de su línea × (1 + 50% del trend 12M del propio EAN, tope ±30%) · base sin ajustes · + 100% DAs de la foto"
+ ],
+ "prueba": {
+  "ean": 0.5931345820426941,
+  "w90": 0.16506969889258677,
+  "gana_casas": 4,
+  "ean_6–11": 2.2471654415130615,
+  "ean_12–17": 0.556218683719635,
+  "ean_18–25": 0.39211249351501465,
+  "ean_26+": 0.5326761603355408
+ },
+ "antes": {
+  "ean": 0.5110135078430176,
+  "w90": 0.15171440040746467,
+  "gana_casas": 3,
+  "ean_6–11": 1.0851303339004517,
+  "ean_12–17": 0.37897980213165283,
+  "ean_18–25": 0.4468631446361542,
+  "ean_26+": 0.5437328219413757
+ },
+ "refs": {
+  "reglas": {
+   "ean": 0.7079979181289673,
+   "w90": 0.1393548293323076,
+   "gana_casas": 3
+  },
+  "consenso": {
+   "ean": 0.7281489001270521,
+   "w90": 0.19132246331680824,
+   "gana_casas": 0
+  }
+ },
+ "escanos": {
+  "eans": 850,
+  "real": 4691324.0,
+  "seats": {
+   "Regla fragancias": 114,
+   "Regla makeup": 88,
+   "Ciclo de vida": 47,
+   "Media 6M prudente": 322,
+   "Media 6M estacional": 156,
+   "Media 12M estacional": 118,
+   "Empate": 5
+  },
+  "vol": {
+   "Regla fragancias": 0.1546827718571559,
+   "Regla makeup": 0.17489263158971752,
+   "Ciclo de vida": 0.0705587591051055,
+   "Media 6M prudente": 0.19760071996732692,
+   "Media 6M estacional": 0.2367523539197037,
+   "Media 12M estacional": 0.16482042169758473,
+   "Empate": 0.0006923418634057251
+  },
+  "win_eans": "Media 6M prudente",
+  "win_vol": "Media 6M estacional"
+ },
+ "stats": {
+  "c1x": {
+   "der": 0.3590733590733591,
+   "izq": 0.3256113256113256,
+   "centro": 0.3153153153153153,
+   "der_fr": 0.488,
+   "izq_fr": 0.32,
+   "der_mu": 0.29791271347248577,
+   "izq_mu": 0.32827324478178366
+  },
+  "c1y": {
+   "der": 0.20334620334620335,
+   "izq": 0.26383526383526384,
+   "centro": 0.5328185328185329,
+   "der_fr": 0.168,
+   "izq_fr": 0.276,
+   "der_mu": 0.22011385199240988,
+   "izq_mu": 0.25806451612903225
+  },
+  "c2x": {
+   "der": 0.14157014157014158,
+   "izq": 0.20077220077220076,
+   "centro": 0.6576576576576577,
+   "der_fr": 0.096,
+   "izq_fr": 0.22,
+   "der_mu": 0.16318785578747627,
+   "izq_mu": 0.19165085388994307
+  },
+  "c2y": {
+   "der": 0.5057915057915058,
+   "izq": 0.11969111969111969,
+   "centro": 0.3745173745173745,
+   "der_fr": 0.42,
+   "izq_fr": 0.096,
+   "der_mu": 0.5464895635673624,
+   "izq_mu": 0.13092979127134724
+  },
+  "c3x": {
+   "der": 0.13256113256113256,
+   "izq": 0.11969111969111969,
+   "centro": 0.7477477477477478,
+   "der_fr": 0.216,
+   "izq_fr": 0.124,
+   "der_mu": 0.09297912713472485,
+   "izq_mu": 0.11764705882352941
+  },
+  "c3y": {
+   "der": 0.10424710424710425,
+   "izq": 0.10810810810810811,
+   "centro": 0.7876447876447876,
+   "der_fr": 0.12,
+   "izq_fr": 0.124,
+   "der_mu": 0.0967741935483871,
+   "izq_mu": 0.10056925996204934
+  }
+ },
+ "posiciones": {
+  "c1": {
+   "Regla fragancias": [
+    1.0,
+    1.0
+   ],
+   "Regla makeup": [
+    -0.8,
+    -0.6
+   ],
+   "Ciclo de vida": [
+    -0.8,
+    -0.6
+   ],
+   "Media 6M prudente": [
+    -0.8,
+    -0.6
+   ],
+   "Media 6M estacional": [
+    0.8,
+    -0.6
+   ],
+   "Media 12M estacional": [
+    0.8,
+    0.4
+   ]
+  },
+  "c2": {
+   "Regla fragancias": [
+    -0.05,
+    0.0
+   ],
+   "Regla makeup": [
+    -0.05,
+    -0.5
+   ],
+   "Ciclo de vida": [
+    0.35,
+    0.6
+   ],
+   "Media 6M prudente": [
+    1.0,
+    1.0
+   ],
+   "Media 6M estacional": [
+    0.2,
+    1.0
+   ],
+   "Media 12M estacional": [
+    -1.0,
+    -0.5
+   ]
+  },
+  "c3": {
+   "Regla fragancias": [
+    0.0,
+    0.0
+   ],
+   "Regla makeup": [
+    -0.5,
+    -0.6
+   ],
+   "Ciclo de vida": [
+    -1.0,
+    -1.0
+   ],
+   "Media 6M prudente": [
+    1.0,
+    -1.0
+   ],
+   "Media 6M estacional": [
+    -1.0,
+    0.0
+   ],
+   "Media 12M estacional": [
+    -1.0,
+    -1.0
+   ]
+  }
+ }
+}
