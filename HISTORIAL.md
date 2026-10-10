@@ -181,3 +181,17 @@ Resultados de todas las pruebas hasta 2026-10-10. El contexto vigente está en `
   - Ciclo de vida solo: antes 67 / 63 / 54% → ahora 62 / 54 / 48% (regla 64 / 61 / 51%).
   - Dos partidos de ciclo (7 partidos): voto 56 / 63 / 64%, coalición 57 / 56 / 53% → peor que uno por tipo: voto 55 / 60 / 62%, coalición 56 / 55 / 52%, voto del grupo 53 / 59 / 54%.
   - WAPE90 casa, coalición 20 / 17 / 12% vs reglas 19 / 21 / 13%.
+
+## 10. Elección con FY25 y prueba en FY26 (`src/fy25_eleccion.py`, `src/fy25_brujulas.py`) — diseño vigente (2026-10-10)
+- Corrección del usuario: los códigos **votan con FY25** y se mide **desde la foto sep-25** sobre Q2, Q3 y Q4 de FY26; la foto sep-26 solo da el real. Las fotos dic-25 y mar-26 ya no se usan para votar.
+- Para votar con FY25 se simula una foto en sep-24 (histórico hasta ago-24). El trend 12M y la temporada piden 24 meses: FY23 (jul-22..jun-23) se recupera de «Consensus - Final LY M» de la foto sep-26, que coincide al 100% con el histórico del año anterior (fragancias y makeup). En sep-24 no hay DAs ni bandera guardados: base sin limpiar y sin DAs futuros.
+- Votan 786 EANs Central (3 urnas). En la prueba hay 851 EANs de la foto sep-25; 148 sin FY25 toman lo que votaron sus parecidos (casa × tamaño/función con su edad en sep-24; si no hay 5, casa × edad, categoría × edad).
+- Error EAN a EAN a 7–9 / 4–6 / 1–3 meses:
+  - Regla de su categoría: 64% / 53% / 55% (total 57%, WAPE90 casa 12%, sesgo -7%).
+  - Un partido (voto FY25): 67% / 55% / 55% (total 58%, WAPE90 casa 14%, sesgo -12%).
+  - Coalición de 2: 63% / 52% / 51% (total 54%, WAPE90 casa 15%, sesgo -14%).
+  - Media de los 6: 64% / 50% / 49% (total 53%, WAPE90 casa 8%, sesgo -4%).
+  - Ciclo de vida solo: 63% / 50% / 49% (total 53%, WAPE90 casa 11%, sesgo -10%).
+- El ganador de FY25 repite en FY26 en el 18% de los EANs (azar 17%). En FY25 todos los partidos sobrepronosticaron entre +65% y +105% (caída de los códigos existentes): el voto premió al más pesimista.
+- Escaños: Regla fragancias 164, Regla makeup 79, Ciclo de vida 145, Media 6M prudente 202, Media 6M estacional 142, Media 12M estacional 107, Empate 12.
+- Los resultados de §8–9 se calcularon con histórico desde jul-23; desde §10 el panel (`ideo_panel`) arranca en jul-22.
