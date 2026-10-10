@@ -36,7 +36,7 @@ SIMPLE_TOL = 0.002
 N_NEW = 8
 DIMS = ["base", "estac", "fuente", "tventana", "fuerza", "tope", "dap", "cortes", "daf", "pool"]
 FAM = {"LY": "Año pasado", "M3": "Media plana", "M6": "Media plana", "M12": "Media plana", "M3e": "Media estacional",
-       "M6e": "Media estacional", "M12e": "Media estacional", "LY+M6e": "Mixta", "CV": "Curva de vida"}
+       "M6e": "Media estacional", "M12e": "Media estacional", "LY+M6e": "Mixta", "CV": "Ciclo de vida"}
 MEM = {"LY": "Año pasado", "M3": "3M", "M6": "6M", "M12": "12M", "M3e": "3M", "M6e": "6M", "M12e": "12M", "LY+M6e": "Año pasado + 6M", "CV": "6M"}
 QLAB = {"FY26.Q2": "Q2 FY26 · oct–dic 25", "FY26.Q3": "Q3 FY26 · ene–mar 26", "FY26.Q4": "Q4 FY26 · abr–jun 26"}
 
@@ -60,8 +60,8 @@ def describe(r):
         base = f"Mitad año pasado, mitad media 6M sin temporada × perfil de {eg}"
     else:
         pool = {"categoría": "su categoría", "casa": "su casa", "casa×seg": "su casa × segmento"}[r["pool"]]
-        base = (f"Nivel 6M{' sin temporada' if e != 'sin' else ''} × curva de vida de los códigos de {pool} a su edad"
-                + (" × perfil mensual de su casa" if e != "sin" else ""))
+        base = (f"Nivel 6M{' sin temporada' if e != 'sin' else ''} × ciclo de vida: jóvenes, curva de los códigos de {pool} a su edad; "
+                f"maduros, trend 12M de su fase" + (" × perfil mensual de su casa" if e != "sin" else ""))
     src = {"EAN": "del propio EAN", "línea": "de su línea", "franquicia": "de su franquicia", "segmento": "de su segmento",
            "casa": "de su casa", "categoría": "de su categoría", "fase": "de su fase (casa × fase)"}
     tr = "" if r["fuente"] == "ninguna" else (f" × (1 + {pct(r['fuerza'])} del trend {int(r['tventana'])}M {src[r['fuente']]}, "
@@ -81,7 +81,7 @@ def ideas(r):
     return dict(familia=FAM[r["base"]], memoria=MEM[r["base"]],
                 estac=("propia (año pasado)" if r["base"] == "LY" else ("propia + " + r["estac"]) if r["base"] == "LY+M6e"
                        else ("ninguna" if r["estac"] == "sin" else r["estac"])),
-                fuente=("edad (curva de vida)" if r["base"] == "CV" else r["fuente"]),
+                fuente=("edad y fase (ciclo de vida)" if r["base"] == "CV" else r["fuente"]),
                 trend=("—" if r["fuente"] == "ninguna" else f"{pct(r['fuerza'])} · {int(r['tventana'])}M · ±{pct(r['tope'])}"),
                 dap=pct(r["dap"]), cortes=("10% con tope" if r["cortes"] == "10%·tope" else r["cortes"]), daf=pct(r["daf"]))
 
@@ -416,6 +416,14 @@ def main():
         print(f"  robustez {rep}: dentro {rob[-1]['dentro']:.3f} fuera {rob[-1]['fuera']:.3f} techo {rob[-1]['techo_fuera']:.3f} "
               f"reglas {rob[-1]['solo_reglas']:.3f} · formas {rob[-1]['formas_A']} · mismos partidos {rob[-1]['iguales']}")
     print(f"partidos {time.time() - t0:.0f}s")
+    # ---- prueba limpia en el tiempo: partidos elegidos SOLO con Q2+Q3, cada EAN elige con Q2+Q3, se mide en Q4
+    r23 = Aq[:, :2].sum(1); c23 = np.where(r23 > 0)[0]
+    E23 = np.abs(FQ[:, c23, :2] - Aq[None, c23, :2]).sum(2)
+    Sc23 = np.minimum(E23 / r23[c23][None], CAPSCORE).astype(np.float32); del E23
+    w23 = 0.5 / len(c23) + 0.5 * r23[c23] / r23[c23].sum()
+    ch23, _ = select_forms(Sc23, w23, st, [rf, rm], cand, dfix, verbose=False)
+    del Sc23
+    print("partidos con Q2+Q3:", [describe(st.loc[i]) for i in ch23[2:]])
 
     # ---- 5. elección con los 10 partidos (todos los votantes, también los muertos)
     names = name_parties(st, chosen)
@@ -468,6 +476,8 @@ def main():
     out["eleccion"] = elect_summary(a, names, el, Aq)
     out["w90"] = wape90(a, names, FQp, Aq)
     out["temporal"] = temporal(a, names, FQp, Aq)
+    out["temporal_limpio"] = temporal(a, name_parties(st, ch23), FQ[ch23], Aq)
+    out["temporal_limpio"]["partidos"] = [describe(st.loc[i]) for i in ch23]
     out["names"] = names
     out["tiempo"] = time.time() - t0
     (W / "ideo.json").write_text(json.dumps(out, indent=1, ensure_ascii=False, default=float))
@@ -483,7 +493,7 @@ def name_parties(st, chosen):
         r = st.loc[s]
         b = r["base"]
         if b == "CV":
-            nm = "Curva de vida"
+            nm = "Ciclo de vida"
         elif b == "LY":
             nm = "Año pasado"
         elif b == "LY+M6e":
@@ -537,7 +547,12 @@ def temporal(a, names, FQp, Aq):
     cons = np.stack(a.cons_q.values)[:, 2]
     A4 = Aq[:, 2]
     cat = a.cat.values
-    res = {}
+    res = {"w90": []}
+    for h in ["Burberry", "Gucci", "Marc Jacobs", "Gucci Make up", "Kylie Makeup"]:
+        s = (a.casa == h).values; R = A4[s].sum()
+        rule = FQp[0][s, 2] if h in ("Burberry", "Gucci", "Marc Jacobs") else FQp[1][s, 2]
+        res["w90"].append(dict(casa=h, real=float(R), elegido=float(abs(f4[s].sum() - R) / R), regla=float(abs(rule.sum() - R) / R),
+                               consenso=float(abs(cons[s].sum() - R) / R), spp3_elegido=float((R - f4[s].sum()) / R)))
     for c in ["Fragancias", "Makeup", "Total"]:
         s = np.ones(len(a), bool) if c == "Total" else cat == c
         rule = FQp[0][:, 2] if c == "Fragancias" else FQp[1][:, 2]

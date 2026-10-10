@@ -19,7 +19,8 @@ fase -> categoría × fase. Perfil estacional: línea -> casa×segmento -> casa 
 Curva de vida (edad decidida con el usuario): para un EAN de a meses, pares que en su día tuvieron a±2 meses;
 multiplicador del mes h = Σ venta de los pares a la edad a+h / Σ su media de las edades a−6..a−1 (sin temporada si se pide).
 Mínimo 5 pares; si no, pool más grande (casa×segmento -> casa -> categoría); si la edad a+h aún no se ha visto en nadie,
-se mantiene el último multiplicador visto. Edad desconocida (26+) -> multiplicador 1 (nivel plano).
+se mantiene el último multiplicador visto. Ciclo de vida completo: si no hay curva (26+ con edad desconocida, o sin pares),
+manda la madurez: trend 12M de los códigos de su misma fase (casa × fase: crecimiento / estable / declive), tope ±30%.
 Salida: work/ideo_bank.npz (forecast EAN × quarter de cada estrategia y real) y work/ideo_strats.parquet"""
 import itertools
 import sys
@@ -133,7 +134,7 @@ class Ctx:
             Y[:, :m] = Y[:, :m] / idx
         peers = np.where(L >= 1)[0]               # lanzamiento visto en los datos
         pools = {"casa×seg": ["seg", "casa", "cat"], "casa": ["casa", "cat"], "categoría": ["cat"]}[pool]
-        out = np.ones((len(Y), 9))
+        out = np.full((len(Y), 9), np.nan)
         cache = {}
         for i in np.where(self.vote)[0]:
             ai = age[i]
@@ -164,6 +165,10 @@ class Ctx:
                             r[h] = r[h - 1]
                     out[i] = np.clip(r, 0.2, 5)
                     break
+        # madurez: sin curva (26+ / edad desconocida o sin pares) -> trend 12M de los códigos en su misma fase (casa × fase, tope ±30%)
+        gf = np.clip(self.trend("fase", 12), -0.3, 0.3)
+        nocurve = ~np.isfinite(out[:, 0])
+        out[nocurve] = (1 + gf[nocurve])[:, None]
         return out
 
 
