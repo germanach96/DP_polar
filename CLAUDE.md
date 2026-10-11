@@ -1,4 +1,4 @@
-# Contexto (vigente a 2026-10-10)
+# Contexto (vigente a 2026-10-11)
 Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falta un número o un resultado anterior.
 
 ## Usuario y objetivo
@@ -52,7 +52,7 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   2. **¿A quién sigo?** (trend) Yo, mi línea, mi brand, mi tamaño/función, mi casa, mi categoría, mi fase o los de mi edad; y cuánto me lo creo (fuerza y tope).
      - La edad va aquí: ciclo de vida = seguir a los códigos que tuvieron mi edad (curva hasta 17 meses) y a mi fase después.
      - Sustento: en nuevos (6–11 meses) el ciclo de vida falla 105% vs 276% de las reglas; el 51% acierta más con el trend completo. La fuente del trend no se puede juzgar con sep-25 (casi todos en el tope de −30%; 64% indiferente). Firmeza alta en edad, baja en fuente.
-     - Candidato: EPOS (sell-out desde jul-24) como otra fuente de trend.
+     - EPOS (sell-out desde jul-24): mejor fuente de trend que los envíos y la edad decide la base (ver «Investigación y EPOS»).
   3. **¿Cómo limpio la base?** Cuánto resto de los DAs planificados de los meses base y cuánto sumo de cortes.
      - Sustento: solo el 42% del DA planificado de fragancias se convirtió en envío extra (80% makeup); al 72% de los EANs le da igual restar o no y al 79% los cortes. Firmeza media (DAs) y baja (cortes).
 - **No son preguntas del EAN:**
@@ -89,7 +89,8 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - 6–11 meses: base = EPOS × relación de su categoría (fragancias 58% vs 215% del año pasado).
   - 12–17 meses: media de EPOS × relación y media 6M de envío (fragancias 33%, makeup 41%).
   - 18+ meses: regla con el trend de EPOS de los veteranos de su casa (31% vs 33%; 47% vs 49%).
-  - Pendiente: meterla como partido (mensual, 9 meses) + semáforo de carga. Dato que más falta: stock del cliente; el usuario intentará conseguir el WOS (semanas de stock).
+  - **Próximo paso:** meterla como partido "Consumidor (EPOS)" en el parlamento (error mensual, 9 meses, con DAs) + semáforo de carga, y elegir por coalición.
+- Abierto con el usuario: intentará conseguir el WOS (semanas de stock por EAN y cliente; stock = WOS × EPOS semanal). Pregunta pendiente: ¿el envío de lanzamiento incluye probadores o material de exposición?
 
 ## Reportes (preferencias)
 - PDF A4 horizontal: HTML + SVG impreso con Chromium (`/opt/pw-browsers/chromium-1194/chrome-linux/chrome`), fuente Inter. Diseño cuidado, con gráficos, nada que parezca hecho con prisa.
