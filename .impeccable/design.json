@@ -1,60 +1,566 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-11T17:20:00Z",
+  "generatedAt": "2026-10-11T19:00:00Z",
   "title": "Design System: Parlamento de la demanda",
   "extensions": {
     "colorMeta": {
-      "chamber": { "role": "primary", "displayName": "Cámara", "canonical": "#15141B" },
-      "ink": { "role": "primary", "displayName": "Tinta de Cámara", "canonical": "#17161D" },
-      "focus-violet": { "role": "secondary", "displayName": "Violeta Foco (= Regla fragancias)", "canonical": "#6250d6" },
-      "rule-teal": { "role": "secondary", "displayName": "Verde Azulado Regla", "canonical": "#0F8A86" },
-      "paper": { "role": "neutral", "displayName": "Papel", "canonical": "#F2F2F5" }
+      "surface": {
+        "role": "neutral",
+        "displayName": "Blanco de chip",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#4D4D4D",
+          "#808080",
+          "#B2B2B2",
+          "#E0E0E0",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Cartulina",
+        "canonical": "#E3E4E0",
+        "tonalRamp": [
+          "#444443",
+          "#727270",
+          "#9FA09D",
+          "#C8C9C5",
+          "#E9E9E6",
+          "#F0F0EE",
+          "#F7F7F6",
+          "#FCFCFC"
+        ]
+      },
+      "paper-2": {
+        "role": "neutral",
+        "displayName": "Cartulina 2",
+        "canonical": "#D7D8D3",
+        "tonalRamp": [
+          "#41413F",
+          "#6C6C6A",
+          "#969794",
+          "#BDBEBA",
+          "#DFE0DC",
+          "#E9EAE7",
+          "#F3F3F2",
+          "#FBFBFB"
+        ]
+      },
+      "ink": {
+        "role": "primary",
+        "displayName": "Tinta",
+        "canonical": "#151515",
+        "tonalRamp": [
+          "#060606",
+          "#0A0A0A",
+          "#0F0F0F",
+          "#121212",
+          "#444444",
+          "#7E7E7E",
+          "#B9B9B9",
+          "#E8E8E8"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Tinta 2",
+        "canonical": "#46474A",
+        "tonalRamp": [
+          "#151516",
+          "#232425",
+          "#313234",
+          "#3E3E41",
+          "#6B6C6E",
+          "#999A9B",
+          "#C8C8C9",
+          "#ECEDED"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Apagado",
+        "canonical": "#5E5F62",
+        "tonalRamp": [
+          "#1C1D1D",
+          "#2F3031",
+          "#424245",
+          "#535456",
+          "#7E7F81",
+          "#A6A7A9",
+          "#CFCFD0",
+          "#EFEFEF"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Línea",
+        "canonical": "#D2D3CE",
+        "tonalRamp": [
+          "#3F3F3E",
+          "#696A67",
+          "#939490",
+          "#B9BAB5",
+          "#DBDCD8",
+          "#E6E7E4",
+          "#F2F2F0",
+          "#FAFBFA"
+        ]
+      },
+      "soft": {
+        "role": "neutral",
+        "displayName": "Suave",
+        "canonical": "#F1F1EE",
+        "tonalRamp": [
+          "#484847",
+          "#787877",
+          "#A9A9A7",
+          "#D4D4D1",
+          "#F4F4F1",
+          "#F7F7F6",
+          "#FBFBFA",
+          "#FEFEFD"
+        ]
+      },
+      "spine": {
+        "role": "neutral",
+        "displayName": "Lomo (barra superior)",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#4D4D4D",
+          "#808080",
+          "#B2B2B2",
+          "#E0E0E0",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF"
+        ]
+      },
+      "spine-2": {
+        "role": "neutral",
+        "displayName": "Lomo 2 (buscador, chips activos)",
+        "canonical": "#F1F1EE",
+        "tonalRamp": [
+          "#484847",
+          "#787877",
+          "#A9A9A7",
+          "#D4D4D1",
+          "#F4F4F1",
+          "#F7F7F6",
+          "#FBFBFA",
+          "#FEFEFD"
+        ]
+      },
+      "label": {
+        "role": "neutral",
+        "displayName": "Tira de etiqueta",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#4D4D4D",
+          "#808080",
+          "#B2B2B2",
+          "#E0E0E0",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF"
+        ]
+      },
+      "empate": {
+        "role": "party",
+        "displayName": "Empate",
+        "canonical": "#B7BCC4",
+        "tonalRamp": [
+          "#37383B",
+          "#5C5E62",
+          "#808489",
+          "#A1A5AC",
+          "#C5C9D0",
+          "#D7DADF",
+          "#E9EBED",
+          "#F8F8F9"
+        ]
+      },
+      "status-good": {
+        "role": "status",
+        "displayName": "Sube",
+        "canonical": "#0ca30c",
+        "tonalRamp": [
+          "#043104",
+          "#065206",
+          "#087208",
+          "#0B8F0B",
+          "#3DB53D",
+          "#79CC79",
+          "#B6E3B6",
+          "#E7F6E7"
+        ]
+      },
+      "status-critical": {
+        "role": "status",
+        "displayName": "Baja",
+        "canonical": "#d03b3b",
+        "tonalRamp": [
+          "#3E1212",
+          "#681E1E",
+          "#922929",
+          "#B73434",
+          "#D96262",
+          "#E59393",
+          "#F1C4C4",
+          "#FAEBEB"
+        ]
+      },
+      "party-regla-fragancias": {
+        "role": "party",
+        "displayName": "Partido 01 · Regla fragancias",
+        "canonical": "#6250d6",
+        "tonalRamp": [
+          "#1D1840",
+          "#31286B",
+          "#453896",
+          "#5646BC",
+          "#8173DE",
+          "#A99FE8",
+          "#D0CAF3",
+          "#EFEEFB"
+        ]
+      },
+      "party-media-12m-estacional": {
+        "role": "party",
+        "displayName": "Partido 02 · Media 12M estacional",
+        "canonical": "#eda100",
+        "tonalRamp": [
+          "#473000",
+          "#765000",
+          "#A67100",
+          "#D18E00",
+          "#F1B433",
+          "#F5CB73",
+          "#FAE3B2",
+          "#FDF6E6"
+        ]
+      },
+      "party-media-6m-estacional": {
+        "role": "party",
+        "displayName": "Partido 03 · Media 6M estacional",
+        "canonical": "#00a3c4",
+        "tonalRamp": [
+          "#00313B",
+          "#005262",
+          "#007289",
+          "#008FAC",
+          "#33B5D0",
+          "#73CCDF",
+          "#B2E3ED",
+          "#E6F6F9"
+        ]
+      },
+      "party-regla-makeup": {
+        "role": "party",
+        "displayName": "Partido 04 · Regla makeup",
+        "canonical": "#eb6834",
+        "tonalRamp": [
+          "#471F10",
+          "#76341A",
+          "#A44924",
+          "#CF5C2E",
+          "#EF865D",
+          "#F4AC8F",
+          "#F9D2C2",
+          "#FDF0EB"
+        ]
+      },
+      "party-media-6m-prudente": {
+        "role": "party",
+        "displayName": "Partido 05 · Media 6M prudente",
+        "canonical": "#2a78d6",
+        "tonalRamp": [
+          "#0D2440",
+          "#153C6B",
+          "#1D5496",
+          "#256ABC",
+          "#5593DE",
+          "#8AB5E8",
+          "#BFD6F3",
+          "#EAF2FB"
+        ]
+      },
+      "party-ciclo-de-vida": {
+        "role": "party",
+        "displayName": "Partido 06 · Ciclo de vida",
+        "canonical": "#e87ba4",
+        "tonalRamp": [
+          "#462531",
+          "#743E52",
+          "#A25673",
+          "#CC6C90",
+          "#ED95B6",
+          "#F2B6CD",
+          "#F8D7E4",
+          "#FDF2F6"
+        ]
+      },
+      "dark-surface": {
+        "role": "neutral",
+        "displayName": "Blanco de chip (oscuro)",
+        "canonical": "#1A1B1D"
+      },
+      "dark-paper": {
+        "role": "neutral",
+        "displayName": "Cartulina (oscuro)",
+        "canonical": "#232427"
+      },
+      "dark-paper-2": {
+        "role": "neutral",
+        "displayName": "Cartulina 2 (oscuro)",
+        "canonical": "#2E2F33"
+      },
+      "dark-ink": {
+        "role": "neutral",
+        "displayName": "Tinta (oscuro)",
+        "canonical": "#EDEDEA"
+      },
+      "dark-ink-2": {
+        "role": "neutral",
+        "displayName": "Tinta 2 (oscuro)",
+        "canonical": "#C3C4C0"
+      },
+      "dark-muted": {
+        "role": "neutral",
+        "displayName": "Apagado (oscuro)",
+        "canonical": "#9B9C99"
+      },
+      "dark-line": {
+        "role": "neutral",
+        "displayName": "Línea (oscuro)",
+        "canonical": "#36373B"
+      },
+      "dark-soft": {
+        "role": "neutral",
+        "displayName": "Suave (oscuro)",
+        "canonical": "#242528"
+      },
+      "dark-spine": {
+        "role": "neutral",
+        "displayName": "Lomo (barra superior) (oscuro)",
+        "canonical": "#1A1B1D"
+      },
+      "dark-spine-2": {
+        "role": "neutral",
+        "displayName": "Lomo 2 (buscador, chips activos) (oscuro)",
+        "canonical": "#26272A"
+      },
+      "dark-label": {
+        "role": "neutral",
+        "displayName": "Tira de etiqueta (oscuro)",
+        "canonical": "#26272B"
+      },
+      "dark-empate": {
+        "role": "neutral",
+        "displayName": "Empate (oscuro)",
+        "canonical": "#6E7380"
+      }
     },
-    "darkTheme": {
-      "bg": "#0F0E13", "surface": "#18171E", "ink": "#ECEBF2", "ink-2": "#B9B7C8", "muted": "#8E8CA1", "line": "#2B2A34", "soft": "#22212A",
-      "chamber": "#09080C", "chamber-2": "#16151C", "rule": "#2BB3AE", "empate": "#6E7380", "focus": "#9d90ff"
-    },
+    "darkLightnessBandException": "En oscuro, 3 colores de partido quedan fuera de la banda de luminosidad recomendada (WARN de validate_palette.js). Excepción aceptada: colores fijos de marca (PRODUCT.md), siempre con número y nombre.",
+    "fonts": [
+      {
+        "family": "Schibsted Grotesk",
+        "source": "src/fonts/schibsted-grotesk-latin-wght-normal.woff2 (base64 en el HTML)",
+        "license": "OFL (src/fonts/OFL-schibsted-grotesk.txt)",
+        "weights": "400 900",
+        "fallback": "Segoe UI, system-ui, sans-serif"
+      }
+    ],
     "shadows": [
-      { "name": "float", "value": "0 12px 32px rgba(0,0,0,.22)", "purpose": "Solo desplegables y tooltips que flotan sobre contenido." }
+      {
+        "name": "dropdown",
+        "value": "0 14px 32px rgba(20,20,18,.20)",
+        "purpose": "Desplegable de resultados del buscador."
+      },
+      {
+        "name": "tooltip",
+        "value": "0 10px 28px rgba(20,20,18,.24)",
+        "purpose": "Tooltips del gráfico y de elementos con data-tip."
+      }
     ],
     "motion": [
-      { "name": "ease-out", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Entradas, pulsación y respuesta de controles (150–250ms)." },
-      { "name": "ease-io", "value": "cubic-bezier(0.77, 0, 0.175, 1)", "purpose": "Movimiento en pantalla: puntos que viajan entre brújulas (0.95s)." },
-      { "name": "press", "value": "transform: scale(.97)", "purpose": "Respuesta táctil al pulsar cualquier botón o chip." }
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Pulsación, barrido del hemiciclo, desplegable y barra de volumen."
+      },
+      {
+        "name": "ease-io",
+        "value": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "purpose": "Puntos y marcadores que viajan en la brújula."
+      },
+      {
+        "name": "press",
+        "value": "transform: scale(.97) 160ms ease-out",
+        "purpose": "Respuesta táctil de todo control pulsable; color y borde transicionan 160ms."
+      },
+      {
+        "name": "hemicycle-sweep",
+        "value": "clip-path inset(0 100% 0 0) → inset(0) + opacity .4 → 1, 260ms ease-out",
+        "purpose": "Un solo barrido del grupo de chips al recomponerse el hemiciclo."
+      },
+      {
+        "name": "compass-travel",
+        "value": "transform 700ms ease-io",
+        "purpose": "Puntos de EAN, marcadores y centro al cambiar de pregunta."
+      },
+      {
+        "name": "dropdown-in",
+        "value": "opacity + translateY(-4px) scale(.98), 150ms ease-out",
+        "purpose": "Entrada del desplegable (@starting-style)."
+      },
+      {
+        "name": "tooltip-in",
+        "value": "opacity 120ms ease",
+        "purpose": "Aparición de tooltips."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "fade 150ms",
+        "purpose": "Con prefers-reduced-motion: barrido → fundido, sin escalas ni desplazamientos."
+      }
     ],
     "breakpoints": [
-      { "name": "stack", "value": "900px" },
-      { "name": "phone", "value": "520px" }
+      {
+        "name": "compact",
+        "value": "1180px"
+      },
+      {
+        "name": "stack",
+        "value": "960px"
+      }
     ]
   },
   "components": [
     {
+      "name": "Pastilla de partido",
+      "kind": "custom",
+      "refersTo": "party-swatch",
+      "description": "Componente firma: bloque de color con los escaños, tira de etiqueta con código, nombre y % de volumen. Pulsar filtra por el partido.",
+      "html": "<div class=\"ds-row\"><button class=\"ds-sw\" aria-pressed=\"false\"><span class=\"ds-blk\" style=\"background:#6250d6;color:#fff\"><b>195</b></span><span class=\"ds-lab\"><small>Partido 01</small><span>Regla fragancias</span><em>23% vol.</em></span></button><button class=\"ds-sw\" aria-pressed=\"true\"><span class=\"ds-blk\" style=\"background:#eda100;color:#151515\"><b>120</b></span><span class=\"ds-lab\"><small>Partido 02</small><span>Media 12M estacional</span><em>14% vol.</em></span></button><button class=\"ds-sw\" aria-pressed=\"false\"><span class=\"ds-blk\" style=\"background:#B7BCC4;color:#151515\"><b>7</b></span><span class=\"ds-lab\"><small>Sin partido</small><span>Empate</span><em>0% vol.</em></span></button></div>",
+      "css": ".ds-row{display:grid;grid-template-columns:repeat(3,120px);gap:6px}.ds-sw{display:grid;grid-template-rows:auto 1fr;padding:0;border:1px solid #D2D3CE;border-radius:2px;background:#fff;cursor:pointer;text-align:left;overflow:hidden;font-family:'Schibsted Grotesk', 'Segoe UI', system-ui, sans-serif;transition:transform 160ms cubic-bezier(0.23,1,0.32,1),border-color 160ms ease}.ds-sw:hover{border-color:#46474A}.ds-sw:active{transform:scale(.97)}.ds-sw:focus-visible{outline:2px solid #151515;outline-offset:2px}.ds-blk{display:flex;align-items:flex-end;padding:7px 8px 6px;min-height:44px}.ds-blk b{font:800 24px/1 'Schibsted Grotesk', 'Segoe UI', system-ui, sans-serif;letter-spacing:-.02em}.ds-lab{padding:6px 8px 7px;font:800 12.5px/1.2 'Schibsted Grotesk', 'Segoe UI', system-ui, sans-serif;color:#151515;display:flex;flex-direction:column;gap:2px;transition:background-color 160ms ease,color 160ms ease}.ds-lab small{font:500 12px/1 'Schibsted Grotesk', 'Segoe UI', system-ui, sans-serif;letter-spacing:.06em;color:#5E5F62;padding-bottom:3px;border-bottom:1px solid #D2D3CE}.ds-lab em{font-style:normal;font-weight:450;color:#5E5F62}.ds-sw[aria-pressed=true]{border-color:#151515}.ds-sw[aria-pressed=true] .ds-lab{background:#151515;color:#fff}.ds-sw[aria-pressed=true] .ds-lab small,.ds-sw[aria-pressed=true] .ds-lab em{color:#fff;border-bottom-color:rgba(255,255,255,.3)}"
+    },
+    {
       "name": "Botón primario",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Acción principal (p. ej. «Repetir escrutinio»).",
-      "html": "<button class=\"ds-btn\">Repetir escrutinio</button>",
-      "css": ".ds-btn { font: 600 .88rem/1 'Public Sans', system-ui, sans-serif; padding: .65rem 1rem; border-radius: 6px; border: 0; background: #17161D; color: #F2F2F5; cursor: pointer; transition: transform .16s cubic-bezier(0.23,1,0.32,1), background-color .16s ease; } .ds-btn:hover { background: #2a2833; } .ds-btn:active { transform: scale(.97); }"
+      "description": "Acción principal de la barra superior («Todo el parlamento»); desactivado cuando no hay filtros.",
+      "html": "<button class=\"ds-btn\">Todo el parlamento</button> <button class=\"ds-btn\" disabled>Todo el parlamento</button>",
+      "css": ".ds-btn{font:700 13px/1.45 'Schibsted Grotesk', 'Segoe UI', system-ui, sans-serif;padding:8px 12px;border:0;border-radius:2px;background:#151515;color:#fff;cursor:pointer;transition:transform 160ms cubic-bezier(0.23,1,0.32,1),background-color 160ms ease}.ds-btn:active{transform:scale(.97)}.ds-btn:focus-visible{outline:2px solid #151515;outline-offset:2px}.ds-btn[disabled]{background:transparent;color:#5E5F62;box-shadow:inset 0 0 0 1px #D2D3CE;cursor:default}.ds-btn[disabled]:active{transform:none}"
     },
     {
-      "name": "Chip de partido",
+      "name": "Buscador",
+      "kind": "input",
+      "refersTo": "search-input",
+      "description": "Búsqueda de EAN, línea, casa o tamaño en la barra superior.",
+      "html": "<label class=\"ds-search\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/></svg><input placeholder=\"Buscar EAN, línea, casa, tamaño…\"></label>",
+      "css": ".ds-search{position:relative;display:block;width:320px}.ds-search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#5E5F62}.ds-search input{width:100%;box-sizing:border-box;font:400 13px/1.45 'Schibsted Grotesk', 'Segoe UI', system-ui, sans-serif;background:#F1F1EE;border:1px solid transparent;border-radius:2px;padding:8px 12px 8px 32px;color:#151515;transition:border-color 160ms ease}.ds-search input::placeholder{color:#5E5F62}.ds-search input:focus{border-color:#5E5F62;outline:none}"
+    },
+    {
+      "name": "Carril de filtros",
+      "kind": "nav",
+      "refersTo": "filter-rail",
+      "description": "Faceta plegable sobre cartulina con casillas cuadradas, color de partido y recuento.",
+      "html": "<div class=\"ds-rail\"><div class=\"ds-fh\">Partido elegido <em>1</em></div><button class=\"ds-opt\" aria-pressed=\"true\"><i class=\"ds-bx\"></i><span><i class=\"ds-dot\" style=\"background:#6250d6\"></i>Regla fragancias</span><b>195</b></button><button class=\"ds-opt\" aria-pressed=\"false\"><i class=\"ds-bx\"></i><span><i class=\"ds-dot\" style=\"background:#eda100\"></i>Media 12M estacional</span><b>120</b></button></div>",
+      "css": ".ds-rail{background:#E3E4E0;padding:10px 8px;width:232px;font:400 13px/1.45 'Schibsted Grotesk', 'Segoe UI', system-ui, sans-serif;color:#151515}.ds-fh{font:700 13px/1.2 'Schibsted Grotesk', 'Segoe UI', system-ui, sans-serif;margin-bottom:6px}.ds-fh em{font-style:normal;font-weight:800;background:#151515;color:#E3E4E0;border-radius:2px;padding:1px 5px;margin-left:6px;font-size:12px}.ds-opt{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:8px;align-items:center;width:100%;background:none;border:0;padding:4px;border-radius:2px;cursor:pointer;text-align:left;font:inherit;color:inherit;transition:background-color 160ms ease,transform 160ms cubic-bezier(0.23,1,0.32,1)}.ds-opt:hover{background:#D7D8D3}.ds-opt:active{transform:scale(.97)}.ds-opt:focus-visible{outline:2px solid #151515;outline-offset:2px}.ds-opt span{display:flex;align-items:center;gap:7px}.ds-opt b{font-weight:400;color:#5E5F62;font-size:12px;font-variant-numeric:tabular-nums}.ds-bx{width:13px;height:13px;box-sizing:border-box;border:1.5px solid #46474A;border-radius:2px}.ds-opt[aria-pressed=true] .ds-bx{background:#151515;border-color:#151515}.ds-dot{width:10px;height:10px;border-radius:1px;display:inline-block}"
+    },
+    {
+      "name": "Chip de serie y marcador",
       "kind": "chip",
-      "refersTo": "chip-filter",
-      "description": "Filtro por partido con su número y color.",
-      "html": "<button class=\"ds-chip\" aria-pressed=\"false\"><i style=\"background:#6250d6\">1</i>Regla fragancias <b>247</b></button>",
-      "css": ".ds-chip { display: inline-flex; align-items: center; gap: .45rem; padding: .38rem .7rem .38rem .38rem; border-radius: 999px; border: 1px solid #DEDDE6; background: #fff; color: #17161D; font: 500 .84rem/1 'Public Sans', system-ui, sans-serif; cursor: pointer; transition: border-color .2s ease, transform .16s cubic-bezier(0.23,1,0.32,1); } .ds-chip:hover { border-color: #706E82; } .ds-chip:active { transform: scale(.97); } .ds-chip[aria-pressed=true] { border-color: #17161D; } .ds-chip i { display: inline-grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 50%; color: #fff; font: 700 .74rem/1 sans-serif; font-style: normal; } .ds-chip b { color: #706E82; font-weight: 600; }"
+      "refersTo": "line-chip",
+      "description": "Chip para mostrar u ocultar una serie del gráfico, con el marcador cuadrado numerado del partido.",
+      "html": "<button class=\"ds-lchip\" aria-pressed=\"true\"><i class=\"ds-nb\" style=\"background:#6250d6;color:#fff\">1</i>Regla fragancias</button> <button class=\"ds-lchip\" aria-pressed=\"false\"><i class=\"ds-nb\" style=\"background:#e87ba4;color:#151515\">6</i>Ciclo de vida</button>",
+      "css": ".ds-lchip{display:inline-flex;align-items:center;gap:6px;border:1px solid #D2D3CE;background:#fff;border-radius:2px;padding:4px 9px 4px 6px;font:400 12px/1.45 'Schibsted Grotesk', 'Segoe UI', system-ui, sans-serif;color:#151515;cursor:pointer;transition:border-color 160ms ease,color 160ms ease,transform 160ms cubic-bezier(0.23,1,0.32,1)}.ds-lchip:hover{border-color:#46474A}.ds-lchip:active{transform:scale(.97)}.ds-lchip:focus-visible{outline:2px solid #151515;outline-offset:2px}.ds-lchip[aria-pressed=false]{color:#5E5F62}.ds-lchip[aria-pressed=false] .ds-nb{opacity:.35}.ds-nb{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:2px;font:800 12px/1 'Schibsted Grotesk', 'Segoe UI', system-ui, sans-serif;font-style:normal}"
+    },
+    {
+      "name": "Pestañas y segmentado",
+      "kind": "nav",
+      "refersTo": "segmented-selected",
+      "description": "Pestañas con subrayado de tinta y control segmentado con borde de tinta.",
+      "html": "<div class=\"ds-tabs\"><button class=\"ds-tab\" aria-selected=\"true\">Histórico y proyección</button><button class=\"ds-tab\" aria-selected=\"false\">Partidos</button></div><div class=\"ds-seg\"><button aria-selected=\"true\">Base</button><button aria-selected=\"false\">Trend</button><button aria-selected=\"false\">DAs</button></div>",
+      "css": ".ds-tabs{display:flex;gap:18px;border-bottom:1px solid #D2D3CE;margin-bottom:12px}.ds-tab{background:none;border:0;padding:12px 0 10px;font:700 13px/1.45 'Schibsted Grotesk', 'Segoe UI', system-ui, sans-serif;color:#5E5F62;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color 160ms ease,border-color 160ms ease}.ds-tab:hover{color:#151515}.ds-tab[aria-selected=true]{color:#151515;border-bottom-color:#151515}.ds-tab:focus-visible{outline:2px solid #151515;outline-offset:2px}.ds-seg{display:flex;width:300px;border:1px solid #151515;border-radius:2px;overflow:hidden}.ds-seg button{flex:1;border:0;background:#fff;padding:7px 4px;font:700 12px/1.45 'Schibsted Grotesk', 'Segoe UI', system-ui, sans-serif;color:#46474A;cursor:pointer;transition:background-color 160ms ease}.ds-seg button+button{border-left:1px solid #151515}.ds-seg button:not([aria-selected=true]):hover{background:#F1F1EE}.ds-seg button[aria-selected=true]{background:#151515;color:#fff}"
+    },
+    {
+      "name": "Tooltip",
+      "kind": "custom",
+      "refersTo": "tooltip",
+      "description": "Uno de los dos únicos elementos con sombra (con el desplegable del buscador).",
+      "html": "<div class=\"ds-tip\"><b>Regla fragancias</b><span>23% del volumen 12M</span></div>",
+      "css": ".ds-tip{display:inline-block;background:#151515;color:#fff;font:400 12px/1.45 'Schibsted Grotesk', 'Segoe UI', system-ui, sans-serif;border-radius:2px;padding:6px 9px;box-shadow:0 10px 28px rgba(20,20,18,.24)}.ds-tip b{display:block;font-weight:700}.ds-tip span{opacity:.72}"
     }
   ],
   "narrative": {
-    "northStar": "El Parlamento",
-    "overview": "Cada página es una sesión de una cámara moderna: hemiciclo en cámara oscura, análisis en papel claro, titulares con el hallazgo y la cifra. Serio porque defiende una regla con datos; vivo y táctil porque se explora con la mano.",
-    "keyCharacteristics": ["Cámara oscura + papel claro", "Un significado por color", "Plano, sin sombras en reposo", "Controles con respuesta táctil", "Funciona sin conexión"],
-    "rules": [
-      { "name": "La Regla de Un Significado", "body": "Un color = una cosa; el color sigue a la entidad, no a su posición.", "section": "colors" },
-      { "name": "La Regla Plana", "body": "Sin sombras en reposo; solo lo que flota lleva sombra.", "section": "elevation" },
-      { "name": "La Regla Sin Conexión", "body": "Toda fuente web lleva alternativa del sistema.", "section": "typography" }
+    "northStar": "Carta de tonos",
+    "overview": "**Creative North Star: \"Carta de tonos\"**\n\nCada página es una carta de tonos de belleza, un abanico Pantone abierto sobre la mesa. Cada partido es una pastilla de color con su código («Partido 01») y su nombre impresos en la tira blanca de abajo; cada EAN es un chip cuadrado de su color en el hemiciclo. El color manda porque es el dato: la página no pone color en nada que no sea un partido, un estado o una selección.\n\nEl material es papel de muestrario: cartulina gris neutra para el carril de filtros, blanco de chip para la zona de trabajo y tinta casi negra para texto, reglas y selección. No hay tarjetas redondeadas ni cajas oscuras: las zonas se separan con reglas de 1px y cambios de tono, y las secciones se rematan con una regla de tinta. En oscuro, el abanico se cierra y se ve su tapa: grafito, no negro.\n\nLa densidad es de muestrario profesional: mucha información en una pantalla, en tipo pequeño y firme (13px de cuerpo, nunca menos de 12px), con las cifras grandes reservadas para los escaños. El movimiento responde al tacto y explica cambios: el hemiciclo se recompone con un barrido corto y los puntos de la brújula viajan a su nueva posición.",
+    "keyCharacteristics": [
+      "Pastilla de partido = bloque de color con los escaños arriba, tira de etiqueta abajo con código y nombre.",
+      "Esquina viva en todo (2px; 1px en marcas diminutas). Nada redondeado, nada en pastilla de 999px.",
+      "Plano: reglas de 1px y cambio de tono; la sombra solo en lo que flota.",
+      "Una grotesca (Schibsted Grotesk) en todos los papeles, de 12px a 50px.",
+      "Funciona descargado y sin conexión, en claro y en oscuro."
     ],
-    "dos": ["Titular con hallazgo y cifra", "Respuesta táctil en cada control", "prefers-reduced-motion", "Validar colores con dataviz"],
-    "donts": ["Sombras en reposo", "Reutilizar colores de partido", "Depender de internet", "Consenso como referencia", "Animar por decorar"]
+    "rules": [
+      {
+        "name": "La Regla de Un Significado",
+        "body": "Un color = una cosa en todo el proyecto. El color de un partido sigue a la entidad, no a su posición; filtrar nunca repinta a los que quedan. Morado = fragancias, naranja = makeup y verde azulado = regla + DAs siguen reservados (PRODUCT.md).",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla del Texto Legible",
+        "body": "Sobre un bloque de partido, el texto va en tinta (`ink`) si la luminancia del color supera 0,3 y en blanco si no. Se calcula, no se elige a ojo.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla Sin Acento",
+        "body": "El sistema no tiene color de marca propio: la selección y el foco son tinta. Si una pieza pide un color que no es partido ni estado, va en neutros.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla de los 12px",
+        "body": "Ningún texto baja de 12px, tampoco ejes, notas ni marcas.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla de la Cifra Tabular",
+        "body": "Toda cifra en tabla, recuento o KPI usa `font-variant-numeric: tabular-nums`.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla Sin Conexión",
+        "body": "La fuente va dentro del archivo y siempre con alternativa del sistema: sin internet la página se lee igual.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla Plana",
+        "body": "Solo el desplegable y los tooltips llevan sombra, porque tapan otro contenido. Ninguna pastilla, chip, panel ni botón la lleva.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do poner el número y el nombre del partido junto a cada color, como en la tira de la pastilla.",
+      "Do usar esquina de 2px (1px en marcas de menos de 12px) en todo lo que tenga forma.",
+      "Do separar zonas con reglas de 1px y cambio de tono, y rematar cabeceras y bloques de cifras con una regla de tinta.",
+      "Do dar respuesta a cada control: `scale(.97)` al pulsar, 160ms ease-out; hover solo en `(hover: hover) and (pointer: fine)`.",
+      "Do respetar `prefers-reduced-motion`: el barrido pasa a un fundido de 150ms y se quitan desplazamientos y escalas.",
+      "Do validar con `dataviz` (`validate_palette.js`) cualquier color nuevo, en claro y en oscuro."
+    ],
+    "donts": [
+      "Don't usar radios grandes ni pastillas de 999px: es la estética de dashboard que este sistema sustituye.",
+      "Don't poner sombra en pastillas, chips, paneles o botones; solo desplegable y tooltip.",
+      "Don't usar discos ni círculos numerados para los partidos: el marcador es cuadrado.",
+      "Don't reutilizar un color de partido, de categoría o de estado para otra cosa.",
+      "Don't bajar de 12px en ningún texto.",
+      "Don't depender de recursos de internet: fuente y datos van dentro del archivo.",
+      "Don't usar el consenso de o9 como referencia fuera de reportes históricos."
+    ]
   }
 }

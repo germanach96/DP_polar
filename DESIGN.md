@@ -1,233 +1,297 @@
 ---
 name: Parlamento de la demanda
-description: Reportes y páginas del parlamento de forecast por EAN: serios como una institución, vivos al tocarlos.
+description: Páginas del parlamento de forecast por EAN como una carta de tonos de belleza: cada partido una pastilla con su código, cada EAN un chip.
 colors:
-  ink: "#17161D"
-  ink-2: "#4B4958"
-  muted: "#706E82"
-  paper: "#F2F2F5"
   surface: "#FFFFFF"
-  line: "#DEDDE6"
-  soft: "#EAE9F0"
-  chamber: "#15141B"
-  chamber-2: "#1F1E27"
-  chamber-ink: "#F1F0F6"
-  chamber-muted: "#A3A1B4"
-  chamber-line: "#302E3B"
-  focus-violet: "#6250d6"
-  rule-teal: "#0F8A86"
-  empate-grey: "#B7BCC4"
+  paper: "#E3E4E0"
+  paper-2: "#D7D8D3"
+  ink: "#151515"
+  ink-2: "#46474A"
+  muted: "#5E5F62"
+  line: "#D2D3CE"
+  soft: "#F1F1EE"
+  spine: "#FFFFFF"
+  spine-2: "#F1F1EE"
+  label: "#FFFFFF"
+  empate: "#B7BCC4"
+  status-good: "#0ca30c"
+  status-critical: "#d03b3b"
   party-regla-fragancias: "#6250d6"
   party-media-12m-estacional: "#eda100"
   party-media-6m-estacional: "#00a3c4"
   party-regla-makeup: "#eb6834"
   party-media-6m-prudente: "#2a78d6"
   party-ciclo-de-vida: "#e87ba4"
-  status-good: "#0ca30c"
-  status-critical: "#d03b3b"
-  dark-paper: "#0F0E13"
-  dark-surface: "#18171E"
-  dark-ink: "#ECEBF2"
-  dark-ink-2: "#B9B7C8"
-  dark-muted: "#8E8CA1"
-  dark-line: "#2B2A34"
-  dark-soft: "#22212A"
-  dark-chamber: "#09080C"
-  dark-chamber-2: "#16151C"
-  dark-chamber-line: "#2A2833"
-  dark-focus: "#9d90ff"
+  rule-teal: "#0F8A86"   # regla + DAs (PRODUCT.md); lo usan otras páginas, no el explorador
+  dark-surface: "#1A1B1D"
+  dark-paper: "#232427"
+  dark-paper-2: "#2E2F33"
+  dark-ink: "#EDEDEA"
+  dark-ink-2: "#C3C4C0"
+  dark-muted: "#9B9C99"
+  dark-line: "#36373B"
+  dark-soft: "#242528"
+  dark-spine: "#1A1B1D"
+  dark-spine-2: "#26272A"
+  dark-label: "#26272B"
   dark-empate: "#6E7380"
 typography:
-  display:
-    fontFamily: "Archivo, Helvetica Neue, Arial, sans-serif"
-    fontSize: "clamp(2.6rem, 6vw, 4.9rem)"
-    fontWeight: 800
-    lineHeight: 0.95
+  numeral:
+    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
+    fontSize: "50px"
+    fontWeight: 850
+    lineHeight: 1
     letterSpacing: "-0.03em"
-  headline:
-    fontFamily: "Archivo, Helvetica Neue, Arial, sans-serif"
-    fontSize: "clamp(1.9rem, 3.6vw, 2.9rem)"
-    fontWeight: 700
-    lineHeight: 1.04
+  swatch-count:
+    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
+    fontSize: "24px"
+    fontWeight: 800
+    lineHeight: 1
     letterSpacing: "-0.02em"
-  title:
-    fontFamily: "Archivo, Helvetica Neue, Arial, sans-serif"
-    fontSize: "1.15rem"
-    fontWeight: 650
+  kpi:
+    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
+    fontSize: "19px"
+    fontWeight: 800
+    lineHeight: 1.1
+    letterSpacing: "-0.01em"
+  title-lg:
+    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
+    fontSize: "17px"
+    fontWeight: 800
     lineHeight: 1.2
+    letterSpacing: "-0.01em"
+  title:
+    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
+    fontSize: "15px"
+    fontWeight: 800
+    lineHeight: 1.2
+    letterSpacing: "-0.01em"
   body:
-    fontFamily: "Public Sans, Segoe UI, system-ui, sans-serif"
-    fontSize: "1rem"
-    fontWeight: 400
-    lineHeight: 1.6
-  data:
-    fontFamily: "Public Sans, Segoe UI, system-ui, sans-serif"
+    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
     fontSize: "13px"
     fontWeight: 400
     lineHeight: 1.45
   label:
-    fontFamily: "Public Sans, Segoe UI, system-ui, sans-serif"
-    fontSize: "0.78rem"
-    fontWeight: 600
-    letterSpacing: "0.1em"
+    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
+    fontSize: "12px"
+    fontWeight: 700
+    lineHeight: 1.2
+  swatch-code:
+    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
+    fontSize: "12px"
+    fontWeight: 500
+    lineHeight: 1
+    letterSpacing: "0.06em"
+  code:
+    fontFamily: "ui-monospace, SF Mono, Menlo, Consolas, monospace"
+    fontSize: "12px"
+    fontWeight: 400
 rounded:
-  sm: "6px"
-  md: "10px"
-  lg: "14px"
-  pill: "999px"
+  mark: "1px"
+  chip: "2px"
 spacing:
-  s1: "0.75rem"
-  s2: "1rem"
-  s3: "1.5rem"
-  s4: "2.25rem"
-  s5: "3.5rem"
-  s6: "5.5rem"
+  hair: "2px"
+  xs: "4px"
+  sm: "6px"
+  md: "8px"
+  lg: "12px"
+  xl: "16px"
 components:
-  button-primary:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.paper}"
-    rounded: "{rounded.sm}"
-    padding: "0.65rem 1rem"
-  chip-filter:
-    backgroundColor: "{colors.surface}"
+  party-swatch:
+    backgroundColor: "{colors.label}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.pill}"
-    padding: "0.38rem 0.7rem"
-  chip-filter-selected:
+    rounded: "{rounded.chip}"
+    padding: "6px 8px 7px"
+  party-swatch-selected:
     backgroundColor: "{colors.ink}"
     textColor: "{colors.surface}"
-    rounded: "{rounded.pill}"
-  panel:
+    rounded: "{rounded.chip}"
+  button-primary:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.surface}"
+    rounded: "{rounded.chip}"
+    padding: "8px 12px"
+  filter-rail:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.ink}"
+    width: "248px"
+  filter-chip:
+    backgroundColor: "{colors.spine-2}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.chip}"
+    padding: "5px 6px 5px 9px"
+  line-chip:
     backgroundColor: "{colors.surface}"
-    rounded: "{rounded.lg}"
-    padding: "1.5rem"
-  chamber-panel:
-    backgroundColor: "{colors.chamber}"
-    textColor: "{colors.chamber-ink}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.chip}"
+    padding: "4px 9px 4px 6px"
+  search-input:
+    backgroundColor: "{colors.spine-2}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.chip}"
+    padding: "8px 12px 8px 32px"
+  segmented-selected:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.surface}"
+    rounded: "{rounded.chip}"
+    padding: "7px 4px"
+  party-marker:
+    backgroundColor: "{colors.party-regla-fragancias}"
+    textColor: "{colors.surface}"
+    rounded: "{rounded.chip}"
+    size: "18px"
+  tooltip:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.surface}"
+    rounded: "{rounded.chip}"
+    padding: "8px 10px"
 ---
 
 # Design System: Parlamento de la demanda
 
 ## Overview
 
-**Creative North Star: "El Parlamento"**
+**Creative North Star: "Carta de tonos"**
 
-Cada página es una sesión de una cámara moderna. El hemiciclo es el centro de gravedad: un punto por EAN, coloreado por el partido que elige, en una cámara oscura que da peso institucional. Alrededor, papel claro y tipografía firme: titulares con el hallazgo y la cifra, nunca un adjetivo vacío. El tono es serio porque la página defiende una regla con datos; la interacción es viva porque el usuario explora esos datos con la mano: filtrar, pulsar un escaño, cambiar de brújula.
+Cada página es una carta de tonos de belleza, un abanico Pantone abierto sobre la mesa. Cada partido es una pastilla de color con su código («Partido 01») y su nombre impresos en la tira blanca de abajo; cada EAN es un chip cuadrado de su color en el hemiciclo. El color manda porque es el dato: la página no pone color en nada que no sea un partido, un estado o una selección.
 
-La densidad es de informe, no de folleto: mucha información legible, bien jerarquizada, sin héroes gigantes ni decoración. El movimiento existe para explicar (los escaños que se llenan, el escrutinio urna a urna, los EANs que viajan entre brújulas) y para responder al tacto (pulsar, filtrar, seleccionar), con respuesta visible e inmediata.
+El material es papel de muestrario: cartulina gris neutra para el carril de filtros, blanco de chip para la zona de trabajo y tinta casi negra para texto, reglas y selección. No hay tarjetas redondeadas ni cajas oscuras: las zonas se separan con reglas de 1px y cambios de tono, y las secciones se rematan con una regla de tinta. En oscuro, el abanico se cierra y se ve su tapa: grafito, no negro.
+
+La densidad es de muestrario profesional: mucha información en una pantalla, en tipo pequeño y firme (13px de cuerpo, nunca menos de 12px), con las cifras grandes reservadas para los escaños. El movimiento responde al tacto y explica cambios: el hemiciclo se recompone con un barrido corto y los puntos de la brújula viajan a su nueva posición.
 
 **Key Characteristics:**
-- Cámara oscura (`chamber`) para el hemiciclo y los momentos clave; papel claro (`paper`) para el análisis.
-- Un significado por color: los 6 colores de partido, morado = fragancias, naranja = makeup, verde azulado = regla.
-- Plano: profundidad por capas de tono y líneas finas, nunca por sombras.
-- Interacción táctil: cada control responde al pasar el ratón y al pulsar.
+- Pastilla de partido = bloque de color con los escaños arriba, tira de etiqueta abajo con código y nombre.
+- Esquina viva en todo (2px; 1px en marcas diminutas). Nada redondeado, nada en pastilla de 999px.
+- Plano: reglas de 1px y cambio de tono; la sombra solo en lo que flota.
+- Una grotesca (Schibsted Grotesk) en todos los papeles, de 12px a 50px.
 - Funciona descargado y sin conexión, en claro y en oscuro.
 
 ## Colors
 
-Neutros fríos con un leve sesgo violeta, una cámara casi negra y una paleta categórica de 6 partidos validada para daltonismo.
+Neutros cálidos de cartulina y tinta casi negra, sin acento propio: los únicos colores saturados son los 6 partidos, Empate y los dos estados.
 
 ### Primary
-- **Tinta de Cámara** (#17161D): texto principal, botón primario, regla gruesa de sección.
-- **Cámara** (#15141B): fondo del panel del hemiciclo, veredictos y barra de navegación.
-
-### Secondary
-- **Violeta Foco** (#6250d6): foco de teclado, partido elegido en gráficos, selección activa. También es el color de Regla fragancias (morado = fragancias).
-- **Verde Azulado Regla** (#0F8A86): la regla de referencia en comparaciones (regla + DAs).
+- **Tinta** (`ink`): texto, reglas de remate (1px bajo cabeceras de tabla y sobre las cifras; 2px bajo la barra superior), foco de teclado, selección (pastilla, casilla, segmento, pestaña) y fondo de tooltip. Es el único «acento» del sistema.
 
 ### Party palette (categórica, orden fijo de bloques)
-- **Regla fragancias** (#6250d6) · **Media 12M estacional** (#eda100) · **Media 6M estacional** (#00a3c4) · **Regla makeup** (#eb6834) · **Media 6M prudente** (#2a78d6) · **Ciclo de vida** (#e87ba4) · **Empate** (#B7BCC4).
+- **Regla fragancias** (`party-regla-fragancias`) · **Media 12M estacional** (`party-media-12m-estacional`) · **Media 6M estacional** (`party-media-6m-estacional`) · **Regla makeup** (`party-regla-makeup`) · **Media 6M prudente** (`party-media-6m-prudente`) · **Ciclo de vida** (`party-ciclo-de-vida`) · **Empate** (`empate`, gris; `dark-empate` en oscuro).
+- Compromiso de marca de PRODUCT.md: no cambian entre claro y oscuro ni entre páginas. En oscuro, tres de ellos quedan fuera de la banda de luminosidad recomendada (aviso WARN de `validate_palette.js`); es una excepción aceptada porque son colores fijos de marca y siempre van con número y nombre.
 
 ### Neutral
-- **Papel** (#F2F2F5): fondo de página.
-- **Superficie** (#FFFFFF): paneles y tablas.
-- **Tinta 2** (#4B4958) y **Apagado** (#706E82): texto secundario y etiquetas.
-- **Línea** (#DEDDE6) y **Suave** (#EAE9F0): divisores, fondos de barra, filas al pasar el ratón.
-- **Cámara 2 / Tinta de cámara / Línea de cámara** (#1F1E27 / #F1F0F6 / #302E3B): superficies y texto dentro de la cámara.
+- **Blanco de chip** (`surface`): zona de trabajo, tablas, tira de etiqueta de las pastillas (`label`) y barra superior (`spine`).
+- **Cartulina** (`paper`) y **Cartulina 2** (`paper-2`): fondo del carril de filtros y sus divisores / hover de opción.
+- **Tinta 2** (`ink-2`) y **Apagado** (`muted`): texto secundario, recuentos, ejes, códigos de pastilla.
+- **Línea** (`line`) y **Suave** (`soft`): reglas de 1px entre zonas y filas, zona de proyección del gráfico, hover de fila, fondo del buscador (`spine-2`).
 
 ### Dark theme
-Mismos roles, tonos propios (no inversión): papel #0F0E13, superficie #18171E, tinta #ECEBF2 / #B9B7C8, apagado #8E8CA1, línea #2B2A34, suave #22212A, cámara #09080C / #16151C con línea #2A2833, foco #9d90ff, Empate #6E7380.
+Mismos roles con tonos de grafito propios (no inversión): `dark-surface`, `dark-paper`, `dark-paper-2`, `dark-ink`, `dark-ink-2`, `dark-muted`, `dark-line`, `dark-soft`, `dark-spine`, `dark-spine-2`, `dark-label` (tira de etiqueta un punto más clara que la superficie) y `dark-empate`. Se activa con `prefers-color-scheme` y se puede forzar con `data-theme`.
 
 ### Status
-**Sube** (#0ca30c) y **baja** (#d03b3b), reservados para variaciones; siempre con triángulo ▲/▼ y la cifra en tinta, nunca solo color.
+**Sube** (`status-good`) y **baja** (`status-critical`): solo en variaciones, siempre con triángulo ▲/▼ y la cifra en tinta; nunca solo color.
 
 ### Named Rules
-**La Regla de Un Significado.** Un color = una cosa en todo el proyecto. El color de un partido sigue a la entidad, no a su posición; filtrar nunca repinta a los que quedan.
+**La Regla de Un Significado.** Un color = una cosa en todo el proyecto. El color de un partido sigue a la entidad, no a su posición; filtrar nunca repinta a los que quedan. Morado = fragancias, naranja = makeup y verde azulado = regla + DAs siguen reservados (PRODUCT.md).
 
-**La Regla del Texto Legible.** Sobre un color de partido claro (amarillo, turquesa, rosa) el texto va en Tinta de Cámara; sobre los oscuros, en blanco. Se calcula por luminancia, no a ojo.
+**La Regla del Texto Legible.** Sobre un bloque de partido, el texto va en tinta (`ink`) si la luminancia del color supera 0,3 y en blanco si no. Se calcula, no se elige a ojo.
 
-**La Regla del Consenso Ausente.** El azul marino del consenso de o9 solo aparece en reportes históricos.
+**La Regla Sin Acento.** El sistema no tiene color de marca propio: la selección y el foco son tinta. Si una pieza pide un color que no es partido ni estado, va en neutros.
 
 ## Typography
 
-**Display Font:** Archivo, con eje de anchura (Helvetica Neue, Arial)
-**Body Font:** Public Sans (Segoe UI, system-ui)
+**Font:** Schibsted Grotesk (variable 400–900, woff2 autoalojada en base64 desde `src/fonts/`, licencia OFL), con alternativa Segoe UI / system-ui.
+**Code Font:** ui-monospace (SF Mono, Menlo, Consolas), solo para el código EAN en tablas.
 
-**Character:** Archivo comprimido y pesado da voz institucional a los titulares; Public Sans, la tipografía del gobierno de EE. UU., aporta lectura cívica y neutra. En los PDF impresos con Chromium se usa Inter / Inter Display, instaladas en el sistema.
+**Character:** una grotesca de prensa, compacta y negrita en las etiquetas, como la impresión pequeña de una carta de tonos. Un solo tipo para todo; la jerarquía sale del peso y del tamaño, no de mezclar familias.
 
 ### Hierarchy
-- **Display** (800, clamp(2.6rem, 6vw, 4.9rem), 0.95, anchura 78%): solo el título de la cámara.
-- **Headline** (700, clamp(1.9rem, 3.6vw, 2.9rem), 1.04, anchura 88%): el hallazgo de cada sección, máximo unos 22 caracteres por línea.
-- **Title** (650, 1.15rem, 1.2): títulos de panel y tabla.
-- **Body** (400, 1rem, 1.6): texto corrido, máximo unos 62 caracteres por línea.
-- **Data** (400, 13px, 1.45): cuerpo denso de los exploradores de una pantalla (listas, filtros, pestañas). Nunca menos de 12px.
-- **Label** (600, 0.78rem, tracking 0.1em, mayúsculas): orden del día y cabeceras de tabla.
+- **Numeral** (850, 50px, 1, −0.03em): solo el total del hemiciclo.
+- **Swatch count** (800, 24px, 1, −0.02em): escaños en el bloque de color de cada pastilla.
+- **KPI** (800, 19px, 1.1): cifras de la ficha de la derecha, alineadas a la derecha.
+- **Title large** (800, 17px, 1.2): nombre del EAN o de la selección.
+- **Title** (800, 15px, 1.2): nombre de la página y títulos de columna.
+- **Body** (400, 13px, 1.45): cuerpo denso (filtros, pestañas, listas); tablas a 12.5px; notas con máximo 62ch.
+- **Label** (700, 12px): cabeceras de tabla, grupos del desplegable, recuentos, ejes. 12px es el mínimo absoluto.
+- **Swatch code** (500, 12px, tracking 0.06em): el código «Partido 0N» de la tira de etiqueta, con regla de 1px debajo. Es el código de tono del muestrario, solo dentro de la pastilla.
 
 ### Named Rules
+**La Regla de los 12px.** Ningún texto baja de 12px, tampoco ejes, notas ni marcas.
+
 **La Regla de la Cifra Tabular.** Toda cifra en tabla, recuento o KPI usa `font-variant-numeric: tabular-nums`.
 
-**La Regla Sin Conexión.** Las fuentes web siempre llevan alternativa del sistema: sin internet la página se lee igual de bien.
+**La Regla Sin Conexión.** La fuente va dentro del archivo y siempre con alternativa del sistema: sin internet la página se lee igual.
 
 ## Layout
 
-Columna de 1160px como máximo, con margen lateral `clamp(16px, 4vw, 40px)`. Las páginas didácticas avanzan como un orden del día: cada sección tiene una cabecera de dos columnas (titular a la izquierda, explicación a la derecha) y su contenido debajo. Los exploradores ocupan una sola pantalla: filtros a la izquierda (250px), hemiciclo y gráfico en el centro, volúmenes, trends y perfil político a la derecha (360px), con scroll solo dentro de cada panel. Por debajo de 900px todo pasa a una columna. El ritmo de espacios sigue s1–s6 (0.75 a 5.5rem).
+Una sola pantalla sin scroll de página en escritorio: barra superior (marca con abanico de 6 colores, buscador de hasta 520px, filtros activos y «Todo el parlamento») sobre tres columnas: carril de filtros en cartulina (248px), zona central flexible en blanco (tira de 7 pastillas, hemiciclo con su total, barra de volumen y pestañas con el gráfico) y ficha de cifras, trends y perfil político (356px). Scroll solo dentro de cada panel. Columnas separadas por reglas de 1px, sin huecos ni tarjetas.
+
+- **≤1180px:** columnas de 220 / flexible / 320px; la tira pasa a 4 pastillas por fila.
+- **≤960px:** una columna con scroll de página, la tira a 2 por fila, los filtros activos bajan a su propia fila.
+
+Ritmo: margen interior de zona 16px; huecos entre pastillas y chips 6px; separación interna 8 / 12px; 2px entre segmentos de la barra de volumen.
 
 ## Elevation & Depth
 
-Sistema plano. La profundidad se consigue con capas de tono (papel → superficie → suave) y con el contraste entre la cámara oscura y el papel claro. Las separaciones son líneas de 1px (`line`) o rejillas con `gap: 1px` sobre fondo de línea. Única excepción funcional: el desplegable de búsqueda y los tooltips flotan sobre el contenido con una sombra difusa (`0 12px 32px rgba(0,0,0,.22)`), porque tapan otros elementos.
+Plano. La profundidad la dan el cambio de tono (cartulina → blanco → suave) y las reglas: 1px de `line` entre zonas y filas, 1px de tinta para rematar una cabecera o un bloque de cifras, 2px de tinta bajo la barra superior.
+
+### Shadow Vocabulary
+- **Desplegable** (`box-shadow: 0 14px 32px rgba(20,20,18,.20)`): resultados del buscador.
+- **Tooltip** (`box-shadow: 0 10px 28px rgba(20,20,18,.24)`): tooltips del gráfico y de los elementos con `data-tip`.
 
 ### Named Rules
-**La Regla Plana.** Ninguna tarjeta ni panel lleva sombra en reposo. La sombra solo existe en lo que flota sobre otra cosa.
+**La Regla Plana.** Solo el desplegable y los tooltips llevan sombra, porque tapan otro contenido. Ninguna pastilla, chip, panel ni botón la lleva.
 
 ## Shapes
 
-Radios contenidos: 6px en botones y pestañas, 10–14px en paneles, pastilla (999px) en chips y filtros. Los marcadores de partido son círculos con número; el centro de una selección es un rombo. Las barras de datos tienen el extremo redondeado en 3–5px y 2px de separación entre segmentos.
+Esquina viva: 2px en pastillas, chips, botones, buscador, segmentado, tooltips, escaños del hemiciclo y marcadores de partido; 1px en marcas diminutas (cuadrado de leyenda de 10px, barras del abanico de la marca, segmentos de la barra de volumen). Los EANs son chips cuadrados, no puntos; el centro de una selección en la brújula es un rombo de tinta. Las casillas de filtro son cuadradas con borde de 1.5px.
 
 ## Components
 
-### Buttons
-- **Shape:** 6px, padding 0.65rem 1rem.
-- **Primary:** fondo Tinta de Cámara, texto Papel, peso 600.
-- **Interacción (vivo y táctil):** al pasar el ratón, cambio de tono en 160ms; al pulsar, `scale(.97)` con `cubic-bezier(0.23, 1, 0.32, 1)`; `disabled` al 50% de opacidad.
+### Pastilla de partido (componente firma)
+- **Forma:** rectángulo de 2px con borde 1px `line`; arriba el bloque del color del partido (mín. 44px) con los escaños en Swatch count; abajo la tira de etiqueta (`label`) con «Partido 0N» (o «Sin partido» en Empate) sobre regla de 1px, el nombre en 800 a 12.5px (máx. 2 líneas) y el % de volumen en apagado.
+- **Estados:** hover = borde `ink-2`; pulsada (filtro activo) = borde tinta y tira en tinta con texto blanco; sin EANs = 38% de opacidad. Pulsar filtra por ese partido.
 
-### Chips / filtros
-- **Style:** pastilla con borde Línea sobre Superficie; número de partido en un disco de su color.
-- **State:** seleccionado = borde o fondo Tinta; los no seleccionados se atenúan al 45% cuando hay foco en uno.
+### Hemiciclo de chips
+- Un chip cuadrado de 2px por EAN con la geometría `seats()` de `src/votes_report.py`, partidos por bloque de izquierda a derecha, Empate al final, total en Numeral con «escaños» debajo. Hover = contorno de tinta 1.5px; clic abre el EAN. Entra con un barrido único `clip-path` de izquierda a derecha (260ms, ease-out). Debajo, la barra de volumen (10px, segmentos de 1px de radio, 2px de hueco).
 
-### Panels
-- **Corner Style:** 14px. **Background:** Superficie. **Border:** 1px Línea. **Shadow:** ninguna. **Padding:** 1.5rem.
+### Carril de filtros
+- Cartulina, facetas plegables separadas por `paper-2`; cabecera en 700 13px con recuento de seleccionados en un recuadro de tinta; opciones con casilla cuadrada (tinta al marcar), cuadrado de color de 10px si es partido y recuento tabular. Opciones sin EANs al 45%.
 
-### Navigation
-- Barra fija de cámara (92% de opacidad, desenfoque 10px) con el orden del día; la sección activa se marca con fondo Cámara 2. En móvil se oculta la lista.
+### Ficha de cifras (spec list)
+- Nombre en Title large con el mini chip del partido (44×52px, bloque de color y tira con el número); lista de cifras abierta por una regla de tinta, cada fila con etiqueta a la izquierda, cifra KPI a la derecha y explicación debajo, separadas por reglas de 1px.
 
-### Hemiciclo (componente firma)
-- Un punto por EAN, filas uniformes con la geometría `seats()` de `src/votes_report.py`, partidos por bloque de izquierda a derecha, Empate en gris al final y número total en el centro. Entra barriendo de izquierda a derecha (stagger por ángulo, unos 1.2s), con el número contando. Debajo, la barra de volumen con el % de cada partido.
+### Marcador de partido
+- Cuadrado de 2px del color del partido con su número (18px en leyendas y chips de línea; 20px con trazo de superficie en la brújula). Sustituye a los discos numerados.
 
-### Brújula política
-- Cuadrícula de 4 cuadrantes en tonos alternos (Suave / Papel); puntos de EAN coloreados por partido con tamaño por volumen; marcadores de partido numerados. Al cambiar de pregunta, los puntos viajan a su nueva posición (`cubic-bezier(0.77, 0, 0.175, 1)`, 0.95s, con desfase por punto).
+### Botones y chips
+- **Primario** («Todo el parlamento»): fondo tinta, texto blanco, 700; desactivado = transparente con hairline `line` y texto apagado.
+- **Chip de filtro activo:** fondo `spine-2`, 12px, con ✕ apagado. **Chip de serie** del gráfico: borde `line` sobre blanco; apagado = texto `muted` y marcador al 35%.
+- **Pulsación:** todo control pulsable hace `scale(.97)` en 160ms ease-out y transiciona color/borde en 160ms.
+
+### Pestañas y segmentado
+- **Pestañas:** texto 700 13px apagado; activa = tinta con subrayado de 2px.
+- **Segmentado:** borde 1px tinta, divisores de tinta; activo = fondo tinta, texto blanco.
+
+### Buscador, desplegable y tooltip
+- **Buscador:** fondo `spine-2`, sin borde; en foco, borde `spine-muted`. **Desplegable:** blanco, borde `line`, sombra de desplegable, entra en 150ms. **Tooltip:** fondo tinta, texto blanco 12px, aparece en 120ms. Son los únicos elementos con sombra.
+
+### Brújula
+- Cuadrantes con puntos de EAN por color de partido, marcadores cuadrados y rombo de centro. Al cambiar de pregunta, los puntos viajan en 700ms `cubic-bezier(0.77, 0, 0.175, 1)`.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** abrir cada sección con el hallazgo y su cifra en el titular, comprobada con los datos.
-- **Do** dar respuesta visible a cada control: tono al pasar el ratón, `scale(.97)` al pulsar, transiciones de 150–250ms con ease-out fuerte.
-- **Do** respetar `prefers-reduced-motion`: sin desplazamientos, solo fundidos.
-- **Do** validar con `dataviz` cualquier color nuevo, en claro y en oscuro.
-- **Do** poner nombre y número visibles junto a cada color de partido.
+- **Do** poner el número y el nombre del partido junto a cada color, como en la tira de la pastilla.
+- **Do** usar esquina de 2px (1px en marcas de menos de 12px) en todo lo que tenga forma.
+- **Do** separar zonas con reglas de 1px y cambio de tono, y rematar cabeceras y bloques de cifras con una regla de tinta.
+- **Do** dar respuesta a cada control: `scale(.97)` al pulsar, 160ms ease-out; hover solo en `(hover: hover) and (pointer: fine)`.
+- **Do** respetar `prefers-reduced-motion`: el barrido pasa a un fundido de 150ms y se quitan desplazamientos y escalas.
+- **Do** validar con `dataviz` (`validate_palette.js`) cualquier color nuevo, en claro y en oscuro.
 
 ### Don't:
-- **Don't** poner sombras en paneles o tarjetas en reposo.
-- **Don't** reutilizar un color de partido o de categoría para otra cosa.
-- **Don't** depender de recursos de internet sin alternativa local: la página debe funcionar descargada.
+- **Don't** usar radios grandes ni pastillas de 999px: es la estética de dashboard que este sistema sustituye.
+- **Don't** poner sombra en pastillas, chips, paneles o botones; solo desplegable y tooltip.
+- **Don't** usar discos ni círculos numerados para los partidos: el marcador es cuadrado.
+- **Don't** reutilizar un color de partido, de categoría o de estado para otra cosa.
+- **Don't** bajar de 12px en ningún texto.
+- **Don't** depender de recursos de internet: fuente y datos van dentro del archivo.
 - **Don't** usar el consenso de o9 como referencia fuera de reportes históricos.
-- **Don't** animar por decorar: si una animación no explica ni responde a un gesto, no va.
