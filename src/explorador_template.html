@@ -1,278 +1,326 @@
 <title>Explorador del parlamento</title>
 <style>
-@font-face { font-family: "Schibsted Grotesk"; font-style: normal; font-weight: 400 900; font-display: swap; src: url(data:font/woff2;base64,/*__FONT__*/) format("woff2"); }
-/* Layout: carta de tonos. Carril de filtros sobre cartulina a la izquierda; en blanco, la tira de pastillas de partido, el hemiciclo de chips
-   y el histórico + proyección; a la derecha la ficha de cifras, trends y perfil político. Sin tarjetas: reglas de 1px y cambio de tono. */
+@font-face { font-family: "Bricolage Grotesque"; font-style: normal; font-weight: 200 800; font-display: swap; src: url(data:font/woff2;base64,/*__FONT__*/) format("woff2"); }
+/* Layout: mesa de trabajo sobre un tapete de corte. Reglas en los bordes; hojas de papel en rejilla (filtros | parlamento + histórico | selección)
+   y, encima, fichas flotantes de EAN o de partido que nacen del punto pulsado, se arrastran y se unen con un hilo a su escaño. */
 :root {
-  --surface: #FFFFFF; --paper: #E3E4E0; --paper-2: #D7D8D3; --ink: #151515; --ink-2: #46474A; --muted: #5E5F62; --line: #D2D3CE; --soft: #F1F1EE;
-  --spine: #FFFFFF; --spine-ink: #151515; --spine-muted: #5E5F62; --spine-2: #F1F1EE; --label: #FFFFFF;
-  --empate: #B7BCC4; --good: #0ca30c; --critical: #d03b3b;   /* estado fijo (dataviz): siempre con triángulo, nunca solo color */
-  --r: 2px;                                                   /* esquina viva de chip: única medida de radio */
-  --f: "Schibsted Grotesk", "Segoe UI", system-ui, sans-serif; --f-code: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); --ease-io: cubic-bezier(0.77, 0, 0.175, 1);
+  --mat: #3D7862; --mat-2: #356B57; --mat-line: rgba(255,255,255,.09); --mat-line-5: rgba(255,255,255,.2); --mat-ink: #D8EDE2;
+  --paper: #FCFCFA; --paper-2: #F2F3F0; --ink: #1B1E1C; --ink-2: #474D49; --muted: #5E6561; --line: #DADDD7;
+  --empate: #B7BCC4; --good: #0ca30c; --critical: #d03b3b;
+  --sh: 0 1px 0 rgba(12,34,26,.10), 0 2px 7px rgba(12,34,26,.20);
+  --sh-lift: 0 2px 0 rgba(12,34,26,.08), 0 22px 44px rgba(12,34,26,.38);
+  --r: 3px; --soft: var(--paper-2); --surface: var(--paper);
+  --f: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif; --f-code: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); --ease-io: cubic-bezier(0.77, 0, 0.175, 1); --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --surface: #1A1B1D; --paper: #232427; --paper-2: #2E2F33; --ink: #EDEDEA; --ink-2: #C3C4C0; --muted: #9B9C99; --line: #36373B; --soft: #242528;
-  --spine: #1A1B1D; --spine-ink: #EDEDEA; --spine-muted: #9B9C99; --spine-2: #26272A; --label: #26272B; --empate: #6E7380; color-scheme: dark; } }
+  --mat: #1C362D; --mat-2: #182F27; --mat-line: rgba(255,255,255,.05); --mat-line-5: rgba(255,255,255,.11); --mat-ink: #9EC1AF;
+  --paper: #222624; --paper-2: #2A2F2C; --ink: #E9EDEA; --ink-2: #C1C8C3; --muted: #9AA39E; --line: #383E3B; --empate: #6E7380;
+  --sh: 0 1px 0 rgba(0,0,0,.35), 0 3px 10px rgba(0,0,0,.45); --sh-lift: 0 2px 0 rgba(0,0,0,.3), 0 24px 48px rgba(0,0,0,.6); color-scheme: dark; } }
 :root[data-theme="dark"] {
-  --surface: #1A1B1D; --paper: #232427; --paper-2: #2E2F33; --ink: #EDEDEA; --ink-2: #C3C4C0; --muted: #9B9C99; --line: #36373B; --soft: #242528;
-  --spine: #1A1B1D; --spine-ink: #EDEDEA; --spine-muted: #9B9C99; --spine-2: #26272A; --label: #26272B; --empate: #6E7380; color-scheme: dark; }
+  --mat: #1C362D; --mat-2: #182F27; --mat-line: rgba(255,255,255,.05); --mat-line-5: rgba(255,255,255,.11); --mat-ink: #9EC1AF;
+  --paper: #222624; --paper-2: #2A2F2C; --ink: #E9EDEA; --ink-2: #C1C8C3; --muted: #9AA39E; --line: #383E3B; --empate: #6E7380;
+  --sh: 0 1px 0 rgba(0,0,0,.35), 0 3px 10px rgba(0,0,0,.45); --sh-lift: 0 2px 0 rgba(0,0,0,.3), 0 24px 48px rgba(0,0,0,.6); color-scheme: dark; }
 * { box-sizing: border-box; }
 html, body { height: 100%; }
-body { margin: 0; background: var(--surface); color: var(--ink); font: 400 13px/1.45 var(--f); -webkit-font-smoothing: antialiased; overflow: hidden; }
-::selection { background: var(--ink); color: var(--surface); }
+body { margin: 0; color: var(--ink); font: 400 13.5px/1.45 var(--f); -webkit-font-smoothing: antialiased; overflow: hidden;
+  background-color: var(--mat);
+  background-image: linear-gradient(var(--mat-line-5) 1px, transparent 1px), linear-gradient(90deg, var(--mat-line-5) 1px, transparent 1px),
+    linear-gradient(var(--mat-line) 1px, transparent 1px), linear-gradient(90deg, var(--mat-line) 1px, transparent 1px);
+  background-size: 5cm 5cm, 5cm 5cm, 1cm 1cm, 1cm 1cm; background-position: 22px 22px; }
+::selection { background: var(--ink); color: var(--paper); }
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 button, input { font: inherit; color: inherit; }
-button { -webkit-tap-highlight-color: transparent; }
+button { -webkit-tap-highlight-color: transparent; cursor: pointer; }
 input { caret-color: var(--ink); }
 * { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
-.app { height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr); }
+svg { display: block; }
 .press { transition: transform 160ms var(--ease-out), background-color 160ms ease, border-color 160ms ease, color 160ms ease, opacity 160ms ease; }
 .press:active { transform: scale(.97); }
 
-/* ── lomo del abanico: barra superior */
-.top { background: var(--spine); color: var(--spine-ink); border-bottom: 2px solid var(--ink); display: flex; align-items: center; gap: 16px; padding: 10px 18px; min-width: 0; }
-.brand { font: 800 15px/1.1 var(--f); letter-spacing: -.01em; white-space: nowrap; display: flex; align-items: center; gap: 10px; min-width: 0; }
-.brand > div { min-width: 0; }
-.brand small { display: block; font: 450 12px/1.35 var(--f); letter-spacing: 0; color: var(--spine-muted); overflow: hidden; text-overflow: ellipsis; }
-.brand .fan { display: grid; grid-template-columns: repeat(6, 4px); gap: 1px; height: 22px; flex: none; }
-.brand .fan i { display: block; border-radius: 1px; }
-.search { position: relative; flex: 1 1 320px; max-width: 520px; min-width: 0; }
-.search input { width: 100%; background: var(--spine-2); border: 1px solid transparent; border-radius: var(--r); padding: 8px 12px 8px 32px; color: var(--spine-ink); transition: border-color 160ms ease; }
-.search input:focus { border-color: var(--spine-muted); outline: none; }
-.search input::placeholder { color: var(--spine-muted); }
-.search svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--spine-muted); }
-.results { position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: var(--r); box-shadow: 0 14px 32px rgba(20,20,18,.20); max-height: 60vh; overflow: auto; z-index: 30; padding: 4px;
-  transform-origin: top center; transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out); }
+/* ── reglas del tapete (cm reales de CSS) */
+.ruler { position: fixed; z-index: 1; color: var(--mat-ink); font: 600 10px/1 var(--f); pointer-events: none; overflow: hidden; background: var(--mat-2); }
+.ruler.x { left: 22px; right: 0; top: 0; height: 22px; border-bottom: 1px solid var(--mat-line-5);
+  background-image: linear-gradient(90deg, var(--mat-ink) 1px, transparent 1px), linear-gradient(90deg, var(--mat-line-5) 1px, transparent 1px);
+  background-size: 1cm 9px, 0.5cm 5px; background-repeat: repeat-x; background-position: 0 100%, 0 100%; }
+.ruler.y { top: 22px; bottom: 0; left: 0; width: 22px; border-right: 1px solid var(--mat-line-5);
+  background-image: linear-gradient(var(--mat-ink) 1px, transparent 1px), linear-gradient(var(--mat-line-5) 1px, transparent 1px);
+  background-size: 9px 1cm, 5px 0.5cm; background-repeat: repeat-y; background-position: 100% 0, 100% 0; }
+.ruler span { position: absolute; opacity: .85; }
+.ruler.x span { top: 3px; transform: translateX(3px); }
+.ruler.y span { left: 3px; transform: translateY(3px); }
+.corner { position: fixed; left: 0; top: 0; width: 22px; height: 22px; background: var(--mat-2); z-index: 2; border-right: 1px solid var(--mat-line-5); border-bottom: 1px solid var(--mat-line-5); }
+
+/* ── la mesa: hojas en rejilla */
+.desk { position: fixed; inset: 22px 0 0 22px; display: grid; grid-template-columns: 252px minmax(0, 1fr) 372px; grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-areas: "top top top" "fil parl sel" "fil evo sel"; gap: 14px; padding: 16px; z-index: 2; }
+.sheet { background: var(--paper); border-radius: var(--r); box-shadow: var(--sh); min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+.sheet-h { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 14px 16px 0; }
+.sheet-h h2 { margin: 0; font: 700 17px/1.15 var(--f); letter-spacing: -.01em; font-variation-settings: "opsz" 28; }
+.sheet-h .hint { color: var(--muted); font-size: 12px; text-align: right; }
+.strip { grid-area: top; flex-direction: row; align-items: center; gap: 14px; padding: 9px 12px 9px 16px; }
+.fil { grid-area: fil; } .parl { grid-area: parl; } .evo { grid-area: evo; } .selc { grid-area: sel; }
+
+/* tira superior */
+.brand { display: flex; flex-direction: column; min-width: 0; }
+.brand b { font: 800 18px/1.05 var(--f); letter-spacing: -.02em; font-variation-settings: "opsz" 36; white-space: nowrap; }
+.brand small { color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.search { position: relative; flex: 1 1 300px; max-width: 460px; min-width: 0; }
+.search input { width: 100%; border: 1px solid var(--line); background: var(--paper-2); border-radius: var(--r); padding: 8px 12px 8px 32px; transition: border-color 160ms ease, background-color 160ms ease; }
+.search input:focus { outline: none; border-color: var(--ink-2); background: var(--paper); }
+.search input::placeholder { color: var(--muted); }
+.search > svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+.results { position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: var(--paper); border-radius: var(--r); box-shadow: var(--sh-lift); max-height: 60vh; overflow: auto; z-index: 60; padding: 4px;
+  transform-origin: top left; transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out); }
 @starting-style { .results { opacity: 0; transform: translateY(-4px) scale(.98); } }
 .results .grp { font: 700 12px/1 var(--f); color: var(--muted); padding: 10px 8px 4px; }
-.results button { display: flex; justify-content: space-between; gap: 10px; width: 100%; text-align: left; background: none; border: 0; padding: 7px 8px; border-radius: var(--r); cursor: pointer; }
-.results button.on { background: var(--soft); }
+.results button { display: flex; justify-content: space-between; gap: 10px; width: 100%; text-align: left; background: none; border: 0; padding: 7px 8px; border-radius: var(--r); }
+.results button.on { background: var(--paper-2); }
 .results button span:last-child { color: var(--muted); white-space: nowrap; }
-.chips { display: flex; gap: 6px; flex-wrap: nowrap; overflow-x: auto; min-width: 0; flex: 1 1 auto; scrollbar-width: none; }
-.fchip { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; background: var(--spine-2); border: 0; color: var(--spine-ink); border-radius: var(--r); padding: 5px 6px 5px 9px; font-size: 12px; cursor: pointer; }
-.fchip b { font-weight: 450; color: var(--spine-muted); }
-.fchip i { font-style: normal; width: 16px; height: 16px; display: grid; place-items: center; color: var(--spine-muted); }
-.reset { white-space: nowrap; background: var(--ink); color: var(--surface); border: 0; border-radius: var(--r); padding: 8px 12px; font-weight: 700; cursor: pointer; }
-.reset[disabled] { background: transparent; color: var(--spine-muted); box-shadow: inset 0 0 0 1px var(--line); cursor: default; }
-.reset[disabled]:active { transform: none; }
+.chips { display: flex; gap: 6px; flex: 1 1 auto; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.fchip { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; border: 1px solid var(--line); background: var(--paper-2); border-radius: var(--r); padding: 4px 6px 4px 9px; font-size: 12.5px; }
+.fchip b { font-weight: 500; color: var(--muted); }
+.fchip svg { color: var(--muted); }
+.btn { white-space: nowrap; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); border-radius: var(--r); padding: 7px 12px; font-weight: 600; }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn[disabled] { opacity: .4; cursor: default; }
+.btn[disabled]:active { transform: none; }
 
-/* ── cuerpo: cartulina | blanco | blanco */
-.main { display: grid; grid-template-columns: 248px minmax(0, 1fr) 356px; min-height: 0; }
-.col { display: flex; flex-direction: column; min-height: 0; min-width: 0; }
-.col + .col { border-left: 1px solid var(--line); }
-.rail { background: var(--paper); border-left: 0; }
-.card { min-height: 0; display: flex; flex-direction: column; }
-.card + .card { border-top: 1px solid var(--line); }
-.card-h { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 14px 16px 0; }
-.card-h h2 { font: 800 15px/1.2 var(--f); letter-spacing: -.01em; margin: 0; color: var(--ink); }
-.card-h span { color: var(--muted); font-size: 12px; }
-
-/* ── filtros (sobre cartulina) */
+/* filtros */
 .facets { overflow-y: auto; padding: 6px 8px 10px; flex: 1; }
-.facet { border-bottom: 1px solid var(--paper-2); padding: 10px 8px; }
+.facet { border-bottom: 1px solid var(--line); padding: 10px 8px; }
 .facet:last-child { border-bottom: 0; }
-.facet-h { display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: none; border: 0; width: 100%; padding: 0; font: 700 13px/1.2 var(--f); color: var(--ink); }
-.facet-h em { font-style: normal; font-weight: 800; background: var(--ink); color: var(--paper); border-radius: var(--r); padding: 1px 5px; margin-left: 6px; font-size: 12px; }
-.facet-h svg { color: var(--muted); flex: none; }
-.facet input { width: 100%; margin-top: 8px; border: 1px solid var(--paper-2); background: var(--surface); border-radius: var(--r); padding: 6px 8px; font-size: 12px; color: var(--ink); }
-.facet input::placeholder { color: var(--muted); }
-.facet ul { list-style: none; margin: 6px 0 0; padding: 0; max-height: 170px; overflow-y: auto; }
-.facet.closed ul, .facet.closed input { display: none; }
+.facet-h { display: flex; justify-content: space-between; align-items: center; background: none; border: 0; width: 100%; padding: 0; font: 650 13px/1.2 var(--f); text-align: left; }
+.facet-h em { font-style: normal; font-weight: 800; background: var(--ink); color: var(--paper); border-radius: var(--r); padding: 1px 5px; margin-left: 6px; font-size: 11.5px; }
+.facet-h svg { color: var(--muted); transition: transform 200ms var(--ease-out); }
+.facet:not(.closed) .facet-h svg { transform: rotate(90deg); }
+.facet input { width: 100%; margin-top: 8px; border: 1px solid var(--line); background: var(--paper-2); border-radius: var(--r); padding: 6px 8px; font-size: 12.5px; }
+.facet ul { list-style: none; margin: 6px 0 0; padding: 0; max-height: 180px; overflow-y: auto; }
 .facet[data-k="v"] ul { max-height: none; }
-.facet li button { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 8px; align-items: center; width: 100%; background: none; border: 0; padding: 4px 4px; border-radius: var(--r); cursor: pointer; text-align: left; font-size: 13px; color: var(--ink); }
-.facet li button .bx { width: 13px; height: 13px; border: 1.5px solid var(--ink-2); border-radius: var(--r); display: grid; place-items: center; transition: background-color 160ms ease, border-color 160ms ease; }
-.facet li button[aria-pressed="true"] .bx { background: var(--ink); border-color: var(--ink); }
-.facet li button[aria-pressed="true"] .bx::after { content: ""; width: 7px; height: 3.5px; border: solid var(--paper); border-width: 0 0 1.8px 1.8px; transform: rotate(-45deg) translate(1px, -1px); }
-.facet li button .lb { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: flex; align-items: center; gap: 7px; }
-.facet li button .ct { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
-.facet li button.zero { opacity: .45; }
-.dot { width: 10px; height: 10px; border-radius: 1px; flex: none; display: inline-block; }
+.facet.closed ul, .facet.closed input { display: none; }
+.facet li button { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 8px; align-items: center; width: 100%; background: none; border: 0; padding: 4px; border-radius: var(--r); text-align: left; font-size: 13px; }
+.facet li .bx { width: 13px; height: 13px; border: 1.5px solid var(--ink-2); border-radius: 2px; display: grid; place-items: center; transition: background-color 140ms ease; }
+.facet li [aria-pressed="true"] .bx { background: var(--ink); border-color: var(--ink); }
+.facet li [aria-pressed="true"] .bx::after { content: ""; width: 7px; height: 3.5px; border: solid var(--paper); border-width: 0 0 1.8px 1.8px; transform: rotate(-45deg) translate(1px, -1px); }
+.facet li .lb { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: flex; align-items: center; gap: 7px; }
+.facet li .ct { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.facet li .zero { opacity: .45; }
+.sq { width: 10px; height: 10px; border-radius: 2px; flex: none; display: inline-block; }
 
-/* ── la carta: tira de pastillas + hemiciclo de chips */
-.chamber { flex: 0 0 auto; }
-.tally { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; padding: 12px 16px 4px; }
-.sw { display: grid; grid-template-rows: auto 1fr; padding: 0; border: 1px solid var(--line); border-radius: var(--r); background: var(--label); cursor: pointer; text-align: left; overflow: hidden; min-width: 0; }
-.sw .blk { display: flex; align-items: flex-end; justify-content: space-between; padding: 7px 8px 6px; min-height: 44px; }
-.sw .blk b { font: 800 24px/1 var(--f); letter-spacing: -.02em; }
+/* parlamento */
+.parl-body { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 18px; padding: 6px 16px 4px; align-items: center; }
+.hemi { width: 100%; height: auto; max-height: 31vh; overflow: visible; }
+.hemi .seat { cursor: pointer; transition: r 160ms var(--ease-out); }
+.hemi .seat.open { stroke: var(--ink); stroke-width: 2.4; }
+.hemi .seats { animation: sweep 320ms var(--ease-out) both; }
+@keyframes sweep { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.hemi .big { font: 800 54px/1 var(--f); letter-spacing: -.035em; fill: var(--ink); font-variation-settings: "opsz" 96; }
+.hemi .cap { font: 500 12.5px/1 var(--f); fill: var(--muted); }
+.tally { display: flex; flex-direction: column; gap: 1px; }
+.tally button { display: grid; grid-template-columns: 12px minmax(0, 1fr) auto; gap: 9px; align-items: center; background: none; border: 0; border-radius: var(--r); padding: 5px 6px; text-align: left; font-size: 13px; }
+.tally button span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tally button b { font-weight: 700; font-variant-numeric: tabular-nums; }
+.tally button.zero { opacity: .4; }
+.tally button.open { background: var(--paper-2); }
+.tally .sq { width: 12px; height: 12px; }
+.vol { padding: 6px 16px 14px; }
+.vlab { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.vlab b { color: var(--ink); white-space: nowrap; }
+.vbar { display: flex; height: 9px; gap: 2px; }
+.vbar i { display: block; min-width: 0; border-radius: 2px; transition: flex-grow 280ms var(--ease-out); }
 
-.sw .lab small { font: 500 12px/1 var(--f); letter-spacing: .06em; color: var(--muted); padding-bottom: 3px; border-bottom: 1px solid var(--line); margin-bottom: 2px; }
-.sw .lab { min-width: 0; padding: 6px 8px 7px; font: 800 12.5px/1.2 var(--f); color: var(--ink); display: flex; flex-direction: column; gap: 2px; transition: background-color 160ms ease, color 160ms ease; }
-.sw .lab span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.4em; }
-.sw .lab em { display: block; font-style: normal; font-weight: 450; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sw.zero { opacity: .38; }
-.sw[aria-pressed="true"] { border-color: var(--ink); }
-.sw[aria-pressed="true"] .lab { background: var(--ink); color: var(--surface); }
-.sw[aria-pressed="true"] .lab em, .sw[aria-pressed="true"] .lab small { color: var(--surface); }
-.sw[aria-pressed="true"] .lab small { border-bottom-color: color-mix(in oklab, var(--surface) 30%, transparent); }
-.sw[aria-pressed="true"] .lab em { opacity: .75; }
-.hemi-body { padding: 4px 16px 6px; }
-.hemi { width: 100%; height: auto; max-height: 29vh; display: block; }
-.hemi .seat { cursor: pointer; }
-.hemi .seats { animation: sweep 260ms var(--ease-out) both; }   /* un solo barrido del grupo: barato con 839 chips */
-@keyframes sweep { from { clip-path: inset(0 100% 0 0); opacity: .4; } to { clip-path: inset(0 0 0 0); opacity: 1; } }
-.hemi .big { font: 850 50px/1 var(--f); letter-spacing: -.03em; fill: var(--ink); }
-.hemi .cap { font: 600 12px/1 var(--f); fill: var(--muted); }
-.nb { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: var(--r); font: 800 12px/1 var(--f); font-style: normal; flex: none; }
-.vlab { font-size: 12px; color: var(--muted); padding: 0 16px 6px; display: flex; justify-content: space-between; gap: 8px; }
-.vlab b { color: var(--ink); font-weight: 700; white-space: nowrap; }
-.vbar { display: flex; height: 10px; gap: 2px; margin: 0 16px 14px; }
-.vbar i { display: block; min-width: 0; border-radius: 1px; transition: flex-grow 250ms var(--ease-out); }
-
-/* ── pestañas */
+/* pestañas */
 .tabs { display: flex; gap: 18px; padding: 0 16px; border-bottom: 1px solid var(--line); }
-.tab { background: none; border: 0; padding: 12px 0 10px; font-weight: 700; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; font-size: 13px; white-space: nowrap; transition: color 160ms ease, border-color 160ms ease; }
-.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+.tab { position: relative; background: none; border: 0; padding: 12px 0 10px; font-weight: 650; color: var(--muted); white-space: nowrap; transition: color 160ms ease; }
+.tab::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform 220ms var(--ease-out); }
+.tab[aria-selected="true"] { color: var(--ink); } .tab[aria-selected="true"]::after { transform: scaleX(1); }
 .pane { flex: 1; min-height: 0; overflow: auto; padding: 12px 16px 14px; }
 
-/* ── histórico y proyección */
-.ctl { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
-.lchip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--surface); border-radius: var(--r); padding: 4px 9px 4px 6px; font-size: 12px; cursor: pointer; color: var(--ink); }
+/* gráfico */
+.ctl { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.lchip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--paper); border-radius: var(--r); padding: 3px 9px 3px 7px; font-size: 12px; }
 .lchip[aria-pressed="false"] { color: var(--muted); }
-.lchip[aria-pressed="false"] .nb, .lchip[aria-pressed="false"] svg { opacity: .35; }
-.lchip svg { flex: none; }
+.lchip[aria-pressed="false"] .sq, .lchip[aria-pressed="false"] svg { opacity: .3; }
 #p-evo:not([hidden]) { display: flex; flex-direction: column; }
-.chart { position: relative; flex: 1; min-height: 190px; }
-.chart svg { width: 100%; height: 100%; display: block; overflow: visible; }
-.chart .grid line { stroke: var(--soft); } .chart .axis text { fill: var(--muted); font-size: 12px; }
-.chart .fut { fill: var(--soft); }
-.chart .futlab { fill: var(--muted); font-size: 12px; font-weight: 600; }
-.chart path.ln { fill: none; stroke-linejoin: round; stroke-linecap: round; }
-.chart .cross { stroke: var(--muted); stroke-dasharray: 2 3; }
-.chart .hit { fill: var(--surface); stroke-width: 2; }
-.tip, .ftip { pointer-events: none; background: var(--ink); color: var(--surface); font-size: 12px; border-radius: var(--r); opacity: 0; transition: opacity 120ms ease; box-shadow: 0 10px 28px rgba(20,20,18,.24); }
-.tip { position: absolute; padding: 8px 10px; z-index: 10; white-space: nowrap; }
+.chart { position: relative; flex: 1; min-height: 180px; }
+.chart svg { width: 100%; height: 100%; overflow: visible; }
+.grid line { stroke: var(--line); stroke-width: .8; } .axis text { fill: var(--muted); font-size: 11.5px; font-family: var(--f); }
+.fut { fill: var(--paper-2); }
+.futlab { fill: var(--muted); font-size: 11.5px; font-weight: 600; }
+path.ln { fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.cross { stroke: var(--muted); stroke-dasharray: 2 3; }
+.hit { fill: var(--paper); stroke-width: 2; }
+.tip, .ftip { pointer-events: none; background: var(--ink); color: var(--paper); font-size: 12px; border-radius: var(--r); opacity: 0; transition: opacity 120ms ease; box-shadow: var(--sh-lift); }
+.tip { position: absolute; padding: 8px 10px; z-index: 5; white-space: nowrap; }
 .tip.on, .ftip.on { opacity: 1; }
 .tip table { border-collapse: collapse; margin-top: 4px; } .tip td { padding: 1px 4px; } .tip td:last-child { text-align: right; }
-.ftip { position: fixed; z-index: 40; padding: 6px 9px; max-width: 320px; }
-.ftip b { display: block; font-weight: 700; }
-.ftip span { opacity: .72; }
+.ftip { position: fixed; z-index: 90; padding: 6px 9px; max-width: 320px; }
+.ftip b { display: block; font-weight: 650; } .ftip span { opacity: .75; }
 
-/* ── tablas */
+/* tablas */
 table.t { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-.t th { position: sticky; top: 0; background: var(--surface); font: 700 12px/1.2 var(--f); color: var(--muted); text-align: right; padding: 7px 6px; border-bottom: 1px solid var(--ink); cursor: pointer; white-space: nowrap; }
-.t th:first-child, .t td:first-child, .t th.l, .t td.l { text-align: left; }
-.t td { padding: 6px; border-bottom: 1px solid var(--soft); text-align: right; white-space: nowrap; color: var(--ink); }
-.t td.desc { max-width: 260px; overflow: hidden; text-overflow: ellipsis; }
+.t th { position: sticky; top: 0; background: var(--paper); font: 650 12px/1.2 var(--f); color: var(--muted); text-align: right; padding: 7px 6px; border-bottom: 1.5px solid var(--ink); cursor: pointer; white-space: nowrap; }
+.t th:first-child, .t td:first-child, .t .l { text-align: left; }
+.t td { padding: 6px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+.t td.desc { max-width: 240px; overflow: hidden; text-overflow: ellipsis; }
+.t td.code { font: 12px var(--f-code); }
 .t tbody tr { cursor: pointer; transition: background-color 120ms ease; }
-.t tr.hl td { font-weight: 800; }
-.t td.l:first-child { font-family: var(--f-code); font-size: 12px; }
-.pn { display: inline-flex; align-items: center; gap: 6px; }
+.t tr.hl td { font-weight: 750; }
+.pn { display: inline-flex; align-items: center; gap: 7px; }
 .dlt { display: inline-flex; align-items: center; gap: 4px; justify-content: flex-end; }
-.dlt svg { flex: none; }
+.note { font-size: 12px; color: var(--muted); margin: 10px 0 0; line-height: 1.5; max-width: 64ch; }
+.empty { color: var(--muted); padding: 18px 4px; text-align: center; }
 
-/* ── derecha: ficha de cifras */
-.who { padding: 14px 16px 10px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 12px; align-items: center; }
-.who .chipx { grid-row: span 2; width: 46px; height: 56px; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; display: grid; grid-template-rows: 1fr 18px; }
-.who .chipx i { display: block; } .who .chipx span { background: var(--label); font: 800 12px/18px var(--f); text-align: center; color: var(--ink); }
-.who.nochip { grid-template-columns: minmax(0, 1fr); }
-.who h3 { font: 800 17px/1.2 var(--f); letter-spacing: -.01em; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink); }
-.who p { margin: 3px 0 0; color: var(--muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.kpis { margin: 0 16px 12px; border-top: 1px solid var(--ink); }
-.kpis div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; padding: 8px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
-.kpis b { font: 800 19px/1.1 var(--f); letter-spacing: -.01em; color: var(--ink); text-align: right; grid-column: 2; grid-row: 1; }
-.kpis span { font-size: 12px; color: var(--muted); line-height: 1.35; }
-.kpis span:first-of-type { color: var(--ink); font-weight: 600; font-size: 12.5px; grid-column: 1; grid-row: 1; }
-.kpis span:last-of-type { grid-column: 1 / -1; }
-.kpis .dlt { justify-content: flex-start; color: var(--ink); font-weight: 700; }
-.tr-tab { width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; }
-.tr-tab th { font: 700 12px/1.2 var(--f); color: var(--muted); text-align: right; padding: 4px 4px 7px; border-bottom: 1px solid var(--ink); }
-.tr-tab th:first-child { text-align: left; }
-.tr-tab td { padding: 6px 2px; white-space: nowrap; border-bottom: 1px solid var(--soft); text-align: right; color: var(--ink); }
-.tr-tab th:first-child, .tr-tab td:first-child { width: 34%; }
+/* selección */
+.who { padding: 14px 16px 8px; }
+.who h3 { margin: 0; font: 750 18px/1.2 var(--f); letter-spacing: -.01em; font-variation-settings: "opsz" 32; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.who p { margin: 3px 0 0; color: var(--muted); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.figs { display: grid; grid-template-columns: 1fr 1fr; margin: 4px 16px 12px; border-top: 1.5px solid var(--ink); }
+.figs div { padding: 9px 0 9px; border-bottom: 1px solid var(--line); }
+.figs div:nth-child(odd) { padding-right: 10px; border-right: 1px solid var(--line); }
+.figs div:nth-child(even) { padding-left: 12px; }
+.figs b { display: block; font: 750 21px/1.1 var(--f); letter-spacing: -.02em; font-variation-settings: "opsz" 36; }
+.figs span { display: block; font-size: 12px; color: var(--muted); line-height: 1.35; }
+.figs .dlt { justify-content: flex-start; color: var(--ink); font-weight: 650; display: inline-flex; }
+.tr-tab { width: 100%; border-collapse: collapse; font-size: 12.5px; table-layout: fixed; }
+.tr-tab th { font: 650 12px/1.2 var(--f); color: var(--muted); text-align: right; padding: 4px 3px 7px; border-bottom: 1.5px solid var(--ink); }
+.tr-tab th:first-child { width: 36%; text-align: left; }
+.tr-tab td { padding: 6px 3px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
 .tr-tab td:first-child { text-align: left; white-space: normal; line-height: 1.3; }
-.tr-tab td:first-child small { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--muted); font-size: 12px; }
-.tr-tab tr.me td { background: var(--soft); font-weight: 800; }
-.note { font-size: 12px; color: var(--muted); margin-top: 10px; line-height: 1.5; max-width: 62ch; }
-.seg { display: flex; gap: 0; margin-bottom: 10px; border: 1px solid var(--ink); border-radius: var(--r); overflow: hidden; }
-.seg button { flex: 1; border: 0; background: var(--surface); padding: 7px 4px; font-size: 12px; font-weight: 700; cursor: pointer; color: var(--ink-2); }
+.tr-tab td:first-child small { display: block; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tr-tab tr.me td { background: var(--paper-2); font-weight: 750; }
+.seg { display: flex; margin-bottom: 10px; border: 1px solid var(--ink); border-radius: var(--r); overflow: hidden; }
+.seg button { flex: 1; border: 0; background: var(--paper); padding: 7px 4px; font-size: 12.5px; font-weight: 650; color: var(--ink-2); }
 .seg button + button { border-left: 1px solid var(--ink); }
-.seg button[aria-selected="true"] { background: var(--ink); color: var(--surface); }
-svg.cmp { width: 100%; height: auto; display: block; max-height: 34vh; }
+.seg button[aria-selected="true"] { background: var(--ink); color: var(--paper); }
+svg.cmp { width: 100%; height: auto; max-height: 34vh; }
 .cmp .al { font: 600 12px/1 var(--f); fill: var(--ink-2); }
-.cmp .d { transition: transform 700ms var(--ease-io); cursor: default; }
+.cmp .d { transition: transform 700ms var(--ease-io); }
 .cmp .mk, .cmp .cent { transition: transform 700ms var(--ease-io); }
-.match { display: grid; gap: 8px; margin-top: 12px; border-top: 1px solid var(--ink); padding-top: 10px; }
+.match { display: grid; gap: 8px; margin-top: 12px; border-top: 1.5px solid var(--ink); padding-top: 10px; }
 .match .r { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 8px; align-items: baseline; font-size: 12.5px; }
 .match .r > span { color: var(--muted); font-size: 12px; }
-.match .r b { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; color: var(--ink); min-width: 0; }
-.match .r small { flex-basis: 100%; padding-left: 24px; font-weight: 400; color: var(--muted); font-size: 12px; }
-.empty { color: var(--muted); padding: 18px 4px; text-align: center; font-size: 13px; }
+.match .r b { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 7px; min-width: 0; }
+.match .r small { flex-basis: 100%; padding-left: 19px; font-weight: 400; color: var(--muted); font-size: 12px; }
+
+/* ── fichas flotantes */
+#layer { position: fixed; inset: 0; z-index: 40; pointer-events: none; }
+#threads { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 39; pointer-events: none; overflow: visible; }
+#threads path { fill: none; stroke-width: 1.6; stroke-linecap: round; opacity: .9; }
+#threads circle { stroke: var(--paper); stroke-width: 1.5; }
+.fic { position: absolute; left: 0; top: 0; width: 340px; pointer-events: auto; will-change: transform; }
+.fic-in { background: var(--paper); border-radius: var(--r); box-shadow: var(--sh); transition: box-shadow 220ms var(--ease-out), rotate 260ms var(--ease-out), scale 220ms var(--ease-out); overflow: hidden; }
+.fic.lift .fic-in { box-shadow: var(--sh-lift); rotate: -0.8deg; scale: 1.015; }
+.fic.top .fic-in { box-shadow: 0 1px 0 rgba(12,34,26,.10), 0 8px 22px rgba(12,34,26,.28); }
+.fic-h { display: flex; align-items: center; gap: 9px; padding: 9px 8px 9px 12px; cursor: grab; touch-action: none; user-select: none; border-bottom: 1px solid var(--line); }
+.fic.lift .fic-h { cursor: grabbing; }
+.fic-h .tag { width: 14px; height: 14px; border-radius: 2px; flex: none; }
+.fic-h .ttl { flex: 1; min-width: 0; font: 600 12px/1.2 var(--f-code); color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fic-h .ttl.txt { font: 700 13px/1.2 var(--f); color: var(--ink); }
+.ib { width: 28px; height: 28px; display: grid; place-items: center; border: 0; background: none; border-radius: var(--r); color: var(--muted); }
+.ib[aria-pressed="true"] { color: var(--ink); background: var(--paper-2); }
+.fic-b { padding: 11px 13px 13px; display: grid; gap: 10px; }
+.fic-b h4 { margin: 0; font: 750 15.5px/1.25 var(--f); letter-spacing: -.01em; font-variation-settings: "opsz" 24; }
+.fic-b .meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.kv { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1.5px solid var(--ink); }
+.kv div { padding: 7px 0 0; } .kv div + div { padding-left: 10px; border-left: 1px solid var(--line); }
+.kv b { display: block; font: 750 17px/1.1 var(--f); letter-spacing: -.01em; }
+.kv span { display: block; font-size: 11.5px; color: var(--muted); }
+.kv .dlt { display: inline-flex; justify-content: flex-start; color: var(--ink); font-weight: 650; font-size: 12px; margin-top: 1px; }
+.kv b .dlt { font-size: 17px; font-weight: 750; }
+.mini { height: 112px; position: relative; }
+.mini svg { width: 100%; height: 100%; overflow: visible; }
+.fic-b .row { display: flex; gap: 8px; flex-wrap: wrap; }
+.fic-b .row .btn { padding: 6px 10px; font-size: 12.5px; }
+.vote { display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; font-size: 12.5px; }
+.vote span { color: var(--muted); }
+.vote b { display: inline-flex; align-items: center; gap: 6px; font-weight: 650; }
+.minitab { width: 100%; border-collapse: collapse; font-size: 12px; }
+.minitab th { font-weight: 650; color: var(--muted); text-align: right; padding: 3px 2px 5px; border-bottom: 1px solid var(--ink); }
+.minitab th:first-child, .minitab td:first-child { text-align: left; }
+.minitab td { padding: 4px 2px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+.minitab tr[data-id] { cursor: pointer; }
+.outside { font-size: 12px; color: var(--muted); background: var(--paper-2); border-radius: var(--r); padding: 6px 8px; }
+.tray { position: fixed; right: 16px; bottom: 14px; z-index: 45; display: flex; gap: 8px; align-items: center; pointer-events: auto; }
+.tray[hidden] { display: none; }
+.tray .btn { box-shadow: var(--sh); }
+.fichas-m { display: none; }
 
 @media (hover: hover) and (pointer: fine) {
-  .results button:hover { background: var(--soft); }
-  .facet li button:hover { background: var(--paper-2); }
-  .t tbody tr:hover td { background: var(--soft); }
-  .sw:hover { border-color: var(--ink-2); }
-  .lchip:hover { border-color: var(--ink-2); }
-  .seg button:not([aria-selected="true"]):hover { background: var(--soft); }
+  .results button:hover, .facet li button:hover, .tally button:hover, .t tbody tr:hover td, .minitab tr[data-id]:hover td { background: var(--paper-2); }
+  .ib:hover { color: var(--ink); background: var(--paper-2); }
+  .lchip:hover, .btn.ghost:hover { border-color: var(--ink-2); }
+  .btn:not(.ghost):not([disabled]):hover { background: var(--ink-2); border-color: var(--ink-2); }
   .tab:hover { color: var(--ink); }
-  .fchip:hover i { color: var(--spine-ink); }
-  .hemi .seat:hover { stroke: var(--ink); stroke-width: 1.5; }
+  .seg button:not([aria-selected="true"]):hover { background: var(--paper-2); }
+  .hemi .seat:hover { stroke: var(--ink); stroke-width: 1.6; }
 }
-@media (max-width: 1180px) { .main { grid-template-columns: 220px minmax(0, 1fr) 320px; } .tally { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 1240px) { .desk { grid-template-columns: 228px minmax(0, 1fr) 330px; } .parl-body { grid-template-columns: minmax(0, 1fr) 196px; } }
 @media (max-width: 960px) {
-  body { overflow: auto; } .app { height: auto; }
-  .main { grid-template-columns: minmax(0, 1fr); } .col + .col { border-left: 0; border-top: 1px solid var(--line); }
-  .card.grow { min-height: 420px; } .top { flex-wrap: wrap; } .chips { order: 3; flex-basis: 100%; }
-  .tally { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .brand small { white-space: normal; } .chamber .card-h { flex-direction: column; gap: 2px; }
-  .chart { height: 300px; } .pane { max-height: 520px; }
+  body { overflow: auto; background-attachment: fixed; }
+  .ruler.y, .corner { display: none; } .ruler.x { position: absolute; left: 0; }
+  .strip { order: 0; } .fil { order: 1; } .parl { order: 2; } .evo { order: 4; } .selc { order: 5; }
+  .desk { position: static; display: flex; flex-direction: column; padding: 30px 12px 14px; gap: 12px; }
+  .strip { flex-wrap: wrap; } .chips { order: 3; flex-basis: 100%; }
+  .facets { max-height: none; } .parl-body { grid-template-columns: minmax(0, 1fr); }
+  .chart { height: 280px; flex: none; } .pane { max-height: 560px; }
+  #layer, #threads, .tray { display: none; }
+  .fichas-m { display: grid; gap: 12px; order: 3; }
+  .fichas-m:empty { display: none; }
+  .fichas-m .fic { position: static; width: auto; transform: none !important; }
+  .fichas-m .fic-h { cursor: default; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hemi .seats { animation: fadeOnly 150ms ease both; }
-  @keyframes fadeOnly { from { opacity: 0; } }
-  .cmp .d, .cmp .mk, .cmp .cent, .vbar i, .press, .results { transition: opacity 150ms ease; }
+  .hemi .seats { animation: fadeOnly 150ms ease both; } @keyframes fadeOnly { from { opacity: 0; } }
+  .cmp .d, .cmp .mk, .cmp .cent, .vbar i, .press, .results, .tab::after, .facet-h svg { transition: opacity 150ms ease; }
   .press:active { transform: none; }
+  .fic-in { transition: box-shadow 150ms ease; } .fic.lift .fic-in { rotate: none; scale: none; }
 }
 </style>
 
-<div class="app">
-  <header class="top">
-    <div class="brand"><span class="fan" id="fan" aria-hidden="true"></span>
-      <div>Explorador del parlamento<small id="sub"></small></div></div>
-    <div class="search"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-      <input id="q" type="search" placeholder="Buscar EAN, línea, casa, tamaño…" autocomplete="off" aria-label="Buscar en todos los filtros">
+<div class="corner" aria-hidden="true"></div>
+<div class="ruler x" id="rx" aria-hidden="true"></div>
+<div class="ruler y" id="ry" aria-hidden="true"></div>
+<main class="desk">
+  <header class="sheet strip">
+    <div class="brand"><b>Explorador del parlamento</b><small id="sub"></small></div>
+    <div class="search"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      <input id="q" type="search" placeholder="Buscar EAN, línea, casa, tamaño…" autocomplete="off" aria-label="Buscar un EAN o un filtro">
       <div class="results" id="results" hidden></div></div>
     <div class="chips" id="chips"></div>
-    <button class="reset press" id="reset" type="button" disabled>Todo el parlamento</button>
+    <button class="btn press" id="reset" type="button" disabled>Todo el parlamento</button>
   </header>
-  <div class="main">
-    <aside class="col rail"><div class="card" style="flex:1"><div class="card-h"><h2>Filtros</h2><span id="nsel"></span></div><div class="facets" id="facets"></div></div></aside>
-    <section class="col">
-      <div class="card chamber">
-        <div class="card-h"><h2 id="hemi-t">El parlamento</h2><span>Pulsa un partido para filtrar o un escaño para ver su EAN</span></div>
-        <div class="tally" id="tally"></div>
-        <div class="hemi-body"><svg class="hemi" id="hemi" role="img" aria-label="Hemiciclo de la selección"></svg></div>
-        <div class="vlab"><span>Volumen de los últimos 12 meses (sep-25 a ago-26) de los EANs que elige cada partido</span><b id="vtot"></b></div>
-        <div class="vbar" id="vbar"></div>
-      </div>
-      <div class="card grow" style="flex:1">
-        <div class="tabs" role="tablist" id="ctabs">
-          <button class="tab" role="tab" aria-selected="true" data-p="evo" type="button">Histórico y proyección</button>
-          <button class="tab" role="tab" aria-selected="false" data-p="par" type="button">Partidos</button>
-          <button class="tab" role="tab" aria-selected="false" data-p="lst" type="button">Lista de EANs</button>
-        </div>
-        <div class="pane" id="p-evo"><div class="ctl" id="lines"></div><div class="chart" id="chart"><svg id="csvg"></svg><div class="tip" id="ctip"></div></div></div>
-        <div class="pane" id="p-par" hidden></div>
-        <div class="pane" id="p-lst" hidden></div>
-      </div>
-    </section>
-    <aside class="col">
-      <div class="card"><div class="who" id="who"></div><div class="kpis" id="kpis"></div></div>
-      <div class="card grow" style="flex:1">
-        <div class="tabs" role="tablist" id="rtabs">
-          <button class="tab" role="tab" aria-selected="true" data-p="tr" type="button">Trends</button>
-          <button class="tab" role="tab" aria-selected="false" data-p="pol" type="button">Perfil político</button>
-        </div>
-        <div class="pane" id="p-tr"></div>
-        <div class="pane" id="p-pol" hidden></div>
-      </div>
-    </aside>
-  </div>
-</div>
+  <aside class="sheet fil"><div class="sheet-h"><h2>Filtros</h2><span class="hint" id="nsel"></span></div><div class="facets" id="facets"></div></aside>
+  <section class="sheet parl">
+    <div class="sheet-h"><h2 id="hemi-t">El parlamento</h2><span class="hint">Pulsa escaños o partidos para abrir sus fichas</span></div>
+    <div class="parl-body"><svg class="hemi" id="hemi" role="img" aria-label="Hemiciclo de la selección"></svg><div class="tally" id="tally"></div></div>
+    <div class="vol"><div class="vlab"><span>Volumen de envíos de los últimos 12 meses (sep-25 a ago-26) de los EANs de cada partido</span><b id="vtot"></b></div><div class="vbar" id="vbar"></div></div>
+  </section>
+  <div class="fichas-m" id="fichas-m"></div>
+  <section class="sheet evo">
+    <div class="tabs" role="tablist" id="ctabs">
+      <button class="tab" role="tab" aria-selected="true" data-p="evo" type="button">Histórico y proyección</button>
+      <button class="tab" role="tab" aria-selected="false" data-p="par" type="button">Partidos</button>
+      <button class="tab" role="tab" aria-selected="false" data-p="lst" type="button">Lista de EANs</button>
+    </div>
+    <div class="pane" id="p-evo"><div class="ctl" id="lines"></div><div class="chart" id="chart"><svg id="csvg"></svg><div class="tip" id="ctip"></div></div></div>
+    <div class="pane" id="p-par" hidden></div>
+    <div class="pane" id="p-lst" hidden></div>
+  </section>
+  <aside class="sheet selc">
+    <div class="who" id="who"></div><div class="figs" id="figs"></div>
+    <div class="tabs" role="tablist" id="rtabs">
+      <button class="tab" role="tab" aria-selected="true" data-p="tr" type="button">Trends</button>
+      <button class="tab" role="tab" aria-selected="false" data-p="pol" type="button">Perfil político</button>
+    </div>
+    <div class="pane" id="p-tr"></div>
+    <div class="pane" id="p-pol" hidden></div>
+  </aside>
+</main>
+<svg id="threads" aria-hidden="true"></svg>
+<div id="layer"></div>
+<div class="tray" id="tray" hidden><button class="btn ghost press" id="tidy" type="button" style="background:var(--paper)">Ordenar fichas</button><button class="btn press" id="closeall" type="button">Cerrar fichas</button></div>
 <div class="ftip" id="ftip" role="tooltip"></div>
-
 <script>
 const D = /*__DATA__*/null;
 const NS = "http://www.w3.org/2000/svg", $ = id => document.getElementById(id);
@@ -281,8 +329,7 @@ const COL = Object.fromEntries(PARTIES.map((p, i) => [p, COLS[i]])); COL.Empate 
 const NUM = Object.fromEntries(ORDER.map((p, i) => [p, i + 1]));
 const lum = h => { const c = [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255).map(v => v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; };
 const ON = Object.fromEntries(PARTIES.map(p => [p, lum(COL[p]) > .3 ? "#151515" : "#FFFFFF"]));
-$("fan").innerHTML = ORDER.map(p => `<i style="background:${COL[p]}"></i>`).join("");   // el abanico de la marca: los 6 tonos   // texto legible sobre el color del partido
-const nb = p => p === "Empate" ? `<i class="nb" style="background:var(--empate);color:var(--ink)">–</i>` : `<i class="nb" style="background:${COL[p]};color:${ON[p]}">${NUM[p]}</i>`;
+const nb = p => `<i class="sq" style="background:${COL[p] || "var(--empate)"}" aria-hidden="true"></i>`;
 const n0 = x => x == null || !isFinite(x) ? "–" : Math.round(x).toLocaleString("es-ES");
 const nk = x => !isFinite(x) ? "–" : Math.abs(x) >= 1e6 ? (x / 1e6).toLocaleString("es-ES", { maximumFractionDigits: 2 }) + " M" : Math.abs(x) >= 1e4 ? Math.round(x / 1e3).toLocaleString("es-ES") + " k" : n0(x);
 const pc = x => x == null || !isFinite(x) ? "–" : (x > 0 ? "+" : x < 0 ? "−" : "") + Math.abs(Math.round(x * 100)) + "%";
@@ -374,15 +421,14 @@ function drawHemi(list) {
   const r = n === 1 ? 46 : Math.min(0.40 * d * (S0 - 2) / (1 + 0.40 * d), 24), S = n === 1 ? 0 : S0 - r - 2, cx = w / 2, cy = n === 1 ? 160 : S + r + 2;
   svg.setAttribute("viewBox", `0 0 ${w} ${Math.ceil(cy + r + 4)}`);
   pts.forEach(([a, rad], i) => {
-    const s = r * 1.78, e = L[i];                                   // chip cuadrado del lado del círculo que ocupaba
-    const c = el("rect", { x: (cx + S * rad * Math.cos(a) - s / 2).toFixed(1), y: (cy - S * rad * Math.sin(a) - (n === 1 ? 72 : 0) - s / 2).toFixed(1), width: s.toFixed(2), height: s.toFixed(2), rx: Math.min(2, s * .12).toFixed(2), fill: COL[e.v], class: "seat" });
+    const e = L[i], c = el("circle", { cx: (cx + S * rad * Math.cos(a)).toFixed(1), cy: (cy - S * rad * Math.sin(a) - (n === 1 ? 72 : 0)).toFixed(1), r: r.toFixed(2), fill: COL[e.v], class: "seat" });
     c.dataset.id = e.id; c.dataset.tip = `${e.d}|${e.id} · ${e.v}`; g.append(c);
   });
   const big = el("text", { x: cx, y: cy - (n === 1 ? -20 : 34), "text-anchor": "middle", class: "big" }); big.textContent = n0(n);
   const cap = el("text", { x: cx, y: cy - (n === 1 ? -38 : 12), "text-anchor": "middle", class: "cap" }); cap.textContent = n === 1 ? "EAN" : "escaños";
   frag.append(g, big, cap); svg.replaceChildren(frag);
 }
-$("hemi").addEventListener("click", e => { const c = e.target.closest(".seat"); if (c) setEAN(c.dataset.id); });
+$("hemi").addEventListener("click", e => { const c = e.target.closest(".seat"); if (!c) return; const r = c.getBoundingClientRect(); openCard("ean", c.dataset.id, { x: r.right, y: r.top }); });
 
 /* tooltip único para escaños y puntos de la brújula (en vez de un <title> por punto) */
 const ftip = $("ftip");
@@ -409,14 +455,14 @@ function drawFacets() {
     const on = S.f[k] || new Set(), q = (fq[k] || "").toLowerCase();
     const isOpen = first ? ["c", "h", "v"].includes(k) : open.has(k) || on.size;
     const items = vals.filter(v => !q || lab(k, v).toLowerCase().includes(q)).map(v =>
-      `<li><button type="button" aria-pressed="${on.has(v)}" data-k="${k}" data-v="${esc(v)}" class="${cnt[v] ? "" : "zero"}"><span class="bx"></span><span class="lb">${k === "v" ? `<span class="dot" style="background:${COL[v]}"></span>` : ""}${esc(lab(k, v))}</span><span class="ct">${cnt[v] || 0}</span></button></li>`).join("");
-    return `<div class="facet ${isOpen ? "" : "closed"}" data-k="${k}"><button class="facet-h" type="button" data-t="${k}" aria-expanded="${!!isOpen}">${name}${on.size ? ` <em>${on.size}</em>` : ""}<svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="${isOpen ? "M1 5H9" : "M1 5H9M5 1V9"}" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+      `<li><button type="button" aria-pressed="${on.has(v)}" data-k="${k}" data-v="${esc(v)}" class="${cnt[v] ? "" : "zero"}"><span class="bx"></span><span class="lb">${k === "v" ? nb(v) : ""}${esc(lab(k, v))}</span><span class="ct">${cnt[v] || 0}</span></button></li>`).join("");
+    return `<div class="facet ${isOpen ? "" : "closed"}" data-k="${k}"><button class="facet-h" type="button" data-t="${k}" aria-expanded="${!!isOpen}">${name}${on.size ? ` <em>${on.size}</em>` : ""}<svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M3.5 1.5L7 5L3.5 8.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       ${vals.length > 7 ? `<input type="search" placeholder="Buscar ${name.toLowerCase()}…" data-q="${k}" value="${esc(fq[k] || "")}" aria-label="Buscar en ${name}">` : ""}<ul>${items}</ul></div>`;
   }).join("");
 }
 $("facets").addEventListener("click", e => {
   const t = e.target.closest("[data-t]");
-  if (t) { const f = t.parentElement, c = f.classList.toggle("closed"); t.setAttribute("aria-expanded", !c); t.querySelector("span").textContent = c ? "+" : "−"; return; }
+  if (t) { const c = t.parentElement.classList.toggle("closed"); t.setAttribute("aria-expanded", !c); return; }
   const b = e.target.closest("li button"); if (b) setF(b.dataset.k, b.dataset.v, b.getAttribute("aria-pressed") !== "true");
 });
 $("facets").addEventListener("input", e => {
@@ -448,7 +494,7 @@ $("results").addEventListener("click", e => {
   const b = e.target.closest("button[data-id]"); if (!b) return;
   const [k, ...rest] = b.dataset.id.split("|"), v = rest.join("|");
   $("results").hidden = true; $("q").value = "";
-  if (k === "ean") setEAN(v); else setF(k, v, true);
+  if (k === "ean") { const r = $("q").getBoundingClientRect(); openCard("ean", v, { x: r.left + 60, y: r.bottom + 90 }); } else setF(k, v, true);
 });
 document.addEventListener("click", e => { if (!e.target.closest(".search")) $("results").hidden = true; });
 $("reset").addEventListener("click", resetAll);
@@ -473,15 +519,12 @@ function aggregate(list) {
 function drawTally(list) {
   const cnt = {}, vol = {}; let tot = 0;
   list.forEach(e => { cnt[e.v] = (cnt[e.v] || 0) + 1; vol[e.v] = (vol[e.v] || 0) + e.v12; tot += e.v12; });
-  const fg = p => p === "Empate" ? "var(--ink)" : ON[p];
-  $("tally").innerHTML = ORDER.concat("Empate").map(p =>
-    `<button type="button" class="sw press ${cnt[p] ? "" : "zero"}" data-p="${esc(p)}" aria-pressed="${!!(S.f.v && S.f.v.has(p))}">` +
-    `<span class="blk" style="background:${COL[p]};color:${fg(p)}"><b>${cnt[p] || 0}</b></span>` +
-    `<span class="lab"><small>${p === "Empate" ? "Sin partido" : "Partido " + String(NUM[p]).padStart(2, "0")}</small><span>${p}</span><em title="% del volumen de envíos 12M">${tot ? Math.round((vol[p] || 0) / tot * 100) : 0}% vol.</em></span></button>`).join("");
+  $("tally").innerHTML = ORDER.concat("Empate").filter(p => p !== "Empate" || cnt.Empate).map(p =>
+    `<button type="button" class="press ${cnt[p] ? "" : "zero"}" data-p="${esc(p)}">${nb(p)}<span>${p}</span><b>${cnt[p] || 0}</b></button>`).join("");
   $("vbar").innerHTML = ORDER.concat("Empate").map(p => `<i style="flex-grow:${tot ? (vol[p] || 0) / tot : 0};background:${COL[p]}" data-tip="${esc(p)}|${tot ? Math.round((vol[p] || 0) / tot * 100) : 0}% del volumen 12M"></i>`).join("");
   $("vtot").textContent = nk(tot) + " u.";
 }
-$("tally").addEventListener("click", e => { const b = e.target.closest("button[data-p]"); if (b) setF("v", b.dataset.p, !(S.f.v && S.f.v.has(b.dataset.p))); });
+$("tally").addEventListener("click", e => { const b = e.target.closest("button[data-p]"); if (!b) return; const r = b.getBoundingClientRect(); openCard("party", b.dataset.p, { x: r.right, y: r.top }); });
 
 function common(list, k) { const s = new Set(list.map(e => String(e[k]))); return s.size === 1 ? [...s][0] : null; }
 function drawWho(list, A) {
@@ -489,10 +532,7 @@ function drawWho(list, A) {
   if (S.ean && list[0]) { const e = list[0]; t = e.d; s = `${e.id} · ${e.h} · ${e.l} · ${e.s} · ${e.age} meses · ${e.f}`; }
   else if (!hasFilter()) { t = "Todo el parlamento"; s = `${PARL.length} EANs Central con actividad en la foto sep-26`; }
   else { t = Object.entries(S.f).filter(([, v]) => v.size).map(([k, v]) => [...v].map(x => lab(k, x)).join(" o ")).join(" · "); s = `${list.length} EANs del parlamento`; }
-  const one = S.ean && list[0];
-  $("who").className = "who" + (one ? "" : " nochip");
-  $("who").innerHTML = (one ? `<span class="chipx" title="${esc(list[0].v)}"><i style="background:${COL[list[0].v]}"></i><span>${list[0].v === "Empate" ? "–" : String(NUM[list[0].v]).padStart(2, "0")}</span></span>` : "") +
-    `<h3 title="${esc(t)}">${esc(t)}</h3><p title="${esc(s)}">${esc(s)}</p>`;
+  $("who").innerHTML = `<h3 title="${esc(t)}">${esc(t)}</h3><p title="${esc(s)}">${esc(s)}</p>`;
   const v12 = s12(A.h), ep12 = A.ep.slice(-12).reduce((a, b) => a + b, 0), f9 = A.el.reduce((a, b) => a + b, 0);
   const ly9 = A.h.slice(NM - 11, NM - 2).reduce((a, b) => a + b, 0);       // oct-25..jun-26: los mismos meses un año antes
   const fy26 = A.h.slice(M.indexOf("2025-07"), M.indexOf("2025-07") + 12).reduce((a, b) => a + b, 0);
@@ -501,7 +541,7 @@ function drawWho(list, A) {
     [nk(ep12), `EPOS últimos 12M (hasta ${mlab(D.epos_to)})`, dlt(trend(A.ep, 12)), "vs 12M anteriores"],
     [nk(f9), "Proyección oct-26 a jun-27 (partido elegido)", dlt(ly9 ? f9 / ly9 - 1 : NaN), "vs oct-25 a jun-26"],
     [ep12 ? (v12 / ep12).toLocaleString("es-ES", { maximumFractionDigits: 2 }) + "×" : "–", "Envío / EPOS 12M", `<span class="dlt">${nk(fy26)}</span>`, "envíos FY26 (jul-25 a jun-26)"]];
-  $("kpis").innerHTML = k.map(([b, l, x, y]) => `<div><b>${b}</b><span>${l}</span><span>${x} ${y}</span></div>`).join("");
+  $("figs").innerHTML = k.map(([b, l, x, y]) => `<div><b>${b}</b><span>${l}</span><span>${x} ${y}</span></div>`).join("");
 }
 
 /* ── histórico y proyección: líneas neutras por trazo (envíos, EPOS, elegido, coalición) y los 6 partidos con su color */
@@ -569,7 +609,7 @@ function drawParties(list, A) {
   $("p-par").innerHTML = `<table class="t"><thead><tr><th>Partido</th><th>Escaños</th><th>Vol. 12M</th><th>Proyección oct–jun</th><th>vs año ant.</th><th>Error FY26</th></tr></thead><tbody>` +
     PARTIES.map((p, k) => { const f = A.fc[k].reduce((a, b) => a + b, 0); return `<tr class="${p === best[0] ? "hl" : ""}" data-p="${esc(p)}"><td><span class="pn">${nb(p)}${p}</span></td><td>${cnt[p] || 0}</td><td>${tot ? Math.round((vol[p] || 0) / tot * 100) + "%" : "–"}</td><td>${n0(f)}</td><td>${dlt(ly9 ? f / ly9 - 1 : NaN)}</td><td>${ne[k] ? Math.round(err[k] / ne[k]) + "%" : "–"}</td></tr>`; }).join("") +
     `<tr><td><span class="pn">${swatch("var(--ink)", 3, "")}Partido elegido por cada EAN</span></td><td>${list.length}</td><td>100%</td><td>${n0(fel)}</td><td>${dlt(ly9 ? fel / ly9 - 1 : NaN)}</td><td></td></tr></tbody></table>
-    <p class="note">«Proyección» = forecast de oct-26 a jun-27 desde la foto sep-26 si ese partido pronosticara todos los EANs de la selección, con los DAs futuros según la bandera. «Error FY26» = media de |forecast − real| / real en las urnas de FY26 de cada EAN (tope 200%); en negrita, el que menos falla con esta selección. Pulsa un partido para filtrar sus EANs.</p>`;
+    <p class="note">«Proyección» = forecast de oct-26 a jun-27 desde la foto sep-26 si ese partido pronosticara todos los EANs de la selección, con los DAs futuros según la bandera. «Error FY26» = media de |forecast − real| / real en las urnas de FY26 de cada EAN (tope 200%); en negrita, el que menos falla con esta selección. Pulsa un partido para abrir su ficha.</p>`;
 }
 $("p-par").addEventListener("click", e => { const r = e.target.closest("tr[data-p]"); if (r) setF("v", r.dataset.p, true); });
 
@@ -579,13 +619,14 @@ function drawList(list) {
   const [sk, sd] = S.sort;
   const L = list.slice().sort((a, b) => { const x = a[sk], y = b[sk]; return (typeof x === "string" ? x.localeCompare(y) : ((isFinite(x) ? x : -1e18) - (isFinite(y) ? y : -1e18))) * sd; }).slice(0, 600);
   $("p-lst").innerHTML = `<table class="t"><thead><tr>${cols.map(([k, l, left]) => `<th class="${left ? "l" : ""}" data-s="${k}" aria-sort="${sk === k ? (sd > 0 ? "ascending" : "descending") : "none"}">${l}${sk === k ? (sd > 0 ? " ↑" : " ↓") : ""}</th>`).join("")}</tr></thead><tbody>` +
-    L.map(e => `<tr data-id="${e.id}"><td class="l">${e.id}</td><td class="l desc" title="${esc(e.d)}">${esc(e.d)}</td><td class="l">${esc(e.h)}</td><td class="l">${esc(e.l)}</td><td class="l">${esc(e.s)}</td><td>${e.age}</td><td class="l"><span class="pn">${nb(e.v)}${esc(e.v)}</span></td><td>${n0(e.v12)}</td><td>${dlt(e.t12)}</td><td>${dlt(e.t6)}</td><td>${n0(e.f9)}</td></tr>`).join("") +
+    L.map(e => `<tr data-id="${e.id}"><td class="l code">${e.id}</td><td class="l desc" title="${esc(e.d)}">${esc(e.d)}</td><td class="l">${esc(e.h)}</td><td class="l">${esc(e.l)}</td><td class="l">${esc(e.s)}</td><td>${e.age}</td><td class="l"><span class="pn">${nb(e.v)}${esc(e.v)}</span></td><td>${n0(e.v12)}</td><td>${dlt(e.t12)}</td><td>${dlt(e.t6)}</td><td>${n0(e.f9)}</td></tr>`).join("") +
     `</tbody></table>${list.length > 600 ? `<p class="note">Se muestran 600 de ${list.length}. Filtra para ver el resto.</p>` : ""}`;
 }
 $("p-lst").addEventListener("click", e => {
   const th = e.target.closest("th[data-s]"); if (th) { S.sort = [th.dataset.s, S.sort[0] === th.dataset.s ? -S.sort[1] : -1]; drawList(sel()); return; }
-  const r = e.target.closest("tr[data-id]"); if (r) setEAN(r.dataset.id);
+  const r = e.target.closest("tr[data-id]"); if (!r) return; const b = r.getBoundingClientRect(); openCard("ean", r.dataset.id, { x: e.clientX, y: b.top });
 });
+$("p-par").addEventListener("click", e => { const r = e.target.closest("tr[data-p]"); if (!r) return; const b = r.getBoundingClientRect(); openCard("party", r.dataset.p, { x: e.clientX, y: b.top }); });
 
 /* ── trends */
 function grpTrends(list) { const A = aggregate(list.map(e => ({ ...e, fc: null }))); return [trend(A.h, 6), trend(A.h, 12), trend(A.ep, 6), trend(A.ep, 12)]; }
@@ -677,6 +718,162 @@ function tabs(id) {
 }
 tabs("ctabs"); tabs("rtabs");
 
+
+/* ── reglas del tapete: números de cm reales en los bordes */
+const CM = 37.7952756;
+function rulers() {
+  $("rx").innerHTML = Array.from({ length: Math.ceil(innerWidth / CM) + 1 }, (_, i) => `<span style="left:${(i * CM).toFixed(1)}px">${i}</span>`).join("");
+  $("ry").innerHTML = Array.from({ length: Math.ceil(innerHeight / CM) + 1 }, (_, i) => i ? `<span style="top:${(i * CM).toFixed(1)}px">${i}</span>` : "").join("");
+}
+
+/* ── fichas: nacen junto al punto pulsado, se arrastran, se apilan y un hilo las une a su escaño.
+   El parlamento no cambia al abrirlas: filtrar es una decisión aparte (botón dentro de la ficha). */
+const CARDS = new Map(); let Z = 1;
+const byId = new Map(ALL.map(e => [e.id, e]));
+const NARROW = matchMedia("(max-width: 960px)"), RM = matchMedia("(prefers-reduced-motion: reduce)");
+const ICO = {
+  close: `<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+  pin: `<svg width="13" height="13" viewBox="0 0 13 13" aria-hidden="true"><path d="M4.5 1.5h4M5.5 1.5v3.4L3.5 7.5h6L7.5 4.9V1.5M6.5 7.5v4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+};
+const errOf = e => { if (!e.err) return null; let b = null; e.err.forEach((x, k) => { if (x != null && (!b || x < b[1])) b = [PARTIES[k], x]; }); return b; };
+
+function cardHTML(c) {
+  if (c.type === "ean") {
+    const e = byId.get(c.id), inSel = cur && cur.list.includes(e), best = errOf(e);
+    const ly9 = e.hist.slice(NM - 11, NM - 2).reduce((a, b) => a + b, 0);
+    return { tag: COL[e.v], title: `<span class="ttl">${e.id}</span>`, body: `
+      <div><h4>${esc(e.d)}</h4><div class="meta">${esc(e.h)}, ${esc(e.l)}</div><div class="meta">${esc(e.s)}, ${e.age} meses, fase ${esc(String(e.f).toLowerCase())}</div></div>
+      <div class="kv"><div><b>${nk(e.v12)}</b><span>Envíos 12M</span>${dlt(e.t12)}</div><div><b>${dlt(e.t6)}</b><span>Trend 6M</span></div><div><b>${nk(e.f9)}</b><span>Proyección 9M</span>${dlt(ly9 ? e.f9 / ly9 - 1 : NaN)}</div></div>
+      <div class="mini"><svg data-mini="${e.id}" role="img" aria-label="Envíos de los últimos 24 meses y proyección"></svg></div>
+      <div class="vote"><span>Elige</span><b>${nb(e.v)}${esc(e.v)}</b>${e.c1 ? `<span>Coalición</span><b>${nb(e.c1)}${nb(e.c2)}<span style="font-weight:450;color:var(--ink-2)">${esc(e.c1)} y ${esc(e.c2)}</span></b>` : ""}${best ? `<span>Menor error</span><b>${nb(best[0])}${esc(best[0])} <span style="font-weight:450;color:var(--muted)">${Math.round(best[1])}% en FY26</span></b>` : ""}</div>
+      ${inSel ? "" : `<div class="outside">Este EAN está fuera de los filtros actuales: su escaño no se ve en el hemiciclo.</div>`}
+      <div class="row"><button class="btn press" type="button" data-act="only">Ver solo este EAN</button><button class="btn ghost press" type="button" data-act="line">Filtrar su línea</button></div>` };
+  }
+  const p = c.id, k = PARTIES.indexOf(p), all = cur ? cur.list : PARL, mine = all.filter(e => e.v === p);
+  const tot = all.reduce((a, e) => a + e.v12, 0), vol = mine.reduce((a, e) => a + e.v12, 0);
+  const errs = k < 0 ? [] : all.map(e => e.err && e.err[k]).filter(x => x != null), err = errs.length ? errs.reduce((a, b) => a + b, 0) / errs.length : null;
+  const proj = k < 0 ? null : mine.reduce((a, e) => a + (e.fc ? e.fc[k].reduce((s, v) => s + (v || 0), 0) : 0), 0);
+  const top = mine.slice().sort((a, b) => b.v12 - a.v12).slice(0, 6);
+  return { tag: COL[p], title: `<span class="ttl txt">${esc(p)}</span>`, body: `
+    <div class="kv"><div><b>${mine.length}</b><span>escaños</span></div><div><b>${tot ? Math.round(vol / tot * 100) : 0}%</b><span>del volumen 12M</span></div><div><b>${err == null ? "–" : Math.round(err) + "%"}</b><span>error medio FY26</span></div></div>
+    ${proj != null ? `<p class="note" style="margin:0">Si pronosticara sus ${mine.length} EANs, proyectaría ${n0(proj)} unidades de oct-26 a jun-27. El error medio usa todos los EANs de la selección, no solo los suyos.</p>` : `<p class="note" style="margin:0">EANs sin un partido ganador claro en FY26.</p>`}
+    ${top.length ? `<table class="minitab"><thead><tr><th>Sus EANs con más volumen</th><th>Envíos 12M</th><th>Trend 12M</th></tr></thead><tbody>${top.map(e => `<tr data-id="${e.id}"><td>${esc(e.d.length > 30 ? e.d.slice(0, 29) + "…" : e.d)}</td><td>${nk(e.v12)}</td><td>${dlt(e.t12)}</td></tr>`).join("")}</tbody></table>` : `<p class="empty" style="padding:4px">Ningún EAN de la selección elige este partido.</p>`}
+    <div class="row"><button class="btn press" type="button" data-act="party">Filtrar por este partido</button></div>` };
+}
+function fillCard(c) {
+  const h = cardHTML(c);
+  c.el.innerHTML = `<div class="fic-in"><div class="fic-h"><span class="tag" style="background:${h.tag}"></span>${h.title}<button class="ib press" type="button" data-act="pin" aria-pressed="${c.pin}" aria-label="Fijar ficha">${ICO.pin}</button><button class="ib press" type="button" data-act="close" aria-label="Cerrar ficha">${ICO.close}</button></div><div class="fic-b">${h.body}</div></div>`;
+  const m = c.el.querySelector("svg[data-mini]"); if (m) requestAnimationFrame(() => drawMini(m, byId.get(c.id)));
+}
+function drawMini(svg, e) {
+  const W = svg.clientWidth || 314, H = svg.clientHeight || 112, h0 = NM - 24, T = 24 + 1 + FM.length;
+  const ml = 34, mr = 4, mt = 6, mb = 18, X = i => ml + i / (T - 1) * (W - ml - mr);
+  const hist = e.hist.slice(h0), ep = Array.from({ length: 24 }, (_, i) => { const j = h0 + i - EP0; return j >= 0 && j < EPN ? e.epos[j] : null; });
+  const fc = e.fc ? e.fc[PARTIES.indexOf(e.vp)].map(v => v || 0) : [];
+  const ymax = Math.max(1, ...hist, ...fc, ...ep.filter(v => v != null)) * 1.1;
+  const step = Math.pow(10, Math.floor(Math.log10(ymax / 2))), nice = [1, 2, 2.5, 5, 10].map(m => m * step).find(s => ymax / s <= 3) || step * 10;
+  const ytop = Math.ceil(ymax / nice) * nice, Y = v => mt + (1 - v / ytop) * (H - mt - mb);
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const f = document.createDocumentFragment(), g = el("g", { class: "grid" }), ax = el("g", { class: "axis" });
+  for (let v = 0; v <= ytop + 1e-9; v += nice) { g.append(el("line", { x1: ml, x2: W - mr, y1: Y(v), y2: Y(v) })); const t = el("text", { x: ml - 6, y: Y(v) + 4, "text-anchor": "end" }); t.textContent = nk(v); ax.append(t); }
+  f.append(el("rect", { x: X(24.5), y: mt, width: X(T - 1) - X(24.5), height: H - mt - mb, class: "fut" }));
+  const allM = M.slice(h0).concat(["2026-09"], FM);
+  allM.forEach((m, i) => { if (m.endsWith("-01") || m.endsWith("-07")) { const t = el("text", { x: X(i), y: H - 4, "text-anchor": "middle" }); t.textContent = mlab(m); ax.append(t); } });
+  const line = (pts, c, w, dash) => { const p = el("path", { d: pts.map(([i, v], j) => (j ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1)).join(""), class: "ln", stroke: c, "stroke-width": w }); if (dash) p.setAttribute("stroke-dasharray", dash); return p; };
+  f.append(g, ax, line(hist.map((v, i) => [i, v]), "var(--ink-2)", 1.7));
+  const epp = ep.map((v, i) => [i, v]).filter(p => p[1] != null); if (epp.length > 1) f.append(line(epp, "var(--ink-2)", 1.4, "4 3"));
+  if (fc.length) { f.append(line(fc.map((v, i) => [25 + i, v]), COL[e.vp] || "var(--ink)", 2.4)); f.append(el("path", { d: `M${X(23)} ${Y(hist[23])}L${X(25)} ${Y(fc[0])}`, stroke: "var(--ink)", "stroke-width": 1, "stroke-dasharray": "2 3", fill: "none" })); }
+  svg.replaceChildren(f);
+}
+function place(c, x, y) { c.x = x; c.y = y; c.el.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px)`; }
+function front(c) { c.el.style.zIndex = ++Z; CARDS.forEach(o => o.el.classList.toggle("top", o === c)); }
+function openCard(type, id, at) {
+  const key = type + ":" + id;
+  if (CARDS.has(key)) { const c = CARDS.get(key); front(c); if (!RM.matches) c.el.firstElementChild.animate([{ transform: "none" }, { transform: "translateY(-5px)" }, { transform: "none" }], { duration: 260, easing: "cubic-bezier(0.23, 1, 0.32, 1)" }); return; }
+  if (CARDS.size >= 8) { const old = [...CARDS.values()].find(o => !o.pin); if (old) closeCard(old.key); }
+  const e = document.createElement("article"); e.className = "fic"; e.dataset.key = key;
+  e.setAttribute("aria-label", type === "ean" ? `Ficha del EAN ${id}` : `Ficha del partido ${id}`);
+  const c = { key, type, id, el: e, x: 0, y: 0, pin: false }; CARDS.set(key, c); fillCard(c);
+  if (NARROW.matches) { $("fichas-m").prepend(e); }
+  else {
+    $("layer").append(e);
+    const w = 340, h = Math.min(e.offsetHeight, innerHeight - 40);
+    let x = at.x + 26, y = at.y - 70, left = false;
+    if (x + w > innerWidth - 14) { x = at.x - w - 26; left = true; }
+    x = Math.max(30, x); y = Math.max(30, Math.min(y, innerHeight - h - 14));
+    for (let i = 0; i < 8 && [...CARDS.values()].some(o => o !== c && Math.abs(o.x - x) < 22 && Math.abs(o.y - y) < 22); i++) { x += 24; y += 24; }
+    place(c, x, y); front(c);
+    if (!RM.matches) { const fi = e.firstElementChild; fi.style.transformOrigin = left ? "100% 20%" : "0 20%"; fi.animate([{ opacity: 0, transform: "scale(.93)" }, { opacity: 1, transform: "none" }], { duration: 230, easing: "cubic-bezier(0.23, 1, 0.32, 1)" }); }
+  }
+  syncCards();
+}
+function closeCard(key) {
+  const c = CARDS.get(key); if (!c) return; CARDS.delete(key);
+  const done = () => c.el.remove();
+  if (RM.matches || NARROW.matches) done(); else c.el.firstElementChild.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "scale(.96)" }], { duration: 150, easing: "cubic-bezier(0.23, 1, 0.32, 1)" }).onfinish = done;
+  syncCards();
+}
+function syncCards() {
+  const eans = new Set([...CARDS.values()].filter(c => c.type === "ean").map(c => c.id)), parts = new Set([...CARDS.values()].filter(c => c.type === "party").map(c => c.id));
+  for (const s of $("hemi").querySelectorAll(".seat")) s.classList.toggle("open", eans.has(s.dataset.id));
+  for (const b of $("tally").querySelectorAll("button[data-p]")) b.classList.toggle("open", parts.has(b.dataset.p));
+  $("tray").hidden = NARROW.matches || !CARDS.size;
+  threads();
+}
+let thrRaf = 0;
+function threads() {
+  if (thrRaf) return;
+  thrRaf = requestAnimationFrame(() => {
+    thrRaf = 0; const svg = $("threads"); if (NARROW.matches) { svg.replaceChildren(); return; }
+    const f = document.createDocumentFragment();
+    CARDS.forEach(c => {
+      const src = c.type === "ean" ? $("hemi").querySelector(`.seat[data-id="${c.id}"]`) : $("tally").querySelector(`button[data-p="${CSS.escape(c.id)}"] .sq`);
+      if (!src) return;
+      const s = src.getBoundingClientRect(), r = c.el.getBoundingClientRect(), sx = s.left + s.width / 2, sy = s.top + s.height / 2;
+      const ex = sx < r.left ? r.left + 2 : sx > r.right ? r.right - 2 : r.left + r.width / 2, ey = sx < r.left || sx > r.right ? r.top + 20 : r.top + 2;
+      const col = c.type === "ean" ? COL[byId.get(c.id).v] : COL[c.id];
+      const sag = Math.min(70, 18 + Math.hypot(ex - sx, ey - sy) * .12);
+      f.append(el("path", { d: `M${sx} ${sy}Q${(sx + ex) / 2} ${Math.max(sy, ey) + sag} ${ex} ${ey}`, stroke: col }), el("circle", { cx: sx, cy: sy, r: 3.6, fill: col }), el("circle", { cx: ex, cy: ey, r: 3, fill: col }));
+    });
+    svg.replaceChildren(f);
+  });
+}
+$("layer").addEventListener("pointerdown", ev => {
+  const card = ev.target.closest(".fic"); if (!card) return; const c = CARDS.get(card.dataset.key); front(c);
+  const h = ev.target.closest(".fic-h"); if (!h || ev.target.closest(".ib") || NARROW.matches) return;
+  ev.preventDefault(); h.setPointerCapture(ev.pointerId); card.classList.add("lift");
+  const dx = ev.clientX - c.x, dy = ev.clientY - c.y, w = card.offsetWidth;
+  const move = m => { place(c, Math.max(-w + 80, Math.min(innerWidth - 80, m.clientX - dx)), Math.max(24, Math.min(innerHeight - 44, m.clientY - dy))); threads(); };
+  const up = () => { card.classList.remove("lift"); h.removeEventListener("pointermove", move); h.removeEventListener("pointerup", up); h.removeEventListener("pointercancel", up); threads(); };
+  h.addEventListener("pointermove", move); h.addEventListener("pointerup", up); h.addEventListener("pointercancel", up);
+});
+function cardClick(ev) {
+  const card = ev.target.closest(".fic"); if (!card) return; const c = CARDS.get(card.dataset.key); if (!c) return;
+  const row = ev.target.closest("tr[data-id]"); if (row) { const r = row.getBoundingClientRect(); openCard("ean", row.dataset.id, { x: r.right, y: r.top }); return; }
+  const a = ev.target.closest("[data-act]"); if (!a) return;
+  const act = a.dataset.act;
+  if (act === "close") closeCard(c.key);
+  else if (act === "pin") { c.pin = !c.pin; a.setAttribute("aria-pressed", c.pin); }
+  else if (act === "only") setEAN(c.id);
+  else if (act === "line") setF("l", byId.get(c.id).l, true);
+  else if (act === "party") setF("v", c.id, true);
+}
+$("layer").addEventListener("click", cardClick); $("fichas-m").addEventListener("click", cardClick);
+$("closeall").addEventListener("click", () => [...CARDS.keys()].forEach(closeCard));
+$("tidy").addEventListener("click", () => {                       // ordena las fichas en abanico junto al borde derecho
+  const list = [...CARDS.values()].sort((a, b) => (+a.el.style.zIndex) - (+b.el.style.zIndex));
+  list.forEach((c, i) => {
+    if (!RM.matches) { c.el.style.transition = "transform 360ms cubic-bezier(0.77, 0, 0.175, 1)"; setTimeout(() => { c.el.style.transition = ""; threads(); }, 380); }
+    place(c, innerWidth - 340 - 30 - (list.length - 1 - i) * 18, 70 + i * 46);
+  });
+  setTimeout(threads, 16); [120, 240, 380].forEach(t => setTimeout(threads, t));
+});
+document.addEventListener("keydown", ev => {
+  if (ev.key !== "Escape" || ev.target.closest("input")) return;
+  const topc = [...CARDS.values()].sort((a, b) => (+b.el.style.zIndex) - (+a.el.style.zIndex)).find(c => !c.pin); if (topc) closeCard(topc.key);
+});
+addEventListener("resize", () => { rulers(); threads(); });
+
 /* ── render */
 function render() {
   const list = sel(), A = aggregate(list); cur = { list, A };
@@ -687,7 +884,8 @@ function render() {
   $("hemi-t").textContent = hasFilter() ? (S.ean ? "Su escaño" : "El parlamento de la selección") : "El parlamento";
   drawHemi(list); drawTally(list); drawFacets(); drawWho(list, A);
   for (const p in PANES) { if (VIS.has(p)) { DIRTY.delete(p); PANES[p](list, A); } else DIRTY.add(p); }
+  CARDS.forEach(fillCard); syncCards();
 }
-$("sub").textContent = `Foto sep-26 · proyección oct-26 a jun-27 · voto con FY26 · ${PARL.length} EANs`;
-drawLines(); render();
+$("sub").textContent = `Foto S&OP sep-26, proyección oct-26 a jun-27, voto con FY26`;
+rulers(); drawLines(); render();
 </script>

@@ -17,7 +17,7 @@ def main():
     D = json.loads((W / "explorador.json").read_text())
     D.update(colors=[b6.COL6[p] for p in D["parties"]], order=b6.ORDER6)
     tpl = (Path(__file__).parent / "explorador_template.html").read_text(encoding="utf-8")
-    font = base64.b64encode((Path(__file__).parent / "fonts" / "schibsted-grotesk-latin-wght-normal.woff2").read_bytes()).decode()  # OFL, incrustada: sin internet
+    font = base64.b64encode((Path(__file__).parent / "fonts" / "bricolage-grotesque-latin-standard-normal.woff2").read_bytes()).decode()  # OFL, incrustada: sin internet
     page = tpl.replace("/*__FONT__*/", font).replace("/*__DATA__*/null", json.dumps(D, ensure_ascii=False, separators=(",", ":")))
     assert "/*__FONT__*/" not in page and "/*__DATA__*/" not in page
     (W / "explorador_artifact.html").write_text(page, encoding="utf-8")
