@@ -169,3 +169,57 @@ Resultados de todas las pruebas hasta 2026-10-10. El contexto vigente está en `
 - Prueba honesta (voto con oct–mar, medido abr–jun), error EAN: a 7–9 meses parlamento 53% vs consenso 73%; a 4–6 meses 60% vs 54%; a 1–3 meses 64% vs 42%. Votar por horizonte no lo arregla (62%); mejor partido único a 1–3 meses 54%.
 - Propuesta: híbrido (consenso meses 1–6, partido del EAN meses 7–9); ciclo de vida para códigos nuevos; guardar los DAs de cada foto.
 - **Corrección del usuario (2026-10-10):** el consenso es la salida de o9 que se quiere sustituir; no es referencia. Prueba honesta sin consenso (`src/six_sin_consenso.py`), error EAN en abr–jun a 7–9 / 4–6 / 1–3 meses: regla de su categoría 64 / 61 / 51%; voto del EAN 53 / 60 / 64%; voto del grupo 53 / 62 / 57%; media de los 6 partidos 64 / 60 / 46%; **media de sus 2 mejores partidos (coalición) 55 / 55 / 53%**. WAPE90 casa coalición 21 / 20 / 12% (reglas 19 / 21 / 13%).
+- **¿Todas las estrategias o 6 partidos?** (`src/todas_vs_partidos.py`, foto sep-25, elegir con oct–mar y medir abr–jun, 690 EANs, 34.020 estrategias sin 3M): la mejor de todas 51,3% (en oct–mar parecía 17%); media de sus 10 mejores 50,4%; mejor de los 6 partidos 50,8% (en oct–mar 28%); coalición de 2 52,8%; regla 61,5%. Con validación cruzada de los 3 quarters de sep-25 (elegir con 2, probar el 3.º, rotando), error EAN medio: mejor de los 6 partidos 43,4%, coalición de 2 44,0%, media de las 10 mejores de todas 47,4%, mejor de todas 48,6%, regla 54,9%. Los 6 partidos ganan en ene–mar (39% vs 44%) y oct–dic (40% vs 51%) y empatan en abr–jun. Dentro de muestra la mejor de todas parece 17% y la de 6 partidos 29%: más opciones = más espejismo, no más puntería.
+
+## 9. Ciclo de vida: con quién compararse (`src/ciclo_vida.py`)
+- Prueba en las fotos sep-25, dic-25 y mar-26 con los EANs de 6–17 meses (223 EANs distintos); forecast = nivel 6M × curva de sus "parecidos" + DAs futuros según bandera; error por quarter.
+- Seccionar más NO mejora: casa × tamaño (la actual) 77% (fragancias, sesgo −29%) y 79% (makeup, −71%); categoría × tamaño, brand y casa no ganan a agrupar solo por tipo.
+- **Fragancias:** mejor = parecidos de toda la categoría + temporada de su casa, sin restar los DAs de lanzamiento de la base: 65% (sesgo +13%). Tamaño no aporta (66%).
+- **Makeup:** mejor = parecidos de su misma línea (lanzamientos anteriores de la línea) + temporada: 61% restando DAs de la base (sesgo −42%) o 71% sin restarlos (sesgo −20%).
+- Restar el 100% de los DAs de la base en los jóvenes los deja muy cortos (los DAs de lanzamiento sí se repiten en forma de pipeline).
+- **Decisión:** un solo partido Ciclo de vida con receta por tipo (fragancias: categoría + temporada de casa; makeup: su línea, plano; sin restar DAs). Prueba honesta (oct–mar → abr–jun, error EAN a 7–9 / 4–6 / 1–3 meses):
+  - Ciclo de vida solo: antes 67 / 63 / 54% → ahora 62 / 54 / 48% (regla 64 / 61 / 51%).
+  - Dos partidos de ciclo (7 partidos): voto 56 / 63 / 64%, coalición 57 / 56 / 53% → peor que uno por tipo: voto 55 / 60 / 62%, coalición 56 / 55 / 52%, voto del grupo 53 / 59 / 54%.
+  - WAPE90 casa, coalición 20 / 17 / 12% vs reglas 19 / 21 / 13%.
+
+## 10. Elección con FY25 y prueba en FY26 (`src/fy25_eleccion.py`, `src/fy25_brujulas.py`) — diseño vigente (2026-10-10)
+- Corrección del usuario: los códigos **votan con FY25** y se mide **desde la foto sep-25** sobre Q2, Q3 y Q4 de FY26; la foto sep-26 solo da el real. Las fotos dic-25 y mar-26 ya no se usan para votar.
+- Para votar con FY25 se simula una foto en sep-24 (histórico hasta ago-24). El trend 12M y la temporada piden 24 meses: FY23 (jul-22..jun-23) se recupera de «Consensus - Final LY M» de la foto sep-26, que coincide al 100% con el histórico del año anterior (fragancias y makeup). En sep-24 no hay DAs ni bandera guardados: base sin limpiar y sin DAs futuros.
+- (Primera versión: solo la foto sep-24, 3 urnas; luego ampliado a las 6 urnas del pasado, abajo.) Votan 786 EANs Central (3 urnas). En la prueba hay 851 EANs de la foto sep-25; 148 sin FY25 toman lo que votaron sus parecidos (casa × tamaño/función con su edad en sep-24; si no hay 5, casa × edad, categoría × edad).
+- Error EAN a EAN a 7–9 / 4–6 / 1–3 meses:
+  - Regla de su categoría: 64% / 53% / 55% (total 57%, WAPE90 casa 12%, sesgo -7%).
+  - Un partido (voto FY25): 67% / 55% / 55% (total 58%, WAPE90 casa 14%, sesgo -12%).
+  - Coalición de 2: 63% / 52% / 51% (total 54%, WAPE90 casa 15%, sesgo -14%).
+  - Media de los 6: 64% / 50% / 49% (total 53%, WAPE90 casa 8%, sesgo -4%).
+  - Ciclo de vida solo: 63% / 50% / 49% (total 53%, WAPE90 casa 11%, sesgo -10%).
+- El ganador de FY25 repite en FY26 en el 18% de los EANs (azar 17%). En FY25 todos los partidos sobrepronosticaron entre +65% y +105% (caída de los códigos existentes): el voto premió al más pesimista.
+- Escaños: Regla fragancias 164, Regla makeup 79, Ciclo de vida 145, Media 6M prudente 202, Media 6M estacional 142, Media 12M estacional 107, Empate 12.
+- Los resultados de §8–9 se calcularon con histórico desde jul-23; desde §10 el panel (`ideo_panel`) arranca en jul-22.
+
+## 11. La decisión en sep-25, solo con el pasado (`src/decision_sep25.py`) — vigente
+- El usuario: en sep-25 no existe la foto sep-26; hay que decidir solo con el pasado.
+- Fotos simuladas sep-24, dic-24 y mar-25 (solo histórico; urnas = quarters cerrados antes de sep-25: sep-24 Q2–Q4, dic-24 Q3–Q4, mar-25 Q4 = 6 urnas).
+- **Ensayo:** elegir con Q2–Q3 FY25 y medir en Q4 FY25 (7–9 / 4–6 / 1–3 meses), error EAN a EAN:
+  - Regla de su categoría 115% / 107% / 88% (total 103%) · un partido 99% / 119% / 105% (total 108%) · coalición 104% / 113% / 86% (total 100%) · media de los 6 116% / 125% / 84% (total 108%).
+  - Ciclo de vida solo 98% / 83% / 65% (total 81%): el mejor en total, mejor que la regla en los 3 plazos (en 1–3 meses gana Media 6M prudente, 57%).
+  - Gana a la regla en fragancias y makeup, jóvenes y maduros, y en las 5 casas (WAPE casa × quarter).
+- **Decisión con el pasado:** Ciclo de vida para todos (los partidos quedan como referencia).
+- **Confirmación con sep-26** (voto con las 6 urnas, foto sep-25 → Q2–Q4 FY26): regla 64% / 53% / 55% (total 57%) · un partido 64% / 55% / 55% (total 58%) · coalición 64% / 51% / 50% (total 54%) · media de los 6 64% / 50% / 49% (total 53%) · **Ciclo de vida 63% / 50% / 49% (total 53%)**. WAPE90 casa: regla 12%, Ciclo 11%, media de los 6 8% (pero en el pasado la media de los 6 era de las peores).
+- El partido ganador del pasado repite en FY26 en el 18% de los EANs (azar 17%).
+
+## 12. Ciclo de vida contra el consenso de o9 (`src/ciclo_vs_cons.py`) — solo comparación
+- Foto sep-25 → real sep-26. A todos los métodos se les suman los DAs futuros de la foto; el consenso va tal cual.
+- Error EAN a EAN a 7–9 / 4–6 / 1–3 meses:
+  - Ciclo de vida (DAs según bandera): 63 / 50 / 49%.
+  - Consenso: 73 / 55 / 54%.
+  - Ciclo + 100% DAs: 72 / 56 / 54%.
+  - Regla + 100% DAs: 71 / 58 / 62%.
+- WAPE90 de la casa:
+  - Ciclo de vida: 17.5 / 12.5 / 15.3% (sesgo −10 / −6 / −13%; gana al consenso en 3 / 1 / 1 de 5 casas).
+  - Consenso: 19.1 / 7.2 / 11.8%.
+  - Ciclo + 100% DAs: 16.0 / 8.7 / 10.7%.
+  - Regla + 100% DAs: 13.9 / 6.2 / 7.8%.
+- Por grupo (9 meses, EAN a EAN, Ciclo de vida vs consenso):
+  - Por edad: 6–11 98 vs 128% · 12–17 63 vs 64% · 18–25 45 vs 44% · 26+ 37 vs 40%.
+  - Por bandera: 0 42 vs 46% · 1 77 vs 57% (con 100% DAs, 102%) · 2 82 vs 121%.
+- Conclusión: gana código a código, no en el total de la casa; la bandera 1 es su punto débil.

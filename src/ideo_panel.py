@@ -11,7 +11,7 @@ Por EAN (todos los EANs de la foto sep-25; los votantes se filtran después):
 Atributos: categoría, casa, franquicia (brand), línea, segmento (tamaño en fragancias, función en makeup), isf, edad, fase.
 
 Edad (decidido con el usuario): meses desde el lanzamiento hasta sep-25. Lanzamiento = primer mes de dos meses seguidos con envío.
-Si ese mes es jul-23 (inicio de los datos) la edad real es desconocida: tramo 26+.
+Si ese mes es jul-22 (inicio de los datos, extendidos con el LY) la edad real es desconocida: tramo 26+.
 Tramos: 6–11, 12–17, 18–25, 26+ meses.
 Fase (madurez): crecimiento / estable / declive según el trend 6M propio frente al año anterior, relativo al de su casa (±15%):
   el mercado cayó un 36–51% en mar–ago 25, así que en absoluto casi todo saldría "declive". Solo con 18+ meses;
@@ -33,8 +33,13 @@ from ptype import add_types  # noqa
 from wape90 import cons_da, fq  # noqa
 
 warnings.filterwarnings("ignore")
-W = hc.W; M = hc.M
+W = hc.W
+# Histórico extendido un año hacia atrás (jul-22..jun-23) con "Consensus - Final LY M" de la foto sep-26: el LY de cada mes coincide
+# al 100% con el histórico del año anterior (comprobado en fragancias y makeup). Permite una foto simulada en sep-24 (voto con FY25).
+M = pd.date_range("2022-07-01", "2027-06-01", freq="MS")
+EXT = M[:12]
 SNAP = "2025-09"
+VOTE_SNAP = "2024-09"                                 # foto simulada: solo histórico (no hay DAs, consenso ni bandera de esa fecha)
 V = pd.Timestamp(SNAP + "-01"); m = M.get_loc(V); MONTHS = list(M[m + 1:m + 10])
 QS = [fq(t) for t in MONTHS]
 QLIST = list(dict.fromkeys(QS))                      # FY26.Q2, FY26.Q3, FY26.Q4
@@ -68,11 +73,25 @@ VERS_F = ["2025-09", "2025-12", "2026-03", "2026-06", "2026-09"]
 VERS_M = ["2025-09", "2026-03", "2026-09"]
 
 
+def extend(H, v, eans):
+    """H (EAN x meses desde jul-23) -> EAN x M, con jul-22..jun-23 tomado del LY de jul-23..jun-24 (foto v = sep-26). NaN antes de la primera venta."""
+    ly = v.pivot_table(index="ean", columns="date", values="cons_ly", aggfunc="sum").reindex(index=eans, columns=EXT + pd.DateOffset(years=1))
+    ly.columns = EXT
+    X = H.reindex(index=eans, columns=M)
+    X[EXT] = ly.values
+    last = M <= hc.LAST
+    f = X.fillna(0).where(pd.DataFrame(np.broadcast_to(last, X.shape), index=X.index, columns=M))
+    started = f.fillna(0).cumsum(axis=1) > 0
+    return f.where(started)
+
+
 def da_plan(d, eans, V, vers):
     """DA planificado de cada mes (EAN x M) visto desde la foto V: el de la última foto W <= V en la que el mes todavía no estaba
     cerrado (W <= mes). Meses anteriores a la primera foto: el que registra la primera foto (o9 los guarda como pasado).
     Devuelve (DA, fuente) con fuente = foto usada por mes (str) para auditar."""
     vs = [v for v in vers if pd.Timestamp(v + "-01") <= V]
+    if not vs:                                       # antes de la primera foto con DAs (foto simulada sep-24): sin DAs
+        return pd.DataFrame(0.0, index=eans, columns=M), pd.Series("", index=M)
     piv = {v: d[d.version == v].pivot_table(index="ean", columns="date", values="da", aggfunc="sum").reindex(index=eans, columns=M).fillna(0)
            for v in vs}
     out = pd.DataFrame(0.0, index=eans, columns=M); src = pd.Series("", index=M)
@@ -92,7 +111,8 @@ def build(snap=SNAP, save=True):
     SNAP_ = snap
     # fragancias
     d = pd.read_parquet(W / "data.parquet")
-    Hf = pd.read_pickle(W / "hist.pkl").reindex(columns=M)
+    Hf = pd.read_pickle(W / "hist.pkl")
+    Hf = extend(Hf, d[d.version == "2026-09"], Hf.index)
     Cf = pd.read_pickle(W / "cuts.pkl").reindex(index=Hf.index, columns=M).fillna(0)
     a = add_types(pd.read_pickle(W / "attr.pkl")).reindex(Hf.index)
     x = d[d.version == SNAP_]
@@ -109,7 +129,8 @@ def build(snap=SNAP, save=True):
     dm, Hdf, Edf, Cdf, attr, fac = mb.load()
     xm = dm[dm.version == SNAP_]
     keep = attr.fam.isin(MU).values
-    Hm, Cm, at = Hdf[keep], Cdf[keep], attr[keep]
+    Hm, Cm, at = Hdf[keep], Cdf[keep].reindex(columns=M).fillna(0), attr[keep]
+    Hm = extend(Hm, dm[dm.version == "2026-09"], Hm.index)
     DAm = np.clip(np.nan_to_num(da_plan(dm, Hm.index, V, VERS_M)[0].values), 0, None)
     Cnm, Dam = cons_da(xm, V, Hm.index, MONTHS)
     isfm = xm.groupby("ean").isf.max().reindex(Hm.index).fillna(0).values
@@ -144,6 +165,8 @@ def build(snap=SNAP, save=True):
     attr["edad"] = age; attr["tramo"] = ageb; attr["fase"] = phase; attr["g6"] = g6
     attr["central"] = central; attr["launch"] = L
     act = (A.sum(1) > 0) | (H0[:, m - 6:m].sum(1) > 0)
+    if snap not in VERS_F:                           # foto simulada: votan todos los Central con actividad
+        attr["foto"] = True
     attr["votante"] = attr.foto & central & act
     attr["real"] = A.sum(1)
     for k, ix in zip(QLIST, QIDX):
