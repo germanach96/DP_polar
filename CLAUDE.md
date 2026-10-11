@@ -83,6 +83,7 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
 - Literatura: combinar gana a elegir; el voto por EAN sirve para vetar a los peores partidos, no para elegir uno.
 - EPOS: forma mensual estable año a año (envíos no); el envío va 3 meses por delante de la venta; envío que crece más que el EPOS = canal cargado → envíos futuros bajan.
 - Patrón: un pico de envío de un trimestre no se repite ni se devuelve; la carga acumulada en 12M (envío/EPOS vs FY25 >+15%) sí anticipa ~12 puntos menos de envío a 3 meses en fragancias (8 de 8 meses; Burberry, Gucci Make up, Marc Jacobs; no en Kylie).
+- Patrones en relativo (`reportes/REPORTE_EPOS_PATRONES.pdf`): el envío oscila 4× el EPOS; el EPOS mantiene su tendencia (79% vs 65%); lanzamientos envían 2–2,5× el EPOS el año 1 y 0,84–0,97× el año 2 (veteranos 1,12×); veteranos pierden 12–23% de EPOS al año (Marc Jacobs 0%), así que el trend de casa no les aplica.
 - Propuesta pendiente de backtest: partido "Consumidor (EPOS)" + coalición + semáforo de carga. Dato que más falta: stock del cliente; el usuario intentará conseguir el WOS (semanas de stock).
 
 ## Reportes (preferencias)
@@ -115,5 +116,5 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
 - **Ideologías (propuesta de 10 partidos, foto sep-25):** `python3 src/ideo_panel.py && python3 src/ideo_engine.py && python3 src/ideo_parties.py && python3 src/ideo_compass.py && python3 src/ideo_report.py && python3 src/ideo_infografia.py`
   - `ideo_engine.py`: banco de 203k estrategias por EAN; `ideo_parties.py`: mejor por EAN, partidos (uno por forma de base), elección, robustez; `ideo_viz.py`: colores y piezas visuales de 10 partidos.
 - **Parlamento de 6 (vigente):** `python3 src/da_conversion.py && python3 src/ideo_brujulas6.py && python3 src/six_multi.py && python3 src/six_report.py && python3 src/six_infografia.py` (requiere antes el bloque de ideologías).
-- **Diagnóstico EPOS:** `python3 src/epos_diag.py` → `work/results/epos_diag.md`; patrón envío ↔ EPOS: `cd src && python3 epos_pattern.py` → `work/results/epos_pattern.md`.
+- **Diagnóstico EPOS:** `python3 src/epos_diag.py` → `work/results/epos_diag.md`; patrón envío ↔ EPOS: `cd src && python3 epos_pattern.py` → `work/results/epos_pattern.md`; patrones en relativo y reporte: `cd src && python3 epos_patrones.py && python3 epos_patrones_report.py`.
 - **Resto de scripts y reportes:** ver `HISTORIAL.md`.

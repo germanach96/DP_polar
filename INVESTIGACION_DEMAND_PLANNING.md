@@ -145,6 +145,21 @@ EPOS disponible de jul-24 a jul-26; envíos de jul-23 a ago-26.
    - Sirve como **semáforo por EAN en fragancias y en Gucci Make up**. En Kylie no funciona: sus EANs "cargados" siguen creciendo. Puede ser que crezca en clientes que no reportan EPOS o que esté ganando tiendas. Con el EPOS solo no se distingue.
    - Por eso hace falta el **WOS (semanas de stock)**: stock en el cliente = WOS × venta semanal. Con él, "cargado" deja de ser una deducción y pasa a ser un dato.
 
+**g) Seis patrones en relativo** (`src/epos_patrones.py` → `reportes/REPORTE_EPOS_PATRONES.pdf`). Como no todos los clientes reportan EPOS, todo compara cada EAN consigo mismo.
+1. **Ruido:** el crecimiento mensual del envío oscila ~4 veces más que el del EPOS (98% de los EANs). Burberry: EPOS mensual entre −11% y −35%; envío entre −50% y +33%.
+2. **Dirección a 12 meses:** envío y EPOS crecen o caen juntos en el 79% de los EANs (correlación 0,64).
+3. **Persistencia:** el EPOS mantiene su dirección de jul–dic a ene–jun en el 79% de los EANs; el envío en el 65% (correlación 0,61 vs 0,20). En makeup el EPOS de jul–dic anticipa el envío de ene–jun mejor que el propio envío (0,40 vs 0,14).
+4. **Lanzamientos:**
+   - Año 1: envío = 2,0× el EPOS en fragancias y 2,5× en makeup (veteranos 1,12×). En el mes 0 de fragancias se envía el 64% de lo que el consumidor comprará en 13 meses.
+   - Año 2 (meses 12–19): baja a 0,97× / 0,84×, con el EPOS de fragancias estable.
+   - Para un EAN de 12–23 meses, el "año pasado" es llenado de canal.
+5. **Veteranos** (con envío desde jul-23, activos): EPOS FY26 de −18% (Burberry), −23% (Gucci), −19% (Gucci Make up), −12% (Kylie) y 0% (Marc Jacobs).
+   - Las casas crecen por los lanzamientos: los EANs anteriores a FY24 pasan del 89% al 64% del envío en fragancias y del 69% al 33% en makeup.
+   - El trend de la casa no aplica a un veterano.
+6. **Carga y bajas:**
+   - Carga acumulada en 12 meses (ver f).
+   - Tras el último envío, en fragancias el EPOS sigue ~6 meses (18% al mes +6); en makeup se agota en 3–4 meses.
+
 ---
 
 ## 3. Recomendación: forecast del consumidor primero, envío después

@@ -184,3 +184,13 @@ Resultados de todas las pruebas hasta 2026-10-10. El contexto vigente está en `
   - Carga acumulada (envío/EPOS 12M vs FY25, ±15%): fragancias, cargados −2% vs normales +10% (envío − EPOS a 3 meses), 8 de 8 meses; Burberry 8/8, Gucci Make up 7/8, Marc Jacobs 6/8, Gucci 4/8, Kylie 1/8 (siguen cargando). Descargados recuperan: makeup 6/8, fragancias 3/8.
   - Casa: Gucci Make up cargó 9 meses (+7% → +16%) y corrigió de golpe (−34% may–jul-26); Kylie y Marc Jacobs descargadas (−15%) enviaron después muy por encima del EPOS.
   - Usuario: el stock del retailer es difícil de conseguir; puede intentar el WOS (semanas de stock) → stock = WOS × EPOS semanal.
+- Patrones en relativo (`src/epos_patrones.py` → `work/results/epos_patrones.md`; `src/epos_patrones_report.py` → `reportes/REPORTE_EPOS_PATRONES.pdf`):
+  - Ruido: el YoY mensual del envío oscila 4,1× el del EPOS (98% de 380 EANs maduros).
+  - Dirección a 12M: misma dirección en el 79% de los EANs (correlación 0,64).
+  - Persistencia de jul–dic a ene–jun: EPOS mantiene el signo en el 79% vs envío 65% (correlación 0,61 vs 0,20); makeup, EPOS → envío siguiente 0,40 vs 0,14.
+  - Lanzamientos jul-24 → jul-25:
+    - Envío/EPOS año 1: 2,03 (fragancias) / 2,51 (makeup); meses 12–19: 0,97 / 0,84; veteranos 1,12.
+    - Mes 0 de fragancias = 64% del EPOS de 13 meses.
+  - Veteranos activos, EPOS FY26: Burberry −18%, Gucci −23%, Gucci Make up −19%, Kylie −12%, Marc Jacobs 0%. Peso en envío de los anteriores a FY24: fragancias 89% → 64%, makeup 69% → 33%.
+  - Bajas: EPOS de fragancias al 18% seis meses después del último envío; makeup a 0 en 4–6 meses.
+  - Pregunta abierta al usuario: ¿el envío de lanzamiento incluye probadores o material de exposición?
