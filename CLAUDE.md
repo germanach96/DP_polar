@@ -9,6 +9,7 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
 - Idea en curso: un **sistema de elecciones** (como el best-fit de o9) donde cada EAN elige su modelo por su rendimiento pasado, comparando también con casa, product line, tamaño y función.
 
 ## Cómo trabajar
+- **Primero, siempre:** el check de skills y plugins de `.claude/CLAUDE.md` (si falta algo, parar y decir qué falta). Después, cargar y usar las skills que encajen con la tarea.
 - Español, lenguaje de negocio, ejemplos concretos, sin jerga sin explicar.
 - No inventar datos ni supuestos: si falta algo, preguntar. Si un resultado sorprende, comprobarlo antes de reportarlo.
 - Reglas objetivas y reproducibles; preferir lo explicable a lo marginalmente mejor y opaco.
