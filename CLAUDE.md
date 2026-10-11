@@ -79,6 +79,11 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
 - Propuestas anteriores (reemplazadas): 10 partidos (`HISTORIAL.md` §7) y 8 partidos EAN/Línea/Segmento/Casa.
 - **En pausa:** reportes del parlamento. Foco en el concepto.
 
+## Investigación y EPOS (2026-10-11; detalle en `INVESTIGACION_DEMAND_PLANNING.md`, `HISTORIAL.md` §9)
+- Literatura: combinar gana a elegir; el voto por EAN sirve para vetar a los peores partidos, no para elegir uno.
+- EPOS: forma mensual estable año a año (envíos no); el envío va 3 meses por delante de la venta; envío que crece más que el EPOS = canal cargado → envíos futuros bajan.
+- Propuesta pendiente de backtest: partido "Consumidor (EPOS)" + coalición. Dato que más falta: stock del cliente por EAN.
+
 ## Reportes (preferencias)
 - PDF A4 horizontal: HTML + SVG impreso con Chromium (`/opt/pw-browsers/chromium-1194/chrome-linux/chrome`), fuente Inter. Diseño cuidado, con gráficos, nada que parezca hecho con prisa.
 - **Hemiciclo de escaños:**
@@ -109,4 +114,5 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
 - **Ideologías (propuesta de 10 partidos, foto sep-25):** `python3 src/ideo_panel.py && python3 src/ideo_engine.py && python3 src/ideo_parties.py && python3 src/ideo_compass.py && python3 src/ideo_report.py && python3 src/ideo_infografia.py`
   - `ideo_engine.py`: banco de 203k estrategias por EAN; `ideo_parties.py`: mejor por EAN, partidos (uno por forma de base), elección, robustez; `ideo_viz.py`: colores y piezas visuales de 10 partidos.
 - **Parlamento de 6 (vigente):** `python3 src/da_conversion.py && python3 src/ideo_brujulas6.py && python3 src/six_multi.py && python3 src/six_report.py && python3 src/six_infografia.py` (requiere antes el bloque de ideologías).
+- **Diagnóstico EPOS:** `python3 src/epos_diag.py` → `work/results/epos_diag.md`.
 - **Resto de scripts y reportes:** ver `HISTORIAL.md`.

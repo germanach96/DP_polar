@@ -169,3 +169,12 @@ Resultados de todas las pruebas hasta 2026-10-10. El contexto vigente está en `
 - Prueba honesta (voto con oct–mar, medido abr–jun), error EAN: a 7–9 meses parlamento 53% vs consenso 73%; a 4–6 meses 60% vs 54%; a 1–3 meses 64% vs 42%. Votar por horizonte no lo arregla (62%); mejor partido único a 1–3 meses 54%.
 - Propuesta: híbrido (consenso meses 1–6, partido del EAN meses 7–9); ciclo de vida para códigos nuevos; guardar los DAs de cada foto.
 - **Corrección del usuario (2026-10-10):** el consenso es la salida de o9 que se quiere sustituir; no es referencia. Prueba honesta sin consenso (`src/six_sin_consenso.py`), error EAN en abr–jun a 7–9 / 4–6 / 1–3 meses: regla de su categoría 64 / 61 / 51%; voto del EAN 53 / 60 / 64%; voto del grupo 53 / 62 / 57%; media de los 6 partidos 64 / 60 / 46%; **media de sus 2 mejores partidos (coalición) 55 / 55 / 53%**. WAPE90 casa coalición 21 / 20 / 12% (reglas 19 / 21 / 13%).
+
+## 9. Investigación externa y diagnóstico de EPOS (2026-10-11)
+- Documento: `INVESTIGACION_DEMAND_PLANNING.md` (literatura + datos). Script: `src/epos_diag.py` → `work/results/epos_diag.md`.
+- Literatura: combinar gana a elegir (M1–M5, FTP §2.6.1); elegir modelo por serie evita el peor pero no acierta el mejor (Petropoulos 2018); ajustes positivos empeoran (Fildes 2025); EPOS ayuda sobre todo combinado con pedidos y stock del canal (Williams & Waller 2014; Van Belle 2021), evidencia mixta (IJOPM 2025).
+- EPOS (jul-24 → jul-26): 98–100% del envío tiene EPOS; EPOS = 79–87% del envío.
+- Forma mensual FY25 vs FY26 (correlación): fragancias envío 0,74 / EPOS 1,00; makeup envío −0,14 / EPOS 0,82. Envío adelantado 3 meses ≈ EPOS (0,73).
+- Carga del canal (envío/EPOS FY25 → FY26) y envío jul–ago-26: GUMU 1,20→1,40, −50%; KYMU 1,31→1,19, +18%; MJ 1,30→1,16, +28%; BBY 1,18→1,23, −6%; Gucci 1,21→1,25, +1%.
+- EANs 18+ meses, cortes ene–mar-26, 6M siguientes, LY × (1 + trend 6M): fragancias error 35,2% plano / 33,0% trend envíos / 31,1% trend EPOS; makeup 62,5 / 56,0 / 56,7% con tope ±30%, sin tope 46,8 / 43,9%. Makeup: coef. trend EPOS 0,66 vs envíos 0,21 (R² 0,55); carga −0,66.
+- Propuesta: partido "Consumidor (EPOS)" (EPOS previsto → envío con desfase 3 meses y corrección de carga) y coalición en vez de ganador único; backtest con cortes oct-25 a mar-26.
