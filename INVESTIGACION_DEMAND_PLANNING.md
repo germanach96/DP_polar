@@ -110,6 +110,41 @@ EPOS disponible de jul-24 a jul-26; envíos de jul-23 a ago-26.
   - **El tope de ±30% tapa esa señal:** sin tope, el error baja del 56% al 44%.
 - **Límites:** solo 3 cortes seguidos de medio año, y la base de año pasado no es la de tu regla de makeup (media 6M). Es una pista sólida para el backtest, no una regla.
 
+**f) ¿Hay un patrón constante "el envío sube, el EPOS no, y luego el envío baja"?** (`src/epos_pattern.py` → `work/results/epos_pattern.md`; cortes mensuales sep-25 → abr/may-26, comparando siempre con el mismo periodo del año anterior)
+
+1. **A corto plazo (un trimestre): el envío vuelve al ritmo del EPOS, pero no devuelve lo que envió de más.**
+
+   | Envío del trimestre | EPOS del trimestre | Envío del trimestre siguiente |
+   |---|---|---|
+   | +69% | −2% (plano) | −1% |
+   | −38% | −4% (plano) | +5% |
+   | +64% | −30% | −11% |
+
+   - El salto del envío desaparece al trimestre siguiente: el pico de un trimestre no se repite.
+   - Pero tampoco hay "resaca": el exceso de un trimestre no se devuelve en los 6 meses siguientes (fragancias devuelve un 0%; makeup ni eso).
+   - Tu frase literal ("subió y luego bajó por debajo de lo normal") solo se cumple en 1 de 9 meses.
+   - En makeup, lo que pase después lo marca el EPOS: el envío siguiente ≈ 0,75 × crecimiento del EPOS. El pico pasado de envíos no cuenta (−0,04).
+2. **Con la carga acumulada en 12 meses sí aparece un patrón** (envío/EPOS de los últimos 12M frente al de FY25):
+   - **Fragancias:** los EANs "cargados" (ratio 15% por encima de FY25) envían en los 3 meses siguientes unos 12 puntos menos que los normales, respecto a su propio EPOS (−2% frente a +10%). **Se cumple en los 8 meses medidos.**
+   - Por casa, en cuántos de los 8 meses los cargados envían menos que los normales:
+
+     | Casa | Meses que se cumple | Cargados | Normales |
+     |---|---|---|---|
+     | Burberry | 8 de 8 | −7% | +9% |
+     | Gucci Make up | 7 de 8 | −22% | −3% |
+     | Marc Jacobs | 6 de 8 | −7% | +10% |
+     | Gucci | 4 de 8 | +5% | +11% |
+     | Kylie | 1 de 8 | +17% (siguen cargando) | −9% |
+
+   - **Descargados → recuperan:** en makeup se cumple en 6 de 8 meses (Gucci Make up 8 de 8); en fragancias es mixto (3 de 8).
+   - **A nivel casa se ve el ciclo completo, pero el momento no es fijo:**
+     - Gucci Make up acumuló carga durante 9 meses (+7% → +16%) sin dejar de enviar por encima del EPOS (+20% a +34%), y la corrección llegó de golpe (−34% en may–jul-26).
+     - Kylie y Marc Jacobs, descargadas (−15%), enviaron después muy por encima de su EPOS (Kylie +32% a +58%).
+3. **Lectura de negocio:**
+   - El patrón existe, pero en el **stock acumulado** (meses de carga), no en el pico de un mes: un pico suelto es casi siempre un cambio de fecha del pedido.
+   - Sirve como **semáforo por EAN en fragancias y en Gucci Make up**. En Kylie no funciona: sus EANs "cargados" siguen creciendo. Puede ser que crezca en clientes que no reportan EPOS o que esté ganando tiendas. Con el EPOS solo no se distingue.
+   - Por eso hace falta el **WOS (semanas de stock)**: stock en el cliente = WOS × venta semanal. Con él, "cargado" deja de ser una deducción y pasa a ser un dato.
+
 ---
 
 ## 3. Recomendación: forecast del consumidor primero, envío después

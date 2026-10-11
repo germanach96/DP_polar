@@ -178,3 +178,9 @@ Resultados de todas las pruebas hasta 2026-10-10. El contexto vigente está en `
 - Carga del canal (envío/EPOS FY25 → FY26) y envío jul–ago-26: GUMU 1,20→1,40, −50%; KYMU 1,31→1,19, +18%; MJ 1,30→1,16, +28%; BBY 1,18→1,23, −6%; Gucci 1,21→1,25, +1%.
 - EANs 18+ meses, cortes ene–mar-26, 6M siguientes, LY × (1 + trend 6M): fragancias error 35,2% plano / 33,0% trend envíos / 31,1% trend EPOS; makeup 62,5 / 56,0 / 56,7% con tope ±30%, sin tope 46,8 / 43,9%. Makeup: coef. trend EPOS 0,66 vs envíos 0,21 (R² 0,55); carga −0,66.
 - Propuesta: partido "Consumidor (EPOS)" (EPOS previsto → envío con desfase 3 meses y corrección de carga) y coalición en vez de ganador único; backtest con cortes oct-25 a mar-26.
+- Patrón envío ↔ EPOS (`src/epos_pattern.py` → `work/results/epos_pattern.md`; cortes sep-25 → may-26, YoY trimestral):
+  - Un pico trimestral de envío no se repite (envío +69% con EPOS plano → −1% el trimestre siguiente), pero el exceso no se devuelve en 6 meses (fragancias 0%). "Sube y luego baja por debajo de lo normal" solo en 1 de 9 meses.
+  - Makeup: envío siguiente ≈ 0,75 × EPOS ahora, −0,04 × envío ahora (R² 0,47); fragancias R² 0,03.
+  - Carga acumulada (envío/EPOS 12M vs FY25, ±15%): fragancias, cargados −2% vs normales +10% (envío − EPOS a 3 meses), 8 de 8 meses; Burberry 8/8, Gucci Make up 7/8, Marc Jacobs 6/8, Gucci 4/8, Kylie 1/8 (siguen cargando). Descargados recuperan: makeup 6/8, fragancias 3/8.
+  - Casa: Gucci Make up cargó 9 meses (+7% → +16%) y corrigió de golpe (−34% may–jul-26); Kylie y Marc Jacobs descargadas (−15%) enviaron después muy por encima del EPOS.
+  - Usuario: el stock del retailer es difícil de conseguir; puede intentar el WOS (semanas de stock) → stock = WOS × EPOS semanal.
