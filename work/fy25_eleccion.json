@@ -1,0 +1,1067 @@
+{
+ "names": [
+  "Regla fragancias",
+  "Regla makeup",
+  "Ciclo de vida",
+  "Media 6M prudente",
+  "Media 6M estacional",
+  "Media 12M estacional"
+ ],
+ "opciones": {
+  "regla": "Regla de su categoría",
+  "un_partido": "Un partido (su voto FY25)",
+  "coalicion": "Coalición de sus 2 mejores",
+  "media6": "Media de los 6"
+ },
+ "horizonte": {
+  "7–9": {
+   "regla": {
+    "ean": 0.643070797582533,
+    "wape90": 0.19115251097796054,
+    "sesgo": -0.12757783151010238
+   },
+   "un_partido": {
+    "ean": 0.6432345379316172,
+    "wape90": 0.20140204545182486,
+    "sesgo": -0.15381451254846223
+   },
+   "coalicion": {
+    "ean": 0.6370433865557104,
+    "wape90": 0.20714700532286884,
+    "sesgo": -0.13928141777631253
+   },
+   "media6": {
+    "ean": 0.6404261155156623,
+    "wape90": 0.20256816699244942,
+    "sesgo": -0.02737121064174719
+   },
+   "F:Regla fragancias": {
+    "ean": 0.6334311172345356,
+    "wape90": 0.25017143719806645,
+    "sesgo": -0.18659675773020834
+   },
+   "F:Regla makeup": {
+    "ean": 0.7263653986870097,
+    "wape90": 0.3647546674763613,
+    "sesgo": 0.10760006478471107
+   },
+   "F:Ciclo de vida": {
+    "ean": 0.628891191655093,
+    "wape90": 0.17524947292014312,
+    "sesgo": -0.1040677524066359
+   },
+   "F:Media 6M prudente": {
+    "ean": 0.6315837559879168,
+    "wape90": 0.3292045060084458,
+    "sesgo": -0.32920450600844586
+   },
+   "F:Media 6M estacional": {
+    "ean": 0.7383753419462753,
+    "wape90": 0.14961585882812012,
+    "sesgo": 0.12230389829011723
+   },
+   "F:Media 12M estacional": {
+    "ean": 0.80967053508448,
+    "wape90": 0.26066454448770754,
+    "sesgo": 0.225737789219979
+   }
+  },
+  "4–6": {
+   "regla": {
+    "ean": 0.5266328635974756,
+    "wape90": 0.11381605129776441,
+    "sesgo": -0.09972124406226279
+   },
+   "un_partido": {
+    "ean": 0.551895608613694,
+    "wape90": 0.14809061906025056,
+    "sesgo": -0.10583482876602313
+   },
+   "coalicion": {
+    "ean": 0.5119888755531786,
+    "wape90": 0.1347808167707832,
+    "sesgo": -0.09232156822940307
+   },
+   "media6": {
+    "ean": 0.49544356620653535,
+    "wape90": 0.08345149428202797,
+    "sesgo": -0.024895803054808097
+   },
+   "F:Regla fragancias": {
+    "ean": 0.5722421744424022,
+    "wape90": 0.13730501816996377,
+    "sesgo": -0.12321021093446227
+   },
+   "F:Regla makeup": {
+    "ean": 0.518857184882117,
+    "wape90": 0.12331392465688636,
+    "sesgo": -0.018729560887865593
+   },
+   "F:Ciclo de vida": {
+    "ean": 0.4971231561560861,
+    "wape90": 0.12494098447755478,
+    "sesgo": -0.05646601823535535
+   },
+   "F:Media 6M prudente": {
+    "ean": 0.5590239456296526,
+    "wape90": 0.3724710675209199,
+    "sesgo": -0.37247106752091996
+   },
+   "F:Media 6M estacional": {
+    "ean": 0.5910993150252506,
+    "wape90": 0.15329547739195773,
+    "sesgo": 0.15329547739195792
+   },
+   "F:Media 12M estacional": {
+    "ean": 0.6640931052392598,
+    "wape90": 0.2682065618577966,
+    "sesgo": 0.2682065618577967
+   }
+  },
+  "1–3": {
+   "regla": {
+    "ean": 0.5521052046175124,
+    "wape90": 0.07128973751510655,
+    "sesgo": -0.0010373859933321405
+   },
+   "un_partido": {
+    "ean": 0.5546067709417908,
+    "wape90": 0.1000728725627229,
+    "sesgo": -0.06631638659117756
+   },
+   "coalicion": {
+    "ean": 0.5043004107988974,
+    "wape90": 0.11767371365519909,
+    "sesgo": -0.11605162064110797
+   },
+   "media6": {
+    "ean": 0.4906713787203864,
+    "wape90": 0.08245849675209277,
+    "sesgo": -0.06501380801769618
+   },
+   "F:Regla fragancias": {
+    "ean": 0.670915175961319,
+    "wape90": 0.0729964334751982,
+    "sesgo": 0.06827564591381119
+   },
+   "F:Regla makeup": {
+    "ean": 0.4589627579497993,
+    "wape90": 0.08352480867958238,
+    "sesgo": -0.07048801301549479
+   },
+   "F:Ciclo de vida": {
+    "ean": 0.4859640771656915,
+    "wape90": 0.15286840439273044,
+    "sesgo": -0.12779588960220112
+   },
+   "F:Media 6M prudente": {
+    "ean": 0.5420229651674012,
+    "wape90": 0.3974688042009637,
+    "sesgo": -0.39746880420096387
+   },
+   "F:Media 6M estacional": {
+    "ean": 0.5777858281816727,
+    "wape90": 0.20895472380475924,
+    "sesgo": 0.026161068130251985
+   },
+   "F:Media 12M estacional": {
+    "ean": 0.5680011680202601,
+    "wape90": 0.1448971319504511,
+    "sesgo": 0.1112331446684196
+   }
+  },
+  "total": {
+   "regla": {
+    "ean": 0.5681381813922408,
+    "wape90": 0.11889984047639565,
+    "sesgo": -0.07002136456664632
+   },
+   "un_partido": {
+    "ean": 0.5779220556239213,
+    "wape90": 0.12466074355221529,
+    "sesgo": -0.104020821533233
+   },
+   "coalicion": {
+    "ean": 0.543310451590996,
+    "wape90": 0.13100545501804234,
+    "sesgo": -0.11415057613216661
+   },
+   "media6": {
+    "ean": 0.5333227940303383,
+    "wape90": 0.08131689849461712,
+    "sesgo": -0.04074699613551214
+   },
+   "F:Regla fragancias": {
+    "ean": 0.6263112230765923,
+    "wape90": 0.11701392634448515,
+    "sesgo": -0.06813545043473579
+   },
+   "F:Regla makeup": {
+    "ean": 0.55300214163408,
+    "wape90": 0.14167003039972284,
+    "sesgo": -0.003727334731527421
+   },
+   "F:Ciclo de vida": {
+    "ean": 0.5289696649476024,
+    "wape90": 0.10922930416710677,
+    "sesgo": -0.09647416182199797
+   },
+   "F:Media 6M prudente": {
+    "ean": 0.5724546035755608,
+    "wape90": 0.37008304277905346,
+    "sesgo": -0.37008304277905346
+   },
+   "F:Media 6M estacional": {
+    "ean": 0.6263757738129325,
+    "wape90": 0.11946510586302264,
+    "sesgo": 0.0967271449397924
+   },
+   "F:Media 12M estacional": {
+    "ean": 0.6675957507366744,
+    "wape90": 0.19721086801445006,
+    "sesgo": 0.19721086801444998
+   }
+  }
+ },
+ "historia": {
+  "Con historia FY25": {
+   "7–9": {
+    "regla": 0.6170995153896824,
+    "un_partido": 0.6212577127955181,
+    "coalicion": 0.6236485110311794,
+    "media6": 0.6049021880513001,
+    "F:Regla fragancias": 0.6129366423517114,
+    "F:Regla makeup": 0.6947477085428827,
+    "F:Ciclo de vida": 0.6116495834687655,
+    "F:Media 6M prudente": 0.6176817945884671,
+    "F:Media 6M estacional": 0.6315552904732129,
+    "F:Media 12M estacional": 0.721504986744723
+   },
+   "4–6": {
+    "regla": 0.48681161285397956,
+    "un_partido": 0.5161186621155839,
+    "coalicion": 0.4835403687767941,
+    "media6": 0.4525459087282194,
+    "F:Regla fragancias": 0.5373068094277126,
+    "F:Regla makeup": 0.48907703166476363,
+    "F:Ciclo de vida": 0.4715542566487758,
+    "F:Media 6M prudente": 0.5405899210548095,
+    "F:Media 6M estacional": 0.4970205937585867,
+    "F:Media 12M estacional": 0.57000609800661
+   },
+   "1–3": {
+    "regla": 0.5055179168262968,
+    "un_partido": 0.510397177904952,
+    "coalicion": 0.47996132016322857,
+    "media6": 0.44371202332998205,
+    "F:Regla fragancias": 0.5573197330562966,
+    "F:Regla makeup": 0.43384137219859936,
+    "F:Ciclo de vida": 0.4693807924097141,
+    "F:Media 6M prudente": 0.5255050367663034,
+    "F:Media 6M estacional": 0.5098382204414876,
+    "F:Media 12M estacional": 0.4740343059614354
+   },
+   "total": {
+    "regla": 0.5297198431639442,
+    "un_partido": 0.542892595299453,
+    "coalicion": 0.520745146567555,
+    "media6": 0.4911390485345871,
+    "F:Regla fragancias": 0.5656671539803485,
+    "F:Regla makeup": 0.5248389481716015,
+    "F:Ciclo de vida": 0.5092856777234347,
+    "F:Media 6M prudente": 0.5561141093971455,
+    "F:Media 6M estacional": 0.5388763111609802,
+    "F:Media 12M estacional": 0.5754959136520127
+   }
+  },
+  "Sin historia FY25 (parecidos)": {
+   "7–9": {
+    "regla": 1.3460978902881344,
+    "un_partido": 1.2381340645550787,
+    "coalicion": 0.9996346643847583,
+    "media6": 1.6020376085989754,
+    "F:Regla fragancias": 1.1882043081155793,
+    "F:Regla makeup": 1.582237381249778,
+    "F:Ciclo de vida": 1.095611224451147,
+    "F:Media 6M prudente": 1.0079015454981737,
+    "F:Media 6M estacional": 3.629930316865554,
+    "F:Media 12M estacional": 3.1962592551114453
+   },
+   "4–6": {
+    "regla": 1.4367795399912784,
+    "un_partido": 1.369606462462056,
+    "coalicion": 1.1622023522135505,
+    "media6": 1.475903989975267,
+    "F:Regla fragancias": 1.370718007397433,
+    "F:Regla makeup": 1.199506510737341,
+    "F:Ciclo de vida": 1.0815208953312319,
+    "F:Media 6M prudente": 0.9803483863767942,
+    "F:Media 6M estacional": 2.741344068304839,
+    "F:Media 12M estacional": 2.81452724092804
+   },
+   "1–3": {
+    "regla": 1.5795142494746395,
+    "un_partido": 1.529579513700712,
+    "coalicion": 1.0410606097345094,
+    "media6": 1.5262857867748278,
+    "F:Regla fragancias": 3.1760832385068585,
+    "F:Regla makeup": 1.0129752399770175,
+    "F:Ciclo de vida": 0.8516822281790892,
+    "F:Media 6M prudente": 0.906299785008159,
+    "F:Media 6M estacional": 2.0762629896238396,
+    "F:Media 12M estacional": 2.640291884507993
+   },
+   "total": {
+    "regla": 1.472548061900333,
+    "un_partido": 1.4025540279402322,
+    "coalicion": 1.074522517521723,
+    "media6": 1.5263744975289564,
+    "F:Regla fragancias": 2.053939220907619,
+    "F:Regla makeup": 1.2159946501274832,
+    "F:Ciclo de vida": 0.9923523450506219,
+    "F:Media 6M prudente": 0.9571277848965263,
+    "F:Media 6M estacional": 2.686209233847602,
+    "F:Media 12M estacional": 2.835727077957975
+   }
+  }
+ },
+ "tramo": {
+  "12–17": {
+   "regla": 0.7122903423470587,
+   "un_partido": 0.7096514829769849,
+   "coalicion": 0.6757502801317642,
+   "media6": 0.6667951573486524,
+   "F:Regla fragancias": 0.8006099954293784,
+   "F:Regla makeup": 0.7167726157499281,
+   "F:Ciclo de vida": 0.6611773214162384,
+   "F:Media 6M prudente": 0.718764587003473,
+   "F:Media 6M estacional": 0.6585197397140029,
+   "F:Media 12M estacional": 0.8072858980157678
+  },
+  "18–25": {
+   "regla": 0.6028509106711174,
+   "un_partido": 0.5496299821357854,
+   "coalicion": 0.5307354475631425,
+   "media6": 0.49312582840113756,
+   "F:Regla fragancias": 0.5476254856814871,
+   "F:Regla makeup": 0.500715290556458,
+   "F:Ciclo de vida": 0.539000376497741,
+   "F:Media 6M prudente": 0.5305543193882526,
+   "F:Media 6M estacional": 0.6343576219202146,
+   "F:Media 12M estacional": 0.5607085939753383
+  },
+  "26+": {
+   "regla": 0.45750234423423886,
+   "un_partido": 0.4841724497907521,
+   "coalicion": 0.46341810217369106,
+   "media6": 0.4305576201876606,
+   "F:Regla fragancias": 0.48839416395346213,
+   "F:Regla makeup": 0.4623557771089998,
+   "F:Ciclo de vida": 0.45104339395865095,
+   "F:Media 6M prudente": 0.5064385450339363,
+   "F:Media 6M estacional": 0.4781243631249697,
+   "F:Media 12M estacional": 0.5003869272081694
+  },
+  "6–11": {
+   "regla": 1.4859960907338428,
+   "un_partido": 1.4171635316334896,
+   "coalicion": 1.142431874613093,
+   "media6": 1.5215282457144748,
+   "F:Regla fragancias": 2.020866667676636,
+   "F:Regla makeup": 1.2394898935739458,
+   "F:Ciclo de vida": 1.0579941189521254,
+   "F:Media 6M prudente": 0.9524628966888765,
+   "F:Media 6M estacional": 2.6836684782979234,
+   "F:Media 12M estacional": 2.7159544899435217
+  }
+ },
+ "casa_q": {
+  "Burberry": {
+   "FY26.Q2": {
+    "regla": 0.003904372946068236,
+    "un_partido": 0.07512128165349564,
+    "coalicion": 0.1467666093225616,
+    "media6": 0.16231341327439655
+   },
+   "FY26.Q3": {
+    "regla": 0.0457132927827644,
+    "un_partido": 0.057973294507145785,
+    "coalicion": 0.008312313313744057,
+    "media6": 0.028155085417491156
+   },
+   "FY26.Q4": {
+    "regla": 0.06355489821168454,
+    "un_partido": 0.044023666033257164,
+    "coalicion": 0.06578509668199528,
+    "media6": 0.1560068773698333
+   }
+  },
+  "Gucci": {
+   "FY26.Q2": {
+    "regla": 0.004999188538097891,
+    "un_partido": 0.01703180620976735,
+    "coalicion": 0.0174215370574089,
+    "media6": 0.029348714534424954
+   },
+   "FY26.Q3": {
+    "regla": 0.11784548294185188,
+    "un_partido": 0.14593807078506593,
+    "coalicion": 0.08240337447511623,
+    "media6": 0.002786778436062808
+   },
+   "FY26.Q4": {
+    "regla": 0.0840571315813457,
+    "un_partido": 0.053666488565261024,
+    "coalicion": 0.0023105285178092482,
+    "media6": 0.10916985119442342
+   }
+  },
+  "Gucci Make up": {
+   "FY26.Q2": {
+    "regla": 0.10676507681395082,
+    "un_partido": 0.08211909175562838,
+    "coalicion": 0.01880928489937252,
+    "media6": 0.059299502068287414
+   },
+   "FY26.Q3": {
+    "regla": 0.29903305795573665,
+    "un_partido": 0.13939874557439402,
+    "coalicion": 0.18977062470340136,
+    "media6": 0.14548802318037068
+   },
+   "FY26.Q4": {
+    "regla": 0.21960725018989846,
+    "un_partido": 0.2940908053687528,
+    "coalicion": 0.3809968546692521,
+    "media6": 0.34255065693731396
+   }
+  },
+  "Kylie Makeup": {
+   "FY26.Q2": {
+    "regla": 0.12107247249759373,
+    "un_partido": 0.22559706383937603,
+    "coalicion": 0.2290476733352424,
+    "media6": 0.011229228138104196
+   },
+   "FY26.Q3": {
+    "regla": 0.1842493612314405,
+    "un_partido": 0.30642106229160043,
+    "coalicion": 0.2932233146363949,
+    "media6": 0.12623644651922405
+   },
+   "FY26.Q4": {
+    "regla": 0.3163997792324738,
+    "un_partido": 0.4102441327192214,
+    "coalicion": 0.4122025306955958,
+    "media6": 0.2608979806380084
+   }
+  },
+  "Marc Jacobs": {
+   "FY26.Q2": {
+    "regla": 0.20654984054761547,
+    "un_partido": 0.07842639731710756,
+    "coalicion": 0.051227412618305074,
+    "media6": 0.09737734356417416
+   },
+   "FY26.Q3": {
+    "regla": 0.04211309537412532,
+    "un_partido": 0.026070174041498747,
+    "coalicion": 0.11249714501759411,
+    "media6": 0.17495531284305518
+   },
+   "FY26.Q4": {
+    "regla": 0.205584911818683,
+    "un_partido": 0.08877167501528821,
+    "coalicion": 0.12215892960526471,
+    "media6": 0.19927408395385787
+   }
+  }
+ },
+ "por": {
+  "Total": {
+   "Total": {
+    "eans": 851,
+    "real": 4692847.0,
+    "seats": {
+     "Regla fragancias": 247,
+     "Regla makeup": 85,
+     "Ciclo de vida": 147,
+     "Media 6M prudente": 126,
+     "Media 6M estacional": 151,
+     "Media 12M estacional": 93,
+     "Empate": 2
+    },
+    "vol": {
+     "Regla fragancias": 0.3292001635680856,
+     "Regla makeup": 0.041511687894363485,
+     "Ciclo de vida": 0.22523960401862664,
+     "Media 6M prudente": 0.15579391358806285,
+     "Media 6M estacional": 0.07513136481969261,
+     "Media 12M estacional": 0.16285210235918623,
+     "Empate": 0.010271163751982539
+    },
+    "win_eans": "Regla fragancias",
+    "win_vol": "Regla fragancias"
+   }
+  },
+  "Categoría": {
+   "Fragancias": {
+    "eans": 270,
+    "real": 3069016.0,
+    "seats": {
+     "Regla fragancias": 122,
+     "Regla makeup": 12,
+     "Ciclo de vida": 31,
+     "Media 6M prudente": 29,
+     "Media 6M estacional": 28,
+     "Media 12M estacional": 46,
+     "Empate": 2
+    },
+    "vol": {
+     "Regla fragancias": 0.3526240984080891,
+     "Regla makeup": 0.03283462842813462,
+     "Ciclo de vida": 0.18163052913376795,
+     "Media 6M prudente": 0.12978394377872257,
+     "Media 6M estacional": 0.0632297127157369,
+     "Media 12M estacional": 0.22419140206502672,
+     "Empate": 0.01570568547052215
+    },
+    "win_eans": "Regla fragancias",
+    "win_vol": "Regla fragancias"
+   },
+   "Makeup": {
+    "eans": 581,
+    "real": 1623831.0,
+    "seats": {
+     "Regla fragancias": 125,
+     "Regla makeup": 73,
+     "Ciclo de vida": 116,
+     "Media 6M prudente": 97,
+     "Media 6M estacional": 123,
+     "Media 12M estacional": 47,
+     "Empate": 0
+    },
+    "vol": {
+     "Regla fragancias": 0.2849292814338438,
+     "Regla makeup": 0.057911198887076305,
+     "Ciclo de vida": 0.3076600951700023,
+     "Media 6M prudente": 0.20495236265350272,
+     "Media 6M estacional": 0.09762530706705316,
+     "Media 12M estacional": 0.04692175478852171,
+     "Empate": 0.0
+    },
+    "win_eans": "Regla fragancias",
+    "win_vol": "Ciclo de vida"
+   }
+  },
+  "Casa": {
+   "Burberry": {
+    "eans": 85,
+    "real": 1361740.0,
+    "seats": {
+     "Regla fragancias": 28,
+     "Regla makeup": 4,
+     "Ciclo de vida": 18,
+     "Media 6M prudente": 7,
+     "Media 6M estacional": 4,
+     "Media 12M estacional": 23,
+     "Empate": 1
+    },
+    "vol": {
+     "Regla fragancias": 0.22580081366486995,
+     "Regla makeup": 0.013943924684594709,
+     "Ciclo de vida": 0.34119582299117307,
+     "Media 6M prudente": 0.05945481516295328,
+     "Media 6M estacional": 0.0037297868903021134,
+     "Media 12M estacional": 0.3215966337186247,
+     "Empate": 0.03427820288748219
+    },
+    "win_eans": "Regla fragancias",
+    "win_vol": "Ciclo de vida"
+   },
+   "Gucci": {
+    "eans": 125,
+    "real": 933477.0,
+    "seats": {
+     "Regla fragancias": 76,
+     "Regla makeup": 2,
+     "Ciclo de vida": 8,
+     "Media 6M prudente": 10,
+     "Media 6M estacional": 15,
+     "Media 12M estacional": 13,
+     "Empate": 1
+    },
+    "vol": {
+     "Regla fragancias": 0.6376193521640062,
+     "Regla makeup": 0.015880412693617518,
+     "Ciclo de vida": 0.029199433944275006,
+     "Media 6M prudente": 0.07004564654512109,
+     "Media 6M estacional": 0.11317257950651168,
+     "Media 12M estacional": 0.1324510405719691,
+     "Empate": 0.0016315345744994253
+    },
+    "win_eans": "Regla fragancias",
+    "win_vol": "Regla fragancias"
+   },
+   "Gucci Make up": {
+    "eans": 261,
+    "real": 234644.0,
+    "seats": {
+     "Regla fragancias": 57,
+     "Regla makeup": 59,
+     "Ciclo de vida": 33,
+     "Media 6M prudente": 22,
+     "Media 6M estacional": 55,
+     "Media 12M estacional": 35,
+     "Empate": 0
+    },
+    "vol": {
+     "Regla fragancias": 0.16427865191524182,
+     "Regla makeup": 0.13021428206133548,
+     "Ciclo de vida": 0.19551320297983327,
+     "Media 6M prudente": 0.14143127461175228,
+     "Media 6M estacional": 0.21065102879255382,
+     "Media 12M estacional": 0.15791155963928333,
+     "Empate": 0.0
+    },
+    "win_eans": "Regla makeup",
+    "win_vol": "Media 6M estacional"
+   },
+   "Kylie Makeup": {
+    "eans": 320,
+    "real": 1389187.0,
+    "seats": {
+     "Regla fragancias": 68,
+     "Regla makeup": 14,
+     "Ciclo de vida": 83,
+     "Media 6M prudente": 75,
+     "Media 6M estacional": 68,
+     "Media 12M estacional": 12,
+     "Empate": 0
+    },
+    "vol": {
+     "Regla fragancias": 0.30530806867613935,
+     "Regla makeup": 0.04569867123720565,
+     "Ciclo de vida": 0.32660253803123696,
+     "Media 6M prudente": 0.21568154611294232,
+     "Media 6M estacional": 0.07853442337136757,
+     "Media 12M estacional": 0.028174752571108137,
+     "Empate": 0.0
+    },
+    "win_eans": "Ciclo de vida",
+    "win_vol": "Ciclo de vida"
+   },
+   "Marc Jacobs": {
+    "eans": 60,
+    "real": 773799.0,
+    "seats": {
+     "Regla fragancias": 18,
+     "Regla makeup": 6,
+     "Ciclo de vida": 5,
+     "Media 6M prudente": 12,
+     "Media 6M estacional": 9,
+     "Media 12M estacional": 10,
+     "Empate": 0
+    },
+    "vol": {
+     "Regla fragancias": 0.2320034014001052,
+     "Regla makeup": 0.08653151529014641,
+     "Ciclo de vida": 0.08471192131289909,
+     "Media 6M prudente": 0.3256155668332474,
+     "Media 6M estacional": 0.10768946457671824,
+     "Media 12M estacional": 0.16344813058688368,
+     "Empate": 0.0
+    },
+    "win_eans": "Regla fragancias",
+    "win_vol": "Media 6M prudente"
+   }
+  },
+  "Edad": {
+   "12–17": {
+    "eans": 71,
+    "real": 978031.0,
+    "seats": {
+     "Regla fragancias": 32,
+     "Regla makeup": 3,
+     "Ciclo de vida": 27,
+     "Media 6M prudente": 4,
+     "Media 6M estacional": 2,
+     "Media 12M estacional": 3,
+     "Empate": 0
+    },
+    "vol": {
+     "Regla fragancias": 0.5342131282137274,
+     "Regla makeup": 0.04354360955838823,
+     "Ciclo de vida": 0.3941153194530644,
+     "Media 6M prudente": 0.02697051524951663,
+     "Media 6M estacional": 0.00048464721465884007,
+     "Media 12M estacional": 0.0006727803106445501,
+     "Empate": 0.0
+    },
+    "win_eans": "Regla fragancias",
+    "win_vol": "Regla fragancias"
+   },
+   "18–25": {
+    "eans": 136,
+    "real": 384181.0,
+    "seats": {
+     "Regla fragancias": 28,
+     "Regla makeup": 5,
+     "Ciclo de vida": 26,
+     "Media 6M prudente": 64,
+     "Media 6M estacional": 11,
+     "Media 12M estacional": 2,
+     "Empate": 0
+    },
+    "vol": {
+     "Regla fragancias": 0.17506071356990585,
+     "Regla makeup": 0.010151465064644009,
+     "Ciclo de vida": 0.26097334329391614,
+     "Media 6M prudente": 0.5180657034054261,
+     "Media 6M estacional": 0.0081888484854795,
+     "Media 12M estacional": 0.027559926180628403,
+     "Empate": 0.0
+    },
+    "win_eans": "Media 6M prudente",
+    "win_vol": "Media 6M prudente"
+   },
+   "26+": {
+    "eans": 563,
+    "real": 3122402.0,
+    "seats": {
+     "Regla fragancias": 146,
+     "Regla makeup": 76,
+     "Ciclo de vida": 59,
+     "Media 6M prudente": 55,
+     "Media 6M estacional": 138,
+     "Media 12M estacional": 87,
+     "Empate": 2
+    },
+    "vol": {
+     "Regla fragancias": 0.2507752044739915,
+     "Regla makeup": 0.045233125010808985,
+     "Ciclo de vida": 0.17685294846723773,
+     "Media 6M prudente": 0.16162620956558443,
+     "Media 6M estacional": 0.11176011288745011,
+     "Media 12M estacional": 0.2383152457627173,
+     "Empate": 0.015437153832209945
+    },
+    "win_eans": "Regla fragancias",
+    "win_vol": "Regla fragancias"
+   },
+   "6–11": {
+    "eans": 81,
+    "real": 208233.0,
+    "seats": {
+     "Regla fragancias": 41,
+     "Regla makeup": 1,
+     "Ciclo de vida": 35,
+     "Media 6M prudente": 3,
+     "Media 6M estacional": 0,
+     "Media 12M estacional": 1,
+     "Empate": 0
+    },
+    "vol": {
+     "Regla fragancias": 0.8266365081423214,
+     "Regla makeup": 0.034024386144367126,
+     "Ciclo de vida": 0.09168095354722834,
+     "Media 6M prudente": 0.005023219182358224,
+     "Media 6M estacional": 0.0,
+     "Media 12M estacional": 0.04263493298372496,
+     "Empate": 0.0
+    },
+    "win_eans": "Regla fragancias",
+    "win_vol": "Regla fragancias"
+   }
+  },
+  "Fase": {
+   "Consolidación": {
+    "eans": 71,
+    "real": 978031.0,
+    "seats": {
+     "Regla fragancias": 32,
+     "Regla makeup": 3,
+     "Ciclo de vida": 27,
+     "Media 6M prudente": 4,
+     "Media 6M estacional": 2,
+     "Media 12M estacional": 3,
+     "Empate": 0
+    },
+    "vol": {
+     "Regla fragancias": 0.5342131282137274,
+     "Regla makeup": 0.04354360955838823,
+     "Ciclo de vida": 0.3941153194530644,
+     "Media 6M prudente": 0.02697051524951663,
+     "Media 6M estacional": 0.00048464721465884007,
+     "Media 12M estacional": 0.0006727803106445501,
+     "Empate": 0.0
+    },
+    "win_eans": "Regla fragancias",
+    "win_vol": "Regla fragancias"
+   },
+   "Crecimiento": {
+    "eans": 292,
+    "real": 1661262.0,
+    "seats": {
+     "Regla fragancias": 57,
+     "Regla makeup": 68,
+     "Ciclo de vida": 30,
+     "Media 6M prudente": 62,
+     "Media 6M estacional": 30,
+     "Media 12M estacional": 44,
+     "Empate": 1
+    },
+    "vol": {
+     "Regla fragancias": 0.26143799111759614,
+     "Regla makeup": 0.08452610124110466,
+     "Ciclo de vida": 0.1083585852201519,
+     "Media 6M prudente": 0.22139734731788244,
+     "Media 6M estacional": 0.038567065279287674,
+     "Media 12M estacional": 0.25761499390222614,
+     "Empate": 0.028097915921751055
+    },
+    "win_eans": "Regla makeup",
+    "win_vol": "Regla fragancias"
+   },
+   "Declive": {
+    "eans": 277,
+    "real": 920460.0,
+    "seats": {
+     "Regla fragancias": 88,
+     "Regla makeup": 3,
+     "Ciclo de vida": 40,
+     "Media 6M prudente": 39,
+     "Media 6M estacional": 87,
+     "Media 12M estacional": 20,
+     "Empate": 0
+    },
+    "vol": {
+     "Regla fragancias": 0.24930143623840254,
+     "Regla makeup": 0.002251048388849054,
+     "Ciclo de vida": 0.32148382330573844,
+     "Media 6M prudente": 0.2645850987549703,
+     "Media 6M estacional": 0.1254753058253482,
+     "Media 12M estacional": 0.03690328748669144,
+     "Empate": 0.0
+    },
+    "win_eans": "Regla fragancias",
+    "win_vol": "Ciclo de vida"
+   },
+   "Estable": {
+    "eans": 130,
+    "real": 924861.0,
+    "seats": {
+     "Regla fragancias": 29,
+     "Regla makeup": 10,
+     "Ciclo de vida": 15,
+     "Media 6M prudente": 18,
+     "Media 6M estacional": 32,
+     "Media 12M estacional": 25,
+     "Empate": 1
+    },
+    "vol": {
+     "Regla fragancias": 0.20163786774445025,
+     "Regla makeup": 0.0028588079722250154,
+     "Ciclo de vida": 0.19088490054181115,
+     "Media 6M prudente": 0.09985716772574474,
+     "Media 6M estacional": 0.18655884505887912,
+     "Media 12M estacional": 0.3165556770152488,
+     "Empate": 0.0016467339416409601
+    },
+    "win_eans": "Media 6M estacional",
+    "win_vol": "Media 12M estacional"
+   },
+   "Lanzamiento": {
+    "eans": 81,
+    "real": 208233.0,
+    "seats": {
+     "Regla fragancias": 41,
+     "Regla makeup": 1,
+     "Ciclo de vida": 35,
+     "Media 6M prudente": 3,
+     "Media 6M estacional": 0,
+     "Media 12M estacional": 1,
+     "Empate": 0
+    },
+    "vol": {
+     "Regla fragancias": 0.8266365081423214,
+     "Regla makeup": 0.034024386144367126,
+     "Ciclo de vida": 0.09168095354722834,
+     "Media 6M prudente": 0.005023219182358224,
+     "Media 6M estacional": 0.0,
+     "Media 12M estacional": 0.04263493298372496,
+     "Empate": 0.0
+    },
+    "win_eans": "Regla fragancias",
+    "win_vol": "Regla fragancias"
+   }
+  },
+  "Historia": {
+   "Con historia FY25": {
+    "eans": 775,
+    "real": 4501623.0,
+    "seats": {
+     "Regla fragancias": 206,
+     "Regla makeup": 85,
+     "Ciclo de vida": 112,
+     "Media 6M prudente": 126,
+     "Media 6M estacional": 151,
+     "Media 12M estacional": 93,
+     "Empate": 2
+    },
+    "vol": {
+     "Regla fragancias": 0.3049462382789496,
+     "Regla makeup": 0.043275058795461105,
+     "Ciclo de vida": 0.23056662008346768,
+     "Media 6M prudente": 0.16241186789742276,
+     "Media 6M estacional": 0.07832286266530983,
+     "Media 12M estacional": 0.16976988077411193,
+     "Empate": 0.010707471505277096
+    },
+    "win_eans": "Regla fragancias",
+    "win_vol": "Regla fragancias"
+   },
+   "Sin historia FY25 (parecidos)": {
+    "eans": 76,
+    "real": 191224.0,
+    "seats": {
+     "Regla fragancias": 41,
+     "Regla makeup": 0,
+     "Ciclo de vida": 35,
+     "Media 6M prudente": 0,
+     "Media 6M estacional": 0,
+     "Media 12M estacional": 0,
+     "Empate": 0
+    },
+    "vol": {
+     "Regla fragancias": 0.900164205329875,
+     "Regla makeup": 0.0,
+     "Ciclo de vida": 0.09983579467012509,
+     "Media 6M prudente": 0.0,
+     "Media 6M estacional": 0.0,
+     "Media 12M estacional": 0.0,
+     "Empate": 0.0
+    },
+    "win_eans": "Regla fragancias",
+    "win_vol": "Regla fragancias"
+   }
+  }
+ },
+ "coaliciones": [
+  {
+   "par": "Ciclo de vida + Media 6M estacional",
+   "eans": 141,
+   "vol": 0.11748816869588972
+  },
+  {
+   "par": "Ciclo de vida + Media 6M prudente",
+   "eans": 141,
+   "vol": 0.1655690032085001
+  },
+  {
+   "par": "Regla makeup + Media 6M prudente",
+   "eans": 125,
+   "vol": 0.11866613166804714
+  },
+  {
+   "par": "Regla fragancias + Ciclo de vida",
+   "eans": 106,
+   "vol": 0.1751829965903427
+  },
+  {
+   "par": "Regla fragancias + Media 12M estacional",
+   "eans": 65,
+   "vol": 0.07910208877468197
+  },
+  {
+   "par": "Regla fragancias + Media 6M estacional",
+   "eans": 40,
+   "vol": 0.006349450557412164
+  },
+  {
+   "par": "Regla fragancias + Media 6M prudente",
+   "eans": 40,
+   "vol": 0.09587080081664712
+  },
+  {
+   "par": "Regla fragancias + Regla makeup",
+   "eans": 39,
+   "vol": 0.016387067381485057
+  },
+  {
+   "par": "Media 6M prudente + Media 12M estacional",
+   "eans": 30,
+   "vol": 0.08648012603010496
+  },
+  {
+   "par": "Ciclo de vida + Media 12M estacional",
+   "eans": 28,
+   "vol": 0.08794320377374332
+  },
+  {
+   "par": "Regla makeup + Media 12M estacional",
+   "eans": 24,
+   "vol": 0.009626565707341408
+  },
+  {
+   "par": "Media 6M estacional + Media 12M estacional",
+   "eans": 23,
+   "vol": 0.014537017720799336
+  },
+  {
+   "par": "Media 6M prudente + Media 6M estacional",
+   "eans": 22,
+   "vol": 0.019374166683891463
+  },
+  {
+   "par": "Regla makeup + Ciclo de vida",
+   "eans": 14,
+   "vol": 0.003658333629883949
+  },
+  {
+   "par": "Regla makeup + Media 6M estacional",
+   "eans": 13,
+   "vol": 0.0037648787612295904
+  }
+ ],
+ "n_votantes_fy25": 860,
+ "n_prueba": 851,
+ "sin_historia": 76,
+ "niveles": {
+  "propio": 775,
+  "parecidos: casa × edad": 38,
+  "parecidos: casa × tamaño/función × edad": 33,
+  "parecidos: categoría × edad": 5
+ },
+ "real_fy25": 7970203.0,
+ "real_fy26": 4692847.0,
+ "persistencia": {
+  "igual": 0.17548387096774193,
+  "azar": 0.16666666666666666,
+  "n": 775
+ },
+ "sesgo_fy25": {
+  "Regla fragancias": 0.9259074449826161,
+  "Regla makeup": 0.9028724510823791,
+  "Ciclo de vida": 0.6171992723571162,
+  "Media 6M prudente": 0.677735858540369,
+  "Media 6M estacional": 1.2455892428123425,
+  "Media 12M estacional": 1.0659748492167083
+ },
+ "error_fy25": {
+  "Regla fragancias": 1.2180259540895804,
+  "Regla makeup": 1.0604551322959737,
+  "Ciclo de vida": 0.884931903250472,
+  "Media 6M prudente": 0.8807339104974276,
+  "Media 6M estacional": 1.4707371171857115,
+  "Media 12M estacional": 1.2289061234346168
+ },
+ "sesgo_fy26": {
+  "Regla fragancias": -0.06813545043473568,
+  "Regla makeup": -0.003727334731527421,
+  "Ciclo de vida": -0.09647416182199797,
+  "Media 6M prudente": -0.37008304277905346,
+  "Media 6M estacional": 0.0967271449397924,
+  "Media 12M estacional": 0.19721086801444998
+ }
+}

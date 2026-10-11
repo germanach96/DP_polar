@@ -1,0 +1,101 @@
+{
+ "error_ean": {
+  "7–9 meses (foto 2025-09)": {
+   "Regla de su categoría": 0.6426975040671746,
+   "Parlamento (voto del EAN)": 0.5452395061777057,
+   "Voto del grupo (casa×tamaño/función×edad)": 0.5346294174699546,
+   "Media de los 6 partidos": 0.6381016815991075,
+   "Media de sus 2 mejores": 0.5574796586367793,
+   "Solo Regla fragancias": 0.6330578237191772,
+   "Solo Regla makeup": 0.7261387561955421,
+   "Solo Ciclo de vida": 0.6235988398580982,
+   "Solo Media 6M prudente": 0.6314266931752788,
+   "Solo Media 6M estacional": 0.7389614697291795,
+   "Solo Media 12M estacional": 0.8128839225694472
+  },
+  "4–6 meses (foto 2025-12)": {
+   "Regla de su categoría": 0.6067921868807982,
+   "Parlamento (voto del EAN)": 0.5969882552512835,
+   "Voto del grupo (casa×tamaño/función×edad)": 0.5861260533821622,
+   "Media de los 6 partidos": 0.5997500550771768,
+   "Media de sus 2 mejores": 0.5453674413780868,
+   "Solo Regla fragancias": 0.6067921868807982,
+   "Solo Regla makeup": 0.7508321280892896,
+   "Solo Ciclo de vida": 0.5388335377900773,
+   "Solo Media 6M prudente": 0.57889870082926,
+   "Solo Media 6M estacional": 0.8040120722071418,
+   "Solo Media 12M estacional": 0.6858564714518316
+  },
+  "1–3 meses (foto 2026-03)": {
+   "Regla de su categoría": 0.5083743595735375,
+   "Parlamento (voto del EAN)": 0.6179539448799375,
+   "Voto del grupo (casa×tamaño/función×edad)": 0.5421086290630901,
+   "Media de los 6 partidos": 0.472136768830104,
+   "Media de sus 2 mejores": 0.5198914270403528,
+   "Solo Regla fragancias": 0.5945001641479273,
+   "Solo Regla makeup": 0.5568143183768509,
+   "Solo Ciclo de vida": 0.47855381285632576,
+   "Solo Media 6M prudente": 0.5558218952870806,
+   "Solo Media 6M estacional": 0.8474263358609149,
+   "Solo Media 12M estacional": 0.5688449803751311
+  }
+ },
+ "wape90": {
+  "regla": {
+   "7–9": {
+    "wape90": 0.1915258044933189,
+    "sesgo": -0.1279511250254607
+   },
+   "4–6": {
+    "wape90": 0.21339076551945976,
+    "sesgo": -0.2133907655194598
+   },
+   "1–3": {
+    "wape90": 0.12584981874603904,
+    "sesgo": -0.09746952492345773
+   }
+  },
+  "parlamento": {
+   "7–9": {
+    "wape90": 0.19624617475534067,
+    "sesgo": -0.017803094192495927
+   },
+   "4–6": {
+    "wape90": 0.20251017701008883,
+    "sesgo": 0.03710431887548671
+   },
+   "1–3": {
+    "wape90": 0.16751593203218176,
+    "sesgo": 0.14380124498535496
+   }
+  },
+  "coalición 2": {
+   "7–9": {
+    "wape90": 0.19581895972437577,
+    "sesgo": -0.04933708708541906
+   },
+   "4–6": {
+    "wape90": 0.16882827405227696,
+    "sesgo": 0.037604667514171464
+   },
+   "1–3": {
+    "wape90": 0.11981346139962809,
+    "sesgo": 0.11981346139962801
+   }
+  },
+  "media 6": {
+   "7–9": {
+    "wape90": 0.19426285123721063,
+    "sesgo": -0.029127900997252487
+   },
+   "4–6": {
+    "wape90": 0.14774696699193876,
+    "sesgo": 0.09100998900421886
+   },
+   "1–3": {
+    "wape90": 0.17497567894940216,
+    "sesgo": 0.17497567894940214
+   }
+  }
+ }
+}

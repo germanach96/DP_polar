@@ -1,0 +1,132 @@
+{
+ "horizonte": {
+  "1–3": {
+   "Consenso o9": {
+    "ean": 0.5414076103868566,
+    "wape90": 0.11750444880184222,
+    "sesgo": -0.10975240096085559
+   },
+   "Ciclo de vida (DAs según bandera)": {
+    "ean": 0.4859640771656915,
+    "wape90": 0.15286840439273044,
+    "sesgo": -0.12779588960220112,
+    "casas_gana_al_consenso": 1
+   },
+   "Ciclo de vida + 100% DAs": {
+    "ean": 0.5437289562728331,
+    "wape90": 0.10692409832453662,
+    "sesgo": -0.05452728853580591,
+    "casas_gana_al_consenso": 2
+   },
+   "Regla + 100% DAs": {
+    "ean": 0.615312065682412,
+    "wape90": 0.07790395953621897,
+    "sesgo": 0.07197258874762569,
+    "casas_gana_al_consenso": 2
+   }
+  },
+  "4–6": {
+   "Consenso o9": {
+    "ean": 0.5456073422340658,
+    "wape90": 0.07208925125356705,
+    "sesgo": 0.06384893039801764
+   },
+   "Ciclo de vida (DAs según bandera)": {
+    "ean": 0.4971231561560861,
+    "wape90": 0.12494098447755478,
+    "sesgo": -0.05646601823535524,
+    "casas_gana_al_consenso": 1
+   },
+   "Ciclo de vida + 100% DAs": {
+    "ean": 0.5599188792182963,
+    "wape90": 0.08690786337059184,
+    "sesgo": 0.02785361210995796,
+    "casas_gana_al_consenso": 2
+   },
+   "Regla + 100% DAs": {
+    "ean": 0.5819952860603624,
+    "wape90": 0.06246702651513855,
+    "sesgo": -0.015521874213480058,
+    "casas_gana_al_consenso": 3
+   }
+  },
+  "7–9": {
+   "Consenso o9": {
+    "ean": 0.7281489001270521,
+    "wape90": 0.19132246331680824,
+    "sesgo": 0.08790108617124637
+   },
+   "Ciclo de vida (DAs según bandera)": {
+    "ean": 0.628891191655093,
+    "wape90": 0.17524947292014312,
+    "sesgo": -0.1040677524066359,
+    "casas_gana_al_consenso": 3
+   },
+   "Ciclo de vida + 100% DAs": {
+    "ean": 0.7216172748266673,
+    "wape90": 0.15960397226827427,
+    "sesgo": -0.0006013516775391636,
+    "casas_gana_al_consenso": 3
+   },
+   "Regla + 100% DAs": {
+    "ean": 0.7083711999160075,
+    "wape90": 0.13898151436405481,
+    "sesgo": -0.024486252532719743,
+    "casas_gana_al_consenso": 3
+   }
+  }
+ },
+ "tramo": {
+  "12–17": {
+   "n": 71,
+   "Consenso o9": 0.636391893508488,
+   "Ciclo de vida (DAs según bandera)": 0.630730191555737,
+   "Ciclo de vida + 100% DAs": 0.6726715577757125,
+   "Regla + 100% DAs": 0.710441920473761
+  },
+  "18–25": {
+   "n": 136,
+   "Consenso o9": 0.4363789339870926,
+   "Ciclo de vida (DAs según bandera)": 0.4463253607328491,
+   "Ciclo de vida + 100% DAs": 0.44157055195218314,
+   "Regla + 100% DAs": 0.44268947263611363
+  },
+  "26+": {
+   "n": 563,
+   "Consenso o9": 0.4011971308058019,
+   "Ciclo de vida (DAs según bandera)": 0.3659399769516901,
+   "Ciclo de vida + 100% DAs": 0.3671961027169442,
+   "Regla + 100% DAs": 0.3484258542995248
+  },
+  "6–11": {
+   "n": 81,
+   "Consenso o9": 1.278005887635485,
+   "Ciclo de vida (DAs según bandera)": 0.9834198310787817,
+   "Ciclo de vida + 100% DAs": 2.2746261146806157,
+   "Regla + 100% DAs": 2.394448465371374
+  }
+ },
+ "bandera": {
+  "0": {
+   "n": 608,
+   "Consenso o9": 0.4579063758222135,
+   "Ciclo de vida (DAs según bandera)": 0.423833777818812,
+   "Ciclo de vida + 100% DAs": 0.423833777818812,
+   "Regla + 100% DAs": 0.42112271318090744
+  },
+  "1": {
+   "n": 176,
+   "Consenso o9": 0.5739713372161691,
+   "Ciclo de vida (DAs según bandera)": 0.7743159365078044,
+   "Ciclo de vida + 100% DAs": 1.016145483234395,
+   "Regla + 100% DAs": 0.8761983166740905
+  },
+  "2": {
+   "n": 67,
+   "Consenso o9": 1.2146678355080527,
+   "Ciclo de vida (DAs según bandera)": 0.8186863274607807,
+   "Ciclo de vida + 100% DAs": 2.275324612986789,
+   "Regla + 100% DAs": 2.5332635377060018
+  }
+ }
+}

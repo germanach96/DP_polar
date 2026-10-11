@@ -34,6 +34,7 @@ T = pd.DataFrame(rows).T
 pd.set_option('display.width', 200); print((T * 100).round(0).to_string())
 # WAPE90 por casa (ponderado) para las opciones principales
 print()
+W90 = {}
 for f, lg in [('2025-09', '7–9'), ('2025-12', '4–6'), ('2026-03', '1–3')]:
     x = B[(B.foto == f) & (B.q == 'FY26.Q4')].copy(); FF = F(x); n = np.arange(len(x))
     p, _ = sm.apply_vote(x, voto)
@@ -44,4 +45,8 @@ for f, lg in [('2025-09', '7–9'), ('2025-12', '4–6'), ('2026-03', '1–3')]:
     for k, v in opts.items():
         x['_f'] = v; g = x.groupby('casa').agg(r=('real', 'sum'), f=('_f', 'sum'))
         out.append(f"{k} {((g.f - g.r).abs().sum() / g.r.sum()):.1%} (sesgo {g.f.sum() / g.r.sum() - 1:+.0%})")
+        W90.setdefault(k, {})[lg] = dict(wape90=float((g.f - g.r).abs().sum() / g.r.sum()), sesgo=float(g.f.sum() / g.r.sum() - 1))
     print(f"{lg} meses: " + " · ".join(out))
+import json
+(Path(__file__).resolve().parents[1] / 'work' / 'six_sin_consenso.json').write_text(json.dumps(
+    dict(error_ean={c: {k: float(v) for k, v in T[c].items()} for c in T.columns}, wape90=W90), indent=1, ensure_ascii=False))

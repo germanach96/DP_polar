@@ -1,0 +1,1502 @@
+{
+ "total": [
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 0% DAs base",
+   "error": 0.9910394388159894,
+   "sesgo": 0.3694162779197796,
+   "n": 223.0
+  },
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 100% DAs base",
+   "error": 0.7423496257819151,
+   "sesgo": -0.4105392433325652,
+   "n": 223.0
+  },
+  {
+   "variante": "casa + temporada · resta 0% DAs base",
+   "error": 0.7286745209079398,
+   "sesgo": -0.06806959376589794,
+   "n": 223.0
+  },
+  {
+   "variante": "casa + temporada · resta 100% DAs base",
+   "error": 0.745826428110012,
+   "sesgo": -0.5600713783256199,
+   "n": 223.0
+  },
+  {
+   "variante": "casa · resta 0% DAs base",
+   "error": 0.7472871073893844,
+   "sesgo": -0.07918171756507097,
+   "n": 223.0
+  },
+  {
+   "variante": "casa · resta 100% DAs base",
+   "error": 0.7468690220805586,
+   "sesgo": -0.5635954820233473,
+   "n": 223.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 0% DAs base",
+   "error": 0.8542191815787684,
+   "sesgo": 0.010149047662949995,
+   "n": 223.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 100% DAs base",
+   "error": 0.7795069927019485,
+   "sesgo": -0.516644674050884,
+   "n": 223.0
+  },
+  {
+   "variante": "casa×seg · resta 0% DAs base",
+   "error": 0.8750858467623019,
+   "sesgo": 0.012316071184773847,
+   "n": 223.0
+  },
+  {
+   "variante": "casa×seg · resta 100% DAs base",
+   "error": 0.7804227398378357,
+   "sesgo": -0.5095066016363794,
+   "n": 223.0
+  },
+  {
+   "variante": "categoría + temporada · resta 0% DAs base",
+   "error": 0.7154331561797823,
+   "sesgo": -0.07591930283734338,
+   "n": 223.0
+  },
+  {
+   "variante": "categoría + temporada · resta 100% DAs base",
+   "error": 0.7500902644118236,
+   "sesgo": -0.5596059577349424,
+   "n": 223.0
+  },
+  {
+   "variante": "categoría · resta 0% DAs base",
+   "error": 0.7157389437226478,
+   "sesgo": -0.0983424693406092,
+   "n": 223.0
+  },
+  {
+   "variante": "categoría · resta 100% DAs base",
+   "error": 0.7545338326600632,
+   "sesgo": -0.5641968987233232,
+   "n": 223.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 0% DAs base",
+   "error": 0.7953440901994236,
+   "sesgo": -0.08539376372976915,
+   "n": 223.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 100% DAs base",
+   "error": 0.7915271186983613,
+   "sesgo": -0.5717326851780533,
+   "n": 223.0
+  },
+  {
+   "variante": "categoría×seg · resta 0% DAs base",
+   "error": 0.7875403378098784,
+   "sesgo": -0.10311380445029183,
+   "n": 223.0
+  },
+  {
+   "variante": "categoría×seg · resta 100% DAs base",
+   "error": 0.7824460031595959,
+   "sesgo": -0.5730305276560899,
+   "n": 223.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 0% DAs base",
+   "error": 0.8121311519588954,
+   "sesgo": -0.05252896970014154,
+   "n": 223.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 100% DAs base",
+   "error": 0.7796823608693507,
+   "sesgo": -0.5487923692977368,
+   "n": 223.0
+  },
+  {
+   "variante": "franquicia · resta 0% DAs base",
+   "error": 0.8268777914043399,
+   "sesgo": -0.0466600858792654,
+   "n": 223.0
+  },
+  {
+   "variante": "franquicia · resta 100% DAs base",
+   "error": 0.7770430814049228,
+   "sesgo": -0.5377295366570788,
+   "n": 223.0
+  },
+  {
+   "variante": "línea + temporada · resta 0% DAs base",
+   "error": 0.8170370084414922,
+   "sesgo": 0.2537084390955726,
+   "n": 223.0
+  },
+  {
+   "variante": "línea + temporada · resta 100% DAs base",
+   "error": 0.6877821540236151,
+   "sesgo": -0.38772744609269527,
+   "n": 223.0
+  },
+  {
+   "variante": "línea · resta 0% DAs base",
+   "error": 0.8171122607259937,
+   "sesgo": 0.1490992363484529,
+   "n": 223.0
+  },
+  {
+   "variante": "línea · resta 100% DAs base",
+   "error": 0.7285944283088488,
+   "sesgo": -0.4388229322860919,
+   "n": 223.0
+  }
+ ],
+ "categoría": [
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 0% DAs base",
+   "cat": "Fragancias",
+   "error": 1.2445713067151676,
+   "sesgo": 1.03554508112033,
+   "n": 91.0
+  },
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 0% DAs base",
+   "cat": "Makeup",
+   "error": 0.7646099386223998,
+   "sesgo": -0.22550385272523943,
+   "n": 132.0
+  },
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 100% DAs base",
+   "cat": "Fragancias",
+   "error": 0.756841524847231,
+   "sesgo": -0.19525303797114069,
+   "n": 91.0
+  },
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 100% DAs base",
+   "cat": "Makeup",
+   "error": 0.7294068999249812,
+   "sesgo": -0.6028115138068517,
+   "n": 132.0
+  },
+  {
+   "variante": "casa + temporada · resta 0% DAs base",
+   "cat": "Fragancias",
+   "error": 0.6827004687623621,
+   "sesgo": 0.15323883334331034,
+   "n": 91.0
+  },
+  {
+   "variante": "casa + temporada · resta 0% DAs base",
+   "cat": "Makeup",
+   "error": 0.769733981146433,
+   "sesgo": -0.2657203149718613,
+   "n": 132.0
+  },
+  {
+   "variante": "casa + temporada · resta 100% DAs base",
+   "cat": "Fragancias",
+   "error": 0.7701871774051596,
+   "sesgo": -0.48900586020909653,
+   "n": 91.0
+  },
+  {
+   "variante": "casa + temporada · resta 100% DAs base",
+   "cat": "Makeup",
+   "error": 0.7240698247569568,
+   "sesgo": -0.6235400455249713,
+   "n": 132.0
+  },
+  {
+   "variante": "casa · resta 0% DAs base",
+   "cat": "Fragancias",
+   "error": 0.7678999649884508,
+   "sesgo": 0.28051667431667027,
+   "n": 91.0
+  },
+  {
+   "variante": "casa · resta 0% DAs base",
+   "cat": "Makeup",
+   "error": 0.7288777489036327,
+   "sesgo": -0.4004286194599028,
+   "n": 132.0
+  },
+  {
+   "variante": "casa · resta 100% DAs base",
+   "cat": "Fragancias",
+   "error": 0.7427634810520055,
+   "sesgo": -0.4391676316162625,
+   "n": 91.0
+  },
+  {
+   "variante": "casa · resta 100% DAs base",
+   "cat": "Makeup",
+   "error": 0.7505356838332705,
+   "sesgo": -0.674722087965615,
+   "n": 132.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 0% DAs base",
+   "cat": "Fragancias",
+   "error": 0.8043922917659633,
+   "sesgo": 0.36062565438834704,
+   "n": 91.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 0% DAs base",
+   "cat": "Makeup",
+   "error": 0.8987196140096183,
+   "sesgo": -0.30286187103518936,
+   "n": 132.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 100% DAs base",
+   "cat": "Fragancias",
+   "error": 0.7703558890454238,
+   "sesgo": -0.3594684654186625,
+   "n": 91.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 100% DAs base",
+   "cat": "Makeup",
+   "error": 0.7876798501984689,
+   "sesgo": -0.6570188631333788,
+   "n": 132.0
+  },
+  {
+   "variante": "casa×seg · resta 0% DAs base",
+   "cat": "Fragancias",
+   "error": 0.9321402231349109,
+   "sesgo": 0.5290381680853404,
+   "n": 91.0
+  },
+  {
+   "variante": "casa×seg · resta 0% DAs base",
+   "cat": "Makeup",
+   "error": 0.824130540697803,
+   "sesgo": -0.44916881870175795,
+   "n": 132.0
+  },
+  {
+   "variante": "casa×seg · resta 100% DAs base",
+   "cat": "Fragancias",
+   "error": 0.7693932822777846,
+   "sesgo": -0.28619211588930693,
+   "n": 91.0
+  },
+  {
+   "variante": "casa×seg · resta 100% DAs base",
+   "cat": "Makeup",
+   "error": 0.7902731566056476,
+   "sesgo": -0.7089489353070575,
+   "n": 132.0
+  },
+  {
+   "variante": "categoría + temporada · resta 0% DAs base",
+   "cat": "Fragancias",
+   "error": 0.6505466556557203,
+   "sesgo": 0.13174271750351152,
+   "n": 91.0
+  },
+  {
+   "variante": "categoría + temporada · resta 0% DAs base",
+   "cat": "Makeup",
+   "error": 0.7733833381617062,
+   "sesgo": -0.2613824079869872,
+   "n": 132.0
+  },
+  {
+   "variante": "categoría + temporada · resta 100% DAs base",
+   "cat": "Fragancias",
+   "error": 0.780697132615986,
+   "sesgo": -0.4901566606700858,
+   "n": 91.0
+  },
+  {
+   "variante": "categoría + temporada · resta 100% DAs base",
+   "cat": "Makeup",
+   "error": 0.7227552476055124,
+   "sesgo": -0.6216311767083817,
+   "n": 132.0
+  },
+  {
+   "variante": "categoría · resta 0% DAs base",
+   "cat": "Fragancias",
+   "error": 0.704945790605706,
+   "sesgo": 0.23871861552749585,
+   "n": 91.0
+  },
+  {
+   "variante": "categoría · resta 0% DAs base",
+   "cat": "Makeup",
+   "error": 0.7253783168161866,
+   "sesgo": -0.3993719754685904,
+   "n": 132.0
+  },
+  {
+   "variante": "categoría · resta 100% DAs base",
+   "cat": "Fragancias",
+   "error": 0.7597498588647289,
+   "sesgo": -0.44049335591117966,
+   "n": 91.0
+  },
+  {
+   "variante": "categoría · resta 100% DAs base",
+   "cat": "Makeup",
+   "error": 0.7498753957688521,
+   "sesgo": -0.6746766250126779,
+   "n": 132.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 0% DAs base",
+   "cat": "Fragancias",
+   "error": 0.6595189967160922,
+   "sesgo": 0.1324273971616865,
+   "n": 91.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 0% DAs base",
+   "cat": "Makeup",
+   "error": 0.9166495824281502,
+   "sesgo": -0.2799300048773845,
+   "n": 132.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 100% DAs base",
+   "cat": "Fragancias",
+   "error": 0.78076899871413,
+   "sesgo": -0.4895032257393871,
+   "n": 91.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 100% DAs base",
+   "cat": "Makeup",
+   "error": 0.8011352036749642,
+   "sesgo": -0.64517187669338,
+   "n": 132.0
+  },
+  {
+   "variante": "categoría×seg · resta 0% DAs base",
+   "cat": "Fragancias",
+   "error": 0.7257149099029008,
+   "sesgo": 0.2575916195201491,
+   "n": 91.0
+  },
+  {
+   "variante": "categoría×seg · resta 0% DAs base",
+   "cat": "Makeup",
+   "error": 0.8427566735558792,
+   "sesgo": -0.4252600874541438,
+   "n": 132.0
+  },
+  {
+   "variante": "categoría×seg · resta 100% DAs base",
+   "cat": "Fragancias",
+   "error": 0.762724607397854,
+   "sesgo": -0.4317842805315849,
+   "n": 91.0
+  },
+  {
+   "variante": "categoría×seg · resta 100% DAs base",
+   "cat": "Makeup",
+   "error": 0.8000591964139722,
+   "sesgo": -0.699177656242467,
+   "n": 132.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 0% DAs base",
+   "cat": "Fragancias",
+   "error": 0.7151785265127062,
+   "sesgo": 0.22776740518843397,
+   "n": 91.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 0% DAs base",
+   "cat": "Makeup",
+   "error": 0.8987196140096183,
+   "sesgo": -0.30286187103518936,
+   "n": 132.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 100% DAs base",
+   "cat": "Fragancias",
+   "error": 0.7707276159868091,
+   "sesgo": -0.4276117584900909,
+   "n": 91.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 100% DAs base",
+   "cat": "Makeup",
+   "error": 0.7876798501984689,
+   "sesgo": -0.6570188631333788,
+   "n": 132.0
+  },
+  {
+   "variante": "franquicia · resta 0% DAs base",
+   "cat": "Fragancias",
+   "error": 0.8299538729335584,
+   "sesgo": 0.4040267318320725,
+   "n": 91.0
+  },
+  {
+   "variante": "franquicia · resta 0% DAs base",
+   "cat": "Makeup",
+   "error": 0.824130540697803,
+   "sesgo": -0.44916881870175795,
+   "n": 132.0
+  },
+  {
+   "variante": "franquicia · resta 100% DAs base",
+   "cat": "Fragancias",
+   "error": 0.762229438857381,
+   "sesgo": -0.34601611626269846,
+   "n": 91.0
+  },
+  {
+   "variante": "franquicia · resta 100% DAs base",
+   "cat": "Makeup",
+   "error": 0.7902731566056476,
+   "sesgo": -0.7089489353070575,
+   "n": 132.0
+  },
+  {
+   "variante": "línea + temporada · resta 0% DAs base",
+   "cat": "Fragancias",
+   "error": 0.8118195037773017,
+   "sesgo": 0.36813399743072317,
+   "n": 91.0
+  },
+  {
+   "variante": "línea + temporada · resta 0% DAs base",
+   "cat": "Makeup",
+   "error": 0.8216967657460066,
+   "sesgo": 0.15151488765807053,
+   "n": 132.0
+  },
+  {
+   "variante": "línea + temporada · resta 100% DAs base",
+   "cat": "Fragancias",
+   "error": 0.7760118250732839,
+   "sesgo": -0.35354841519830593,
+   "n": 91.0
+  },
+  {
+   "variante": "línea + temporada · resta 100% DAs base",
+   "cat": "Makeup",
+   "error": 0.6089841690461765,
+   "sesgo": -0.41825276406020007,
+   "n": 132.0
+  },
+  {
+   "variante": "línea · resta 0% DAs base",
+   "cat": "Fragancias",
+   "error": 0.9378687984922635,
+   "sesgo": 0.5347075171387923,
+   "n": 91.0
+  },
+  {
+   "variante": "línea · resta 0% DAs base",
+   "cat": "Makeup",
+   "error": 0.7092645068396926,
+   "sesgo": -0.19528780664287537,
+   "n": 132.0
+  },
+  {
+   "variante": "línea · resta 100% DAs base",
+   "cat": "Fragancias",
+   "error": 0.773660298268938,
+   "sesgo": -0.2818496909148859,
+   "n": 91.0
+  },
+  {
+   "variante": "línea · resta 100% DAs base",
+   "cat": "Makeup",
+   "error": 0.688346066257139,
+   "sesgo": -0.57901585115649,
+   "n": 132.0
+  }
+ ],
+ "tramo": [
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 0% DAs base",
+   "tramo": "12–17",
+   "error": 0.7761734674430669,
+   "sesgo": -0.02715407867643016,
+   "n": 145.0
+  },
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 0% DAs base",
+   "tramo": "6–11",
+   "error": 1.5284666002951786,
+   "sesgo": 1.3613261634659888,
+   "n": 152.0
+  },
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 100% DAs base",
+   "tramo": "12–17",
+   "error": 0.7019511118329383,
+   "sesgo": -0.43926203516067197,
+   "n": 145.0
+  },
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 100% DAs base",
+   "tramo": "6–11",
+   "error": 0.8433952149966627,
+   "sesgo": -0.33869720904810585,
+   "n": 152.0
+  },
+  {
+   "variante": "casa + temporada · resta 0% DAs base",
+   "tramo": "12–17",
+   "error": 0.686223755775896,
+   "sesgo": -0.26230628744794393,
+   "n": 145.0
+  },
+  {
+   "variante": "casa + temporada · resta 0% DAs base",
+   "tramo": "6–11",
+   "error": 0.8348532427490897,
+   "sesgo": 0.4177591964964191,
+   "n": 152.0
+  },
+  {
+   "variante": "casa + temporada · resta 100% DAs base",
+   "tramo": "12–17",
+   "error": 0.7139443871918014,
+   "sesgo": -0.5623862638059354,
+   "n": 145.0
+  },
+  {
+   "variante": "casa + temporada · resta 100% DAs base",
+   "tramo": "6–11",
+   "error": 0.825570440823402,
+   "sesgo": -0.5542813394242241,
+   "n": 152.0
+  },
+  {
+   "variante": "casa · resta 0% DAs base",
+   "tramo": "12–17",
+   "error": 0.703192896462662,
+   "sesgo": -0.28237268009639815,
+   "n": 145.0
+  },
+  {
+   "variante": "casa · resta 0% DAs base",
+   "tramo": "6–11",
+   "error": 0.8575764494596728,
+   "sesgo": 0.42904367305253666,
+   "n": 152.0
+  },
+  {
+   "variante": "casa · resta 100% DAs base",
+   "tramo": "12–17",
+   "error": 0.7141470012819643,
+   "sesgo": -0.5644443446822994,
+   "n": 145.0
+  },
+  {
+   "variante": "casa · resta 100% DAs base",
+   "tramo": "6–11",
+   "error": 0.828714009647853,
+   "sesgo": -0.5614722893820404,
+   "n": 152.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 0% DAs base",
+   "tramo": "12–17",
+   "error": 0.8509396482042563,
+   "sesgo": -0.1592814890749652,
+   "n": 145.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 0% DAs base",
+   "tramo": "6–11",
+   "error": 0.8624220175196039,
+   "sesgo": 0.433932170905462,
+   "n": 152.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 100% DAs base",
+   "tramo": "12–17",
+   "error": 0.752162514380131,
+   "sesgo": -0.5046092517528004,
+   "n": 145.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 100% DAs base",
+   "tramo": "6–11",
+   "error": 0.8479015610587851,
+   "sesgo": -0.5467479184200735,
+   "n": 152.0
+  },
+  {
+   "variante": "casa×seg · resta 0% DAs base",
+   "tramo": "12–17",
+   "error": 0.8619762592993686,
+   "sesgo": -0.16065419820331872,
+   "n": 145.0
+  },
+  {
+   "variante": "casa×seg · resta 0% DAs base",
+   "tramo": "6–11",
+   "error": 0.9078758150078529,
+   "sesgo": 0.44495284611733465,
+   "n": 152.0
+  },
+  {
+   "variante": "casa×seg · resta 100% DAs base",
+   "tramo": "12–17",
+   "error": 0.7543256529526414,
+   "sesgo": -0.48933497192419595,
+   "n": 145.0
+  },
+  {
+   "variante": "casa×seg · resta 100% DAs base",
+   "tramo": "6–11",
+   "error": 0.845697307224978,
+   "sesgo": -0.5599602943703148,
+   "n": 152.0
+  },
+  {
+   "variante": "categoría + temporada · resta 0% DAs base",
+   "tramo": "12–17",
+   "error": 0.6801154978589684,
+   "sesgo": -0.26090316806531044,
+   "n": 145.0
+  },
+  {
+   "variante": "categoría + temporada · resta 0% DAs base",
+   "tramo": "6–11",
+   "error": 0.8037704053968951,
+   "sesgo": 0.3867661236807969,
+   "n": 152.0
+  },
+  {
+   "variante": "categoría + temporada · resta 100% DAs base",
+   "tramo": "12–17",
+   "error": 0.7149294136565558,
+   "sesgo": -0.5652207343360585,
+   "n": 145.0
+  },
+  {
+   "variante": "categoría + temporada · resta 100% DAs base",
+   "tramo": "6–11",
+   "error": 0.8380353033393714,
+   "sesgo": -0.545562163681391,
+   "n": 152.0
+  },
+  {
+   "variante": "categoría · resta 0% DAs base",
+   "tramo": "12–17",
+   "error": 0.685974904200361,
+   "sesgo": -0.2849341660716216,
+   "n": 145.0
+  },
+  {
+   "variante": "categoría · resta 0% DAs base",
+   "tramo": "6–11",
+   "error": 0.7901853680326855,
+   "sesgo": 0.36836449821214545,
+   "n": 152.0
+  },
+  {
+   "variante": "categoría · resta 100% DAs base",
+   "tramo": "12–17",
+   "error": 0.7175831722656137,
+   "sesgo": -0.568990803297162,
+   "n": 145.0
+  },
+  {
+   "variante": "categoría · resta 100% DAs base",
+   "tramo": "6–11",
+   "error": 0.8469555800576735,
+   "sesgo": -0.5522062865707424,
+   "n": 152.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 0% DAs base",
+   "tramo": "12–17",
+   "error": 0.7746877018218327,
+   "sesgo": -0.2837193653787389,
+   "n": 145.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 0% DAs base",
+   "tramo": "6–11",
+   "error": 0.8470102712203023,
+   "sesgo": 0.4106622867551517,
+   "n": 152.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 100% DAs base",
+   "tramo": "12–17",
+   "error": 0.7667075335783553,
+   "sesgo": -0.5826516799436902,
+   "n": 145.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 100% DAs base",
+   "tramo": "6–11",
+   "error": 0.8536063725462641,
+   "sesgo": -0.5444218721832979,
+   "n": 152.0
+  },
+  {
+   "variante": "categoría×seg · resta 0% DAs base",
+   "tramo": "12–17",
+   "error": 0.7500814298913574,
+   "sesgo": -0.3050270159517239,
+   "n": 145.0
+  },
+  {
+   "variante": "categoría×seg · resta 0% DAs base",
+   "tramo": "6–11",
+   "error": 0.8812333243080558,
+   "sesgo": 0.40191564916209455,
+   "n": 152.0
+  },
+  {
+   "variante": "categoría×seg · resta 100% DAs base",
+   "tramo": "12–17",
+   "error": 0.7519945946199464,
+   "sesgo": -0.5838289510419266,
+   "n": 145.0
+  },
+  {
+   "variante": "categoría×seg · resta 100% DAs base",
+   "tramo": "6–11",
+   "error": 0.8586116889121482,
+   "sesgo": -0.5460212902621036,
+   "n": 152.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 0% DAs base",
+   "tramo": "12–17",
+   "error": 0.8054561523269351,
+   "sesgo": -0.22789854441774926,
+   "n": 145.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 0% DAs base",
+   "tramo": "6–11",
+   "error": 0.8288267975381239,
+   "sesgo": 0.38610899678696864,
+   "n": 152.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 100% DAs base",
+   "tramo": "12–17",
+   "error": 0.7502819777446809,
+   "sesgo": -0.5458818910341556,
+   "n": 145.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 100% DAs base",
+   "tramo": "6–11",
+   "error": 0.8532192003611122,
+   "sesgo": -0.5560721170481542,
+   "n": 152.0
+  },
+  {
+   "variante": "franquicia · resta 0% DAs base",
+   "tramo": "12–17",
+   "error": 0.8374813018221969,
+   "sesgo": -0.19480505841239149,
+   "n": 145.0
+  },
+  {
+   "variante": "franquicia · resta 0% DAs base",
+   "tramo": "6–11",
+   "error": 0.800356074311719,
+   "sesgo": 0.3238831488971079,
+   "n": 152.0
+  },
+  {
+   "variante": "franquicia · resta 100% DAs base",
+   "tramo": "12–17",
+   "error": 0.7456523976992848,
+   "sesgo": -0.5196811304899793,
+   "n": 145.0
+  },
+  {
+   "variante": "franquicia · resta 100% DAs base",
+   "tramo": "6–11",
+   "error": 0.8555581014102637,
+   "sesgo": -0.5828725792413925,
+   "n": 152.0
+  },
+  {
+   "variante": "línea + temporada · resta 0% DAs base",
+   "tramo": "12–17",
+   "error": 0.7304171535583641,
+   "sesgo": 0.10789607697578263,
+   "n": 145.0
+  },
+  {
+   "variante": "línea + temporada · resta 0% DAs base",
+   "tramo": "6–11",
+   "error": 1.0336923607996518,
+   "sesgo": 0.6184173010056149,
+   "n": 152.0
+  },
+  {
+   "variante": "línea + temporada · resta 100% DAs base",
+   "tramo": "12–17",
+   "error": 0.6418727288843175,
+   "sesgo": -0.3546955299869836,
+   "n": 145.0
+  },
+  {
+   "variante": "línea + temporada · resta 100% DAs base",
+   "tramo": "6–11",
+   "error": 0.8026117470024465,
+   "sesgo": -0.47034755013932605,
+   "n": 152.0
+  },
+  {
+   "variante": "línea · resta 0% DAs base",
+   "tramo": "12–17",
+   "error": 0.7827001930688471,
+   "sesgo": -0.007802124055254933,
+   "n": 145.0
+  },
+  {
+   "variante": "línea · resta 0% DAs base",
+   "tramo": "6–11",
+   "error": 0.9031844280563524,
+   "sesgo": 0.5415441275296455,
+   "n": 152.0
+  },
+  {
+   "variante": "línea · resta 100% DAs base",
+   "tramo": "12–17",
+   "error": 0.692188539616932,
+   "sesgo": -0.406707482110531,
+   "n": 145.0
+  },
+  {
+   "variante": "línea · resta 100% DAs base",
+   "tramo": "6–11",
+   "error": 0.8196535815838273,
+   "sesgo": -0.5191507530070477,
+   "n": 152.0
+  }
+ ],
+ "foto": [
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 0% DAs base",
+   "foto": "2025-09",
+   "error": 0.9173737095904159,
+   "sesgo": 0.13468506778218559,
+   "n": 149.0
+  },
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 0% DAs base",
+   "foto": "2025-12",
+   "error": 1.7260603698322947,
+   "sesgo": 1.5522553898020237,
+   "n": 59.0
+  },
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 0% DAs base",
+   "foto": "2026-03",
+   "error": 0.7289510616143782,
+   "sesgo": 0.5710504474323572,
+   "n": 151.0
+  },
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 100% DAs base",
+   "foto": "2025-09",
+   "error": 0.7514380841708842,
+   "sesgo": -0.4559990657898123,
+   "n": 149.0
+  },
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 100% DAs base",
+   "foto": "2025-12",
+   "error": 0.7764208572102869,
+   "sesgo": -0.23255781563579148,
+   "n": 59.0
+  },
+  {
+   "variante": "Sin curva (nivel 6M plano) · resta 100% DAs base",
+   "foto": "2026-03",
+   "error": 0.6631131634146709,
+   "sesgo": -0.3257923249883049,
+   "n": 151.0
+  },
+  {
+   "variante": "casa + temporada · resta 0% DAs base",
+   "foto": "2025-09",
+   "error": 0.7748851774544893,
+   "sesgo": -0.19474965924098175,
+   "n": 149.0
+  },
+  {
+   "variante": "casa + temporada · resta 0% DAs base",
+   "foto": "2025-12",
+   "error": 0.6959503957693087,
+   "sesgo": 0.31685937608522896,
+   "n": 59.0
+  },
+  {
+   "variante": "casa + temporada · resta 0% DAs base",
+   "foto": "2026-03",
+   "error": 0.5099906342051607,
+   "sesgo": 0.26739675046483824,
+   "n": 151.0
+  },
+  {
+   "variante": "casa + temporada · resta 100% DAs base",
+   "foto": "2025-09",
+   "error": 0.7543434156879281,
+   "sesgo": -0.5706632409180598,
+   "n": 149.0
+  },
+  {
+   "variante": "casa + temporada · resta 100% DAs base",
+   "foto": "2025-12",
+   "error": 0.778520174612425,
+   "sesgo": -0.5669658629323493,
+   "n": 59.0
+  },
+  {
+   "variante": "casa + temporada · resta 100% DAs base",
+   "foto": "2026-03",
+   "error": 0.6708882058684996,
+   "sesgo": -0.4970732130050478,
+   "n": 151.0
+  },
+  {
+   "variante": "casa · resta 0% DAs base",
+   "foto": "2025-09",
+   "error": 0.7611766148250834,
+   "sesgo": -0.23731739419747833,
+   "n": 149.0
+  },
+  {
+   "variante": "casa · resta 0% DAs base",
+   "foto": "2025-12",
+   "error": 0.9253454159814062,
+   "sesgo": 0.6235491984799935,
+   "n": 59.0
+  },
+  {
+   "variante": "casa · resta 0% DAs base",
+   "foto": "2026-03",
+   "error": 0.5135176518777284,
+   "sesgo": 0.1408439090052671,
+   "n": 151.0
+  },
+  {
+   "variante": "casa · resta 100% DAs base",
+   "foto": "2025-09",
+   "error": 0.7645225182529521,
+   "sesgo": -0.5871766086540069,
+   "n": 149.0
+  },
+  {
+   "variante": "casa · resta 100% DAs base",
+   "foto": "2025-12",
+   "error": 0.6960264716370916,
+   "sesgo": -0.4380588713550161,
+   "n": 59.0
+  },
+  {
+   "variante": "casa · resta 100% DAs base",
+   "foto": "2026-03",
+   "error": 0.6976166954523936,
+   "sesgo": -0.5493388663231397,
+   "n": 151.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 0% DAs base",
+   "foto": "2025-09",
+   "error": 0.9343246726706348,
+   "sesgo": -0.10660664419607824,
+   "n": 149.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 0% DAs base",
+   "foto": "2025-12",
+   "error": 0.7004827038683497,
+   "sesgo": 0.36138312172506337,
+   "n": 59.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 0% DAs base",
+   "foto": "2026-03",
+   "error": 0.5618927634262759,
+   "sesgo": 0.32249912008305603,
+   "n": 151.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 100% DAs base",
+   "foto": "2025-09",
+   "error": 0.7995892623064624,
+   "sesgo": -0.5246111661932378,
+   "n": 149.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 100% DAs base",
+   "foto": "2025-12",
+   "error": 0.7569753250532858,
+   "sesgo": -0.5343953991074821,
+   "n": 59.0
+  },
+  {
+   "variante": "casa×seg + temporada · resta 100% DAs base",
+   "foto": "2026-03",
+   "error": 0.6919033936082949,
+   "sesgo": -0.4580242391367534,
+   "n": 151.0
+  },
+  {
+   "variante": "casa×seg · resta 0% DAs base",
+   "foto": "2025-09",
+   "error": 0.9104640756736105,
+   "sesgo": -0.12215727361906559,
+   "n": 149.0
+  },
+  {
+   "variante": "casa×seg · resta 0% DAs base",
+   "foto": "2025-12",
+   "error": 0.9525534946062187,
+   "sesgo": 0.6446143946449845,
+   "n": 59.0
+  },
+  {
+   "variante": "casa×seg · resta 0% DAs base",
+   "foto": "2026-03",
+   "error": 0.6159769234171031,
+   "sesgo": 0.16836807571406864,
+   "n": 151.0
+  },
+  {
+   "variante": "casa×seg · resta 100% DAs base",
+   "foto": "2025-09",
+   "error": 0.8005006108020214,
+   "sesgo": -0.5250674389083714,
+   "n": 149.0
+  },
+  {
+   "variante": "casa×seg · resta 100% DAs base",
+   "foto": "2025-12",
+   "error": 0.7208785684470835,
+   "sesgo": -0.40860893895987893,
+   "n": 59.0
+  },
+  {
+   "variante": "casa×seg · resta 100% DAs base",
+   "foto": "2026-03",
+   "error": 0.7259442095541714,
+   "sesgo": -0.5162486358355021,
+   "n": 151.0
+  },
+  {
+   "variante": "categoría + temporada · resta 0% DAs base",
+   "foto": "2025-09",
+   "error": 0.7570901888986279,
+   "sesgo": -0.21664060333482682,
+   "n": 149.0
+  },
+  {
+   "variante": "categoría + temporada · resta 0% DAs base",
+   "foto": "2025-12",
+   "error": 0.6891423617361162,
+   "sesgo": 0.33382275261932115,
+   "n": 59.0
+  },
+  {
+   "variante": "categoría + temporada · resta 0% DAs base",
+   "foto": "2026-03",
+   "error": 0.5154288786959097,
+   "sesgo": 0.31269622986951395,
+   "n": 151.0
+  },
+  {
+   "variante": "categoría + temporada · resta 100% DAs base",
+   "foto": "2025-09",
+   "error": 0.7570040656189495,
+   "sesgo": -0.5768639101197943,
+   "n": 149.0
+  },
+  {
+   "variante": "categoría + temporada · resta 100% DAs base",
+   "foto": "2025-12",
+   "error": 0.7995576083177717,
+   "sesgo": -0.5581405621065039,
+   "n": 59.0
+  },
+  {
+   "variante": "categoría + temporada · resta 100% DAs base",
+   "foto": "2026-03",
+   "error": 0.6687530107544217,
+   "sesgo": -0.46831640923266893,
+   "n": 151.0
+  },
+  {
+   "variante": "categoría · resta 0% DAs base",
+   "foto": "2025-09",
+   "error": 0.7441997485399069,
+   "sesgo": -0.2530337929384705,
+   "n": 149.0
+  },
+  {
+   "variante": "categoría · resta 0% DAs base",
+   "foto": "2025-12",
+   "error": 0.8048989431696842,
+   "sesgo": 0.5584112790543618,
+   "n": 59.0
+  },
+  {
+   "variante": "categoría · resta 0% DAs base",
+   "foto": "2026-03",
+   "error": 0.48328963911553574,
+   "sesgo": 0.14432082429120663,
+   "n": 151.0
+  },
+  {
+   "variante": "categoría · resta 100% DAs base",
+   "foto": "2025-09",
+   "error": 0.765334534502986,
+   "sesgo": -0.5900165978649212,
+   "n": 149.0
+  },
+  {
+   "variante": "categoría · resta 100% DAs base",
+   "foto": "2025-12",
+   "error": 0.741993520353424,
+   "sesgo": -0.4545505528626351,
+   "n": 59.0
+  },
+  {
+   "variante": "categoría · resta 100% DAs base",
+   "foto": "2026-03",
+   "error": 0.7077962706110741,
+   "sesgo": -0.5237177181412543,
+   "n": 151.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 0% DAs base",
+   "foto": "2025-09",
+   "error": 0.852596511096361,
+   "sesgo": -0.239578093672849,
+   "n": 149.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 0% DAs base",
+   "foto": "2025-12",
+   "error": 0.7053045902325443,
+   "sesgo": 0.3443644543506639,
+   "n": 59.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 0% DAs base",
+   "foto": "2026-03",
+   "error": 0.5686729570034013,
+   "sesgo": 0.3575585516439721,
+   "n": 151.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 100% DAs base",
+   "foto": "2025-09",
+   "error": 0.809739192353307,
+   "sesgo": -0.5975882527165731,
+   "n": 149.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 100% DAs base",
+   "foto": "2025-12",
+   "error": 0.7962109261277911,
+   "sesgo": -0.5564533169583912,
+   "n": 59.0
+  },
+  {
+   "variante": "categoría×seg + temporada · resta 100% DAs base",
+   "foto": "2026-03",
+   "error": 0.6896186620591109,
+   "sesgo": -0.44666563762296496,
+   "n": 151.0
+  },
+  {
+   "variante": "categoría×seg · resta 0% DAs base",
+   "foto": "2025-09",
+   "error": 0.8123963940921766,
+   "sesgo": -0.27168154856644,
+   "n": 149.0
+  },
+  {
+   "variante": "categoría×seg · resta 0% DAs base",
+   "foto": "2025-12",
+   "error": 0.8429275291571859,
+   "sesgo": 0.5841680911284677,
+   "n": 59.0
+  },
+  {
+   "variante": "categoría×seg · resta 0% DAs base",
+   "foto": "2026-03",
+   "error": 0.6046369488911303,
+   "sesgo": 0.18670317846502638,
+   "n": 151.0
+  },
+  {
+   "variante": "categoría×seg · resta 100% DAs base",
+   "foto": "2025-09",
+   "error": 0.7994695765507925,
+   "sesgo": -0.6083012625316742,
+   "n": 149.0
+  },
+  {
+   "variante": "categoría×seg · resta 100% DAs base",
+   "foto": "2025-12",
+   "error": 0.7390580752622936,
+   "sesgo": -0.44375175344089657,
+   "n": 59.0
+  },
+  {
+   "variante": "categoría×seg · resta 100% DAs base",
+   "foto": "2026-03",
+   "error": 0.7299067128368861,
+   "sesgo": -0.49939832483870117,
+   "n": 151.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 0% DAs base",
+   "foto": "2025-09",
+   "error": 0.9005027735613859,
+   "sesgo": -0.14466751246533327,
+   "n": 149.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 0% DAs base",
+   "foto": "2025-12",
+   "error": 0.56899861928926,
+   "sesgo": 0.1574294568650485,
+   "n": 59.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 0% DAs base",
+   "foto": "2026-03",
+   "error": 0.5554013411204383,
+   "sesgo": 0.2540814797070219,
+   "n": 151.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 100% DAs base",
+   "foto": "2025-09",
+   "error": 0.7894628734096085,
+   "sesgo": -0.5516309714767132,
+   "n": 149.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 100% DAs base",
+   "foto": "2025-12",
+   "error": 0.7946751020240043,
+   "sesgo": -0.5879986365802958,
+   "n": 59.0
+  },
+  {
+   "variante": "franquicia + temporada · resta 100% DAs base",
+   "foto": "2026-03",
+   "error": 0.7137950842416183,
+   "sesgo": -0.4984980087890477,
+   "n": 151.0
+  },
+  {
+   "variante": "franquicia · resta 0% DAs base",
+   "foto": "2025-09",
+   "error": 0.9041297927078156,
+   "sesgo": -0.13258560178017786,
+   "n": 149.0
+  },
+  {
+   "variante": "franquicia · resta 0% DAs base",
+   "foto": "2025-12",
+   "error": 0.6558394250182583,
+   "sesgo": 0.3270523679227244,
+   "n": 59.0
+  },
+  {
+   "variante": "franquicia · resta 0% DAs base",
+   "foto": "2026-03",
+   "error": 0.5653358282566253,
+   "sesgo": 0.08016297794851512,
+   "n": 151.0
+  },
+  {
+   "variante": "franquicia · resta 100% DAs base",
+   "foto": "2025-09",
+   "error": 0.7965862101662606,
+   "sesgo": -0.5393774460457285,
+   "n": 149.0
+  },
+  {
+   "variante": "franquicia · resta 100% DAs base",
+   "foto": "2025-12",
+   "error": 0.7127079571454591,
+   "sesgo": -0.4976500734196637,
+   "n": 59.0
+  },
+  {
+   "variante": "franquicia · resta 100% DAs base",
+   "foto": "2026-03",
+   "error": 0.7297184921436503,
+   "sesgo": -0.5647317821787934,
+   "n": 151.0
+  },
+  {
+   "variante": "línea + temporada · resta 0% DAs base",
+   "foto": "2025-09",
+   "error": 0.8182012051592926,
+   "sesgo": 0.1596643720762514,
+   "n": 149.0
+  },
+  {
+   "variante": "línea + temporada · resta 0% DAs base",
+   "foto": "2025-12",
+   "error": 0.7277901177143101,
+   "sesgo": 0.39018463092698696,
+   "n": 59.0
+  },
+  {
+   "variante": "línea + temporada · resta 0% DAs base",
+   "foto": "2026-03",
+   "error": 0.8906066906850794,
+   "sesgo": 0.6362607764779882,
+   "n": 151.0
+  },
+  {
+   "variante": "línea + temporada · resta 100% DAs base",
+   "foto": "2025-09",
+   "error": 0.6931515283094397,
+   "sesgo": -0.3789625912690098,
+   "n": 149.0
+  },
+  {
+   "variante": "línea + temporada · resta 100% DAs base",
+   "foto": "2025-12",
+   "error": 0.7792002580768751,
+   "sesgo": -0.5105225803584439,
+   "n": 59.0
+  },
+  {
+   "variante": "línea + temporada · resta 100% DAs base",
+   "foto": "2026-03",
+   "error": 0.5772138435980008,
+   "sesgo": -0.32493695184376803,
+   "n": 151.0
+  },
+  {
+   "variante": "línea · resta 0% DAs base",
+   "foto": "2025-09",
+   "error": 0.832716670326384,
+   "sesgo": 0.02708249900153592,
+   "n": 149.0
+  },
+  {
+   "variante": "línea · resta 0% DAs base",
+   "foto": "2025-12",
+   "error": 0.9743406632256011,
+   "sesgo": 0.6676100203219424,
+   "n": 59.0
+  },
+  {
+   "variante": "línea · resta 0% DAs base",
+   "foto": "2026-03",
+   "error": 0.592770095742744,
+   "sesgo": 0.34007730933346525,
+   "n": 151.0
+  },
+  {
+   "variante": "línea · resta 100% DAs base",
+   "foto": "2025-09",
+   "error": 0.7405680362506006,
+   "sesgo": -0.4446622687918126,
+   "n": 149.0
+  },
+  {
+   "variante": "línea · resta 100% DAs base",
+   "foto": "2025-12",
+   "error": 0.7376520941583213,
+   "sesgo": -0.39024248035737574,
+   "n": 59.0
+  },
+  {
+   "variante": "línea · resta 100% DAs base",
+   "foto": "2026-03",
+   "error": 0.6562477014837105,
+   "sesgo": -0.4509381614201805,
+   "n": 151.0
+  }
+ ],
+ "cobertura": [
+  {
+   "variante": "casa · resta 0% DAs base",
+   "casa": 345,
+   "casa×seg": 0,
+   "categoría": 0,
+   "categoría×seg": 0,
+   "franquicia": 0,
+   "línea": 0,
+   "sin pares": 14
+  },
+  {
+   "variante": "casa×seg · resta 0% DAs base",
+   "casa": 66,
+   "casa×seg": 279,
+   "categoría": 0,
+   "categoría×seg": 0,
+   "franquicia": 0,
+   "línea": 0,
+   "sin pares": 14
+  },
+  {
+   "variante": "categoría · resta 0% DAs base",
+   "casa": 0,
+   "casa×seg": 0,
+   "categoría": 345,
+   "categoría×seg": 0,
+   "franquicia": 0,
+   "línea": 0,
+   "sin pares": 14
+  },
+  {
+   "variante": "categoría×seg · resta 0% DAs base",
+   "casa": 0,
+   "casa×seg": 0,
+   "categoría": 1,
+   "categoría×seg": 344,
+   "franquicia": 0,
+   "línea": 0,
+   "sin pares": 14
+  },
+  {
+   "variante": "franquicia · resta 0% DAs base",
+   "casa": 40,
+   "casa×seg": 0,
+   "categoría": 0,
+   "categoría×seg": 0,
+   "franquicia": 305,
+   "línea": 0,
+   "sin pares": 14
+  },
+  {
+   "variante": "línea · resta 0% DAs base",
+   "casa": 63,
+   "casa×seg": 85,
+   "categoría": 0,
+   "categoría×seg": 0,
+   "franquicia": 0,
+   "línea": 197,
+   "sin pares": 14
+  }
+ ]
+}
