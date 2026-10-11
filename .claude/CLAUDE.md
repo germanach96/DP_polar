@@ -10,7 +10,7 @@ Al arrancar cada sesión, `.claude/hooks/session-start.sh` instala lo que falte 
 
 | Skill / plugin | Origen | Instalar | Cuándo usarla |
 |---|---|---|---|
-| Ponytail (plugin) | github.com/DietrichGebert/ponytail | `/plugin marketplace add DietrichGebert/ponytail` y `/plugin install ponytail@ponytail` | Al escribir o revisar código: la solución más simple que funcione |
+| Ponytail (plugin) | github.com/DietrichGebert/ponytail | `/plugin marketplace add DietrichGebert/ponytail` y `/plugin install ponytail@ponytail` | Código: la solución más simple que funcione. **Se pregunta al usuario en cada mensaje** si se activa (ver «Ponytail: se pregunta en cada mensaje») |
 | Agent Skills (25) | github.com/addyosmani/agent-skills | `npx skills add addyosmani/agent-skills` | Método: planificar, depurar, tests, revisión, git, documentar |
 | OmniRoute (CLI) | github.com/diegosouzapw/OmniRoute | `npm install -g omniroute` | **No operativo** (acordado 2026-10-11): sin servidor ni API keys; el check lo marca sin bloquear |
 | Graphify | github.com/Graphify-Labs/graphify | `uv tool install graphifyy` y `graphify install` | Grafo versionado en `graphify-out/` (código + documentos; `.graphifyignore` deja fuera skills, `work/` y `reportes/`). Se actualiza solo al arrancar. Para preguntas sobre el código o dónde está algo: `graphify query "…"` primero. Si cambian los .md, `/graphify . --update` |
@@ -20,6 +20,15 @@ Al arrancar cada sesión, `.claude/hooks/session-start.sh` instala lo que falte 
 
 Además, para cualquier gráfico: skill `dataviz`.
 
+## Ponytail: se pregunta en cada mensaje (decidido por el usuario 2026-10-11)
+Ponytail empuja a «lo mínimo que funcione» y recorta pulido; en decisiones de diseño choca con Impeccable, Taste, Emil y `DESIGN.md`. Por eso no se enciende solo: **el usuario decide en cada mensaje**.
+- En cada mensaje, `.claude/hooks/ponytail-switch.py` lo deja **apagado** y pide a Claude preguntar **antes de hacer nada**, con AskUserQuestion: «¿Activo Ponytail en esta tarea?» (Sí / No).
+- La primera opción es la recomendada: **Sí** si el mensaje es código puro (Python, script, `.py`, función, bug, test, hook…) y no menciona nada visual; **No** en diseño (HTML, PDF, reporte, gráfico, colores, hemiciclo, explorador, animación, interfaz…), análisis o preguntas. Si mezcla código y diseño, se recomienda No.
+- Tras la respuesta: `python3 .claude/hooks/ponytail-switch.py --set full` (Sí) o `--set off` (No). Esto cambia el flag del plugin, que también usan sus subagentes y su barra de estado.
+- No se pregunta si el mensaje ya lo dice: «con ponytail» lo enciende, «sin ponytail» lo apaga. Tampoco con los comandos del plugin (`/ponytail full`, `stop ponytail`).
+- Apagado = las reglas de Ponytail que se inyectan al arrancar la sesión **no se aplican**: no se recortan pasos de las skills, ni pulido, ni detalle por «lo mínimo», y no hace falta su cierre «qué me salté».
+- En la línea final: «Ponytail (usado: el usuario dijo Sí)» o «Ponytail (apagado: el usuario dijo No)».
+
 ## Skills en cada tarea, no solo al empezar (lección 2026-10-11)
 Error cometido: se cargaron skills para el primer HTML y el segundo (explorador) se hizo de memoria, sin cargar ninguna, sin performance, sin auditoría y sin validar colores nuevos; los avisos del hook de Impeccable se ignoraron sin decirlo.
 
@@ -27,7 +36,7 @@ Error cometido: se cargaron skills para el primer HTML y el segundo (explorador)
 
 | Tipo de tarea | Cargar antes de empezar (Skill) | Antes de entregar (obligatorio) |
 |---|---|---|
-| Código Python / scripts | `ponytail` (activo), `code-review-and-quality` | Un `assert` o autocomprobación en cada script nuevo; revisar el diff |
+| Código Python / scripts | `ponytail` (si el usuario dijo Sí), `code-review-and-quality` | Un `assert` o autocomprobación en cada script nuevo; revisar el diff |
 | HTML / página / reporte | `artifact-design`, `impeccable` (lee `PRODUCT.md`/`DESIGN.md`), una de Taste (`design-taste-frontend` o `high-end-visual-design`) y una de Emil (`emil-design-eng`) | `impeccable detect --json <archivos>` una vez y triar cada aviso; capturas escritorio + móvil, claro + oscuro; seguir `DESIGN.md` |
 | Gráficos / colores | `dataviz` | `validate_palette.js` con **todos** los colores nuevos, en claro y en oscuro |
 | Animación / interacción | `animate`, `emil-design-eng` | Respeta `prefers-reduced-motion`; respuesta táctil (`DESIGN.md`) |
@@ -42,10 +51,10 @@ Reglas:
   con «usado: qué skill» o «no aplica: motivo» en cada una, y di qué pasos de skills no se hicieron.
 
 ## Hooks que lo hacen cumplir (`.claude/settings.json`)
-- `UserPromptSubmit` → `.claude/hooks/skills-reminder.sh`: en cada mensaje revisa que todas las skills funcionan (`skills-health.py --short`) y recuerda que es tarea nueva y qué cargar.
+- `UserPromptSubmit` → `.claude/hooks/skills-reminder.sh`: en cada mensaje revisa que todas las skills funcionan (`skills-health.py --short`), apaga Ponytail y pide preguntar al usuario si lo activa (`ponytail-switch.py`, autocomprobación con `--selftest`) y recuerda que es tarea nueva y qué cargar.
 - `Stop` → `.claude/hooks/skills-stop-check.py`: no deja cerrar el turno si falta la línea con las 7, si se escribió HTML/CSS/SVG sin `impeccable` + una de Taste + una de Emil o sin pasar `impeccable detect`, o Python sin `code-review-and-quality` (o `ponytail:ponytail-review`). Detecta archivos escritos con Write/Edit o desde Bash (`>`/`tee`). Solo mira lo cargado en el turno actual. Bloquea una vez por turno (no hace bucle) y si falla deja pasar.
 - `SessionStart` → `.claude/hooks/session-start.sh`: instala lo que falte, actualiza el grafo de Graphify (código, sin IA) y muestra el check con la revisión de funcionamiento completa.
-- Todas las skills siguen activas (decisión del usuario 2026-10-11: no desactivar ninguna). OmniRoute no se puede usar por ahora; las otras 6 se usan según la tabla y se da cuenta de las 7 en cada respuesta.
+- Todas las skills siguen activas (decisión del usuario 2026-10-11: no desactivar ninguna). OmniRoute no se puede usar por ahora; Ponytail solo si el usuario dice Sí en cada mensaje; las otras 5 se usan según la tabla y se da cuenta de las 7 en cada respuesta.
 
 # graphify
 - **graphify** (`.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
