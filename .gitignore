@@ -4,3 +4,4 @@ __pycache__/
 work/*.npy
 work/*.npz
 work/*.log
+graphify-out/
