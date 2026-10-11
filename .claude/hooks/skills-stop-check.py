@@ -18,7 +18,7 @@ BASH_WRITE = re.compile(r"(?:>>?|\btee(?:\s+-a)?)\s*['\"]?([^\s'\";|&]+\.(?:py|h
 
 def is_prompt(e):
     """Mensaje escrito por el usuario (no un resultado de herramienta)."""
-    if e.get("type") != "user":
+    if e.get("type") != "user" or e.get("isMeta"):     # isMeta = texto de una skill cargada o aviso de hook, no el usuario
         return False
     c = e.get("message", {}).get("content")
     return isinstance(c, str) or (any(b.get("type") == "text" for b in c) and not any(b.get("type") == "tool_result" for b in c))
@@ -42,6 +42,7 @@ def problems(lines):
                     detected = detected or bool(DETECT.search(inp.get("command", "")))
             elif b.get("type") == "text" and b.get("text", "").strip():
                 last = b["text"]
+    files = [f for f in files if not f.startswith("/tmp/")]   # archivos temporales de prueba (scratchpad) no son entregables
     out = []
     tail = last[last.find("Skills y plugins"):] if "Skills y plugins" in last else ""
     miss = [t for t in TOOLS if t.lower() not in tail.lower()]
