@@ -1,5 +1,6 @@
 # Contexto (vigente a 2026-10-10)
 Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falta un número o un resultado anterior.
+Investigación externa (qué está demostrado en demand planning y qué datos faltan): `INVESTIGACION_DEMAND_PLANNING.md`.
 
 ## Usuario y objetivo
 - Demand planner en belleza (fragancias y makeup). Usa o9; horizonte de 9 meses sin el mes en curso; la señal a supply va por EAN.
