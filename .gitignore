@@ -5,3 +5,4 @@ work/*.npy
 work/*.npz
 work/*.log
 graphify-out/
+.claude/settings.local.json
