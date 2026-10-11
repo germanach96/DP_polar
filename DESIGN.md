@@ -1,18 +1,20 @@
 ---
 name: Parlamento de la demanda
-description: Páginas del parlamento de forecast por EAN como una carta de tonos de belleza: cada partido una pastilla con su código, cada EAN un chip.
+description: Mesa de trabajo sobre tapete de corte. El parlamento es una hoja impresa y cada EAN, partido o grupo se abre como una ficha que se levanta, se mueve y se compara.
 colors:
-  surface: "#FFFFFF"
-  paper: "#E3E4E0"
-  paper-2: "#D7D8D3"
-  ink: "#151515"
-  ink-2: "#46474A"
-  muted: "#5E5F62"
-  line: "#D2D3CE"
-  soft: "#F1F1EE"
-  spine: "#FFFFFF"
-  spine-2: "#F1F1EE"
-  label: "#FFFFFF"
+  mat: "#3D7862"
+  mat-2: "#356B57"
+  mat-line: "rgba(255,255,255,.09)"
+  mat-line-5: "rgba(255,255,255,.2)"
+  mat-ink: "#D8EDE2"
+  paper: "#FCFCFA"
+  paper-2: "#F2F3F0"
+  card: "#FCFCFA"
+  ink: "#1B1E1C"
+  ink-2: "#474D49"
+  muted: "#5E6561"
+  line: "#DADDD7"
+  shadow-tint: "rgba(12,34,26,.10)"
   empate: "#B7BCC4"
   status-good: "#0ca30c"
   status-critical: "#d03b3b"
@@ -22,276 +24,267 @@ colors:
   party-regla-makeup: "#eb6834"
   party-media-6m-prudente: "#2a78d6"
   party-ciclo-de-vida: "#e87ba4"
-  rule-teal: "#0F8A86"   # regla + DAs (PRODUCT.md); lo usan otras páginas, no el explorador
-  dark-surface: "#1A1B1D"
-  dark-paper: "#232427"
-  dark-paper-2: "#2E2F33"
-  dark-ink: "#EDEDEA"
-  dark-ink-2: "#C3C4C0"
-  dark-muted: "#9B9C99"
-  dark-line: "#36373B"
-  dark-soft: "#242528"
-  dark-spine: "#1A1B1D"
-  dark-spine-2: "#26272A"
-  dark-label: "#26272B"
+  fragancias: "#6250d6"
+  makeup: "#eb6834"
+  rule-teal: "#0F8A86"
+  consenso-navy: "#26408B"
+  dark-mat: "#1C362D"
+  dark-mat-2: "#182F27"
+  dark-mat-line: "rgba(255,255,255,.05)"
+  dark-mat-line-5: "rgba(255,255,255,.11)"
+  dark-mat-ink: "#9EC1AF"
+  dark-paper: "#222624"
+  dark-paper-2: "#2A2F2C"
+  dark-card: "#2B302D"
+  dark-card-edge: "rgba(255,255,255,.07)"
+  dark-ink: "#E9EDEA"
+  dark-ink-2: "#C1C8C3"
+  dark-muted: "#9AA39E"
+  dark-line: "#383E3B"
   dark-empate: "#6E7380"
 typography:
   numeral:
-    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
-    fontSize: "50px"
-    fontWeight: 850
-    lineHeight: 1
-    letterSpacing: "-0.03em"
-  swatch-count:
-    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
-    fontSize: "24px"
+    fontFamily: "Bricolage Grotesque, Segoe UI, system-ui, sans-serif"
+    fontSize: "54px"
     fontWeight: 800
     lineHeight: 1
+    letterSpacing: "-0.035em"
+    fontVariation: "'opsz' 96"
+  brand:
+    fontFamily: "Bricolage Grotesque, Segoe UI, system-ui, sans-serif"
+    fontSize: "18px"
+    fontWeight: 800
+    lineHeight: 1.05
     letterSpacing: "-0.02em"
-  kpi:
-    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
-    fontSize: "19px"
-    fontWeight: 800
-    lineHeight: 1.1
-    letterSpacing: "-0.01em"
-  title-lg:
-    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
-    fontSize: "17px"
-    fontWeight: 800
+    fontVariation: "'opsz' 36"
+  headline:
+    fontFamily: "Bricolage Grotesque, Segoe UI, system-ui, sans-serif"
+    fontSize: "18px"
+    fontWeight: 750
     lineHeight: 1.2
     letterSpacing: "-0.01em"
+    fontVariation: "'opsz' 32"
   title:
-    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
-    fontSize: "15px"
-    fontWeight: 800
-    lineHeight: 1.2
+    fontFamily: "Bricolage Grotesque, Segoe UI, system-ui, sans-serif"
+    fontSize: "17px"
+    fontWeight: 700
+    lineHeight: 1.15
     letterSpacing: "-0.01em"
+    fontVariation: "'opsz' 28"
+  card-title:
+    fontFamily: "Bricolage Grotesque, Segoe UI, system-ui, sans-serif"
+    fontSize: "15.5px"
+    fontWeight: 750
+    lineHeight: 1.25
+    letterSpacing: "-0.01em"
+    fontVariation: "'opsz' 24"
   body:
-    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
-    fontSize: "13px"
+    fontFamily: "Bricolage Grotesque, Segoe UI, system-ui, sans-serif"
+    fontSize: "13.5px"
     fontWeight: 400
     lineHeight: 1.45
   label:
-    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
+    fontFamily: "Bricolage Grotesque, Segoe UI, system-ui, sans-serif"
     fontSize: "12px"
-    fontWeight: 700
+    fontWeight: 650
     lineHeight: 1.2
-  swatch-code:
-    fontFamily: "Schibsted Grotesk, Segoe UI, system-ui, sans-serif"
-    fontSize: "12px"
-    fontWeight: 500
-    lineHeight: 1
-    letterSpacing: "0.06em"
   code:
     fontFamily: "ui-monospace, SF Mono, Menlo, Consolas, monospace"
     fontSize: "12px"
-    fontWeight: 400
+    fontWeight: 600
+    lineHeight: 1.2
 rounded:
-  mark: "1px"
-  chip: "2px"
+  r: "3px"
+  tick: "2px"
 spacing:
-  hair: "2px"
-  xs: "4px"
-  sm: "6px"
-  md: "8px"
-  lg: "12px"
-  xl: "16px"
+  gutter: "14px"
+  sheet: "16px"
+  card: "12px"
+  rule: "22px"
+  grid: "1cm"
 components:
-  party-swatch:
-    backgroundColor: "{colors.label}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.chip}"
-    padding: "6px 8px 7px"
-  party-swatch-selected:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.surface}"
-    rounded: "{rounded.chip}"
   button-primary:
     backgroundColor: "{colors.ink}"
-    textColor: "{colors.surface}"
-    rounded: "{rounded.chip}"
-    padding: "8px 12px"
-  filter-rail:
-    backgroundColor: "{colors.paper}"
+    textColor: "{colors.paper}"
+    rounded: "{rounded.r}"
+    padding: "7px 12px"
+  button-primary-hover:
+    backgroundColor: "{colors.ink-2}"
+  button-ghost:
+    backgroundColor: "transparent"
     textColor: "{colors.ink}"
-    width: "248px"
-  filter-chip:
-    backgroundColor: "{colors.spine-2}"
+    rounded: "{rounded.r}"
+    padding: "7px 12px"
+  input-search:
+    backgroundColor: "{colors.paper-2}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.chip}"
-    padding: "5px 6px 5px 9px"
-  line-chip:
-    backgroundColor: "{colors.surface}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.chip}"
-    padding: "4px 9px 4px 6px"
-  search-input:
-    backgroundColor: "{colors.spine-2}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.chip}"
+    rounded: "{rounded.r}"
     padding: "8px 12px 8px 32px"
-  segmented-selected:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.surface}"
-    rounded: "{rounded.chip}"
-    padding: "7px 4px"
-  party-marker:
-    backgroundColor: "{colors.party-regla-fragancias}"
-    textColor: "{colors.surface}"
-    rounded: "{rounded.chip}"
-    size: "18px"
-  tooltip:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.surface}"
-    rounded: "{rounded.chip}"
-    padding: "8px 10px"
+  chip-filter:
+    backgroundColor: "{colors.paper-2}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.r}"
+    padding: "4px 6px 4px 9px"
+  sheet:
+    backgroundColor: "{colors.paper}"
+    rounded: "{rounded.r}"
+    padding: "{spacing.sheet}"
+  card-floating:
+    backgroundColor: "{colors.card}"
+    rounded: "{rounded.r}"
+    width: "340px"
+  card-compact:
+    backgroundColor: "{colors.card}"
+    rounded: "{rounded.r}"
+    width: "300px"
+  tab-active:
+    textColor: "{colors.ink}"
+    typography: "{typography.label}"
 ---
 
 # Design System: Parlamento de la demanda
 
 ## Overview
 
-**Creative North Star: "Carta de tonos"**
+**Creative North Star: "La mesa de trabajo sobre el tapete de corte"**
 
-Cada página es una carta de tonos de belleza, un abanico Pantone abierto sobre la mesa. Cada partido es una pastilla de color con su código («Partido 01») y su nombre impresos en la tira blanca de abajo; cada EAN es un chip cuadrado de su color en el hemiciclo. El color manda porque es el dato: la página no pone color en nada que no sea un partido, un estado o una selección.
+La página es una mesa: un tapete verde de corte con cuadrícula de 1 cm (líneas finas cada centímetro y más marcadas cada 5 cm) y reglas numeradas en centímetros reales en el borde superior e izquierdo. Encima descansan hojas de papel blanco neutro (filtros, parlamento, histórico, selección) en una rejilla fija, y sobre ellas fichas flotantes que el planner levanta, arrastra, apila y compara sin perder de vista el parlamento.
 
-El material es papel de muestrario: cartulina gris neutra para el carril de filtros, blanco de chip para la zona de trabajo y tinta casi negra para texto, reglas y selección. No hay tarjetas redondeadas ni cajas oscuras: las zonas se separan con reglas de 1px y cambios de tono, y las secciones se rematan con una regla de tinta. En oscuro, el abanico se cierra y se ve su tapa: grafito, no negro.
+Densidad de herramienta de análisis: texto de 13.5px, tablas de especificaciones con filete de tinta arriba, cifras tabulares. La tinta es casi negra; el color está reservado a los partidos y al estado. La profundidad es física y corta: el papel apoya, la ficha levantada proyecta una sombra larga y se inclina un poco. El modo oscuro es el mismo tapete de noche, no otro mundo.
 
-La densidad es de muestrario profesional: mucha información en una pantalla, en tipo pequeño y firme (13px de cuerpo, nunca menos de 12px), con las cifras grandes reservadas para los escaños. El movimiento responde al tacto y explica cambios: el hemiciclo se recompone con un barrido corto y los puntos de la brújula viajan a su nueva posición.
+Rechazados por el usuario: la «carta de tonos» y la cámara oscura con tarjetas (gritan IA), y el dashboard de tres columnas que sustituye la vista al pulsar.
 
 **Key Characteristics:**
-- Pastilla de partido = bloque de color con los escaños arriba, tira de etiqueta abajo con código y nombre.
-- Esquina viva en todo (2px; 1px en marcas diminutas). Nada redondeado, nada en pastilla de 999px.
-- Plano: reglas de 1px y cambio de tono; la sombra solo en lo que flota.
-- Una grotesca (Schibsted Grotesk) en todos los papeles, de 12px a 50px.
-- Funciona descargado y sin conexión, en claro y en oscuro.
+- Tapete verde con cuadrícula de 1 cm y 5 cm y reglas numeradas en cm reales.
+- Hojas de papel con esquina de 3px y sombra corta tintada en verde.
+- Fichas flotantes que nacen junto al punto pulsado, unidas a su escaño por un hilo del color del partido, y que se encajan en la cuadrícula de 1 cm.
+- Una grotesca humanista variable (Bricolage Grotesque) y monoespaciada solo para códigos EAN.
+- Colores de partido fijos; tinta para todo lo demás.
 
 ## Colors
 
-Neutros cálidos de cartulina y tinta casi negra, sin acento propio: los únicos colores saturados son los 6 partidos, Empate y los dos estados.
+Tapete verde, papel neutro y tinta casi negra; el único color vivo es el de los partidos y el estado.
 
 ### Primary
-- **Tinta** (`ink`): texto, reglas de remate (1px bajo cabeceras de tabla y sobre las cifras; 2px bajo la barra superior), foco de teclado, selección (pastilla, casilla, segmento, pestaña) y fondo de tooltip. Es el único «acento» del sistema.
+- **Tinta de imprenta** (`ink`): texto, botón principal, filete superior de tablas, subrayado de pestaña activa, foco, casilla marcada. En oscuro, `dark-ink`.
 
-### Party palette (categórica, orden fijo de bloques)
-- **Regla fragancias** (`party-regla-fragancias`) · **Media 12M estacional** (`party-media-12m-estacional`) · **Media 6M estacional** (`party-media-6m-estacional`) · **Regla makeup** (`party-regla-makeup`) · **Media 6M prudente** (`party-media-6m-prudente`) · **Ciclo de vida** (`party-ciclo-de-vida`) · **Empate** (`empate`, gris; `dark-empate` en oscuro).
-- Compromiso de marca de PRODUCT.md: no cambian entre claro y oscuro ni entre páginas. En oscuro, tres de ellos quedan fuera de la banda de luminosidad recomendada (aviso WARN de `validate_palette.js`); es una excepción aceptada porque son colores fijos de marca y siempre van con número y nombre.
+### Secondary
+- **Verde tapete** (`mat`, `mat-2`): fondo de la página y de las reglas. Sus líneas (`mat-line` cada 1 cm, `mat-line-5` cada 5 cm) y números (`mat-ink`) son blancos translúcidos y verde pálido. En oscuro, `dark-mat*`.
+
+### Tertiary (colores con significado fijo)
+- **Partidos** (`party-*`): Regla fragancias, Media 12M estacional, Media 6M estacional, Regla makeup, Media 6M prudente, Ciclo de vida, en ese orden de bloques; **Empate** en gris (`empate` / `dark-empate`). Salen de `src/ideo_brujulas6.py` (`COL6`).
+- **Categoría:** morado = fragancias (`fragancias`), naranja = makeup (`makeup`).
+- **Regla + DAs:** verde azulado (`rule-teal`). No aparece en el explorador; lo usan otras páginas.
+- **Consenso:** azul marino (`consenso-navy`), solo en reportes históricos.
+- **Estado:** bueno (`status-good`) y crítico (`status-critical`), siempre con triángulo hacia arriba o hacia abajo.
 
 ### Neutral
-- **Blanco de chip** (`surface`): zona de trabajo, tablas, tira de etiqueta de las pastillas (`label`) y barra superior (`spine`).
-- **Cartulina** (`paper`) y **Cartulina 2** (`paper-2`): fondo del carril de filtros y sus divisores / hover de opción.
-- **Tinta 2** (`ink-2`) y **Apagado** (`muted`): texto secundario, recuentos, ejes, códigos de pastilla.
-- **Línea** (`line`) y **Suave** (`soft`): reglas de 1px entre zonas y filas, zona de proyección del gráfico, hover de fila, fondo del buscador (`spine-2`).
-
-### Dark theme
-Mismos roles con tonos de grafito propios (no inversión): `dark-surface`, `dark-paper`, `dark-paper-2`, `dark-ink`, `dark-ink-2`, `dark-muted`, `dark-line`, `dark-soft`, `dark-spine`, `dark-spine-2`, `dark-label` (tira de etiqueta un punto más clara que la superficie) y `dark-empate`. Se activa con `prefers-color-scheme` y se puede forzar con `data-theme`.
-
-### Status
-**Sube** (`status-good`) y **baja** (`status-critical`): solo en variaciones, siempre con triángulo ▲/▼ y la cifra en tinta; nunca solo color.
+- **Papel** (`paper`, `card`): hojas y fichas. **Papel 2** (`paper-2`): campos, chips, fila resaltada, zona de proyección del gráfico.
+- **Tinta 2** (`ink-2`) para texto secundario fuerte y hover del botón; **gris de lápiz** (`muted`) para notas, ejes y contadores; **filete** (`line`) para divisores.
+- **Sombra tintada** (`shadow-tint`): las sombras del modo claro son verde muy oscuro translúcido, nunca negro puro.
+- En oscuro el papel baja a `dark-paper` y las fichas a `dark-card`, un punto más claras que la hoja, con un canto interior `dark-card-edge`.
 
 ### Named Rules
-**La Regla de Un Significado.** Un color = una cosa en todo el proyecto. El color de un partido sigue a la entidad, no a su posición; filtrar nunca repinta a los que quedan. Morado = fragancias, naranja = makeup y verde azulado = regla + DAs siguen reservados (PRODUCT.md).
+**La Regla de Un Significado.** Un color = una cosa en todo el proyecto. El color de un partido sigue a la entidad, no a su posición; filtrar nunca repinta a los que quedan. Morado = fragancias, naranja = makeup, verde azulado = regla + DAs, azul marino = consenso (solo histórico).
 
-**La Regla del Texto Legible.** Sobre un bloque de partido, el texto va en tinta (`ink`) si la luminancia del color supera 0,3 y en blanco si no. Se calcula, no se elige a ojo.
-
-**La Regla Sin Acento.** El sistema no tiene color de marca propio: la selección y el foco son tinta. Si una pieza pide un color que no es partido ni estado, va en neutros.
+**La Regla del Triángulo.** Verde y rojo de estado nunca van solos: el signo va con un triángulo hacia arriba (bueno) o hacia abajo (crítico) y la cifra con su signo.
 
 ## Typography
 
-**Font:** Schibsted Grotesk (variable 400–900, woff2 autoalojada en base64 desde `src/fonts/`, licencia OFL), con alternativa Segoe UI / system-ui.
-**Code Font:** ui-monospace (SF Mono, Menlo, Consolas), solo para el código EAN en tablas.
+**Display Font:** Bricolage Grotesque, autoalojada en el HTML (woff2 variable, ejes wght 200–800 y opsz), con Segoe UI y system-ui de reserva.
+**Body Font:** Bricolage Grotesque.
+**Label/Mono Font:** ui-monospace (SF Mono, Menlo, Consolas) solo para códigos EAN.
 
-**Character:** una grotesca de prensa, compacta y negrita en las etiquetas, como la impresión pequeña de una carta de tonos. Un solo tipo para todo; la jerarquía sale del peso y del tamaño, no de mezclar familias.
+**Character:** Grotesca humanista con tamaño óptico: los titulares grandes cierran el tracking y suben el eje opsz; el texto de trabajo queda abierto y legible. La monoespaciada marca que algo es un código, no un nombre.
 
 ### Hierarchy
-- **Numeral** (850, 50px, 1, −0.03em): solo el total del hemiciclo.
-- **Swatch count** (800, 24px, 1, −0.02em): escaños en el bloque de color de cada pastilla.
-- **KPI** (800, 19px, 1.1): cifras de la ficha de la derecha, alineadas a la derecha.
-- **Title large** (800, 17px, 1.2): nombre del EAN o de la selección.
-- **Title** (800, 15px, 1.2): nombre de la página y títulos de columna.
-- **Body** (400, 13px, 1.45): cuerpo denso (filtros, pestañas, listas); tablas a 12.5px; notas con máximo 62ch.
-- **Label** (700, 12px): cabeceras de tabla, grupos del desplegable, recuentos, ejes. 12px es el mínimo absoluto.
-- **Swatch code** (500, 12px, tracking 0.06em): el código «Partido 0N» de la tira de etiqueta, con regla de 1px debajo. Es el código de tono del muestrario, solo dentro de la pastilla.
+- **Numeral** (800, 54px, opsz 96): total de escaños en el centro del hemiciclo.
+- **Brand** (800, 18px, opsz 36): nombre en la tira superior.
+- **Headline** (750, 18px, opsz 32): nombre de la selección.
+- **Title** (700, 17px, opsz 28): título de cada hoja; cifras grandes de la tabla de especificaciones (750, 17px).
+- **Card title** (750, 15.5px, opsz 24): nombre dentro de la ficha.
+- **Body** (400, 13.5px, 1.45): todo el texto de trabajo; notas a 12px en `muted`, máximo 64ch.
+- **Label** (650, 12px): cabeceras de tabla, pestañas (650 al tamaño del cuerpo), facetas (650, 13px).
+- **Code** (600, 12px, monoespaciada): código EAN en tablas y en la cabecera de la ficha.
 
 ### Named Rules
-**La Regla de los 12px.** Ningún texto baja de 12px, tampoco ejes, notas ni marcas.
-
-**La Regla de la Cifra Tabular.** Toda cifra en tabla, recuento o KPI usa `font-variant-numeric: tabular-nums`.
-
-**La Regla Sin Conexión.** La fuente va dentro del archivo y siempre con alternativa del sistema: sin internet la página se lee igual.
+**La Regla del Código.** La monoespaciada es solo para códigos EAN; nombres, cifras y etiquetas van en Bricolage con cifras tabulares.
 
 ## Layout
 
-Una sola pantalla sin scroll de página en escritorio: barra superior (marca con abanico de 6 colores, buscador de hasta 520px, filtros activos y «Todo el parlamento») sobre tres columnas: carril de filtros en cartulina (248px), zona central flexible en blanco (tira de 7 pastillas, hemiciclo con su total, barra de volumen y pestañas con el gráfico) y ficha de cifras, trends y perfil político (356px). Scroll solo dentro de cada panel. Columnas separadas por reglas de 1px, sin huecos ni tarjetas.
+La mesa es una rejilla fija bajo las reglas (22px): tira superior a lo ancho; filtros (252px) | parlamento encima del histórico (flexible) | selección (372px); separación de 14px y margen de 16px. Por debajo de 1240px las columnas laterales bajan a 228px y 330px.
 
-- **≤1180px:** columnas de 220 / flexible / 320px; la tira pasa a 4 pastillas por fila.
-- **≤960px:** una columna con scroll de página, la tira a 2 por fila, los filtros activos bajan a su propia fila.
+La cuadrícula del tapete arranca en (22px, 22px) y mide centímetros CSS reales (1cm ≈ 37.8px). Las fichas sueltas se encajan en sus líneas de 1 cm al soltarlas; al arrastrar, la ficha proyecta su ancho y alto como una marca en las reglas. «Comparar en fila» pliega las fichas (300px) y las coloca en rejilla bajo la hoja del parlamento, que sigue entera a la vista, con un paso redondeado a centímetros y medio centímetro entre filas.
 
-Ritmo: margen interior de zona 16px; huecos entre pastillas y chips 6px; separación interna 8 / 12px; 2px entre segmentos de la barra de volumen.
+Por debajo de 960px la mesa pasa a una columna: desaparecen la regla vertical, la capa flotante, los hilos y la bandeja; las fichas se apilan en flujo entre el parlamento y el histórico.
 
 ## Elevation & Depth
 
-Plano. La profundidad la dan el cambio de tono (cartulina → blanco → suave) y las reglas: 1px de `line` entre zonas y filas, 1px de tinta para rematar una cabecera o un bloque de cifras, 2px de tinta bajo la barra superior.
+Profundidad física y corta, de objeto sobre una mesa: cada sombra tiene un canto de 1px (el grosor del papel) y una difusa. La hoja apoya; la ficha levantada se separa con una sombra larga. En claro las sombras van tintadas en verde muy oscuro; en oscuro, negras y más densas.
 
 ### Shadow Vocabulary
-- **Desplegable** (`box-shadow: 0 14px 32px rgba(20,20,18,.20)`): resultados del buscador.
-- **Tooltip** (`box-shadow: 0 10px 28px rgba(20,20,18,.24)`): tooltips del gráfico y de los elementos con `data-tip`.
+- **Apoyada** (`box-shadow: 0 1px 0 rgba(12,34,26,.10), 0 2px 7px rgba(12,34,26,.20)`): hojas y fichas en reposo. Oscuro: `0 1px 0 rgba(0,0,0,.35), 0 3px 10px rgba(0,0,0,.45)`.
+- **Encima** (`--sh-top: 0 1px 0 rgba(12,34,26,.10), 0 8px 22px rgba(12,34,26,.28)`; en oscuro, la misma sombra en negro): la ficha que está delante del montón.
+- **Levantada** (`box-shadow: 0 2px 0 rgba(12,34,26,.08), 0 22px 44px rgba(12,34,26,.38)`): ficha arrastrándose, desplegable de búsqueda, tooltips. Oscuro: `0 2px 0 rgba(0,0,0,.3), 0 24px 48px rgba(0,0,0,.6)`.
 
 ### Named Rules
-**La Regla Plana.** Solo el desplegable y los tooltips llevan sombra, porque tapan otro contenido. Ninguna pastilla, chip, panel ni botón la lleva.
+**La Regla del Levantar.** Al coger una ficha crece la sombra a «levantada», se inclina −0.8deg y escala a 1.015; al soltarla vuelve a apoyar y se encaja en la cuadrícula.
 
 ## Shapes
 
-Esquina viva: 2px en pastillas, chips, botones, buscador, segmentado, tooltips, escaños del hemiciclo y marcadores de partido; 1px en marcas diminutas (cuadrado de leyenda de 10px, barras del abanico de la marca, segmentos de la barra de volumen). Los EANs son chips cuadrados, no puntos; el centro de una selección en la brújula es un rombo de tinta. Las casillas de filtro son cuadradas con borde de 1.5px.
+Esquina de papel cortado: 3px (`rounded.r`) en hojas, fichas, botones, campos, chips, tooltips y filas. 2px (`rounded.tick`) para muestras de color, casillas y segmentos de la barra de volumen. Escaños del hemiciclo, círculos. Los divisores son filetes de 1px en `line`; las tablas abren con un filete de tinta de 1.5px.
 
 ## Components
 
-### Pastilla de partido (componente firma)
-- **Forma:** rectángulo de 2px con borde 1px `line`; arriba el bloque del color del partido (mín. 44px) con los escaños en Swatch count; abajo la tira de etiqueta (`label`) con «Partido 0N» (o «Sin partido» en Empate) sobre regla de 1px, el nombre en 800 a 12.5px (máx. 2 líneas) y el % de volumen en apagado.
-- **Estados:** hover = borde `ink-2`; pulsada (filtro activo) = borde tinta y tira en tinta con texto blanco; sin EANs = 38% de opacidad. Pulsar filtra por ese partido.
+### Buttons
+- **Shape:** esquina de papel (3px).
+- **Primary:** tinta sobre papel invertido (`ink` de fondo, `paper` de texto), 7px 12px, peso 600.
+- **Hover / Focus:** hover a `ink-2` (solo con puntero fino); foco con contorno de 2px en tinta y 2px de separación; al pulsar escala a 0.97 en 160ms.
+- **Ghost:** transparente con filete `line`; en hover el filete pasa a `ink-2`.
+- **Icono (28px):** sin borde, `muted`; activo (chincheta) en `ink` sobre `paper-2`.
 
-### Hemiciclo de chips
-- Un chip cuadrado de 2px por EAN con la geometría `seats()` de `src/votes_report.py`, partidos por bloque de izquierda a derecha, Empate al final, total en Numeral con «escaños» debajo. Hover = contorno de tinta 1.5px; clic abre el EAN. Entra con un barrido único `clip-path` de izquierda a derecha (260ms, ease-out). Debajo, la barra de volumen (10px, segmentos de 1px de radio, 2px de hueco).
+### Chips
+- **Filtro activo:** `paper-2` con filete `line`, 12.5px, etiqueta de la faceta en `muted` y aspa para quitarlo.
+- **Leyenda del gráfico:** papel con filete; apagada = texto `muted` y muestra al 30%.
 
-### Carril de filtros
-- Cartulina, facetas plegables separadas por `paper-2`; cabecera en 700 13px con recuento de seleccionados en un recuadro de tinta; opciones con casilla cuadrada (tinta al marcar), cuadrado de color de 10px si es partido y recuento tabular. Opciones sin EANs al 45%.
+### Cards / Containers
+- **Hoja:** `paper`, 3px, sombra apoyada, cabecera con título a 16px de margen y pista en `muted` a la derecha.
+- **Ficha flotante:** 340px, `card`, canto interior `card-edge`, cabecera arrastrable con muestra del partido, código o nombre, chincheta y cierre; cuerpo 11px 13px.
+- **Ficha plegada (comparar):** 300px; solo nombre, una cifra y su curva (la curva se quita si no cabe).
+- **Tabla de especificaciones:** filete de tinta arriba, filas con filete `line`, etiqueta a la izquierda y cifra tabular grande a la derecha con su triángulo.
 
-### Ficha de cifras (spec list)
-- Nombre en Title large con el mini chip del partido (44×52px, bloque de color y tira con el número); lista de cifras abierta por una regla de tinta, cada fila con etiqueta a la izquierda, cifra KPI a la derecha y explicación debajo, separadas por reglas de 1px.
+### Inputs / Fields
+- **Style:** `paper-2`, filete `line`, 3px, icono de lupa en `muted`.
+- **Focus:** el campo pasa a `paper` y el filete a `ink-2` (160ms).
 
-### Marcador de partido
-- Cuadrado de 2px del color del partido con su número (18px en leyendas y chips de línea; 20px con trazo de superficie en la brújula). Sustituye a los discos numerados.
+### Navigation
+- **Pestañas:** texto 650 en `muted`; la activa en `ink` con subrayado de 2px que crece desde la izquierda (220ms).
+- **Segmentado:** borde de tinta; la opción activa invertida.
 
-### Botones y chips
-- **Primario** («Todo el parlamento»): fondo tinta, texto blanco, 700; desactivado = transparente con hairline `line` y texto apagado.
-- **Chip de filtro activo:** fondo `spine-2`, 12px, con ✕ apagado. **Chip de serie** del gráfico: borde `line` sobre blanco; apagado = texto `muted` y marcador al 35%.
-- **Pulsación:** todo control pulsable hace `scale(.97)` en 160ms ease-out y transiciona color/borde en 160ms.
+### Hemiciclo
+Un punto por EAN en filas uniformes, número total en el centro, partidos por bloques de izquierda a derecha, Empate en gris; aparece con un barrido de 320ms. Escaño abierto con contorno de tinta de 2.4px. Debajo, la barra de volumen (9px, segmentos de 2px de radio).
 
-### Pestañas y segmentado
-- **Pestañas:** texto 700 13px apagado; activa = tinta con subrayado de 2px.
-- **Segmentado:** borde 1px tinta, divisores de tinta; activo = fondo tinta, texto blanco.
+### Hilos
+Línea de 1.6px del color del partido entre la ficha y su escaño, con un punto de anclaje bordeado en papel. Rodea la hoja por el tapete sin tachar nombres; en la fila de comparar no se dibujan.
 
-### Buscador, desplegable y tooltip
-- **Buscador:** fondo `spine-2`, sin borde; en foco, borde `spine-muted`. **Desplegable:** blanco, borde `line`, sombra de desplegable, entra en 150ms. **Tooltip:** fondo tinta, texto blanco 12px, aparece en 120ms. Son los únicos elementos con sombra.
-
-### Brújula
-- Cuadrantes con puntos de EAN por color de partido, marcadores cuadrados y rombo de centro. Al cambiar de pregunta, los puntos viajan en 700ms `cubic-bezier(0.77, 0, 0.175, 1)`.
+### Movimiento
+- **Curva:** `cubic-bezier(0.23, 1, 0.32, 1)` para casi todo; `cubic-bezier(0.77, 0, 0.175, 1)` para los puntos de la brújula (700ms).
+- **Duraciones:** abrir ficha 230ms (desde escala 0.93), cerrar 150ms (a 0.96), encajar 180ms, deslizar 220ms, recolocar en fila 360ms; pulsación y hover 160ms.
+- **Movimiento reducido:** sin escala, inclinación ni deslizamiento; las fichas se colocan al instante, el barrido del hemiciclo pasa a fundido de 150ms y el resto de transiciones solo cambia la opacidad.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** poner el número y el nombre del partido junto a cada color, como en la tira de la pastilla.
-- **Do** usar esquina de 2px (1px en marcas de menos de 12px) en todo lo que tenga forma.
-- **Do** separar zonas con reglas de 1px y cambio de tono, y rematar cabeceras y bloques de cifras con una regla de tinta.
-- **Do** dar respuesta a cada control: `scale(.97)` al pulsar, 160ms ease-out; hover solo en `(hover: hover) and (pointer: fine)`.
-- **Do** respetar `prefers-reduced-motion`: el barrido pasa a un fundido de 150ms y se quitan desplazamientos y escalas.
-- **Do** validar con `dataviz` (`validate_palette.js`) cualquier color nuevo, en claro y en oscuro.
+- **Do** poner el contenido en hojas de papel (3px, sombra apoyada) sobre el tapete verde con su cuadrícula de 1 cm y 5 cm.
+- **Do** abrir el detalle como ficha junto al punto pulsado, unida por un hilo, sin sustituir la vista.
+- **Do** encajar en la cuadrícula de 1 cm todo lo que se suelta o se recoloca.
+- **Do** usar la sombra tintada en verde (`rgba(12,34,26,…)`) en claro y la negra en oscuro.
+- **Do** emparejar siempre verde y rojo de estado con su triángulo.
+- **Do** respetar `prefers-reduced-motion` con fundidos de 150ms.
 
 ### Don't:
-- **Don't** usar radios grandes ni pastillas de 999px: es la estética de dashboard que este sistema sustituye.
-- **Don't** poner sombra en pastillas, chips, paneles o botones; solo desplegable y tooltip.
-- **Don't** usar discos ni círculos numerados para los partidos: el marcador es cuadrado.
-- **Don't** reutilizar un color de partido, de categoría o de estado para otra cosa.
-- **Don't** bajar de 12px en ningún texto.
-- **Don't** depender de recursos de internet: fuente y datos van dentro del archivo.
+- **Don't** repintar un partido ni reutilizar sus colores para otra cosa.
 - **Don't** usar el consenso de o9 como referencia fuera de reportes históricos.
+- **Don't** usar la monoespaciada para nada que no sea un código EAN.
+- **Don't** usar sombras negras puras en modo claro.
+- **Don't** volver a la carta de tonos, a la cámara oscura con tarjetas ni al dashboard de tres columnas que sustituye la vista.

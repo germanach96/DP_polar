@@ -9,6 +9,7 @@
   --empate: #B7BCC4; --good: #0ca30c; --critical: #d03b3b;
   --sh: 0 1px 0 rgba(12,34,26,.10), 0 2px 7px rgba(12,34,26,.20);
   --sh-lift: 0 2px 0 rgba(12,34,26,.08), 0 22px 44px rgba(12,34,26,.38);
+  --sh-top: 0 1px 0 rgba(12,34,26,.10), 0 8px 22px rgba(12,34,26,.28);
   --r: 3px; --soft: var(--paper-2); --surface: var(--paper); --card: var(--paper); --card-edge: transparent;
   --f: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif; --f-code: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1); --ease-io: cubic-bezier(0.77, 0, 0.175, 1); --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
@@ -16,11 +17,11 @@
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --mat: #1C362D; --mat-2: #182F27; --mat-line: rgba(255,255,255,.05); --mat-line-5: rgba(255,255,255,.11); --mat-ink: #9EC1AF;
   --paper: #222624; --paper-2: #2A2F2C; --ink: #E9EDEA; --ink-2: #C1C8C3; --muted: #9AA39E; --line: #383E3B; --empate: #6E7380; --card: #2B302D; --card-edge: rgba(255,255,255,.07);
-  --sh: 0 1px 0 rgba(0,0,0,.35), 0 3px 10px rgba(0,0,0,.45); --sh-lift: 0 2px 0 rgba(0,0,0,.3), 0 24px 48px rgba(0,0,0,.6); color-scheme: dark; } }
+  --sh: 0 1px 0 rgba(0,0,0,.35), 0 3px 10px rgba(0,0,0,.45); --sh-lift: 0 2px 0 rgba(0,0,0,.3), 0 24px 48px rgba(0,0,0,.6); --sh-top: 0 1px 0 rgba(0,0,0,.35), 0 8px 22px rgba(0,0,0,.55); color-scheme: dark; } }
 :root[data-theme="dark"] {
   --mat: #1C362D; --mat-2: #182F27; --mat-line: rgba(255,255,255,.05); --mat-line-5: rgba(255,255,255,.11); --mat-ink: #9EC1AF;
   --paper: #222624; --paper-2: #2A2F2C; --ink: #E9EDEA; --ink-2: #C1C8C3; --muted: #9AA39E; --line: #383E3B; --empate: #6E7380; --card: #2B302D; --card-edge: rgba(255,255,255,.07);
-  --sh: 0 1px 0 rgba(0,0,0,.35), 0 3px 10px rgba(0,0,0,.45); --sh-lift: 0 2px 0 rgba(0,0,0,.3), 0 24px 48px rgba(0,0,0,.6); color-scheme: dark; }
+  --sh: 0 1px 0 rgba(0,0,0,.35), 0 3px 10px rgba(0,0,0,.45); --sh-lift: 0 2px 0 rgba(0,0,0,.3), 0 24px 48px rgba(0,0,0,.6); --sh-top: 0 1px 0 rgba(0,0,0,.35), 0 8px 22px rgba(0,0,0,.55); color-scheme: dark; }
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 body { margin: 0; color: var(--ink); font: 400 13.5px/1.45 var(--f); -webkit-font-smoothing: antialiased; overflow: hidden;
@@ -215,7 +216,7 @@ svg.cmp { width: 100%; height: auto; max-height: 34vh; }
 .fic .ttl, .fic h4 { -webkit-user-select: text; user-select: text; }
 .fic-in { background: var(--card); border-radius: var(--r); box-shadow: inset 0 0 0 1px var(--card-edge), var(--sh); transition: box-shadow 220ms var(--ease-out), rotate 260ms var(--ease-out), scale 220ms var(--ease-out); overflow: hidden; }
 .fic.lift .fic-in { box-shadow: inset 0 0 0 1px var(--card-edge), var(--sh-lift); rotate: -0.8deg; scale: 1.015; }
-.fic.top .fic-in { box-shadow: inset 0 0 0 1px var(--card-edge), 0 1px 0 rgba(12,34,26,.10), 0 8px 22px rgba(12,34,26,.28); }
+.fic.top .fic-in { box-shadow: inset 0 0 0 1px var(--card-edge), var(--sh-top); }
 .fic-h { display: flex; align-items: center; gap: 9px; padding: 9px 8px 9px 12px; cursor: grab; touch-action: none; user-select: none; border-bottom: 1px solid var(--line); }
 .fic.lift .fic-h { cursor: grabbing; }
 .fic-h .tag { width: 14px; height: 14px; border-radius: 2px; flex: none; }
