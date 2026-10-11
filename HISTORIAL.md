@@ -194,3 +194,15 @@ Resultados de todas las pruebas hasta 2026-10-10. El contexto vigente está en `
   - Veteranos activos, EPOS FY26: Burberry −18%, Gucci −23%, Gucci Make up −19%, Kylie −12%, Marc Jacobs 0%. Peso en envío de los anteriores a FY24: fragancias 89% → 64%, makeup 69% → 33%.
   - Bajas: EPOS de fragancias al 18% seis meses después del último envío; makeup a 0 en 4–6 meses.
   - Pregunta abierta al usuario: ¿el envío de lanzamiento incluye probadores o material de exposición?
+- Usuario: los primeros 6 meses son Local (llenado + safety stock); no juzgar el envío de esos meses.
+- Envío/EPOS por edad, meses Central (`src/epos_reco_test.py` → `work/results/epos_reco_test.md`):
+  - Fragancias: 6–11 = 0,90; 12–17 = 0,87.
+  - Makeup: 1,20 / 1,09.
+  - Veteranos: 1,09–1,21.
+- Prueba de base para jóvenes (cortes oct-25 → feb-26, total de 6 meses), error EAN:
+  - Fragancias 6–11: año pasado 215%, media 6M envío 173%, EPOS × relación 58%.
+  - Fragancias 12–17: 101 / 43 / 36%; media de las dos 33%.
+  - Makeup 6–11: 110 / 64 / 54%; media 53%.
+  - Makeup 12–17: 171 / 43 / 51%; media 41%.
+- Veteranos (cortes ene–mar-26), año pasado × trend: envíos de casa 33% / 49%; EPOS de veteranos de casa 31% / 47%; EPOS propio 31% / 51% (fragancias / makeup).
+- Propuesta: regla por edad (6–11 EPOS × relación; 12–17 media EPOS × relación + media 6M envío; 18+ regla con trend EPOS de veteranos de casa + semáforo de carga).

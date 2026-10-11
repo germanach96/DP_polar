@@ -84,7 +84,12 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
 - EPOS: forma mensual estable año a año (envíos no); el envío va 3 meses por delante de la venta; envío que crece más que el EPOS = canal cargado → envíos futuros bajan.
 - Patrón: un pico de envío de un trimestre no se repite ni se devuelve; la carga acumulada en 12M (envío/EPOS vs FY25 >+15%) sí anticipa ~12 puntos menos de envío a 3 meses en fragancias (8 de 8 meses; Burberry, Gucci Make up, Marc Jacobs; no en Kylie).
 - Patrones en relativo (`reportes/REPORTE_EPOS_PATRONES.pdf`): el envío oscila 4× el EPOS; el EPOS mantiene su tendencia (79% vs 65%); lanzamientos envían 2–2,5× el EPOS el año 1 y 0,84–0,97× el año 2 (veteranos 1,12×); veteranos pierden 12–23% de EPOS al año (Marc Jacobs 0%), así que el trend de casa no les aplica.
-- Propuesta pendiente de backtest: partido "Consumidor (EPOS)" + coalición + semáforo de carga. Dato que más falta: stock del cliente; el usuario intentará conseguir el WOS (semanas de stock).
+- Los primeros 6 meses (Local) son llenado + safety stock: no juzgar ese envío. En Central, fragancias envía 0,87–0,90× el EPOS en meses 6–17 (veteranos ~1,1×); la base "año pasado" de un EAN de 12–17 meses cae en su Local.
+- **Regla por edad (probada en 6M, `src/epos_reco_test.py`):**
+  - 6–11 meses: base = EPOS × relación de su categoría (fragancias 58% vs 215% del año pasado).
+  - 12–17 meses: media de EPOS × relación y media 6M de envío (fragancias 33%, makeup 41%).
+  - 18+ meses: regla con el trend de EPOS de los veteranos de su casa (31% vs 33%; 47% vs 49%).
+  - Pendiente: meterla como partido (mensual, 9 meses) + semáforo de carga. Dato que más falta: stock del cliente; el usuario intentará conseguir el WOS (semanas de stock).
 
 ## Reportes (preferencias)
 - PDF A4 horizontal: HTML + SVG impreso con Chromium (`/opt/pw-browsers/chromium-1194/chrome-linux/chrome`), fuente Inter. Diseño cuidado, con gráficos, nada que parezca hecho con prisa.
@@ -116,5 +121,5 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
 - **Ideologías (propuesta de 10 partidos, foto sep-25):** `python3 src/ideo_panel.py && python3 src/ideo_engine.py && python3 src/ideo_parties.py && python3 src/ideo_compass.py && python3 src/ideo_report.py && python3 src/ideo_infografia.py`
   - `ideo_engine.py`: banco de 203k estrategias por EAN; `ideo_parties.py`: mejor por EAN, partidos (uno por forma de base), elección, robustez; `ideo_viz.py`: colores y piezas visuales de 10 partidos.
 - **Parlamento de 6 (vigente):** `python3 src/da_conversion.py && python3 src/ideo_brujulas6.py && python3 src/six_multi.py && python3 src/six_report.py && python3 src/six_infografia.py` (requiere antes el bloque de ideologías).
-- **Diagnóstico EPOS:** `python3 src/epos_diag.py` → `work/results/epos_diag.md`; patrón envío ↔ EPOS: `cd src && python3 epos_pattern.py` → `work/results/epos_pattern.md`; patrones en relativo y reporte: `cd src && python3 epos_patrones.py && python3 epos_patrones_report.py`.
+- **Diagnóstico EPOS:** `python3 src/epos_diag.py` → `work/results/epos_diag.md`; patrón envío ↔ EPOS: `cd src && python3 epos_pattern.py` → `work/results/epos_pattern.md`; patrones en relativo y reporte: `cd src && python3 epos_patrones.py && python3 epos_patrones_report.py`; prueba de la regla por edad: `cd src && python3 epos_reco_test.py`.
 - **Resto de scripts y reportes:** ver `HISTORIAL.md`.

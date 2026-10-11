@@ -164,6 +164,41 @@ EPOS disponible de jul-24 a jul-26; envíos de jul-23 a ago-26.
 
 ## 3. Recomendación: forecast del consumidor primero, envío después
 
+### 3.0 Regla por edad del EAN (probada; `src/epos_reco_test.py` → `work/results/epos_reco_test.md`)
+Los primeros 6 meses son Local: llenado y safety stock, así que el envío es alto a propósito. Lo que importa es lo que viene después.
+- **En Central, el llenado se sigue consumiendo:**
+  - Fragancias: los meses 6–17 envían 0,87–0,90 por cada unidad vendida (veteranos 1,10–1,14).
+  - Makeup: 1,09–1,20, ya en niveles normales.
+- **Por eso la base "año pasado" falla en los jóvenes:** para un EAN de 12–17 meses, ese año pasado es su etapa Local.
+
+Prueba: cortes oct-25 → feb-26, total de los 6 meses siguientes por EAN. La base `EPOS × relación` es la venta al consumidor de los últimos 6 meses, sin temporada, × la temporada del EPOS adelantada 3 meses × la relación envío/EPOS de su categoría en Central (calculada solo con datos anteriores al corte). Error EAN de cada base, con el desvío total entre paréntesis:
+
+| Edad en el corte | Año pasado | Media 6M envío | EPOS × relación | Media de las dos |
+|---|---|---|---|---|
+| Fragancias 6–11 | 215% (+161%) | 173% (+163%) | **58% (+42%)** | 110% |
+| Fragancias 12–17 | 101% (+80%) | 43% | 36% | **33% (+4%)** |
+| Makeup 6–11 | 110% | 64% | 54% (−41%) | **53% (−13%)** |
+| Makeup 12–17 | 171% (+115%) | 43% | 51% | **41% (+19%)** |
+
+Veteranos (18+ meses), cortes ene–mar-26. Base = envío del año pasado; cambia la fuente del trend:
+
+| | Trend envíos casa (como la regla) | Trend EPOS 6M de los veteranos de su casa | Trend EPOS 6M propio |
+|---|---|---|---|
+| Fragancias | 33% (−8%) | **31% (−8%)** | 31% (−4%) |
+| Makeup | 49% (−8%) | **47% (−4%)** | 51% (+17%) |
+
+**Regla propuesta:**
+
+| Edad | Base | Trend |
+|---|---|---|
+| 6–11 meses | EPOS × relación de su categoría en Central (sin envíos: los últimos 6 meses incluyen el Local). En makeup, media con la media 6M de envío. | Ya va en el EPOS reciente |
+| 12–17 meses | Media de las dos bases: EPOS × relación y media 6M de envío, que ya es Central | Ya va en el EPOS reciente |
+| 18+ meses | Regla actual | EPOS de los veteranos de su casa, en lugar del trend de envíos de la casa. Más el semáforo de carga en fragancias. |
+
+Límites de la prueba:
+- 5 cortes que se solapan, horizonte de 6 meses (no 9), totales y no meses, y sin DAs.
+- Siguiente paso: meterla como partido en el parlamento, con error mensual y 9 meses.
+
 ### 3.1 La lógica (explicable a supply y a dirección)
 > **Envío del mes t = Venta al consumidor prevista para t+3 × factor envío/EPOS del EAN − corrección por stock acumulado en el canal**
 
