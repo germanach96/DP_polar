@@ -2,12 +2,15 @@
 """Stop: no deja terminar el turno si la respuesta no da cuenta de las 7 skills/plugins de la lista, o si se escribió HTML o Python
 sin cargar sus skills (.claude/CLAUDE.md, «Skills en cada tarea»). Ante cualquier error deja pasar: un hook roto no debe bloquear la sesión."""
 import json
+import re
 import sys
 
 TOOLS = ["Ponytail", "Agent Skills", "OmniRoute", "Graphify", "Taste", "Impeccable", "Emil"]
 TASTE = {"design-taste-frontend", "design-taste-frontend-v1", "high-end-visual-design", "minimalist-ui", "industrial-brutalist-ui",
          "redesign-existing-projects", "gpt-taste", "stitch-design-taste", "image-to-code"}
 REVIEW = {"code-review-and-quality", "ponytail:ponytail-review", "code-review", "simplify"}
+# shortcut: solo detecta archivos escritos desde Bash con > o tee; un open(..., "w") dentro de un python -c se escapa
+BASH_WRITE = re.compile(r"(?:>>?|\btee(?:\s+-a)?)\s*['\"]?([^\s'\";|&]+\.(?:py|html|css|svg))\b")
 
 
 def is_prompt(e):
@@ -31,6 +34,8 @@ def problems(lines):
                     skills.add(inp.get("skill", ""))
                 if b.get("name") in ("Write", "Edit") and inp.get("file_path"):
                     files.append(inp["file_path"])
+                if b.get("name") == "Bash":
+                    files += BASH_WRITE.findall(inp.get("command", ""))
             elif b.get("type") == "text" and b.get("text", "").strip():
                 last = b["text"]
     out = []
