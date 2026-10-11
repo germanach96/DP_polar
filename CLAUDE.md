@@ -139,6 +139,7 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - `ideo_engine.py`: banco de 203k estrategias por EAN; `ideo_parties.py`: mejor por EAN, partidos (uno por forma de base), elección, robustez; `ideo_viz.py`: colores y piezas visuales de 10 partidos.
 - **Parlamento de 6 (vigente):** `python3 src/fy25_eleccion.py && python3 src/decision_sep25.py && python3 src/fy25_brujulas.py && python3 src/ideologia_report.py` (las posiciones de los partidos salen de `ideo_brujulas6.py`, que requiere antes el bloque de ideologías).
   - `decision_sep25.py`: ensayo con el pasado y decisión. `fy25_eleccion.py`: voto con FY25 (6 urnas), prueba desde sep-25, coalición, parecidos para los nuevos. `fy25_brujulas.py`: posición de cada EAN en las brújulas con FY25.
+  - `parlamento_html.py` (+ `parlamento_template.html`) → `reportes/PARLAMENTO.html`: parlamento interactivo y didáctico (hemiciclo, escrutinio de ejemplo, 6 partidos, brújulas animadas, resultados por grupo, veredicto). Lee los JSON de `work/` y saca los puntos de las brújulas de `work/reporte_ideologia.html` (correr antes `ideologia_report.py`).
   - `ciclo_vs_cons.py`: comparación histórica Ciclo de vida vs consenso (no se usa para decidir).
   - `six_multi.py` / `six_sin_consenso.py`: diseño anterior (votar con quarters de FY26 de varias fotos), reemplazado.
   - `ideologia_report.py` → `reportes/REPORTE_IDEOLOGIA.pdf`: concepto (DNI, 3 preguntas, diseño de la prueba), los 6 partidos, brújulas, coalición, prueba honesta y elección.
