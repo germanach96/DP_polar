@@ -23,6 +23,20 @@ colors:
   party-regla-makeup: "#eb6834"
   party-media-6m-prudente: "#2a78d6"
   party-ciclo-de-vida: "#e87ba4"
+  status-good: "#0ca30c"
+  status-critical: "#d03b3b"
+  dark-paper: "#0F0E13"
+  dark-surface: "#18171E"
+  dark-ink: "#ECEBF2"
+  dark-ink-2: "#B9B7C8"
+  dark-muted: "#8E8CA1"
+  dark-line: "#2B2A34"
+  dark-soft: "#22212A"
+  dark-chamber: "#09080C"
+  dark-chamber-2: "#16151C"
+  dark-chamber-line: "#2A2833"
+  dark-focus: "#9d90ff"
+  dark-empate: "#6E7380"
 typography:
   display:
     fontFamily: "Archivo, Helvetica Neue, Arial, sans-serif"
@@ -46,6 +60,11 @@ typography:
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.6
+  data:
+    fontFamily: "Public Sans, Segoe UI, system-ui, sans-serif"
+    fontSize: "13px"
+    fontWeight: 400
+    lineHeight: 1.45
   label:
     fontFamily: "Public Sans, Segoe UI, system-ui, sans-serif"
     fontSize: "0.78rem"
@@ -126,6 +145,12 @@ Neutros fríos con un leve sesgo violeta, una cámara casi negra y una paleta ca
 - **Línea** (#DEDDE6) y **Suave** (#EAE9F0): divisores, fondos de barra, filas al pasar el ratón.
 - **Cámara 2 / Tinta de cámara / Línea de cámara** (#1F1E27 / #F1F0F6 / #302E3B): superficies y texto dentro de la cámara.
 
+### Dark theme
+Mismos roles, tonos propios (no inversión): papel #0F0E13, superficie #18171E, tinta #ECEBF2 / #B9B7C8, apagado #8E8CA1, línea #2B2A34, suave #22212A, cámara #09080C / #16151C con línea #2A2833, foco #9d90ff, Empate #6E7380.
+
+### Status
+**Sube** (#0ca30c) y **baja** (#d03b3b), reservados para variaciones; siempre con triángulo ▲/▼ y la cifra en tinta, nunca solo color.
+
 ### Named Rules
 **La Regla de Un Significado.** Un color = una cosa en todo el proyecto. El color de un partido sigue a la entidad, no a su posición; filtrar nunca repinta a los que quedan.
 
@@ -145,6 +170,7 @@ Neutros fríos con un leve sesgo violeta, una cámara casi negra y una paleta ca
 - **Headline** (700, clamp(1.9rem, 3.6vw, 2.9rem), 1.04, anchura 88%): el hallazgo de cada sección, máximo unos 22 caracteres por línea.
 - **Title** (650, 1.15rem, 1.2): títulos de panel y tabla.
 - **Body** (400, 1rem, 1.6): texto corrido, máximo unos 62 caracteres por línea.
+- **Data** (400, 13px, 1.45): cuerpo denso de los exploradores de una pantalla (listas, filtros, pestañas). Nunca menos de 12px.
 - **Label** (600, 0.78rem, tracking 0.1em, mayúsculas): orden del día y cabeceras de tabla.
 
 ### Named Rules

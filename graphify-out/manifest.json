@@ -462,10 +462,10 @@
     "semantic_hash": "7c96769ae98803ea0994a9930ce465f2"
   },
   ".claude/CLAUDE.md": {
-    "mtime": 1791731238.2252057,
-    "seen": 1791738351.8169498,
-    "ast_hash": "d9d1baa91f52e1fd540e1ead7c44fe50",
-    "semantic_hash": "d9d1baa91f52e1fd540e1ead7c44fe50"
+    "mtime": 1791738823.4957776,
+    "seen": 1791739353.5219576,
+    "ast_hash": "6059080f3afb79400080b61ade857590",
+    "semantic_hash": ""
   },
   "CLAUDE.md": {
     "mtime": 1791731078.2922719,
@@ -498,15 +498,33 @@
     "semantic_hash": "548f34dc3bc8e83f3d821ab3935c74ca"
   },
   "src/explorador_template.html": {
-    "mtime": 1791730313.3369951,
-    "seen": 1791738351.8169622,
-    "ast_hash": "4e5f93b2f2cc1abb889dc272470e8970",
-    "semantic_hash": "4e5f93b2f2cc1abb889dc272470e8970"
+    "mtime": 1791739276.3914766,
+    "seen": 1791739353.5219903,
+    "ast_hash": "5338c87d7fa2fa986365d3beb46691ff",
+    "semantic_hash": ""
   },
   "src/parlamento_template.html": {
     "mtime": 1791728375.3515155,
     "seen": 1791738351.8169634,
     "ast_hash": "c5fc8588d7a3fe5c87de96f5797f6bd0",
     "semantic_hash": "c5fc8588d7a3fe5c87de96f5797f6bd0"
+  },
+  ".impeccable/design.json": {
+    "mtime": 1791738792.5554876,
+    "seen": 1791739353.5217078,
+    "ast_hash": "64f35ffd1b6f10ab983c40e25bd7357f",
+    "semantic_hash": ""
+  },
+  "DESIGN.md": {
+    "mtime": 1791738777.627488,
+    "seen": 1791739353.5219631,
+    "ast_hash": "7af9282cdece572d219ac9a9d304ff5c",
+    "semantic_hash": ""
+  },
+  "PRODUCT.md": {
+    "mtime": 1791738419.2554963,
+    "seen": 1791739353.521987,
+    "ast_hash": "8c68c46d0174aefcfec1471cd7d089a3",
+    "semantic_hash": ""
   }
 }
