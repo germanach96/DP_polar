@@ -10,10 +10,10 @@ Al arrancar cada sesión, `.claude/hooks/session-start.sh` instala lo que falte 
 |---|---|---|---|
 | Ponytail (plugin) | github.com/DietrichGebert/ponytail | `/plugin marketplace add DietrichGebert/ponytail` y `/plugin install ponytail@ponytail` | Al escribir o revisar código: la solución más simple que funcione |
 | Agent Skills (25) | github.com/addyosmani/agent-skills | `npx skills add addyosmani/agent-skills` | Método: planificar, depurar, tests, revisión, git, documentar |
-| OmniRoute (CLI) | github.com/diegosouzapw/OmniRoute | `npm install -g omniroute` | Enrutar modelos de IA; necesita servidor y API keys configurados |
-| Graphify | github.com/Graphify-Labs/graphify | `uv tool install graphifyy` y `graphify install` | Preguntas sobre el código y la estructura del proyecto (`/graphify`) |
+| OmniRoute (CLI) | github.com/diegosouzapw/OmniRoute | `npm install -g omniroute` | **No operativo** (acordado 2026-10-11): sin servidor ni API keys; el check lo marca sin bloquear |
+| Graphify | github.com/Graphify-Labs/graphify | `uv tool install graphifyy` y `graphify install` | Grafo versionado en `graphify-out/` (código + documentos; `.graphifyignore` deja fuera skills, `work/` y `reportes/`). Se actualiza solo al arrancar. Para preguntas sobre el código o dónde está algo: `graphify query "…"` primero. Si cambian los .md, `/graphify . --update` |
 | Taste Skill (13) | tasteskill.dev | `npx skills add Leonxlnx/taste-skill` | Diseño de páginas, reportes HTML y estilo visual |
-| Impeccable (plugin) | impeccable.style | `/plugin marketplace add pbakaus/impeccable` y `/plugin install impeccable@impeccable` | Pulir y auditar diseño frontend (`/impeccable`) |
+| Impeccable (plugin) | impeccable.style | `/plugin marketplace add pbakaus/impeccable` y `/plugin install impeccable@impeccable` | Diseñar, auditar y pulir (`/impeccable`). Contexto en `PRODUCT.md` (para quién y para qué) y `DESIGN.md` + `.impeccable/design.json` (sistema visual «El Parlamento») |
 | Emil Kowalski (14) | emilkowal.ski/skill | `npx skills add emilkowalski/skill` | Animación, interacción y detalles de interfaz |
 
 Además, para cualquier gráfico: skill `dataviz`.
@@ -26,9 +26,10 @@ Error cometido: se cargaron skills para el primer HTML y el segundo (explorador)
 | Tipo de tarea | Cargar antes de empezar (Skill) | Antes de entregar (obligatorio) |
 |---|---|---|
 | Código Python / scripts | `ponytail` (activo), `code-review-and-quality` | Un `assert` o autocomprobación en cada script nuevo; revisar el diff |
-| HTML / página / reporte | `artifact-design`, `impeccable`, una de Taste (`design-taste-frontend` o `high-end-visual-design`) | `impeccable detect --json <archivos>` una vez y triar cada aviso; capturas escritorio + móvil, claro + oscuro |
+| HTML / página / reporte | `artifact-design`, `impeccable` (lee `PRODUCT.md`/`DESIGN.md`), una de Taste (`design-taste-frontend` o `high-end-visual-design`) y una de Emil (`emil-design-eng`) | `impeccable detect --json <archivos>` una vez y triar cada aviso; capturas escritorio + móvil, claro + oscuro; seguir `DESIGN.md` |
 | Gráficos / colores | `dataviz` | `validate_palette.js` con **todos** los colores nuevos, en claro y en oscuro |
-| Animación / interacción | `animate`, `emil-design-eng` | Respeta `prefers-reduced-motion` |
+| Animación / interacción | `animate`, `emil-design-eng` | Respeta `prefers-reduced-motion`; respuesta táctil (`DESIGN.md`) |
+| Pregunta sobre el código o la estructura | `graphify` | Responder desde `graphify query`, citando archivo y línea |
 | Página interactiva con datos (filtros, muchas filas) | `performance-optimization` | Medir con Playwright el tiempo de cada filtro/clic y el peso del archivo; redibujar solo lo que cambia |
 
 Reglas:
@@ -40,8 +41,9 @@ Reglas:
 
 ## Hooks que lo hacen cumplir (`.claude/settings.json`)
 - `UserPromptSubmit` → `.claude/hooks/skills-reminder.sh`: en cada mensaje recuerda que es tarea nueva y qué cargar.
-- `Stop` → `.claude/hooks/skills-stop-check.py`: no deja cerrar el turno si falta la línea con las 7, si se escribió HTML/CSS/SVG sin `impeccable` + una de Taste, o Python sin `code-review-and-quality` (o `ponytail:ponytail-review`). Solo mira lo cargado en el turno actual. Bloquea una vez por turno (no hace bucle) y si falla deja pasar.
-- No se fuerza usar las 7 en todo: OmniRoute necesita servidor y API keys; Graphify es para preguntas sobre el código. Se fuerza dar cuenta de las 7.
+- `Stop` → `.claude/hooks/skills-stop-check.py`: no deja cerrar el turno si falta la línea con las 7, si se escribió HTML/CSS/SVG sin `impeccable` + una de Taste + una de Emil o sin pasar `impeccable detect`, o Python sin `code-review-and-quality` (o `ponytail:ponytail-review`). Detecta archivos escritos con Write/Edit o desde Bash (`>`/`tee`). Solo mira lo cargado en el turno actual. Bloquea una vez por turno (no hace bucle) y si falla deja pasar.
+- `SessionStart` → `.claude/hooks/session-start.sh`: instala lo que falte, actualiza el grafo de Graphify (código, sin IA) y muestra el check.
+- Todas las skills siguen activas (decisión del usuario 2026-10-11: no desactivar ninguna). OmniRoute no se puede usar por ahora; las otras 6 se usan según la tabla y se da cuenta de las 7 en cada respuesta.
 
 # graphify
 - **graphify** (`.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`

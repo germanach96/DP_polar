@@ -26,6 +26,11 @@ if command -v claude >/dev/null 2>&1; then
   done
 fi
 
+# ---------- grafo de Graphify (solo código vía AST, sin IA; los documentos ya vienen en graph.json versionado) ----------
+if command -v graphify >/dev/null 2>&1 && [ -f "$ROOT/graphify-out/graph.json" ]; then
+  (cd "$ROOT" && timeout 180 graphify update . >>"$LOG" 2>&1)
+fi
+
 # ---------- informe ----------
 "$ROOT/.claude/hooks/check-tools.sh"
 exit 0

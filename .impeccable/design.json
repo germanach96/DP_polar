@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-11T17:20:00Z",
+  "title": "Design System: Parlamento de la demanda",
+  "extensions": {
+    "colorMeta": {
+      "chamber": { "role": "primary", "displayName": "Cámara", "canonical": "#15141B" },
+      "ink": { "role": "primary", "displayName": "Tinta de Cámara", "canonical": "#17161D" },
+      "focus-violet": { "role": "secondary", "displayName": "Violeta Foco (= Regla fragancias)", "canonical": "#6250d6" },
+      "rule-teal": { "role": "secondary", "displayName": "Verde Azulado Regla", "canonical": "#0F8A86" },
+      "paper": { "role": "neutral", "displayName": "Papel", "canonical": "#F2F2F5" }
+    },
+    "darkTheme": {
+      "bg": "#0F0E13", "surface": "#18171E", "ink": "#ECEBF2", "ink-2": "#B9B7C8", "muted": "#8E8CA1", "line": "#2B2A34", "soft": "#22212A",
+      "chamber": "#09080C", "chamber-2": "#16151C", "rule": "#2BB3AE", "empate": "#6E7380", "focus": "#9d90ff"
+    },
+    "shadows": [
+      { "name": "float", "value": "0 12px 32px rgba(0,0,0,.22)", "purpose": "Solo desplegables y tooltips que flotan sobre contenido." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Entradas, pulsación y respuesta de controles (150–250ms)." },
+      { "name": "ease-io", "value": "cubic-bezier(0.77, 0, 0.175, 1)", "purpose": "Movimiento en pantalla: puntos que viajan entre brújulas (0.95s)." },
+      { "name": "press", "value": "transform: scale(.97)", "purpose": "Respuesta táctil al pulsar cualquier botón o chip." }
+    ],
+    "breakpoints": [
+      { "name": "stack", "value": "900px" },
+      { "name": "phone", "value": "520px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón primario",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción principal (p. ej. «Repetir escrutinio»).",
+      "html": "<button class=\"ds-btn\">Repetir escrutinio</button>",
+      "css": ".ds-btn { font: 600 .88rem/1 'Public Sans', system-ui, sans-serif; padding: .65rem 1rem; border-radius: 6px; border: 0; background: #17161D; color: #F2F2F5; cursor: pointer; transition: transform .16s cubic-bezier(0.23,1,0.32,1), background-color .16s ease; } .ds-btn:hover { background: #2a2833; } .ds-btn:active { transform: scale(.97); }"
+    },
+    {
+      "name": "Chip de partido",
+      "kind": "chip",
+      "refersTo": "chip-filter",
+      "description": "Filtro por partido con su número y color.",
+      "html": "<button class=\"ds-chip\" aria-pressed=\"false\"><i style=\"background:#6250d6\">1</i>Regla fragancias <b>247</b></button>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: .45rem; padding: .38rem .7rem .38rem .38rem; border-radius: 999px; border: 1px solid #DEDDE6; background: #fff; color: #17161D; font: 500 .84rem/1 'Public Sans', system-ui, sans-serif; cursor: pointer; transition: border-color .2s ease, transform .16s cubic-bezier(0.23,1,0.32,1); } .ds-chip:hover { border-color: #706E82; } .ds-chip:active { transform: scale(.97); } .ds-chip[aria-pressed=true] { border-color: #17161D; } .ds-chip i { display: inline-grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 50%; color: #fff; font: 700 .74rem/1 sans-serif; font-style: normal; } .ds-chip b { color: #706E82; font-weight: 600; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "El Parlamento",
+    "overview": "Cada página es una sesión de una cámara moderna: hemiciclo en cámara oscura, análisis en papel claro, titulares con el hallazgo y la cifra. Serio porque defiende una regla con datos; vivo y táctil porque se explora con la mano.",
+    "keyCharacteristics": ["Cámara oscura + papel claro", "Un significado por color", "Plano, sin sombras en reposo", "Controles con respuesta táctil", "Funciona sin conexión"],
+    "rules": [
+      { "name": "La Regla de Un Significado", "body": "Un color = una cosa; el color sigue a la entidad, no a su posición.", "section": "colors" },
+      { "name": "La Regla Plana", "body": "Sin sombras en reposo; solo lo que flota lleva sombra.", "section": "elevation" },
+      { "name": "La Regla Sin Conexión", "body": "Toda fuente web lleva alternativa del sistema.", "section": "typography" }
+    ],
+    "dos": ["Titular con hallazgo y cifra", "Respuesta táctil en cada control", "prefers-reduced-motion", "Validar colores con dataviz"],
+    "donts": ["Sombras en reposo", "Reutilizar colores de partido", "Depender de internet", "Consenso como referencia", "Animar por decorar"]
+  }
+}

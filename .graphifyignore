@@ -1,0 +1,7 @@
+# Graphify: grafo del proyecto, no de herramientas de terceros ni de salidas generadas
+.claude/skills/
+work/
+reportes/
+*.pdf
+*.xlsx
+skills-lock.json

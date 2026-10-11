@@ -7,7 +7,10 @@ import sys
 
 TOOLS = ["Ponytail", "Agent Skills", "OmniRoute", "Graphify", "Taste", "Impeccable", "Emil"]
 TASTE = {"design-taste-frontend", "design-taste-frontend-v1", "high-end-visual-design", "minimalist-ui", "industrial-brutalist-ui",
-         "redesign-existing-projects", "gpt-taste", "stitch-design-taste", "image-to-code"}
+         "redesign-existing-projects", "gpt-taste", "stitch-design-taste", "image-to-code", "brandkit", "imagegen-frontend-web"}
+EMIL = {"emil-design-eng", "animate", "review-animations", "improve-animations", "find-animation-opportunities", "apple-design",
+        "break-ui", "pick-ui-library", "prototype", "mobile-native"}
+DETECT = re.compile(r"impeccable\S*\s+detect")
 REVIEW = {"code-review-and-quality", "ponytail:ponytail-review", "code-review", "simplify"}
 # shortcut: solo detecta archivos escritos desde Bash con > o tee; un open(..., "w") dentro de un python -c se escapa
 BASH_WRITE = re.compile(r"(?:>>?|\btee(?:\s+-a)?)\s*['\"]?([^\s'\";|&]+\.(?:py|html|css|svg))\b")
@@ -23,7 +26,7 @@ def is_prompt(e):
 
 def problems(lines):
     start = max([i for i, e in enumerate(lines) if is_prompt(e)], default=-1)
-    skills, files, last = set(), [], ""
+    skills, files, last, detected = set(), [], "", False
     for e in lines[start + 1:]:
         if e.get("type") != "assistant":
             continue
@@ -36,6 +39,7 @@ def problems(lines):
                     files.append(inp["file_path"])
                 if b.get("name") == "Bash":
                     files += BASH_WRITE.findall(inp.get("command", ""))
+                    detected = detected or bool(DETECT.search(inp.get("command", "")))
             elif b.get("type") == "text" and b.get("text", "").strip():
                 last = b["text"]
     out = []
@@ -45,9 +49,11 @@ def problems(lines):
         out.append("Falta la línea final «Skills y plugins: …» con las 7 (usado / no aplica: motivo). Sin nombrar: " + ", ".join(miss) + ".")
     if any(f.endswith((".html", ".css", ".svg")) for f in files):
         need = [n for n, ok in [("impeccable", bool({"impeccable", "impeccable:impeccable"} & skills)),
-                                ("una skill de Taste", bool(TASTE & skills))] if not ok]
+                                ("una skill de Taste", bool(TASTE & skills)), ("una skill de Emil", bool(EMIL & skills))] if not ok]
         if need:
             out.append("Se escribió HTML/CSS/SVG sin cargar con Skill: " + ", ".join(need) + ".")
+        if not detected:
+            out.append("Se escribió HTML/CSS/SVG sin pasar el detector: impeccable detect --json <archivos>.")
     if any(f.endswith(".py") for f in files) and not REVIEW & skills:
         out.append("Se escribió Python sin cargar code-review-and-quality (o ponytail:ponytail-review) para revisarlo.")
     return out
