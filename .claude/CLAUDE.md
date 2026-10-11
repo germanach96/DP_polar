@@ -18,6 +18,24 @@ Al arrancar cada sesión, `.claude/hooks/session-start.sh` instala lo que falte 
 
 Además, para cualquier gráfico: skill `dataviz`.
 
+## Skills en cada tarea, no solo al empezar (lección 2026-10-11)
+Error cometido: se cargaron skills para el primer HTML y el segundo (explorador) se hizo de memoria, sin cargar ninguna, sin performance, sin auditoría y sin validar colores nuevos; los avisos del hook de Impeccable se ignoraron sin decirlo.
+
+**Cada petición nueva del usuario es una tarea nueva:** volver a mirar esta tabla y cargar con Skill las que encajen, aunque se hayan cargado antes en la conversación. Lo cargado en una tarea anterior no cuenta.
+
+| Tipo de tarea | Cargar antes de empezar (Skill) | Antes de entregar (obligatorio) |
+|---|---|---|
+| Código Python / scripts | `ponytail` (activo), `code-review-and-quality` | Un `assert` o autocomprobación en cada script nuevo; revisar el diff |
+| HTML / página / reporte | `artifact-design`, `impeccable`, una de Taste (`design-taste-frontend` o `high-end-visual-design`) | `impeccable detect --json <archivos>` una vez y triar cada aviso; capturas escritorio + móvil, claro + oscuro |
+| Gráficos / colores | `dataviz` | `validate_palette.js` con **todos** los colores nuevos, en claro y en oscuro |
+| Animación / interacción | `animate`, `emil-design-eng` | Respeta `prefers-reduced-motion` |
+| Página interactiva con datos (filtros, muchas filas) | `performance-optimization` | Medir con Playwright el tiempo de cada filtro/clic y el peso del archivo; redibujar solo lo que cambia |
+
+Reglas:
+- **Avisos de hooks** (Impeccable u otros): cada uno se arregla, se ignora con motivo o se pregunta, y se dice en la respuesta. Nunca en silencio.
+- **Pasos que una skill exige y se saltan** (p. ej. la entrevista de Impeccable): decirlo en la respuesta y por qué, no omitirlo.
+- **Respuesta final:** una línea «Skills usadas: …» y otra «Pasos de skills no hechos: …» (o «ninguno»).
+
 # graphify
 - **graphify** (`.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
 When the user types `/graphify`, use the installed graphify skill or instructions before doing anything else.

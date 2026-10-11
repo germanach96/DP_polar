@@ -126,6 +126,7 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
 ## Código
 - **Regenerar datos** (los parquet y pkl de `work/` no se versionan):
   `pip install pandas statsmodels openpyxl pyarrow tabulate reportlab` y luego `python3 src/load.py && python3 src/panel.py && python3 src/mu_load.py`
+  - **Cuidado:** volver a correr `ideo_brujulas6.py` vuelve a elegir las recetas con los datos y cambia los partidos (2026-10-11: Media 6M prudente pasó de restar 50% a 100% de DAs). Las recetas vigentes son las de `work/ideo_brujulas6.json` versionado: tras regenerar, `git checkout -- work/ideo_brujulas6.json` (y los JSON de resultados) antes de usar `sm.specs()`.
 - **Piezas clave:**
   - `src/house_compare.py`: `frag_rule`, `mu_rule`, `central_mask`, `segments`.
   - `src/methods.py`: `_group_g`, trend por grupo.
