@@ -40,11 +40,14 @@ echo "| Skill / plugin | Estado | Detalle |"
 echo "|---|---|---|"
 plugin_row "Ponytail" ponytail DietrichGebert/ponytail
 skill_row "Agent Skills (addyosmani)" addyosmani/agent-skills "npx skills add addyosmani/agent-skills"
+# OmniRoute: acordado con el usuario (2026-10-11) que hoy no se puede usar; se informa sin bloquear la sesión
 if command -v omniroute >/dev/null 2>&1; then
-  row "OmniRoute" OK "CLI v$(omniroute --version 2>/dev/null | tail -1) instalada; para enrutar modelos necesita un servidor y API keys configurados"
-else row "OmniRoute" FALTA "CLI no instalada. Instalar: npm install -g omniroute"; fi
-if command -v graphify >/dev/null 2>&1 && [ -f "$SK/graphify/SKILL.md" ]; then
-  row "Graphify" OK "CLI instalada y skill en .claude/skills/graphify (/graphify)"
+  printf '| %s | %s | %s |\n' "OmniRoute" "NO OPERATIVO" "CLI v$(omniroute --version 2>/dev/null | tail -1) instalada, sin servidor ni API keys: no se usa (no bloquea)"
+else printf '| %s | %s | %s |\n' "OmniRoute" "NO OPERATIVO" "CLI no instalada (npm install -g omniroute); sin servidor ni API keys no se usa (no bloquea)"; fi
+if command -v graphify >/dev/null 2>&1 && [ -f "$SK/graphify/SKILL.md" ] && [ -f "$ROOT/graphify-out/graph.json" ]; then
+  row "Graphify" OK "CLI, skill y grafo (graphify-out/graph.json, $(python3 -c "import json;d=json.load(open('$ROOT/graphify-out/graph.json'));print(len(d.get('nodes',[])))") nodos): usar graphify query para preguntas sobre el código"
+elif command -v graphify >/dev/null 2>&1 && [ -f "$SK/graphify/SKILL.md" ]; then
+  row "Graphify" FALTA "falta el grafo: correr /graphify . (con .graphifyignore del proyecto)"
 else
   m=""; command -v graphify >/dev/null 2>&1 || m="CLI (uv tool install graphifyy)"; [ -f "$SK/graphify/SKILL.md" ] || m="$m skill (graphify install)"
   row "Graphify" FALTA "falta: $m"; fi
@@ -52,5 +55,11 @@ skill_row "Taste Skill (tasteskill.dev)" Leonxlnx/taste-skill "npx skills add Le
 plugin_row "Impeccable (impeccable.style)" impeccable pbakaus/impeccable
 skill_row "Emil Kowalski (emilkowal.ski/skill)" emilkowalski/skill "npx skills add emilkowalski/skill"
 echo
-if [ "$FAIL" = 0 ]; then echo "Resultado: todo instalado."
+echo "### Revisión de funcionamiento (cada SKILL.md y prueba real de cada herramienta)"
+echo
+echo "| Herramienta | Estado | Detalle |"
+echo "|---|---|---|"
+python3 "$ROOT/.claude/hooks/skills-health.py" || FAIL=1
+echo
+if [ "$FAIL" = 0 ]; then echo "Resultado: todo instalado y funcionando."
 else echo "Resultado: FALTA algo. Detalle de instalación en /tmp/session-start-tools.log"; fi

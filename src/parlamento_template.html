@@ -1,0 +1,798 @@
+<title>Parlamento de la demanda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: columna institucional de 1160px; la cámara (hemiciclo) abre en un panel oscuro y cada sección es un punto del orden del día */
+:root {
+  --bg: #F2F2F5; --surface: #FFFFFF; --ink: #17161D; --ink-2: #4B4958; --muted: #706E82; --line: #DEDDE6; --soft: #EAE9F0;
+  --chamber: #15141B; --chamber-2: #1F1E27; --chamber-ink: #F1F0F6; --chamber-muted: #A3A1B4; --chamber-line: #302E3B;
+  --rule: #0F8A86; --empate: #B7BCC4; --focus: #6250d6;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); --ease-io: cubic-bezier(0.77, 0, 0.175, 1);
+  --s1: .75rem; --s2: 1rem; --s3: 1.5rem; --s4: 2.25rem; --s5: 3.5rem; --s6: 5.5rem;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0F0E13; --surface: #18171E; --ink: #ECEBF2; --ink-2: #B9B7C8; --muted: #8E8CA1; --line: #2B2A34; --soft: #22212A;
+  --chamber: #09080C; --chamber-2: #16151C; --chamber-ink: #F1F0F6; --chamber-muted: #A3A1B4; --chamber-line: #2A2833;
+  --rule: #2BB3AE; --empate: #6E7380; --focus: #9d90ff; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0F0E13; --surface: #18171E; --ink: #ECEBF2; --ink-2: #B9B7C8; --muted: #8E8CA1; --line: #2B2A34; --soft: #22212A;
+  --chamber: #09080C; --chamber-2: #16151C; --chamber-ink: #F1F0F6; --chamber-muted: #A3A1B4; --chamber-line: #2A2833;
+  --rule: #2BB3AE; --empate: #6E7380; --focus: #9d90ff; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.6 var(--f-body); -webkit-font-smoothing: antialiased; }
+::selection { background: color-mix(in oklab, var(--focus) 30%, transparent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1160px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 40px); }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.9rem, 3.6vw, 2.9rem); font-weight: 700; font-stretch: 88%; line-height: 1.04; max-width: 22ch; }
+h3 { font-size: 1.15rem; font-weight: 650; line-height: 1.2; }
+p { margin: 0; }
+.lead { font-size: 1.1rem; color: var(--ink-2); max-width: 62ch; }
+.num { font-variant-numeric: tabular-nums; }
+section.s { padding-block: var(--s6) 0; }
+.s-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s3) var(--s5); align-items: end; margin-bottom: var(--s4); }
+.s-head .lead { justify-self: start; }
+.order { font: 600 .78rem/1 var(--f-body); color: var(--muted); letter-spacing: .1em; text-transform: uppercase; display: block; margin-bottom: var(--s2); font-variant-numeric: tabular-nums; }
+
+/* ── barra del orden del día */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in oklab, var(--chamber) 92%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--chamber-line); }
+.nav .wrap { display: flex; align-items: center; gap: var(--s3); height: 56px; }
+.brand { font: 700 .95rem/1 var(--f-display); font-stretch: 110%; color: var(--chamber-ink); text-decoration: none; letter-spacing: .02em; white-space: nowrap; display: flex; gap: .55rem; align-items: center; }
+.brand svg { flex: none; }
+.nav ol { display: flex; gap: .25rem; list-style: none; margin: 0 0 0 auto; padding: 0; overflow-x: auto; scrollbar-width: none; }
+.nav ol a { display: block; padding: .45rem .7rem; border-radius: 6px; color: var(--chamber-muted); text-decoration: none; font-size: .85rem; white-space: nowrap; transition: color .2s ease, background-color .2s ease; }
+.nav ol a.on { color: var(--chamber-ink); background: var(--chamber-2); }
+@media (hover: hover) and (pointer: fine) { .nav ol a:hover { color: var(--chamber-ink); } }
+
+/* ── la cámara */
+.chamber { background: var(--chamber); color: var(--chamber-ink); padding-block: var(--s5) var(--s5); overflow: hidden; }
+.hero { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.25fr); gap: var(--s5); align-items: center; }
+.hero h1 { font-size: clamp(2.6rem, 6vw, 4.9rem); font-weight: 800; font-stretch: 78%; line-height: .95; letter-spacing: -0.03em; }
+.hero .lead { color: var(--chamber-muted); margin-top: var(--s3); }
+.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--chamber-line); border: 1px solid var(--chamber-line); border-radius: 10px; overflow: hidden; margin-top: var(--s4); }
+.facts div { background: var(--chamber); padding: .85rem 1rem; }
+.facts b { display: block; font: 700 1.6rem/1.1 var(--f-display); font-stretch: 90%; font-variant-numeric: tabular-nums; }
+.facts span { font-size: .82rem; color: var(--chamber-muted); line-height: 1.35; display: block; margin-top: .2rem; }
+.hemi-wrap { position: relative; }
+.hemi { width: 100%; height: auto; display: block; overflow: visible; }
+.hemi .seat { transform-box: fill-box; transform-origin: center; animation: seatIn .55s var(--ease-out) both; animation-delay: var(--d, 0ms); transition: opacity .2s ease; }
+.hemi.dim .seat:not(.hl) { opacity: .16; }
+@keyframes seatIn { from { opacity: 0; transform: scale(.35) translateY(6px); } }
+.hemi .big { font: 800 64px/1 var(--f-display); font-stretch: 85%; font-variant-numeric: tabular-nums; }
+.hemi .cap { font: 500 13px/1 var(--f-body); letter-spacing: .12em; text-transform: uppercase; }
+.majority { display: flex; justify-content: space-between; gap: 1rem; font-size: .82rem; color: var(--chamber-muted); margin-top: var(--s2); }
+.vbar { display: flex; height: 26px; border-radius: 5px; overflow: hidden; gap: 2px; margin-top: .5rem; }
+.vbar i { display: flex; align-items: center; justify-content: center; font: 600 .74rem/1 var(--f-body); font-style: normal; color: #fff; min-width: 0; transform-origin: left; animation: grow .9s var(--ease-out) both; animation-delay: var(--d, 0ms); font-variant-numeric: tabular-nums; }
+@keyframes grow { from { transform: scaleX(0); } }
+.vlab { font-size: .8rem; color: var(--chamber-muted); margin-top: var(--s3); }
+.legend { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: var(--s3); }
+.chip { display: inline-flex; align-items: center; gap: .45rem; padding: .38rem .7rem .38rem .38rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 500 .84rem/1 var(--f-body); cursor: pointer; transition: opacity .2s ease, border-color .2s ease, transform .16s var(--ease-out); }
+.chip:active { transform: scale(.97); }
+.chip[aria-pressed="true"] { border-color: var(--ink); }
+.legend.has-focus .chip[aria-pressed="false"] { opacity: .45; }
+.chamber .chip { background: var(--chamber-2); border-color: var(--chamber-line); color: var(--chamber-ink); }
+.chamber .chip b { color: var(--chamber-muted); }
+.chip b { font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.nb { display: inline-grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 50%; color: #fff; font: 700 .74rem/1 var(--f-body); font-style: normal; flex: none; }
+
+/* ── glosario */
+.gloss { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.gloss div { padding: var(--s3) var(--s3) var(--s3) 0; border-bottom: 1px solid var(--line); }
+.gloss div + div { padding-left: var(--s3); border-left: 1px solid var(--line); }
+.gloss div:nth-child(3n+1) { padding-left: 0; border-left: 0; }
+.gloss dt { font: 700 1.25rem/1.1 var(--f-display); font-stretch: 92%; display: flex; gap: .6rem; align-items: baseline; }
+.gloss dt small { font: 500 .78rem/1 var(--f-body); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.gloss dd { margin: .55rem 0 0; color: var(--ink-2); font-size: .95rem; max-width: 46ch; }
+.dni { display: grid; grid-template-columns: auto repeat(6, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-top: var(--s4); }
+.dni > div { background: var(--surface); padding: .9rem 1rem; font-size: .84rem; color: var(--ink-2); line-height: 1.4; }
+.dni > div b { display: block; color: var(--ink); font-size: .9rem; margin-bottom: .2rem; }
+.dni .dni-t { display: flex; flex-direction: column; justify-content: center; background: var(--ink); color: var(--bg); font: 700 1rem/1.15 var(--f-display); font-stretch: 95%; min-width: 7.5rem; }
+.dni .dni-t span { font: 400 .76rem/1.3 var(--f-body); opacity: .75; margin-top: .3rem; }
+.q3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s3); margin-top: var(--s5); }
+.q { border-top: 2px solid var(--ink); padding-top: var(--s2); display: flex; flex-direction: column; gap: .6rem; }
+.q .qn { font: 800 2.6rem/1 var(--f-display); font-stretch: 75%; color: var(--muted); }
+.q p { color: var(--ink-2); font-size: .94rem; }
+.firm { display: flex; align-items: center; gap: .6rem; font-size: .82rem; color: var(--muted); margin-top: auto; padding-top: .4rem; }
+.firm i { display: flex; gap: 3px; }
+.firm i span { width: 18px; height: 6px; border-radius: 2px; background: var(--soft); }
+.firm i span.on { background: var(--ink); }
+
+/* ── calendario de la prueba */
+.tl { position: relative; margin-top: var(--s5); padding: var(--s4) 0 0; }
+.tl-track { position: relative; height: 2px; background: var(--line); margin: 0 4% 0 4%; }
+.tl-fill { position: absolute; inset: 0; background: var(--ink); transform-origin: left; transform: scaleX(1); }
+.tl.play .tl-fill { animation: grow 1.6s var(--ease-io) both; }
+.tl-pts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: -7px; }
+.tl-pt { display: flex; flex-direction: column; align-items: center; text-align: center; gap: .4rem; padding-inline: .4rem; }
+.tl-pt::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); }
+.tl-pt.key::before { background: var(--ink); }
+.tl-pt b { font: 700 1.05rem/1 var(--f-display); font-stretch: 95%; margin-top: .4rem; }
+.tl-pt span { font-size: .82rem; color: var(--ink-2); line-height: 1.4; max-width: 24ch; }
+.tl-band { display: grid; grid-template-columns: 3fr 1fr 1fr; margin: var(--s3) 0 0; gap: 6px; font-size: .78rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.tl-band div { padding: .55rem .8rem; border-radius: 6px; background: var(--soft); color: var(--ink-2); }
+.tl-band div:nth-child(2) { background: var(--ink); color: var(--bg); }
+.note { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s3); margin-top: var(--s4); }
+.note div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: var(--s3); font-size: .92rem; color: var(--ink-2); }
+.note b { color: var(--ink); }
+
+/* ── escrutinio */
+.vote { display: grid; gap: var(--s3); }
+.vote-b { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s3); align-items: stretch; }
+.vote-b .verdict { margin-top: 0; }
+.ballot { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.ballot-h { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: var(--s2) var(--s3); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.ballot-h h3 { font-size: 1.05rem; }
+.ballot-h span { font-size: .8rem; color: var(--muted); }
+.btn { font: 600 .88rem/1 var(--f-body); padding: .65rem 1rem; border-radius: 8px; border: 0; background: var(--ink); color: var(--bg); cursor: pointer; display: inline-flex; gap: .5rem; align-items: center; transition: transform .16s var(--ease-out), opacity .2s ease; }
+.btn:active { transform: scale(.97); }
+.btn[disabled] { opacity: .5; cursor: progress; }
+.tscroll { overflow-x: auto; }
+table.ev { width: 100%; border-collapse: collapse; font-size: .88rem; min-width: 640px; }
+.ev th { font: 600 .72rem/1.25 var(--f-body); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; text-align: right; padding: .7rem .6rem; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.ev th:first-child, .ev td:first-child { text-align: left; padding-left: var(--s3); }
+.ev td { padding: .55rem .6rem; text-align: right; border-bottom: 1px solid var(--soft); font-variant-numeric: tabular-nums; position: relative; transition: background-color .25s ease, color .25s ease; }
+.ev td.pn { display: flex; align-items: center; gap: .5rem; white-space: nowrap; }
+.ev .cur { background: var(--soft); }
+.ev td.win { color: var(--t, #fff); font-weight: 700; background: var(--c); }
+.ev td.win::after { content: "✓"; font-size: .7rem; margin-left: .25rem; }
+.ev td.top2 { box-shadow: inset 0 0 0 2px var(--c); font-weight: 700; }
+.ev tfoot td { font-weight: 600; color: var(--ink-2); border-bottom: 0; }
+.ev th.cm, .ev td.cm { border-left: 1px solid var(--line); }
+.tally { display: flex; flex-direction: column; gap: .55rem; }
+.tally .row { display: grid; grid-template-columns: minmax(0, 13rem) minmax(0, 1fr) 2.2rem; align-items: center; gap: .6rem; font-size: .88rem; }
+.tally .bar { height: 10px; border-radius: 3px; background: var(--soft); overflow: hidden; }
+.tally .bar i { display: block; height: 100%; width: 100%; background: var(--c); transform-origin: left; transform: scaleX(0); transition: transform .45s var(--ease-out); }
+.tally .row b { text-align: right; font-variant-numeric: tabular-nums; }
+.tally .pn { display: flex; align-items: center; gap: .5rem; white-space: nowrap; overflow: hidden; }
+.verdict { margin-top: var(--s3); padding: var(--s3); border-radius: 12px; background: var(--chamber); color: var(--chamber-ink); }
+.verdict h3 { font-size: 1.3rem; }
+.verdict p { color: var(--chamber-muted); font-size: .9rem; margin-top: .5rem; }
+.verdict p b { color: var(--chamber-ink); }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: var(--s3); }
+.panel h3 { margin-bottom: var(--s2); }
+.kv { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .35rem 1rem; font-size: .9rem; margin-top: var(--s2); }
+.kv span { color: var(--ink-2); } .kv b { text-align: right; font-variant-numeric: tabular-nums; }
+.kv .sep { grid-column: 1 / -1; height: 1px; background: var(--line); margin: .3rem 0; }
+
+/* ── partidos */
+.parties { border-top: 1px solid var(--ink); }
+.party { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr) minmax(0, 1fr); gap: var(--s3) var(--s4); padding-block: var(--s3); border-bottom: 1px solid var(--line); align-items: start; }
+.party .id { display: flex; gap: .9rem; align-items: flex-start; }
+.party .id .nb { width: 2.4rem; height: 2.4rem; font-size: 1rem; }
+.party .id h3 { font-size: 1.35rem; font-stretch: 90%; }
+.party .bloc { font-size: .78rem; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-top: .3rem; display: block; }
+.party .lema { font-style: italic; color: var(--ink-2); margin-top: .7rem; font-size: .95rem; }
+.ans { display: grid; gap: .5rem; }
+.ans div { display: grid; grid-template-columns: 7.2rem minmax(0, 1fr); gap: .8rem; font-size: .9rem; line-height: 1.45; }
+.ans span { color: var(--muted); font-size: .8rem; padding-top: .1rem; }
+.pm { display: grid; gap: .7rem; }
+.pm .seats { display: flex; align-items: baseline; gap: .5rem; }
+.pm .seats b { font: 800 2.2rem/1 var(--f-display); font-stretch: 85%; font-variant-numeric: tabular-nums; }
+.pm .seats span { color: var(--muted); font-size: .82rem; }
+.pm .sbar { height: 6px; border-radius: 3px; background: var(--soft); overflow: hidden; }
+.pm .sbar i { display: block; height: 100%; background: var(--c); }
+.pm dl { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .2rem .8rem; font-size: .84rem; }
+.pm dt { color: var(--muted); } .pm dd { margin: 0; text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ── brújulas */
+.cmp-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: var(--s4); align-items: start; }
+.tabs { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: var(--s2); }
+.tab { font: 600 .9rem/1.1 var(--f-body); padding: .65rem .95rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); cursor: pointer; text-align: left; transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
+.tab small { display: block; font-weight: 500; font-size: .74rem; color: var(--muted); margin-top: .2rem; }
+.tab[aria-selected="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.tab[aria-selected="true"] small { color: color-mix(in oklab, var(--bg) 70%, transparent); }
+.cmp-box { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: .6rem; position: relative; }
+svg.cmp { width: 100%; height: auto; display: block; }
+.cmp .q-bg { transition: fill .3s ease; }
+.cmp .ql { font: 600 12px/1 var(--f-body); fill: var(--muted); letter-spacing: .02em; }
+.cmp .al { font: 600 12.5px/1 var(--f-body); fill: var(--ink-2); }
+.cmp .axis { stroke: var(--line); stroke-width: 1.2; }
+.cmp .dot { transition: transform .95s var(--ease-io), opacity .25s ease; transition-delay: var(--d, 0ms), 0ms; }
+.cmp.focus .dot:not(.hl) { opacity: .06; }
+.cmp .mk { transition: transform .95s var(--ease-io), opacity .25s ease; }
+.cmp.focus .mk:not(.hl) { opacity: .25; }
+.cmp .mk text { font: 700 13px/1 var(--f-body); }
+.cmp .lead-l { transition: d .95s var(--ease-io); fill: none; stroke-width: 1.4; stroke-dasharray: 2 3; }
+.cmp-side h3 { font-size: 1.6rem; font-stretch: 90%; }
+.cmp-side .sub { color: var(--muted); font-size: .85rem; margin-top: .3rem; }
+.cmp-side .read { margin-top: var(--s3); display: grid; gap: var(--s2); }
+.split { display: grid; gap: .35rem; }
+.split .lab { display: flex; justify-content: space-between; font-size: .8rem; color: var(--muted); gap: .5rem; }
+.split .sb { display: flex; height: 22px; border-radius: 4px; overflow: hidden; gap: 2px; }
+.split .sb i { display: flex; align-items: center; padding-inline: .45rem; font: 600 .74rem/1 var(--f-body); font-style: normal; transition: flex-grow .6s var(--ease-out); white-space: nowrap; overflow: hidden; font-variant-numeric: tabular-nums; }
+.split .sb i:nth-child(1) { background: var(--ink); color: var(--bg); }
+.split .sb i:nth-child(2) { background: var(--soft); color: var(--ink-2); justify-content: center; }
+.split .sb i:nth-child(3) { background: var(--ink-2); color: var(--bg); justify-content: flex-end; }
+.cmp-side .txt { font-size: .95rem; color: var(--ink-2); }
+.cmp-side .txt b { color: var(--ink); }
+.how { font-size: .82rem; color: var(--muted); margin-top: var(--s2); }
+.tip { position: absolute; pointer-events: none; background: var(--chamber); color: var(--chamber-ink); font-size: .8rem; padding: .45rem .6rem; border-radius: 6px; opacity: 0; transform: translateY(4px); transition: opacity .15s ease, transform .15s var(--ease-out); white-space: nowrap; z-index: 5; }
+.tip.on { opacity: 1; transform: none; }
+
+/* ── resultados */
+.res { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s4); align-items: start; }
+.filters { display: grid; gap: .8rem; margin-bottom: var(--s3); }
+.filters .fr { display: flex; flex-wrap: wrap; gap: .35rem; align-items: center; }
+.filters .fr > span { font-size: .74rem; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; width: 5.6rem; flex: none; }
+.fb { font: 500 .84rem/1 var(--f-body); padding: .45rem .7rem; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); cursor: pointer; transition: background-color .2s ease, color .2s ease; }
+.fb[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.res .hemi .big { fill: var(--ink); } .res .hemi .cap { fill: var(--muted); }
+.res .vbar { height: 22px; }
+.res-tab { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.res-tab th { font: 600 .72rem/1 var(--f-body); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; text-align: right; padding: .5rem; border-bottom: 1px solid var(--line); }
+.res-tab th:first-child, .res-tab td:first-child { text-align: left; }
+.res-tab td { padding: .5rem; border-bottom: 1px solid var(--soft); text-align: right; font-variant-numeric: tabular-nums; }
+.res-tab td.pn { display: flex; gap: .5rem; align-items: center; }
+.res-tab .bw { width: 34%; }
+.res-tab .bw i { display: block; height: 8px; border-radius: 2px; background: var(--c); transform-origin: left; animation: grow .6s var(--ease-out) both; }
+.res-tab tr.lead-r td { font-weight: 700; }
+.headline { font: 650 1.25rem/1.3 var(--f-display); font-stretch: 95%; margin-bottom: var(--s2); text-wrap: balance; }
+
+/* ── veredicto */
+.status { display: inline-flex; align-items: center; gap: .5rem; font: 600 .8rem/1 var(--f-body); padding: .45rem .75rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); }
+.status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #d9a400; box-shadow: 0 0 0 3px color-mix(in oklab, #d9a400 25%, transparent); }
+.ver { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s3); }
+.bars h3 { font-size: 1.05rem; }
+.bars .sub { font-size: .82rem; color: var(--muted); margin: .3rem 0 var(--s2); }
+.br { display: grid; grid-template-columns: 11.5rem minmax(0, 1fr) 3rem; gap: .7rem; align-items: center; font-size: .86rem; padding-block: .26rem; }
+.br .bt { height: 14px; background: var(--soft); border-radius: 3px; overflow: hidden; }
+.br .bt i { display: block; height: 100%; background: var(--muted); transform-origin: left; animation: grow .8s var(--ease-out) both; animation-delay: var(--d, 0ms); border-radius: 0 3px 3px 0; }
+.br.ref .bt i { background: var(--rule); }
+.br.best { font-weight: 700; }
+.br b { text-align: right; font-variant-numeric: tabular-nums; }
+.br .pn { display: flex; align-items: center; gap: .45rem; min-width: 0; }
+.br .pn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.br.gap { margin-top: .5rem; padding-top: .7rem; border-top: 1px solid var(--line); }
+.why { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s3); margin-top: var(--s4); }
+.why div { border-top: 2px solid var(--ink); padding-top: var(--s2); }
+.why b { display: block; font: 800 2.4rem/1 var(--f-display); font-stretch: 82%; font-variant-numeric: tabular-nums; }
+.why p { font-size: .92rem; color: var(--ink-2); margin-top: .5rem; }
+.htab { width: 100%; border-collapse: collapse; font-size: .88rem; margin-top: var(--s2); }
+.htab th { font: 600 .72rem/1 var(--f-body); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; padding: .55rem .5rem; text-align: right; border-bottom: 1px solid var(--line); }
+.htab th:first-child, .htab td:first-child { text-align: left; }
+.htab td { padding: .55rem .5rem; text-align: right; border-bottom: 1px solid var(--soft); font-variant-numeric: tabular-nums; }
+.htab tr.hl td { font-weight: 700; background: var(--soft); }
+.open { margin-top: var(--s4); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s3); }
+.open ul { margin: .6rem 0 0; padding-left: 1.1rem; color: var(--ink-2); font-size: .93rem; display: grid; gap: .45rem; }
+footer { margin-top: var(--s6); padding-block: var(--s4); border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; }
+footer code { font-size: .8rem; }
+
+@media (max-width: 900px) {
+  .vote-b, .hero, .vote, .cmp-grid, .res, .ver, .s-head, .note, .open { grid-template-columns: minmax(0, 1fr); }
+  .gloss { grid-template-columns: minmax(0, 1fr); }
+  .gloss div, .gloss div + div { padding-left: 0; border-left: 0; padding-right: 0; }
+  .dni { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dni .dni-t { grid-column: 1 / -1; }
+  .q3, .why { grid-template-columns: minmax(0, 1fr); }
+  .party { grid-template-columns: minmax(0, 1fr); }
+  .tl-pts { grid-template-columns: minmax(0, 1fr); gap: var(--s2); margin-top: 0; }
+  .tl-track { display: none; }
+  .tl-pt { flex-direction: row; text-align: left; align-items: baseline; gap: .7rem; }
+  .tl-pt b { margin-top: 0; min-width: 4.2rem; }
+  .tl-band { grid-template-columns: minmax(0, 1fr); }
+  .nav ol { display: none; }
+}
+@media (max-width: 520px) {
+  .ans div { grid-template-columns: minmax(0, 1fr); gap: .1rem; }
+  .br { grid-template-columns: 8.5rem minmax(0, 1fr) 2.6rem; }
+  .filters .fr > span { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hemi .seat, .vbar i, .res-tab .bw i, .br .bt i, .tl.play .tl-fill { animation: fadeOnly .3s ease both !important; animation-delay: 0ms !important; }
+  .cmp .dot, .cmp .mk, .cmp .lead-l { transition: opacity .25s ease !important; }
+  @keyframes fadeOnly { from { opacity: 0; } }
+}
+</style>
+
+<nav class="nav" aria-label="Orden del día">
+  <div class="wrap">
+    <a class="brand" href="#camara"><svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true"><path d="M1 11a10 10 0 0 1 20 0" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 11a5 5 0 0 1 10 0" fill="none" stroke="currentColor" stroke-width="2"/></svg>Parlamento de la demanda</a>
+    <ol>
+      <li><a href="#camara">La cámara</a></li>
+      <li><a href="#reglas">Cómo funciona</a></li>
+      <li><a href="#escrutinio">Escrutinio</a></li>
+      <li><a href="#partidos">Partidos</a></li>
+      <li><a href="#brujulas">Brújulas</a></li>
+      <li><a href="#resultados">Resultados</a></li>
+      <li><a href="#veredicto">Veredicto</a></li>
+    </ol>
+  </div>
+</nav>
+
+<header class="chamber" id="camara">
+  <div class="wrap hero">
+    <div>
+      <h1>Parlamento<br>de la demanda</h1>
+      <p class="lead">Cada código EAN es un ciudadano que elige cómo quiere que se le pronostique. Seis partidos, seis formas de hacer el forecast, compiten por su voto. Votan con lo que pasó en el año fiscal 2025, eligen desde la foto S&amp;OP de sep-25 y se les mide con el real de sep-26.</p>
+      <div class="facts" id="facts"></div>
+    </div>
+    <div class="hemi-wrap">
+      <svg class="hemi" id="hemi-main" role="img" aria-label="Hemiciclo: un punto por EAN, pintado con el partido que elige"></svg>
+      <div class="majority"><span id="maj-l"></span><span id="maj-r"></span></div>
+      <div class="vlab">Volumen real FY26 (oct-25 a jun-26) de los EANs que elige cada partido</div>
+      <div class="vbar" id="vbar-main"></div>
+      <div class="legend" id="legend-main"></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="s" id="reglas">
+  <div class="wrap">
+    <div class="s-head">
+      <div><span class="order">Punto 1 del orden del día</span><h2>Cómo funciona la cámara</h2></div>
+      <p class="lead">Un parlamento con ciudadanos, partidos, urnas y escaños. Cada pieza tiene su equivalente en el forecast. La idea es la misma que el best-fit de o9, pero cada EAN decide con su propio pasado y a la vista de todos.</p>
+    </div>
+    <dl class="gloss" id="gloss"></dl>
+    <div class="dni" id="dni"></div>
+    <div class="q3" id="q3"></div>
+    <div class="tl" id="tl">
+      <h3>El calendario de la prueba</h3>
+      <div class="tl-band" style="margin-top:var(--s3)"><div>Votación · FY25 (solo histórico)</div><div>Elección</div><div>Juicio</div></div>
+      <div style="margin-top:var(--s3)"><div class="tl-track"><div class="tl-fill"></div></div>
+      <div class="tl-pts">
+        <div class="tl-pt"><b>sep-24</b><span>Foto simulada: los partidos pronostican Q2, Q3 y Q4 de FY25</span></div>
+        <div class="tl-pt"><b>dic-24</b><span>Foto simulada: Q3 y Q4 de FY25</span></div>
+        <div class="tl-pt"><b>mar-25</b><span>Foto simulada: Q4 de FY25. Son 6 urnas en total.</span></div>
+        <div class="tl-pt key"><b>sep-25</b><span>Foto real, tal cual: el partido elegido pronostica oct-25 a jun-26</span></div>
+        <div class="tl-pt key"><b>sep-26</b><span>Solo aporta el real: Q2 queda a 1–3 meses de la foto, Q3 a 4–6 y Q4 a 7–9</span></div>
+      </div></div>
+    </div>
+    <div class="note">
+      <div><b>Igual para todos, no es ideología.</b> Los DAs futuros de la foto son información de mercado y se suman según la bandera isf: 100% sin bandera, 50% con bandera 1 y 0% con bandera 2 (ahí el forecast de o9 ya son los DAs). El trend siempre se calcula con actuals.</div>
+      <div><b>Fuera de la cámara.</b> El consenso es lo que calcula o9 y lo que el parlamento quiere sustituir, así que no vota ni sirve de referencia. Las referencias son las dos reglas y los propios partidos.</div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="escrutinio">
+  <div class="wrap">
+    <div class="s-head">
+      <div><span class="order">Punto 2 del orden del día</span><h2>Un escrutinio real, urna a urna</h2></div>
+      <p class="lead" id="ex-lead"></p>
+    </div>
+    <div class="vote">
+      <div class="ballot">
+        <div class="ballot-h"><div><h3 id="ex-name"></h3><span id="ex-ean"></span></div><button class="btn" id="ex-play" type="button"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z" fill="currentColor"/></svg>Repetir escrutinio</button></div>
+        <div class="tscroll"><table class="ev" id="ex-table"></table></div>
+      </div>
+      <div class="vote-b">
+        <div class="panel"><h3>Recuento de urnas ganadas</h3><div class="tally" id="ex-tally"></div></div>
+        <div class="verdict" id="ex-verdict"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="partidos">
+  <div class="wrap">
+    <div class="s-head">
+      <div><span class="order">Punto 3 del orden del día</span><h2>Los 6 partidos y su programa</h2></div>
+      <p class="lead">Dos reglas fijas, el ciclo de vida y tres partidos de nivel reciente. Cada uno responde a su manera a las 3 preguntas. «Solo» es el error EAN a EAN desde la foto sep-25 si ese partido se usara para todos los EANs; por plazo, a 7–9, 4–6 y 1–3 meses de la foto.</p>
+    </div>
+    <div class="parties" id="parties"></div>
+  </div>
+</section>
+
+<section class="s" id="brujulas">
+  <div class="wrap">
+    <div class="s-head">
+      <div><span class="order">Punto 4 del orden del día</span><h2>Las brújulas políticas</h2></div>
+      <p class="lead">Una brújula por pregunta. El círculo numerado es el partido, colocado por su receta. Cada punto es un EAN, colocado según la respuesta que mejor le funcionó en FY25 y pintado con el partido que eligió. El tamaño del punto es su volumen de FY26.</p>
+    </div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="cmp-grid">
+      <div class="cmp-box"><svg class="cmp" id="cmp" viewBox="0 0 600 600" role="img" aria-label="Brújula política de los partidos y los EANs"></svg><div class="tip" id="tip"></div></div>
+      <div class="cmp-side" id="cmp-side"></div>
+    </div>
+    <div class="legend" id="legend-cmp"></div>
+    <p class="how">Pulsa un partido para ver solo sus votantes. Si dos partidos comparten posición, el marcador se separa y una línea punteada señala su sitio real. Se dibujan los <span id="n-cmp"></span> EANs con historia en FY25 que eligen un partido (sin empates).</p>
+  </div>
+</section>
+
+<section class="s" id="resultados">
+  <div class="wrap">
+    <div class="s-head">
+      <div><span class="order">Punto 5 del orden del día</span><h2>La cámara por grupos</h2></div>
+      <p class="lead">Cómo se reparten los escaños dentro de cada categoría, casa, edad y fase. Los nuevos sin FY25 heredan el voto de sus parecidos: códigos de su casa y tamaño o función que en sep-24 tenían su edad.</p>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="res">
+      <div>
+        <svg class="hemi" id="hemi-res" role="img" aria-label="Hemiciclo del grupo seleccionado"></svg>
+        <div class="vlab" style="color:var(--muted)">Volumen real FY26 de los EANs que elige cada partido</div>
+        <div class="vbar" id="vbar-res"></div>
+      </div>
+      <div><p class="headline" id="res-head"></p><table class="res-tab" id="res-tab"></table></div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="veredicto">
+  <div class="wrap">
+    <div class="s-head">
+      <div><span class="order">Punto 6 del orden del día</span><h2>El veredicto: Ciclo de vida para todos</h2></div>
+      <div><span class="status">Propuesta de Claude · pendiente de aprobación</span><p class="lead" style="margin-top:var(--s2)" id="ver-lead"></p></div>
+    </div>
+    <div class="ver">
+      <div class="panel bars" id="bars-1"></div>
+      <div class="panel bars" id="bars-2"></div>
+    </div>
+    <div class="why" id="why"></div>
+    <div class="panel" style="margin-top:var(--s4)">
+      <h3>Error EAN a EAN según lo lejos que estaba la foto (real sep-26)</h3>
+      <div class="tscroll"><table class="htab" id="htab"></table></div>
+    </div>
+    <div class="open">
+      <div class="panel"><h3>Dónde no basta</h3><ul>
+        <li>En el total de la casa el Ciclo de vida se queda corto: sesgo de <span id="cv-sesgo"></span>. Ahí acierta más la regla con el 100% de los DAs.</li>
+        <li>Con bandera 1 falla más que con el resto, y sumarle el 100% de los DAs lo empeora.</li>
+        <li>Gana con claridad en los nuevos de 6–11 meses y en los EANs con bandera 2.</li>
+      </ul></div>
+      <div class="panel"><h3>Preguntas abiertas</h3><ul>
+        <li>¿Se aprueba el Ciclo de vida como base para todos?</li>
+        <li>¿Por qué acierta EAN a EAN pero se queda corto en el total de la casa?</li>
+        <li>¿Qué hacer con la bandera 1, donde no funcionan ni el 50% ni el 100% de los DAs?</li>
+        <li>Próximo paso: el partido «Consumidor (EPOS)» y una coalición en lugar de un solo ganador.</li>
+      </ul></div>
+    </div>
+    <footer>Datos del último reporte del parlamento (<code>reportes/REPORTE_IDEOLOGIA.pdf</code>): voto con FY25 en 6 urnas, prueba desde la foto sep-25 y real de la foto sep-26. Generado con <code>src/parlamento_html.py</code>. Error EAN a EAN = |forecast − real| / real de cada EAN y quarter. WAPE90 = |Σ forecast − Σ real| / Σ real por casa y quarter.</footer>
+  </div>
+</section>
+</main>
+
+<script>
+const D = /*__DATA__*/null;
+const P = D.parties, ORDER = P.map(p => p.name).concat("Empate");
+const COL = Object.fromEntries(P.map(p => [p.name, p.col])); COL.Empate = D.empate;
+const NUM = Object.fromEntries(P.map(p => [p.name, p.num]));
+const lum = h => { const c = [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255).map(v => v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; };
+const ON = Object.fromEntries(P.map(p => [p.name, lum(p.col) > .3 ? "#17161D" : "#fff"]));  // texto legible sobre el color del partido
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const NS = "http://www.w3.org/2000/svg";
+const pc = x => Math.round(x * 100) + "%";
+const sg = x => (x > 0 ? "+" : "−") + Math.round(Math.abs(x) * 100) + "%";
+const n0 = x => Math.round(x).toLocaleString("es-ES");
+const $ = id => document.getElementById(id);
+const nb = n => n === "Empate" ? `<i class="nb" style="background:var(--empate)">–</i>` : `<i class="nb" style="background:${COL[n]};color:${ON[n]}">${NUM[n]}</i>`;
+const el = (tag, attrs = {}) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+const T = D.por.Total.Total;
+
+/* ── geometría del hemiciclo (misma que src/votes_report.seats) */
+function seats(n) {
+  const opts = [];
+  for (let rows = n <= 10 ? 1 : 2; rows < 40; rows++) for (let i = 20; i <= 1000; i++) {
+    const d = i / 1000, r0 = 1 - (rows - 1) * d;
+    if (rows > 1 && !(r0 >= 0.479 && r0 <= 0.641)) continue;
+    if (rows === 1 && d < Math.PI / Math.max(n - 1, 1)) continue;
+    let cap = 0;
+    if (rows > 1) for (let j = 0; j < rows; j++) cap += Math.floor(Math.PI * (r0 + (1 - r0) * j / (rows - 1)) / d) + 1;
+    else cap = Math.floor(Math.PI / d) + 1;
+    if (cap >= n) opts.push([d, cap - n, rows]);
+  }
+  let ok = opts.filter(o => o[1] <= Math.max(1, 0.15 * n));
+  if (!ok.length) ok = [opts.reduce((a, b) => b[1] < a[1] ? b : a)];
+  ok.sort((a, b) => b[0] - a[0] || b[1] - a[1] || b[2] - a[2]);
+  const [d, , rows] = ok[0], R0 = 1 - (rows - 1) * d;
+  const radii = rows === 1 ? [1] : Array.from({ length: rows }, (_, i) => R0 + (1 - R0) * i / (rows - 1));
+  const cap = radii.map(r => Math.floor(Math.PI * r / d) + 1), sc = cap.reduce((a, b) => a + b, 0);
+  const k = cap.map(c => Math.floor(n * c / sc));
+  const rest = radii.map((_, i) => i).sort((a, b) => (n * cap[b] / sc - k[b]) - (n * cap[a] / sc - k[a]));
+  for (const i of rest.slice(0, n - k.reduce((a, b) => a + b, 0))) k[i]++;
+  const pts = [];
+  radii.forEach((r, ri) => { for (let j = 0; j < k[ri]; j++) pts.push([k[ri] > 1 ? Math.PI * (1 - j / (k[ri] - 1)) : Math.PI / 2, r]); });
+  pts.sort((a, b) => b[0] - a[0] || a[1] - b[1]);
+  const dd = Math.min(d, ...radii.map((r, i) => k[i] ? Math.PI * r / Math.max(k[i] - 1, 1) : Infinity));
+  return [pts, dd];
+}
+
+function countUp(node, to, ms = 1100) {
+  if (RM) { node.textContent = n0(to); return; }
+  const t0 = performance.now();
+  const f = t => { const p = Math.min((t - t0) / ms, 1), e = 1 - Math.pow(1 - p, 4); node.textContent = n0(to * e); if (p < 1) requestAnimationFrame(f); };
+  requestAnimationFrame(f);
+}
+
+function hemicycle(svg, st, { w = 600, label = "escaños", sweep = 1200 } = {}) {
+  const n = ORDER.reduce((a, p) => a + (st[p] || 0), 0);
+  const [pts, d] = seats(n), S0 = w / 2;
+  const r = Math.min(0.40 * d * (S0 - 2) / (1 + 0.40 * d), 24), S = S0 - r - 2, cx = w / 2, cy = S + r + 2;
+  const cols = ORDER.flatMap(p => Array(st[p] || 0).fill(p));
+  svg.setAttribute("viewBox", `0 0 ${w} ${Math.ceil(cy + r + 2)}`);
+  svg.replaceChildren();
+  pts.forEach(([a, rad], i) => {
+    const c = el("circle", { cx: (cx + S * rad * Math.cos(a)).toFixed(1), cy: (cy - S * rad * Math.sin(a)).toFixed(1), r: r.toFixed(2), fill: COL[cols[i]], class: "seat" });
+    c.dataset.p = cols[i]; c.style.setProperty("--d", (Math.PI - a) / Math.PI * sweep + "ms");
+    svg.append(c);
+  });
+  const big = el("text", { x: cx, y: cy - 40, "text-anchor": "middle", class: "big", fill: "currentColor" });
+  const cap = el("text", { x: cx, y: cy - 12, "text-anchor": "middle", class: "cap", fill: "currentColor", opacity: ".7" }); cap.textContent = label;
+  svg.append(big, cap); countUp(big, n);
+}
+
+function volbar(node, vol) {
+  node.innerHTML = ORDER.filter(p => (vol[p] || 0) > 0.002).map((p, i) =>
+    `<i style="flex:${vol[p]} 1 0;background:${COL[p]};--d:${300 + i * 70}ms;color:${p === "Empate" ? "var(--ink)" : ON[p]}" title="${p}: ${pc(vol[p])} del volumen">${vol[p] >= 0.07 ? pc(vol[p]) : ""}</i>`).join("");
+}
+
+function legend(node, onFocus, counts) {
+  node.innerHTML = ORDER.filter(p => p !== "Empate" || (counts && counts.Empate)).map(p =>
+    `<button class="chip" type="button" aria-pressed="false" data-p="${p}">${nb(p)}${p}${counts ? ` <b>${counts[p] || 0}</b>` : ""}</button>`).join("");
+  let cur = null;
+  node.addEventListener("click", e => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    cur = cur === b.dataset.p ? null : b.dataset.p;
+    node.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.p === cur));
+    node.classList.toggle("has-focus", !!cur); onFocus(cur);
+  });
+}
+
+/* ── 1. la cámara */
+(function camara() {
+  const st = T.seats, svg = $("hemi-main"), top = P.map(p => p.name).sort((a, b) => st[b] - st[a])[0];
+  hemicycle(svg, st, { label: "EANs · escaños", sweep: 1300 });
+  svg.style.color = "var(--chamber-ink)";
+  volbar($("vbar-main"), T.vol);
+  const maj = Math.floor(T.eans / 2) + 1;
+  $("maj-l").textContent = `Mayoría absoluta: ${maj} escaños`;
+  $("maj-r").textContent = `Nadie llega: el más votado tiene ${st[top]} (${pc(st[top] / T.eans)})`;
+  legend($("legend-main"), p => { svg.classList.toggle("dim", !!p); svg.querySelectorAll(".seat").forEach(s => s.classList.toggle("hl", s.dataset.p === p)); }, st);
+  $("facts").innerHTML = [
+    [T.eans, "EANs Central con actividad en la foto sep-25: cada uno es un escaño"],
+    [6, "partidos: dos reglas fijas, el ciclo de vida y tres de nivel reciente"],
+    [6, "urnas por EAN: los quarters de FY25 cerrados antes de sep-25"],
+    [D.sin_historia, "EANs nuevos sin FY25: votan lo que votaron sus parecidos"]
+  ].map(([b, s]) => `<div><b class="num">${n0(b)}</b><span>${s}</span></div>`).join("");
+})();
+
+/* ── 2. cómo funciona */
+(function reglas() {
+  const g = [
+    ["Ciudadano", "el EAN", `Cada código Central (6 meses o más de envíos) con actividad. Votan ${n0(D.n_votantes)} EANs con FY25.`],
+    ["Partido", "una receta", "Una forma completa de hacer el forecast: de dónde parte, a quién sigue y cómo limpia la base."],
+    ["Urna", "un quarter", "Cada quarter de FY25 pronosticado desde una foto simulada. Hay 6 urnas por EAN."],
+    ["Voto", "el que menos falla", "En cada urna el EAN vota al partido con menor error: |forecast − real| / real. Si empatan exacto, vota a todos (hasta 3)."],
+    ["Escaño", "el más votado", "El EAN se queda con el partido que gana más urnas. Si empatan, el de menor error sumado; si siguen, Empate y se queda la regla."],
+    ["Parecidos", "para los nuevos", `Los ${D.sin_historia} EANs sin FY25 toman el voto de los códigos de su casa y tamaño o función que tenían su edad.`]
+  ];
+  $("gloss").innerHTML = g.map(([a, b, c]) => `<div><dt>${a} <small>${b}</small></dt><dd>${c}</dd></div>`).join("");
+  const dni = [["Historia", "Envíos, cortes y DAs"], ["Familia", "Categoría, casa, brand, línea"], ["Formato", "Tamaño en fragancias, función en makeup"],
+    ["Edad", "Meses desde el lanzamiento: 6–11, 12–17, 18–25, 26+"], ["Fase", "Desde 18 meses: crece, estable o en declive frente a su casa"], ["Gestión", "Bandera isf (0, 1, 2) y Central o Local"]];
+  $("dni").innerHTML = `<div class="dni-t">El DNI del EAN<span>Lo que le define y entra en los partidos</span></div>` + dni.map(([a, b]) => `<div><b>${a}</b>${b}</div>`).join("");
+  const s = D.stats;
+  const q = [
+    ["1", "¿De dónde parto?", "La base: el año pasado o el nivel reciente (6 o 12 meses), con temporada propia, de su línea o de su casa, o plana.", "La forma de la base cambia el error en 9 de cada 10 EANs. Fragancias tiene temporada; makeup es casi plano.", 3, "Alta"],
+    ["2", "¿A quién sigo?", "El trend: yo, mi línea, mi casa, mi categoría, mi fase o los códigos que tuvieron mi edad. Y cuánto me lo creo.", `En FY25 el ${pc(s.c2y.der)} acertaba más creyéndose el trend entero; la fuente le da igual al ${pc(s.c2x.centro)}.`, 2, "Alta en edad, baja en fuente"],
+    ["3", "¿Cómo limpio la base?", "Cuánto resto de los DAs planificados de los meses base y cuánto sumo de cortes.", "Solo el 42% del DA planificado de fragancias se convirtió en envío extra (80% en makeup).", 1, "Media en DAs, baja en cortes"]
+  ];
+  $("q3").innerHTML = q.map(([n, t, a, b, f, fl]) => `<div class="q"><span class="qn">${n}</span><h3>${t}</h3><p>${a}</p><p style="color:var(--muted);font-size:.88rem">${b}</p>
+    <div class="firm"><i aria-hidden="true">${[1, 2, 3].map(i => `<span class="${i <= f ? "on" : ""}"></span>`).join("")}</i>Firmeza: ${fl}</div></div>`).join("");
+})();
+
+/* ── 3. escrutinio */
+(function escrutinio() {
+  const X = D.ejemplo, names = P.map(p => p.name), U = X.urnas;
+  $("ex-name").textContent = X.name; $("ex-ean").textContent = `EAN ${X.ean} · error de cada partido en cada urna de FY25`;
+  const capd = names.map(n => X.rows[n].err.map(e => Math.min(e, 200)));
+  const mean = names.map((n, i) => capd[i].reduce((a, b) => a + b, 0) / 6);
+  const winners = U.map((_, j) => { const m = Math.min(...names.map(n => X.rows[n].err[j])); return names.filter(n => X.rows[n].err[j] === m).slice(0, 3); });
+  const votes = Object.fromEntries(names.map(n => [n, winners.filter(w => w.includes(n)).length]));
+  const mx = Math.max(...Object.values(votes));
+  const tied = names.filter(n => votes[n] === mx);
+  const elected = tied.sort((a, b) => X.rows[a].err.reduce((s, x) => s + x, 0) - X.rows[b].err.reduce((s, x) => s + x, 0))[0];
+  const top2 = names.map((n, i) => [n, mean[i]]).sort((a, b) => a[1] - b[1]).slice(0, 2).map(x => x[0]);
+  const coal = (X.rows[top2[0]].fc + X.rows[top2[1]].fc) / 2;
+  $("ex-lead").textContent = `Un perfume de Burberry de 10 ml. Cada columna es una urna: el quarter de FY25 que cada partido pronosticó desde una foto simulada. En cada urna gana el partido que menos se equivocó con este EAN.`;
+  const th = U.map(u => { const [f, q] = u.split(" "); return `<th>${f}<br>${q}</th>`; }).join("");
+  $("ex-table").innerHTML = `<thead><tr><th>Partido</th>${th}<th class="cm">Media</th><th>Forecast<br>oct–jun</th></tr></thead><tbody>` +
+    names.map((n, i) => `<tr style="--c:${COL[n]};--t:${ON[n]}" data-p="${n}"><td class="pn">${nb(n)}${n}</td>${X.rows[n].err.map((e, j) => `<td data-j="${j}">${e}%</td>`).join("")}
+      <td class="cm mean">${Math.round(mean[i])}%</td><td>${n0(X.rows[n].fc)}</td></tr>`).join("") +
+    `</tbody><tfoot><tr><td>Real oct-25 a jun-26</td><td colspan="7"></td><td>${n0(X.real)}</td></tr></tfoot>`;
+  $("ex-tally").innerHTML = names.map(n => `<div class="row" style="--c:${COL[n]}" data-p="${n}"><span class="pn">${nb(n)}${n}</span><div class="bar"><i></i></div><b>0</b></div>`).join("");
+  $("ex-verdict").innerHTML = `<h3>Elige ${elected}: gana ${votes[elected]} de 6 urnas</h3>
+    <p>Ningún partido gana más de ${mx} urnas, así que un solo quarter decide. Su forecast para oct-25 a jun-26 fue <b>${n0(X.rows[elected].fc)}</b> unidades frente a un real de <b>${n0(X.real)}</b>.</p>
+    <p>En coalición se queda con los 2 de menor error medio, <b>${top2[0]}</b> y <b>${top2[1]}</b> (marcados en la columna Media), y usa la media de sus forecasts: <b>${n0(coal)}</b>. Los errores por encima de 200% cuentan como 200% en la media.</p>`;
+  const tb = $("ex-table"), tally = $("ex-tally");
+  const setTally = v => names.forEach(n => { const r = tally.querySelector(`[data-p="${n}"]`); r.querySelector("i").style.transform = `scaleX(${v[n] / 6})`; r.querySelector("b").textContent = v[n]; });
+  const mark = j => winners[j].forEach(n => tb.querySelector(`tr[data-p="${n}"] td[data-j="${j}"]`).classList.add("win"));
+  const markMean = () => top2.forEach(n => tb.querySelector(`tr[data-p="${n}"] .mean`).classList.add("top2"));
+  const final = () => { U.forEach((_, j) => mark(j)); markMean(); setTally(votes); };
+  final();
+  let timer = null;
+  function play() {
+    if (RM) return;
+    clearTimeout(timer); const btn = $("ex-play"); btn.disabled = true;
+    tb.querySelectorAll(".win,.top2,.cur").forEach(c => c.classList.remove("win", "top2", "cur"));
+    const v = Object.fromEntries(names.map(n => [n, 0])); setTally(v);
+    let j = 0;
+    const step = () => {
+      tb.querySelectorAll(".cur").forEach(c => c.classList.remove("cur"));
+      if (j === U.length) { markMean(); btn.disabled = false; return; }
+      tb.querySelectorAll(`td[data-j="${j}"]`).forEach(c => c.classList.add("cur"));
+      const jj = j;
+      timer = setTimeout(() => { mark(jj); winners[jj].forEach(n => v[n]++); setTally(v); j++; timer = setTimeout(step, 380); }, 420);
+    };
+    timer = setTimeout(step, 250);
+  }
+  $("ex-play").addEventListener("click", play);
+  if (!RM && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); play(); } }, { threshold: .55 });
+    io.observe($("ex-table"));
+  }
+})();
+
+/* ── 4. partidos */
+(function partidos() {
+  const smax = Math.max(...P.map(p => T.seats[p.name]));
+  const lab = ["1 · Parto de", "2 · Sigo a", "3 · Limpio"];
+  $("parties").innerHTML = P.map(p => `<article class="party" style="--c:${p.col}">
+    <div><div class="id">${nb(p.name)}<div><h3>${p.name}</h3><span class="bloc">${p.name.startsWith("Regla") ? "Regla fija · " : ""}Bloque ${p.bloc}</span></div></div><p class="lema">«${p.lema}»</p></div>
+    <div class="ans">${p.resp.map((r, i) => `<div><span>${lab[i]}</span>${r}</div>`).join("")}</div>
+    <div class="pm"><div class="seats"><b>${T.seats[p.name]}</b><span>escaños · ${pc(T.seats[p.name] / T.eans)} de la cámara</span></div>
+      <div class="sbar"><i style="width:${T.seats[p.name] / smax * 100}%"></i></div>
+      <dl><dt>Volumen</dt><dd>${pc(T.vol[p.name])}</dd><dt>Solo por plazo</dt><dd>${p.solo.slice(0, 3).map(pc).join(" / ")}</dd><dt>Solo · total</dt><dd>${pc(p.solo[3])}</dd></dl></div>
+  </article>`).join("");
+})();
+
+/* ── 5. brújulas */
+(function brujulas() {
+  const svg = $("cmp"), L = 1.14, ml = 44, mt = 14, PW = 542, PH = 542;
+  const X = x => ml + (x + L) / (2 * L) * PW, Y = y => mt + (1 - (y + L) / (2 * L)) * PH;
+  const SPEC = [
+    { k: "c1", t: "¿De dónde parto?", sub: "La base", xl: ["Plana", "Con temporada"], yl: ["Reciente (6M)", "Lejana (12M / año pasado)"],
+      q: ["Planos de memoria larga", "Estacionales de memoria larga", "Planos de lo reciente", "Estacionales de lo reciente"] },
+    { k: "c2", t: "¿A quién sigo?", sub: "El trend", xl: ["Individual: EAN, línea", "Colectivo: casa, categoría"], yl: ["Trend suave", "Trend completo"],
+      q: ["Individualistas creyentes", "Colectivistas creyentes", "Individualistas escépticos", "Colectivistas escépticos"] },
+    { k: "c3", t: "¿Cómo limpio la base?", sub: "DAs y cortes", xl: ["Deja los DAs planificados", "Los resta"], yl: ["No suma cortes", "Suma cortes"],
+      q: ["Suma cortes, deja DAs", "Suma cortes y resta DAs", "Base tal cual", "Solo resta DAs"] }
+  ];
+  const s = D.stats;
+  const READ = {
+    c1: { ax: [["x", "c1x", "Plana", "Con temporada"], ["y", "c1y", "Reciente (6M)", "Lejana"]],
+      txt: `Con temporada gana en el <b>${pc(s.c1x.der)}</b> y plana en el <b>${pc(s.c1x.izq)}</b>; lo reciente gana en el ${pc(s.c1y.izq)} y lo lejano en el ${pc(s.c1y.der)}. <b>Nadie domina</b>: la base buena depende del EAN.` },
+    c2: { ax: [["x", "c2x", "Individual", "Colectivo"], ["y", "c2y", "Suave", "Completo"]],
+      txt: `El <b>${pc(s.c2y.der)}</b> acierta más creyéndose el trend entero: FY25 cayó y hacía falta poder bajar hasta un 60%. Seguirse a sí mismo o a su casa le da igual al <b>${pc(s.c2x.centro)}</b>.` },
+    c3: { ax: [["y", "c3y", "No suma cortes", "Suma cortes"]],
+      txt: `En sep-24 no hay DAs guardados (o9 los borra y solo existen desde ene-25), así que <b>el eje de DAs no se puede juzgar con FY25</b>. Los cortes le dan igual al <b>${pc(s.c3y.centro)}</b>.` }
+  };
+  $("n-cmp").textContent = n0(D.pts.length);
+  // estructura fija
+  const qcol = ["var(--soft)", "var(--bg)", "var(--bg)", "var(--soft)"];
+  const g0 = el("g");
+  [[ml, mt], [X(0), mt], [ml, Y(0)], [X(0), Y(0)]].forEach(([x, y], i) => g0.append(el("rect", { x, y, width: PW / 2, height: PH / 2, fill: qcol[i], class: "q-bg" })));
+  g0.append(el("line", { x1: X(0), y1: mt, x2: X(0), y2: mt + PH, class: "axis" }), el("line", { x1: ml, y1: Y(0), x2: ml + PW, y2: Y(0), class: "axis" }));
+  const tq = [[ml + 10, mt + 20, "start"], [ml + PW - 10, mt + 20, "end"], [ml + 10, mt + PH - 12, "start"], [ml + PW - 10, mt + PH - 12, "end"]].map(([x, y, a]) => { const t = el("text", { x, y, "text-anchor": a, class: "ql" }); g0.append(t); return t; });
+  const xl0 = el("text", { x: ml, y: mt + PH + 22, class: "al" }), xl1 = el("text", { x: ml + PW, y: mt + PH + 22, "text-anchor": "end", class: "al" });
+  const yl0 = el("text", { transform: `translate(${ml - 14} ${mt + PH}) rotate(-90)`, class: "al" }), yl1 = el("text", { transform: `translate(${ml - 14} ${mt}) rotate(-90)`, "text-anchor": "end", class: "al" });
+  const arrows = el("path", { d: `M${ml + PW / 2 - 18} ${mt + PH + 18}h36m-5 -4l5 4-5 4M${ml - 18} ${mt + PH / 2 + 18}v-36m-4 5l4-5 4 5`, fill: "none", stroke: "var(--muted)", "stroke-width": 1.2 });
+  g0.append(xl0, xl1, yl0, yl1, arrows); svg.append(g0);
+  // EANs
+  const gd = el("g"), names = P.map(p => p.name);
+  const dots = D.pts.map((p, i) => {
+    const c = el("circle", { cx: 0, cy: 0, r: (2 + 6 * Math.sqrt(p[7])).toFixed(2), fill: P[p[6]].col, "fill-opacity": .62, stroke: "var(--surface)", "stroke-width": .6, class: "dot" });
+    c.style.setProperty("--d", Math.round((i * 7919) % 260) + "ms"); c.dataset.p = names[p[6]]; c.dataset.i = i; gd.append(c); return c;
+  });
+  svg.append(gd);
+  // partidos
+  const gm = el("g");
+  const mks = names.map(n => {
+    const g = el("g", { class: "mk" }); g.dataset.p = n;
+    const ln = el("path", { class: "lead-l", stroke: COL[n] }), od = el("circle", { r: 3, fill: COL[n] });
+    const c = el("circle", { r: 15, fill: COL[n], stroke: "var(--surface)", "stroke-width": 3 });
+    const t = el("text", { "text-anchor": "middle", dy: "4.5", fill: ON[n] }); t.textContent = NUM[n];
+    const ttl = el("title"); ttl.textContent = n;
+    g.append(ln, od, c, t, ttl); gm.append(g); return { g, ln, od, n };
+  });
+  svg.append(gm);
+  const tabs = $("tabs");
+  tabs.innerHTML = SPEC.map((sp, i) => `<button class="tab" role="tab" type="button" aria-selected="${i === 0}" data-i="${i}">${i + 1} · ${sp.t}<small>${sp.sub}</small></button>`).join("");
+  function show(i) {
+    const sp = SPEC[i], o = 2 * i;
+    tabs.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", +b.dataset.i === i));
+    sp.q.forEach((q, j) => tq[j].textContent = q);
+    xl0.textContent = "← " + sp.xl[0]; xl1.textContent = sp.xl[1] + " →"; yl0.textContent = "← " + sp.yl[0]; yl1.textContent = sp.yl[1] + " →";
+    dots.forEach((c, j) => { const p = D.pts[j]; c.style.transform = `translate(${X(p[o]).toFixed(1)}px, ${Y(p[o + 1]).toFixed(1)}px)`; });
+    mks.forEach(({ g, ln, od, n }) => {
+      const [x, y, ox, oy] = D.markers[sp.k][n], dx = X(ox) - X(x), dy = Y(oy) - Y(y), far = Math.hypot(dx, dy) > 4;
+      g.style.transform = `translate(${X(x).toFixed(1)}px, ${Y(y).toFixed(1)}px)`;
+      ln.style.d = `path("M0 0 L${far ? dx.toFixed(1) : 0} ${far ? dy.toFixed(1) : 0}")`;
+      od.setAttribute("cx", far ? dx.toFixed(1) : 0); od.setAttribute("cy", far ? dy.toFixed(1) : 0); od.style.opacity = far ? 1 : 0;
+    });
+    const R = READ[sp.k];
+    $("cmp-side").innerHTML = `<span class="order">Pregunta ${i + 1} de 3</span><h3>${sp.t}</h3><p class="sub">Dónde le fue mejor a cada EAN en FY25</p>
+      <div class="read">${R.ax.map(([a, k, l0, l1]) => { const v = s[k]; return `<div class="split"><div class="lab"><span>${l0}</span><span>Le da igual</span><span>${l1}</span></div>
+        <div class="sb"><i style="flex-grow:${v.izq}">${pc(v.izq)}</i><i style="flex-grow:${v.centro}">${pc(v.centro)}</i><i style="flex-grow:${Math.max(v.der, 0.001)}">${v.der > .04 ? pc(v.der) : ""}</i></div></div>`; }).join("")}
+      <p class="txt">${R.txt}</p></div>`;
+  }
+  tabs.addEventListener("click", e => { const b = e.target.closest(".tab"); if (b) show(+b.dataset.i); });
+  tabs.addEventListener("keydown", e => {
+    if (!["ArrowRight", "ArrowLeft"].includes(e.key)) return;
+    const cur = +tabs.querySelector('[aria-selected="true"]').dataset.i, nx = (cur + (e.key === "ArrowRight" ? 1 : 2)) % 3;
+    show(nx); tabs.querySelector(`[data-i="${nx}"]`).focus();
+  });
+  show(0);
+  const cnt = Object.fromEntries(names.map(n => [n, 0])); D.pts.forEach(p => cnt[names[p[6]]]++);
+  legend($("legend-cmp"), p => {
+    svg.classList.toggle("focus", !!p);
+    dots.forEach(c => c.classList.toggle("hl", c.dataset.p === p)); mks.forEach(m => m.g.classList.toggle("hl", m.n === p));
+  }, cnt);
+  const tip = $("tip"), box = svg.parentElement;
+  svg.addEventListener("pointerover", e => {
+    const t = e.target; if (!t.classList.contains("dot") && !t.closest(".mk")) return;
+    const p = t.classList.contains("dot") ? t.dataset.p : t.closest(".mk").dataset.p;
+    tip.innerHTML = t.classList.contains("dot") ? `EAN que elige <b>${p}</b>` : `<b>${p}</b>: posición por su receta`;
+    const r = box.getBoundingClientRect(), b = t.getBoundingClientRect();
+    tip.style.left = Math.min(b.left - r.left + 10, r.width - 220) + "px"; tip.style.top = (b.top - r.top - 34) + "px"; tip.classList.add("on");
+  });
+  svg.addEventListener("pointerout", () => tip.classList.remove("on"));
+})();
+
+/* ── 6. resultados por grupo */
+(function resultados() {
+  const groups = [["Total", ["Total"]], ["Categoría", ["Fragancias", "Makeup"]], ["Casa", Object.keys(D.por.Casa)],
+    ["Edad", ["6–11", "12–17", "18–25", "26+"].filter(k => D.por.Edad[k])], ["Fase", ["Lanzamiento", "Consolidación", "Crecimiento", "Estable", "Declive"].filter(k => D.por.Fase[k])],
+    ["Historia", Object.keys(D.por.Historia)]];
+  const lab = (g, k) => g === "Edad" ? k + " meses" : k.replace("Sin historia FY25 (parecidos)", "Sin FY25 (parecidos)");
+  $("filters").innerHTML = groups.map(([g, ks]) => `<div class="fr"><span>${g}</span>${ks.map(k => `<button class="fb" type="button" aria-pressed="${g === "Total"}" data-g="${g}" data-k="${k}">${lab(g, k)}</button>`).join("")}</div>`).join("");
+  function show(g, k) {
+    const d = D.por[g][k];
+    $("filters").querySelectorAll(".fb").forEach(b => b.setAttribute("aria-pressed", b.dataset.g === g && b.dataset.k === k));
+    hemicycle($("hemi-res"), d.seats, { label: "escaños", sweep: 600 });
+    volbar($("vbar-res"), d.vol);
+    const top = P.map(p => p.name).sort((a, b) => d.seats[b] - d.seats[a])[0];
+    const topv = P.map(p => p.name).sort((a, b) => d.vol[b] - d.vol[a])[0];
+    $("res-head").textContent = top === topv
+      ? `${lab(g, k)}: ${top} gana en escaños (${d.seats[top]} de ${d.eans}) y en volumen (${pc(d.vol[topv])}).`
+      : `${lab(g, k)}: más escaños para ${top} (${d.seats[top]} de ${d.eans}); más volumen para ${topv} (${pc(d.vol[topv])}).`;
+    const mx = Math.max(...ORDER.map(p => d.seats[p] || 0), 1);
+    $("res-tab").innerHTML = `<thead><tr><th>Partido</th><th>Escaños</th><th></th><th>Volumen</th></tr></thead><tbody>` +
+      ORDER.filter(p => p !== "Empate" || d.seats.Empate).map(p => `<tr class="${p === top ? "lead-r" : ""}" style="--c:${COL[p]}"><td class="pn">${nb(p)}${p}</td><td>${d.seats[p] || 0}</td>
+        <td class="bw"><i style="width:${(d.seats[p] || 0) / mx * 100}%"></i></td><td>${pc(d.vol[p] || 0)}</td></tr>`).join("") + `</tbody>`;
+  }
+  $("filters").addEventListener("click", e => { const b = e.target.closest(".fb"); if (b) show(b.dataset.g, b.dataset.k); });
+  show("Total", "Total");
+})();
+
+/* ── 7. veredicto */
+(function veredicto() {
+  const rows = [["regla", "Regla de su categoría"], ["un_partido", "Un partido por EAN"], ["coalicion", "Coalición de 2"], ["media6", "Media de los 6"]]
+    .concat(P.map(p => ["F:" + p.name, p.name]));
+  const best = "F:Ciclo de vida", E = D.ensayo, C = D.confirmacion;
+  function bars(node, R, title, sub) {
+    const mx = Math.max(...rows.map(([c]) => R[c].total.ean));
+    node.innerHTML = `<h3>${title}</h3><p class="sub">${sub}. Debajo de la línea, cada partido usado solo para todos.</p>` + rows.map(([c, l], i) => {
+      const isP = c.startsWith("F:"), col = isP ? COL[c.slice(2)] : null;
+      return `<div class="br ${c === "regla" ? "ref" : ""} ${c === best ? "best" : ""} ${c === "F:" + P[0].name ? "gap" : ""}"><span class="pn">${isP ? nb(c.slice(2)) : ""}<span>${l}</span></span>
+        <span class="bt"><i style="width:${R[c].total.ean / mx * 100}%;--d:${i * 50}ms;${col ? `background:${col}` : ""}"></i></span><b>${pc(R[c].total.ean)}</b></div>`;
+    }).join("");
+  }
+  bars($("bars-1"), E, "Ensayo con el pasado: lo que se sabía en sep-25", "Elegir con Q2–Q3 de FY25 y medir en Q4 de FY25 · error EAN a EAN, menos es mejor");
+  bars($("bars-2"), C, "Confirmación con el real de sep-26", "Foto sep-25 → Q2 a Q4 de FY26 · no estaba disponible al decidir");
+  $("ver-lead").textContent = `Con lo que se sabía en sep-25, usar el Ciclo de vida para todos era la mejor apuesta: ${pc(E[best].total.ean)} de error contra ${pc(E.regla.total.ean)} de la regla. El real de sep-26 lo confirma: ${pc(C[best].total.ean)} contra ${pc(C.regla.total.ean)}.`;
+  const pe = D.persistencia.igual;
+  $("why").innerHTML = [
+    [pc(pe), `de los EANs repite ganador en FY26. Al azar sería un 17%: el partido que gana con el pasado no se repite.`],
+    [pc(C.un_partido.total.ean), `de error eligiendo un partido por EAN, frente a ${pc(C.regla.total.ean)} de la regla. Elegir no mejora.`],
+    [pc(C[best].total.ean), `de error con el Ciclo de vida para todos. Ya lleva dentro el DNI: la curva de su edad y el trend de su fase.`]
+  ].map(([b, p]) => `<div><b>${b}</b><p>${p}</p></div>`).join("");
+  const hz = ["7–9", "4–6", "1–3", "total"], hr = [["regla", "Regla de su categoría"], ["un_partido", "Un partido por EAN"], ["coalicion", "Coalición de 2"], [best, "Ciclo de vida para todos"]];
+  $("htab").innerHTML = `<thead><tr><th></th><th>7–9 meses</th><th>4–6 meses</th><th>1–3 meses</th><th>Total</th><th>WAPE90</th><th>Sesgo</th></tr></thead><tbody>` +
+    hr.map(([c, l]) => `<tr class="${c === best ? "hl" : ""}"><td>${l}</td>${hz.map(h => `<td>${pc(C[c][h].ean)}</td>`).join("")}<td>${pc(C[c].total.wape90)}</td><td>${sg(C[c].total.sesgo)}</td></tr>`).join("") + `</tbody>`;
+  $("cv-sesgo").textContent = sg(C[best].total.sesgo);
+})();
+
+/* ── barra del orden del día: sección activa */
+(function nav() {
+  const links = [...document.querySelectorAll(".nav ol a")];
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id)); }), { rootMargin: "-40% 0px -55% 0px" });
+  document.querySelectorAll("#camara, main section").forEach(s => io.observe(s));
+  const tl = $("tl");
+  if (!RM) new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { tl.classList.add("play"); o.disconnect(); } }, { threshold: .4 }).observe(tl);
+})();
+</script>

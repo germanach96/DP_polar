@@ -126,6 +126,7 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
 ## Código
 - **Regenerar datos** (los parquet y pkl de `work/` no se versionan):
   `pip install pandas statsmodels openpyxl pyarrow tabulate reportlab` y luego `python3 src/load.py && python3 src/panel.py && python3 src/mu_load.py`
+  - **Cuidado:** volver a correr `ideo_brujulas6.py` vuelve a elegir las recetas con los datos y cambia los partidos (2026-10-11: Media 6M prudente pasó de restar 50% a 100% de DAs). Las recetas vigentes son las de `work/ideo_brujulas6.json` versionado: tras regenerar, `git checkout -- work/ideo_brujulas6.json` (y los JSON de resultados) antes de usar `sm.specs()`.
 - **Piezas clave:**
   - `src/house_compare.py`: `frag_rule`, `mu_rule`, `central_mask`, `segments`.
   - `src/methods.py`: `_group_g`, trend por grupo.
@@ -139,6 +140,8 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - `ideo_engine.py`: banco de 203k estrategias por EAN; `ideo_parties.py`: mejor por EAN, partidos (uno por forma de base), elección, robustez; `ideo_viz.py`: colores y piezas visuales de 10 partidos.
 - **Parlamento de 6 (vigente):** `python3 src/fy25_eleccion.py && python3 src/decision_sep25.py && python3 src/fy25_brujulas.py && python3 src/ideologia_report.py` (las posiciones de los partidos salen de `ideo_brujulas6.py`, que requiere antes el bloque de ideologías).
   - `decision_sep25.py`: ensayo con el pasado y decisión. `fy25_eleccion.py`: voto con FY25 (6 urnas), prueba desde sep-25, coalición, parecidos para los nuevos. `fy25_brujulas.py`: posición de cada EAN en las brújulas con FY25.
+  - `parlamento_html.py` (+ `parlamento_template.html`) → `reportes/PARLAMENTO.html`: parlamento interactivo y didáctico (hemiciclo, escrutinio de ejemplo, 6 partidos, brújulas animadas, resultados por grupo, veredicto). Lee los JSON de `work/` y saca los puntos de las brújulas de `work/reporte_ideologia.html` (correr antes `ideologia_report.py`).
+  - **Explorador** (`python3 src/explorador_data.py && python3 src/explorador_html.py` → `reportes/EXPLORADOR_PARLAMENTO.html`, una pantalla con filtros, búsqueda, hemiciclo, histórico + proyección, trends 6M/12M de envíos y EPOS por grupo y perfil político). Misma regla un año más tarde: voto con FY26 (fotos sep-25, dic-25, mar-26; makeup sin dic-25), proyección oct-26..jun-27 desde la foto sep-26, brújulas con FY26 (ya con eje de DAs). EPOS hasta jul-26 (ago-26 vacío). Requiere antes la cadena del parlamento de 6.
   - `ciclo_vs_cons.py`: comparación histórica Ciclo de vida vs consenso (no se usa para decidir).
   - `six_multi.py` / `six_sin_consenso.py`: diseño anterior (votar con quarters de FY26 de varias fotos), reemplazado.
   - `ideologia_report.py` → `reportes/REPORTE_IDEOLOGIA.pdf`: concepto (DNI, 3 preguntas, diseño de la prueba), los 6 partidos, brújulas, coalición, prueba honesta y elección.
