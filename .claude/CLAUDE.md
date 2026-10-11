@@ -1,9 +1,11 @@
 # Skills y plugins: check obligatorio al empezar
-Al arrancar cada sesión, `.claude/hooks/session-start.sh` instala lo que falte y deja en el contexto la tabla «Check de skills y plugins». Se puede repetir con `.claude/hooks/check-tools.sh`.
+Al arrancar cada sesión, `.claude/hooks/session-start.sh` instala lo que falte y deja en el contexto la tabla «Check de skills y plugins» más la **revisión de funcionamiento**: `.claude/hooks/skills-health.py` abre cada SKILL.md (repo y plugins) y prueba de verdad Impeccable (`detect`) y Graphify (`query`). Se puede repetir con `.claude/hooks/check-tools.sh`.
+
+**Revisión en cada mensaje:** el hook de cada mensaje vuelve a correr `skills-health.py --short` (menos de 1 s) y deja la línea «Revisión de skills: …» en el contexto. Si dice FALLA, parar y decir al usuario qué falta, aunque la tarea no parezca necesitar esa skill.
 
 **Lo primero de cada conversación, antes de hacer nada de lo que pida el usuario:**
 1. Mostrar el check: una línea por skill/plugin con «funcionando» o «falta» y el motivo. Para los dos plugins (Ponytail, Impeccable) no basta con «instalado»: confirmar que su skill (`ponytail`, `impeccable`) aparece en la lista de skills disponibles de la sesión. Si está instalado pero no cargado, decirlo: se activa al reiniciar la sesión.
-2. Si algo falta o no funciona: **parar**, decir qué falta y qué hace falta para usarlo (comando, permiso, red o clave), y esperar al usuario. No seguir con la tarea.
+2. Si algo falta o no funciona (en el check, en la línea «Revisión de skills» o al cargar una skill con Skill y que dé error): **parar**, decir qué falta y qué hace falta para usarlo (comando, permiso, red o clave), y esperar al usuario. No seguir con la tarea.
 3. Si todo funciona: seguir y **usar las skills en el trabajo**: cargar con la herramienta Skill las que encajen con la tarea antes de empezar, y decir cuáles se usaron. No aplicar sus ideas de memoria sin cargarlas.
 
 | Skill / plugin | Origen | Instalar | Cuándo usarla |
@@ -40,9 +42,9 @@ Reglas:
   con «usado: qué skill» o «no aplica: motivo» en cada una, y di qué pasos de skills no se hicieron.
 
 ## Hooks que lo hacen cumplir (`.claude/settings.json`)
-- `UserPromptSubmit` → `.claude/hooks/skills-reminder.sh`: en cada mensaje recuerda que es tarea nueva y qué cargar.
+- `UserPromptSubmit` → `.claude/hooks/skills-reminder.sh`: en cada mensaje revisa que todas las skills funcionan (`skills-health.py --short`) y recuerda que es tarea nueva y qué cargar.
 - `Stop` → `.claude/hooks/skills-stop-check.py`: no deja cerrar el turno si falta la línea con las 7, si se escribió HTML/CSS/SVG sin `impeccable` + una de Taste + una de Emil o sin pasar `impeccable detect`, o Python sin `code-review-and-quality` (o `ponytail:ponytail-review`). Detecta archivos escritos con Write/Edit o desde Bash (`>`/`tee`). Solo mira lo cargado en el turno actual. Bloquea una vez por turno (no hace bucle) y si falla deja pasar.
-- `SessionStart` → `.claude/hooks/session-start.sh`: instala lo que falte, actualiza el grafo de Graphify (código, sin IA) y muestra el check.
+- `SessionStart` → `.claude/hooks/session-start.sh`: instala lo que falte, actualiza el grafo de Graphify (código, sin IA) y muestra el check con la revisión de funcionamiento completa.
 - Todas las skills siguen activas (decisión del usuario 2026-10-11: no desactivar ninguna). OmniRoute no se puede usar por ahora; las otras 6 se usan según la tabla y se da cuenta de las 7 en cada respuesta.
 
 # graphify

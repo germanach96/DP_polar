@@ -55,5 +55,11 @@ skill_row "Taste Skill (tasteskill.dev)" Leonxlnx/taste-skill "npx skills add Le
 plugin_row "Impeccable (impeccable.style)" impeccable pbakaus/impeccable
 skill_row "Emil Kowalski (emilkowal.ski/skill)" emilkowalski/skill "npx skills add emilkowalski/skill"
 echo
-if [ "$FAIL" = 0 ]; then echo "Resultado: todo instalado."
+echo "### Revisión de funcionamiento (cada SKILL.md y prueba real de cada herramienta)"
+echo
+echo "| Herramienta | Estado | Detalle |"
+echo "|---|---|---|"
+python3 "$ROOT/.claude/hooks/skills-health.py" || FAIL=1
+echo
+if [ "$FAIL" = 0 ]; then echo "Resultado: todo instalado y funcionando."
 else echo "Resultado: FALTA algo. Detalle de instalación en /tmp/session-start-tools.log"; fi

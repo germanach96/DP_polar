@@ -498,9 +498,9 @@
     "semantic_hash": "548f34dc3bc8e83f3d821ab3935c74ca"
   },
   "src/explorador_template.html": {
-    "mtime": 1791739276.3914766,
-    "seen": 1791739353.5219903,
-    "ast_hash": "5338c87d7fa2fa986365d3beb46691ff",
+    "mtime": 1791739650.141455,
+    "seen": 1791741215.8727484,
+    "ast_hash": "1d18f637de39fee9ccb304cfb02aa1aa",
     "semantic_hash": ""
   },
   "src/parlamento_template.html": {
@@ -516,9 +516,9 @@
     "semantic_hash": ""
   },
   "DESIGN.md": {
-    "mtime": 1791738777.627488,
-    "seen": 1791739353.5219631,
-    "ast_hash": "7af9282cdece572d219ac9a9d304ff5c",
+    "mtime": 1791739407.7074327,
+    "seen": 1791741215.872728,
+    "ast_hash": "4bcb698a682b6dc2b328e59fd99b3f88",
     "semantic_hash": ""
   },
   "PRODUCT.md": {

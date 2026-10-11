@@ -1,5 +1,7 @@
 #!/bin/bash
 # UserPromptSubmit: en cada mensaje del usuario recuerda que es una tarea nueva y qué skills cargar (lo que imprime entra en el contexto).
+# Antes del recordatorio revisa que todas las skills funcionan (skills-health.py, < 1 s); si algo falla, lo dice y pide parar.
+python3 "$(dirname "$0")/skills-health.py" --short 2>&1 || true
 cat <<'EOF'
 [Recordatorio de skills — DP_polar] Este mensaje es una tarea nueva: lo cargado antes en la conversación no cuenta.
 Antes de trabajar, carga con la herramienta Skill las que encajen (.claude/CLAUDE.md, tabla «Skills en cada tarea»):
