@@ -1,0 +1,876 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patrones EPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F4F2EC; --paper: #FFFFFF; --ink: #15171C; --ink2: #4A4F59; --muted: #8A8F98; --line: #E2DFD6; --line2: #ECEAE3;
+  --frag: #6250D6; --frag-soft: #E7E3FB; --mu: #E3602B; --mu-soft: #FBE3D8; --ship: #5B6573; --ok: #1B7F5B;
+  --shadow: 0 1px 0 rgba(21,23,28,.04), 0 8px 24px -12px rgba(21,23,28,.12);
+  --ease: cubic-bezier(.23, 1, .32, 1);
+  --serif: Fraunces, Georgia, "Times New Roman", serif;
+  --sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111215; --paper: #191B20; --ink: #F1EFEA; --ink2: #B9BCC4; --muted: #80858F; --line: #2B2E35; --line2: #23262C;
+    --frag: #8F81F0; --frag-soft: #2A2547; --mu: #F28A5C; --mu-soft: #3D271D; --ship: #A3AAB5; --ok: #4CC495;
+    --shadow: 0 1px 0 rgba(0,0,0,.3), 0 10px 30px -14px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111215; --paper: #191B20; --ink: #F1EFEA; --ink2: #B9BCC4; --muted: #80858F; --line: #2B2E35; --line2: #23262C;
+  --frag: #8F81F0; --frag-soft: #2A2547; --mu: #F28A5C; --mu-soft: #3D271D; --ship: #A3AAB5; --ok: #4CC495;
+  --shadow: 0 1px 0 rgba(0,0,0,.3), 0 10px 30px -14px rgba(0,0,0,.6);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; -webkit-text-size-adjust: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased; font-feature-settings: "tnum" 1, "cv11" 1; }
+b, strong { font-weight: 600; color: var(--ink); }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+
+/* ---------- barra superior ---------- */
+.bar { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: saturate(1.4) blur(14px); -webkit-backdrop-filter: saturate(1.4) blur(14px); border-bottom: 1px solid transparent;
+  transition: border-color .2s var(--ease); }
+.bar.scrolled { border-bottom-color: var(--line); }
+.bar .wrap { display: flex; align-items: center; gap: 20px; height: 60px; }
+.brand { font-family: var(--serif); font-weight: 600; font-size: 17px; letter-spacing: -.01em; white-space: nowrap; }
+.brand span { color: var(--muted); font-weight: 400; }
+.nav { display: flex; gap: 2px; margin-left: 8px; overflow-x: auto; scrollbar-width: none; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { font-size: 13px; color: var(--ink2); text-decoration: none; padding: 6px 10px; border-radius: 8px; white-space: nowrap;
+  transition: color .15s var(--ease), background-color .15s var(--ease); }
+.nav a .n { color: var(--muted); margin-right: 5px; font-variant-numeric: tabular-nums; }
+.nav a.on { color: var(--ink); background: var(--paper); box-shadow: var(--shadow); }
+@media (hover: hover) { .nav a:hover { color: var(--ink); } }
+.bar .sp { flex: 1; }
+.theme { border: 0; background: none; color: var(--ink2); width: 34px; height: 34px; border-radius: 9px; cursor: pointer; display: grid; place-items: center; }
+@media (hover: hover) { .theme:hover { background: var(--paper); color: var(--ink); } }
+
+/* ---------- control segmentado ---------- */
+.seg { position: relative; display: inline-flex; max-width: 100%; overflow-x: auto; scrollbar-width: none; background: var(--line2); border-radius: 10px; padding: 3px; gap: 0; isolation: isolate; }
+.seg button { position: relative; z-index: 1; border: 0; background: none; font: inherit; font-size: 13px; font-weight: 500; color: var(--ink2);
+  padding: 6px 12px; border-radius: 7px; cursor: pointer; white-space: nowrap; transition: color .15s var(--ease); display: inline-flex; align-items: center; gap: 6px; }
+.seg button[aria-pressed="true"] { color: var(--ink); }
+.seg button:active { transform: scale(.97); }
+.seg::-webkit-scrollbar { display: none; }
+.seg .pill { position: absolute; z-index: 0; top: 3px; bottom: 3px; left: 0; border-radius: 7px; background: var(--paper); box-shadow: var(--shadow);
+  transition: transform .26s var(--ease), width .26s var(--ease); }
+.seg .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.seg button:disabled { opacity: .35; cursor: default; }
+
+/* ---------- portada ---------- */
+.hero { padding: 72px 0 40px; position: relative; }
+.kick { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--frag); }
+h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(38px, 6.2vw, 76px); line-height: 1.02; letter-spacing: -.025em; margin: 18px 0 0; max-width: 15ch; text-wrap: balance; }
+h1 em { font-style: italic; color: var(--ship); }
+.lead { font-size: 18px; color: var(--ink2); max-width: 60ch; margin-top: 22px; text-wrap: pretty; }
+.signal { margin-top: 40px; background: var(--paper); border-radius: 20px; box-shadow: var(--shadow); padding: 22px 24px 14px; }
+.signal-h { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: baseline; justify-content: space-between; }
+.signal-h .t { font-weight: 600; font-size: 14px; }
+.signal-h .s { font-size: 13px; color: var(--muted); }
+
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22px; }
+.tile { background: var(--paper); border-radius: 16px; padding: 20px 22px 18px; box-shadow: var(--shadow); text-decoration: none; color: inherit; display: block;
+  position: relative; overflow: hidden; transition: transform .2s var(--ease), box-shadow .2s var(--ease); }
+.tile::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--frag); }
+.tile:nth-child(even)::before { background: var(--mu); }
+@media (hover: hover) { .tile:hover { transform: translateY(-2px); } .tile:hover .go { opacity: 1; transform: none; } }
+.tile:active { transform: scale(.985); }
+.tv { font-family: var(--serif); font-size: 38px; line-height: 1.05; letter-spacing: -.02em; font-variant-numeric: lining-nums tabular-nums; }
+.tk { font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .09em; color: var(--ink2); margin: 8px 0 6px; }
+.td { font-size: 13.5px; color: var(--ink2); line-height: 1.5; }
+.go { position: absolute; right: 16px; top: 18px; font-size: 12px; color: var(--muted); opacity: 0; transform: translateX(-4px); transition: opacity .2s var(--ease), transform .2s var(--ease); }
+
+/* ---------- secciones ---------- */
+section.sec { padding: 72px 0 24px; }
+.sec-h { display: grid; grid-template-columns: 84px 1fr; gap: 0 18px; align-items: start; margin-bottom: 28px; }
+.num { font-family: var(--serif); font-size: 64px; line-height: .9; color: var(--line); font-variant-numeric: lining-nums; }
+.sec-h .kick { color: var(--muted); }
+h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(25px, 3.1vw, 36px); line-height: 1.14; letter-spacing: -.015em; margin-top: 8px; max-width: 30ch; text-wrap: balance; }
+.grid { display: grid; gap: 18px; }
+.g2 { grid-template-columns: 1.25fr 1fr; }
+.g2e { grid-template-columns: 1fr 1fr; }
+.stack { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.card { background: var(--paper); border-radius: 18px; box-shadow: var(--shadow); padding: 22px 24px; min-width: 0; }
+.card-h { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 16px; align-items: flex-start; margin-bottom: 6px; }
+.ct { font-weight: 600; font-size: 15.5px; letter-spacing: -.005em; }
+.cs { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.kpi { font-family: var(--serif); font-size: 54px; line-height: 1; letter-spacing: -.02em; margin: 6px 0 10px; font-variant-numeric: lining-nums tabular-nums; }
+.kl { font-size: 13.5px; color: var(--ink2); line-height: 1.55; }
+.kl + .kl { margin-top: 8px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--ink2); margin: 10px 0 4px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+.legend i.dash { width: 16px; height: 0; border-radius: 0; border-top: 2px dashed var(--ship); vertical-align: 3px; }
+.legend i.ring { background: transparent; border: 2px solid var(--ship); }
+.note { margin-top: 18px; padding: 18px 22px; border-radius: 16px; background: var(--paper); box-shadow: var(--shadow); font-size: 14px; color: var(--ink2);
+  border-left: 3px solid var(--frag); line-height: 1.6; }
+.note.q { border-left-color: var(--mu); }
+details.how { margin-top: 12px; }
+details.how summary { cursor: pointer; font-size: 13px; color: var(--muted); list-style: none; display: inline-flex; align-items: center; gap: 6px; user-select: none; }
+details.how summary::-webkit-details-marker { display: none; }
+details.how summary::before { content: "+"; display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--line); font-size: 12px;
+  transition: transform .2s var(--ease); }
+details.how[open] summary::before { transform: rotate(45deg); }
+details.how .body { font-size: 13.5px; color: var(--ink2); padding: 10px 0 0 24px; max-width: 75ch; }
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ax { font-family: var(--sans); font-size: 11px; fill: var(--muted); }
+.axl { font-family: var(--sans); font-size: 11.5px; fill: var(--ink2); font-weight: 500; }
+.lb { font-family: var(--sans); font-size: 12.5px; fill: var(--ink); font-weight: 600; }
+.vl { font-family: var(--sans); font-size: 11.5px; fill: var(--ink2); font-weight: 600; font-variant-numeric: tabular-nums; }
+.halo { paint-order: stroke; stroke: var(--paper); stroke-width: 4px; stroke-linejoin: round; }
+.gl { stroke: var(--line2); stroke-width: 1; }
+.gl0 { stroke: var(--line); stroke-width: 1.2; }
+.hit { fill: transparent; cursor: crosshair; }
+.col .xh { stroke: var(--ink2); stroke-width: 1; stroke-dasharray: 2 3; opacity: 0; transition: opacity .12s; }
+.col:hover .xh { opacity: .6; }
+[data-tip] { cursor: pointer; }
+.mk { transition: opacity .2s var(--ease), r .15s var(--ease); }
+.dim .mk { opacity: .12; }
+.pt { transition: opacity .2s var(--ease); }
+@media (hover: hover) { .pt:hover { stroke: var(--ink); stroke-width: 1.5; } }
+
+/* tabla */
+.tb { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 12px; }
+.tb th { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); text-align: left; font-weight: 600; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+.tb td { padding: 8px; border-bottom: 1px solid var(--line2); font-variant-numeric: tabular-nums; vertical-align: middle; }
+.tb tr:last-child td { border-bottom: 0; }
+.meter { display: flex; align-items: center; gap: 8px; }
+.meter .m { flex: 1; height: 6px; border-radius: 3px; background: var(--line2); overflow: hidden; min-width: 40px; }
+.meter .m span { display: block; height: 100%; border-radius: 3px; }
+.sw { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; }
+
+/* reglas */
+.rules { display: flex; flex-direction: column; gap: 10px; }
+.rule { background: var(--paper); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+.rule button { all: unset; box-sizing: border-box; width: 100%; display: grid; grid-template-columns: 40px 1fr 20px; gap: 14px; align-items: center; padding: 16px 20px; cursor: pointer; }
+.rule button:focus-visible { outline: 2px solid var(--frag); outline-offset: -2px; border-radius: 16px; }
+.rn { width: 36px; height: 36px; border-radius: 50%; background: var(--frag); color: #fff; display: grid; place-items: center; font-family: var(--serif); font-size: 18px; }
+.rule:nth-child(even) .rn { background: var(--mu); }
+.rt { font-weight: 600; font-size: 16px; }
+.rs { font-size: 13.5px; color: var(--ink2); margin-top: 2px; }
+.chev { color: var(--muted); transition: transform .25s var(--ease); }
+.rule.open .chev { transform: rotate(180deg); }
+.rd { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s var(--ease); }
+.rule.open .rd { grid-template-rows: 1fr; }
+.rd > div { overflow: hidden; }
+.rd .in { padding: 0 20px 18px 74px; font-size: 13.5px; color: var(--ink2); }
+.rd .ev { margin-top: 8px; font-size: 12.5px; color: var(--muted); }
+.rd .ev a { color: var(--ink2); }
+
+.foot { margin: 80px 0 0; padding: 28px 0 60px; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; font-size: 13px; color: var(--ink2); }
+.foot b { display: block; margin-bottom: 4px; }
+.foot code { font-size: 12px; background: var(--line2); padding: 1px 5px; border-radius: 4px; }
+.empty { padding: 40px 0; text-align: center; color: var(--muted); font-size: 14px; }
+
+/* tooltip */
+#tip { position: fixed; z-index: 50; pointer-events: none; background: var(--ink); color: var(--bg); font-size: 12.5px; line-height: 1.45; padding: 9px 12px; border-radius: 10px;
+  max-width: 260px; opacity: 0; transform: translateY(4px) scale(.98); transform-origin: top left; transition: opacity .12s var(--ease), transform .12s var(--ease); box-shadow: 0 10px 30px -10px rgba(0,0,0,.4); }
+#tip.on { opacity: 1; transform: none; }
+#tip b { color: var(--bg); }
+#tip .r { display: flex; justify-content: space-between; gap: 14px; }
+#tip .r span:last-child { font-weight: 600; font-variant-numeric: tabular-nums; }
+#tip .h { font-weight: 600; margin-bottom: 3px; }
+#tip .sw { margin-right: 6px; }
+
+/* aparición */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+.draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.in .draw { stroke-dashoffset: 0; transition: stroke-dashoffset 1.4s var(--ease) .15s; }
+.drawn .draw { stroke-dashoffset: 0; transition: none; }
+.grow { transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0); }
+.growx { transform-box: fill-box; transform-origin: 0 50%; transform: scaleX(0); }
+.in .grow, .in .growx { transform: none; transition: transform .8s var(--ease); }
+.drawn .grow, .drawn .growx { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal, .reveal.in { opacity: 1; transform: none; transition: none; }
+  .draw, .in .draw { stroke-dashoffset: 0; transition: none; }
+  .grow, .growx { transform: none !important; transition: none !important; }
+  .seg .pill, .tile, .rd, .chev { transition: none; }
+}
+
+@media (max-width: 1280px) { .nav { display: none; } }
+@media (max-width: 900px) {
+  .g2, .g2e { grid-template-columns: 1fr; }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .foot { grid-template-columns: 1fr 1fr; }
+  .nav { display: none; }
+}
+@media (max-width: 560px) {
+  .wrap { padding: 0 16px; }
+  body { font-size: 14.5px; }
+  .tiles { grid-template-columns: 1fr; }
+  .sec-h { grid-template-columns: 1fr; }
+  .num { font-size: 44px; margin-bottom: 4px; }
+  .card { padding: 18px 16px; border-radius: 16px; }
+  .signal { padding: 16px 14px 10px; }
+  .foot { grid-template-columns: 1fr; }
+  .rd .in { padding-left: 20px; }
+  .bar .brand span { display: none; }
+  .bar .wrap { gap: 10px; }
+  .theme { display: none; }
+  .seg button { padding: 6px 9px; }
+  .hero { padding-top: 44px; }
+}
+</style>
+</head>
+<body>
+<div id="tip" role="status" aria-live="polite"></div>
+
+<header class="bar" id="bar">
+  <div class="wrap">
+    <div class="brand">EPOS <span>· patrones sep-26</span></div>
+    <nav class="nav" id="nav">
+      <a href="#ruido"><span class="n">1</span>Ruido</a>
+      <a href="#tendencia"><span class="n">2</span>Tendencia</a>
+      <a href="#lanzamientos"><span class="n">3</span>Lanzamientos</a>
+      <a href="#ciclo"><span class="n">4</span>Ciclo de vida</a>
+      <a href="#carga"><span class="n">5</span>Carga y bajas</a>
+      <a href="#forecast"><span class="n">6</span>Forecast</a>
+    </nav>
+    <div class="sp"></div>
+    <div class="seg" id="catSeg" role="group" aria-label="Categoría">
+      <button data-v="all" aria-pressed="true">Todas</button>
+      <button data-v="Fragancias" aria-pressed="false"><i class="dot" style="background:var(--frag)"></i>Fragancias</button>
+      <button data-v="Makeup" aria-pressed="false"><i class="dot" style="background:var(--mu)"></i>Makeup</button>
+    </div>
+    <button class="theme" id="theme" aria-label="Cambiar tema" title="Cambiar tema">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="kick">EPOS · patrones · foto sep-26 · 5 casas</div>
+    <h1>El consumidor compra a ritmo constante. <em>El ruido lo meten los pedidos.</em></h1>
+    <p class="lead">Seis patrones entre el envío (sell-in) y el EPOS (sell-out) de Burberry, Gucci, Marc Jacobs, Gucci Make up y Kylie Makeup, de jul-24 a ago-26.
+      Todo en relativo: cada EAN se compara consigo mismo, porque no todos los clientes reportan EPOS.</p>
+    <div class="signal reveal">
+      <div class="signal-h">
+        <div><div class="t" id="sigT"></div><div class="s">Crecimiento de cada mes frente al mismo mes del año anterior · EANs maduros</div></div>
+        <div class="legend" style="margin:0"><span><i class="dash"></i>Envío</span><span><i id="sigDot" style="background:var(--frag)"></i>EPOS</span></div>
+      </div>
+      <div class="chart" id="cHero"></div>
+    </div>
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section class="sec" id="ruido">
+    <div class="sec-h reveal"><div class="num">01</div><div><div class="kick">Ruido</div>
+      <h2 id="h-ruido"></h2></div></div>
+    <div class="grid g2">
+      <div class="card reveal">
+        <div class="card-h"><div><div class="ct">Crecimiento mensual frente al año anterior</div><div class="cs" id="noiseSub"></div></div>
+          <div class="seg" id="houseSeg1" role="group" aria-label="Casa"></div></div>
+        <div class="legend"><span><i class="dash"></i>Envío</span><span><i id="noiseDot"></i>EPOS</span></div>
+        <div class="chart" id="cNoise"></div>
+      </div>
+      <div class="stack">
+        <div class="card reveal">
+          <div class="ct">EANs cuyo envío es más inestable que su EPOS</div>
+          <div class="kpi" id="kNoise"></div>
+          <div class="kl" id="kNoiseL"></div>
+        </div>
+        <div class="card reveal">
+          <div class="ct">Distancia entre el mejor y el peor mes</div>
+          <div class="cs">jul-25 → jul-26 · por casa</div>
+          <div class="legend"><span><i style="background:var(--ship)"></i>Envío</span><span><i style="background:var(--frag)"></i><i style="background:var(--mu);margin-left:-4px"></i>EPOS</span></div>
+          <div class="chart" id="cRange"></div>
+        </div>
+      </div>
+    </div>
+    <div class="note reveal" id="n-ruido"></div>
+  </section>
+
+  <section class="sec" id="tendencia">
+    <div class="sec-h reveal"><div class="num">02</div><div><div class="kick">Tendencia</div>
+      <h2 id="h-trend"></h2></div></div>
+    <div class="grid g2">
+      <div class="card reveal">
+        <div class="ct">Cada punto es un EAN: crecimiento FY26 del EPOS frente al del envío</div>
+        <div class="cs" id="scSub"></div>
+        <div class="legend"><span><i style="background:var(--frag)"></i>Fragancias</span><span><i style="background:var(--mu)"></i>Makeup</span><span style="color:var(--muted)">zona sombreada = misma dirección</span></div>
+        <div class="chart" id="cScatter"></div>
+        <details class="how"><summary>Cómo se calcula</summary><div class="body">Crecimiento = suma FY26 / suma FY25 − 1, por EAN, de envío y de EPOS. EANs maduros (lanzados antes de ene-24) con envío y EPOS en los dos años.
+          Los valores se recortan a −80% y +150% para que el gráfico se lea; el tamaño del punto es el envío FY25.</div></details>
+      </div>
+      <div class="stack">
+        <div class="card reveal">
+          <div class="ct">Envío y EPOS van en la misma dirección</div>
+          <div class="kpi" id="kSame"></div>
+          <div class="kl" id="kSameL"></div>
+          <table class="tb" id="tbHouse"></table>
+        </div>
+        <div class="card reveal">
+          <div class="ct">¿La tendencia de jul–dic sigue en ene–jun?</div>
+          <div class="cs">% de EANs que mantienen el signo de su crecimiento</div>
+          <div class="legend"><span><i style="background:var(--ink2)"></i>EPOS (color de la categoría)</span><span><i style="background:var(--ship);opacity:.55"></i>Envío</span></div>
+          <div class="chart" id="cPersist"></div>
+          <div class="kl" id="kPersistL"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="lanzamientos">
+    <div class="sec-h reveal"><div class="num">03</div><div><div class="kick">Lanzamientos</div>
+      <h2 id="h-launch"></h2></div></div>
+    <div class="grid g2">
+      <div class="card reveal">
+        <div class="card-h"><div><div class="ct">Los 13 primeros meses de un lanzamiento</div><div class="cs" id="launchSub"></div></div>
+          <div class="seg" id="launchSeg" role="group" aria-label="Categoría del lanzamiento">
+            <button data-v="Fragancias" aria-pressed="true"><i class="dot" style="background:var(--frag)"></i>Fragancias</button>
+            <button data-v="Makeup" aria-pressed="false"><i class="dot" style="background:var(--mu)"></i>Makeup</button></div></div>
+        <div class="legend"><span><i style="background:var(--ship)"></i>Envío</span><span><i id="launchDot"></i>EPOS</span><span style="color:var(--muted)">cada mes en % de lo que el consumidor compra en sus 13 primeros meses</span></div>
+        <div class="chart" id="cLaunch"></div>
+      </div>
+      <div class="stack">
+        <div class="card reveal">
+          <div class="ct">Envío por cada unidad vendida</div>
+          <div class="cs">Envío ÷ EPOS. La referencia es la de los veteranos (incluye los clientes que no reportan)</div>
+          <div class="chart" id="cRatio"></div>
+          <div class="kl" id="kRatioL"></div>
+        </div>
+        <div class="note q reveal" style="margin-top:0"><b>Pregunta abierta.</b> ¿Los envíos de lanzamiento incluyen probadores o material de exposición? Si es así, parte del «doble» no es stock vendible.</div>
+      </div>
+    </div>
+    <div class="note reveal" id="n-launch"></div>
+  </section>
+
+  <section class="sec" id="ciclo">
+    <div class="sec-h reveal"><div class="num">04</div><div><div class="kick">Ciclo de vida</div>
+      <h2 id="h-vet"></h2></div></div>
+    <div class="grid g2">
+      <div class="card reveal">
+        <div class="ct">EPOS FY26 frente a FY25: veteranos activos frente al total de la casa</div>
+        <div class="cs">Veteranos = con envío desde jul-23 y todavía activos</div>
+        <div class="legend"><span><i style="background:var(--frag)"></i><i style="background:var(--mu);margin-left:-4px"></i>Veteranos</span><span><i style="background:var(--ship);opacity:.45"></i>Total de la casa (con lanzamientos)</span></div>
+        <div class="chart" id="cVet"></div>
+      </div>
+      <div class="stack" id="cohortStack"></div>
+    </div>
+    <div class="note reveal" id="n-vet"></div>
+  </section>
+
+  <section class="sec" id="carga">
+    <div class="sec-h reveal"><div class="num">05</div><div><div class="kick">Carga del canal y bajas</div>
+      <h2 id="h-load"></h2></div></div>
+    <div class="grid g2e">
+      <div class="card reveal">
+        <div class="ct">Envío de los 3 meses siguientes: EANs cargados frente a normales</div>
+        <div class="cs">Exceso de crecimiento del envío sobre el del EPOS · cortes sep-25 → abr-26</div>
+        <div class="legend"><span><i style="background:var(--frag)"></i><i style="background:var(--mu);margin-left:-4px"></i>Cargados</span><span><i class="ring"></i>Normales</span><span style="color:var(--muted)">derecha: meses en que cargados &lt; normales</span></div>
+        <div class="chart" id="cDumb"></div>
+        <div class="kl" id="kDumbL"></div>
+        <details class="how"><summary>Qué es «cargado»</summary><div class="body">Un EAN está cargado cuando su relación envío/EPOS de los últimos 12 meses está más de un 15% por encima de la suya de FY25: ha enviado más de lo que el consumidor ha comprado.
+          Se compara cada EAN consigo mismo, nunca en unidades.</div></details>
+      </div>
+      <div class="card reveal">
+        <div class="card-h"><div><div class="ct">La casa a lo largo del año</div><div class="cs">Envío por unidad de EPOS en 12 meses y crecimiento del envío de los 3 meses siguientes</div></div>
+          <div class="seg" id="houseSeg2" role="group" aria-label="Casa"></div></div>
+        <div class="legend"><span><i id="loadDot"></i>Envío ÷ EPOS, 12 meses (eje izquierdo)</span><span><i style="background:var(--ship);opacity:.5;border-radius:2px"></i>Envío 3 meses siguientes vs año anterior (eje derecho)</span></div>
+        <div class="chart" id="cLoad"></div>
+        <div class="kl" id="kLoadL"></div>
+      </div>
+    </div>
+    <div class="grid g2e" style="margin-top:18px">
+      <div class="card reveal">
+        <div class="ct">Bajas: el consumidor sigue comprando después del último envío</div>
+        <div class="cs" id="exitSub"></div>
+        <div class="chart" id="cExit"></div>
+      </div>
+      <div class="stack">
+        <div class="card reveal"><div class="kl" id="kExitL"></div></div>
+        <div class="note reveal" style="margin-top:0"><b>Gucci Make up, a nivel casa:</b> acumuló carga 9 meses sin dejar de enviar por encima del EPOS y corrigió de golpe en may–jul-26.
+          <b>La carga avisa, pero no dice cuándo llega la corrección.</b> El WOS (semanas de stock) lo diría.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="forecast">
+    <div class="sec-h reveal"><div class="num">06</div><div><div class="kick">Qué significa para el forecast</div>
+      <h2>El EPOS no sirve como número, pero sí como brújula: marca la dirección, la edad del producto y si el canal está lleno</h2></div></div>
+    <div class="grid g2">
+      <div class="rules reveal" id="rules"></div>
+      <div class="stack">
+        <div class="card reveal"><div class="ct">Por qué solo en relativo</div>
+          <div class="kl" style="margin-top:8px">No todos los clientes reportan EPOS (suman ~80% del envío). Por eso todo el reporte compara cada EAN o casa consigo mismo: frente al año anterior o frente a su propia relación envío/EPOS. El nivel absoluto no se usa nunca.</div></div>
+        <div class="card reveal"><div class="ct">Qué falta para cerrar el círculo</div>
+          <div class="kl" style="margin-top:8px"><b>WOS</b> (semanas de stock) por EAN y cliente: stock = WOS × venta semanal. Convierte «cargado» en un dato y diría cuándo llega la corrección.</div>
+          <div class="kl"><b>Probadores y material de exposición:</b> saber si están en el envío de lanzamiento.</div>
+          <div class="kl"><b>Más historia de EPOS:</b> hoy hay 2 años (jul-24 → jul-26); cada mes nuevo refuerza o desmiente estos patrones.</div></div>
+        <div class="note reveal" style="margin-top:0"><b>Siguiente paso:</b> probar los puntos 1–3 como partido «Consumidor (EPOS)» en el parlamento, con cortes oct-25 → mar-26 y lo real hasta ago-26.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div><b>Envío</b>Sell-in de la foto sep-26 (actuals), jul-23 → ago-26.</div>
+    <div><b>EPOS</b>Venta al consumidor de los clientes que reportan (~80% del envío), jul-24 → jul-26.</div>
+    <div><b>Cómo se compara</b>Siempre en relativo: crecimiento frente al año anterior o relación envío/EPOS frente a la propia historia del EAN.</div>
+    <div><b>Datos y cálculo</b>DATA.xlsx, GUMU.xlsx, KYMU.xlsx (foto sep-26). <code>src/epos_patrones.py</code> · página: <code>src/epos_patrones_html.py</code></div>
+  </footer>
+</main>
+
+<script>
+const D = {"noise":{"houses":{"BURBERRY":{"ship":[-0.029620342932401234,-0.5040016107112297,0.04074519729471815,-0.18866189760724772,0.33306417035872515,0.2998029772329247,-0.48020416859321313,-0.2851740989255912,0.33079014583504995,-0.5017060839894192,0.05082582652519396,-0.15179421063940812,-0.10202670077126863],"epos":[-0.15719720413603022,-0.2062237705800064,-0.11340636832814543,-0.16822382961623472,-0.15468982972604417,-0.22443644518895234,-0.1545831833485083,-0.12460160655312158,-0.345309727429189,-0.1938208738753815,-0.11279507603186101,-0.21024492909203907,-0.10509154998531278],"n":64},"Gucci":{"ship":[-0.23022214757730597,-0.47892916674649855,-0.14319581736976905,0.08084948194183639,-0.38792490010400127,0.1642849841561893,-0.37915301669827717,-0.21966704732370168,0.46927104114524765,-0.1770602561080996,-0.08385739250347723,-0.1815936373067233,-0.0712277727894467],"epos":[-0.24845305854196897,-0.2934974191111671,-0.30917830026940973,-0.29734005319893597,-0.07739653793003132,-0.24608670217233275,-0.21901285510236468,-0.20729830452423648,-0.11056976586818246,-0.20758971468105003,-0.19457857195227968,-0.3130350151518503,-0.09121058623591338],"n":58},"Marc Jacobs":{"ship":[-0.49847036328871897,-0.3068829344570777,-0.3526948463102959,-0.08431040132206913,0.40958592164577934,0.3825086769566093,-0.13674914954098516,-0.06039012017633916,0.24117970476259631,-0.47931560997188805,0.6189994318988781,-0.5222717480865258,0.3367463645770927],"epos":[-0.20464408178364613,0.07068270813234201,-0.03944676438440631,-0.141260705314583,0.008877000284063907,-0.020372664259547202,-0.04857272557344661,-0.11324636386833375,-0.25708241735451487,-0.04172000189636371,-0.0330431801765404,-0.018237450392317278,-0.07391771019677995],"n":41},"Gucci Make up":{"ship":[0.03904929339373853,-0.30884092253104667,0.19625267217168973,-0.4153359734287174,-0.1700572435050638,-0.18121969890278133,0.0033714408312133237,-0.21182786608048698,-0.1780898025152785,0.35688631026384865,-0.3250756212428686,0.22230497114131453,-0.6834347444115446],"epos":[-0.14910156747801706,-0.13833863739689545,-0.18251820048534628,-0.20998992048381682,-0.05355575065847229,-0.2500775386142299,-0.23662073966642494,-0.06039123014310099,-0.38413799397645343,-0.015499688344068119,-0.1245923510228284,-0.28022741629816805,-0.20450801258050022],"n":105},"Kylie Makeup":{"ship":[-0.15881717109326743,-0.1396617029468915,-0.5860844319468284,0.11165034644677307,-0.19879752540150775,-0.30936992476218883,0.06271706374410457,-0.2228930496402156,0.019496170939823143,0.19195963983530162,-0.27945659127685996,0.05065683252605324,-0.36185072385164174],"epos":[-0.3096278855504939,-0.17703779121997965,-0.26828736427346833,-0.19923878421422014,-0.13283264340626844,-0.0989217414892174,-0.015353989960186998,0.008295419835056217,-0.062255444315513886,-0.045307025333828466,-0.08878757657786007,-0.3144482483461608,-0.23182431530716652],"n":112}},"months":["Jul-25","Aug-25","Sep-25","Oct-25","Nov-25","Dec-25","Jan-26","Feb-26","Mar-26","Apr-26","May-26","Jun-26","Jul-26"],"ruido":{"BURBERRY":{"ship":1.5612297130385184,"epos":0.3338873616591779},"Gucci":{"ship":1.231204224118418,"epos":0.26380688398493757},"Marc Jacobs":{"ship":1.926708438673742,"epos":0.2874719401108812},"Gucci Make up":{"ship":1.4995153454693788,"epos":0.3481398189025314},"Kylie Makeup":{"ship":1.0950739362540354,"epos":0.39695697282065845}},"pct_env_mas_ruidoso":0.9763157894736842,"ratio_ruido":4.059780521349724,"rango":{"BURBERRY":{"ship":0.8370657810699549,"epos":0.2402181774438762},"Gucci":{"ship":0.9482002078917462,"epos":0.23563847722181896},"Marc Jacobs":{"ship":1.1412711799854038,"epos":0.3277651254868569},"Gucci Make up":{"ship":1.0403210546753932,"epos":0.3686383056323853},"Kylie Makeup":{"ship":0.77804407178213,"epos":0.322743668181217}}},"trend":{"points":[{"cat":"Fragancias","x":0.15547296935992727,"y":0.004570580774845068,"w":41789.0},{"cat":"Fragancias","x":-0.04027000253415347,"y":-0.3217016754900287,"w":52701.0},{"cat":"Fragancias","x":0.1372426998563907,"y":-0.23764853033145716,"w":27183.0},{"cat":"Fragancias","x":0.09046224119954327,"y":-0.25190568347881037,"w":25319.0},{"cat":"Fragancias","x":-0.19761288143227118,"y":-0.08286239646417792,"w":59279.0},{"cat":"Fragancias","x":-0.05345449416695214,"y":-0.05250390456252285,"w":60186.0},{"cat":"Fragancias","x":0.31020527859237546,"y":-0.2607322235208642,"w":31657.0},{"cat":"Fragancias","x":0.1915014701697808,"y":-0.8,"w":26743.0},{"cat":"Fragancias","x":0.3496223900488671,"y":-0.4278506559031282,"w":2973.0},{"cat":"Fragancias","x":0.09694338940133829,"y":0.08938237335183907,"w":28820.0},{"cat":"Fragancias","x":-0.17523875273271206,"y":-0.10184511606375235,"w":15121.0},{"cat":"Fragancias","x":-0.019684724333840165,"y":0.016829788002455937,"w":27689.0},{"cat":"Fragancias","x":-0.06365601729521975,"y":0.2447330092108233,"w":48747.0},{"cat":"Fragancias","x":1.2581192438196802,"y":1.436336559940432,"w":4029.0},{"cat":"Fragancias","x":-0.7487029288702929,"y":-0.8,"w":11587.0},{"cat":"Fragancias","x":1.3362701908957417,"y":1.5,"w":787.0},{"cat":"Fragancias","x":0.28383233532934127,"y":0.1916299559471366,"w":8172.0},{"cat":"Fragancias","x":-0.22968197879858654,"y":0.8511992168379834,"w":4086.0},{"cat":"Fragancias","x":-0.009580177559311842,"y":-0.2957331447430457,"w":25452.0},{"cat":"Fragancias","x":-0.06715958102279729,"y":-0.40858658948383986,"w":2073.0},{"cat":"Fragancias","x":-0.05428668248051505,"y":-0.008692852543464302,"w":18636.0},{"cat":"Fragancias","x":-0.6232136199826022,"y":-0.42449864498644985,"w":9225.0},{"cat":"Fragancias","x":1.5,"y":1.0372928176795582,"w":11584.0},{"cat":"Fragancias","x":1.5,"y":1.5,"w":797.0},{"cat":"Fragancias","x":-0.2978802992518703,"y":0.5775277853076715,"w":7378.0},{"cat":"Fragancias","x":-0.8,"y":-0.2410183624589728,"w":11273.0},{"cat":"Fragancias","x":-0.4301191765980499,"y":0.8272946859903381,"w":1656.0},{"cat":"Fragancias","x":-0.27311392405063295,"y":0.4753479419603197,"w":13508.0},{"cat":"Fragancias","x":0.002410468319559156,"y":0.13548295856314518,"w":7071.0},{"cat":"Fragancias","x":0.31844709464602894,"y":0.4321595666092095,"w":4061.0},{"cat":"Fragancias","x":0.18638170974155077,"y":0.9122661122661122,"w":2405.0},{"cat":"Fragancias","x":-0.1378053226394459,"y":-0.45522761380690346,"w":3998.0},{"cat":"Fragancias","x":-0.05415592144415793,"y":-0.10942234959712471,"w":42569.0},{"cat":"Fragancias","x":-0.06267984105476299,"y":0.16231609593397112,"w":70757.0},{"cat":"Fragancias","x":0.1074765282464476,"y":-0.1554221561127639,"w":56472.0},{"cat":"Fragancias","x":-0.07077444884115325,"y":0.8360780065005418,"w":9230.0},{"cat":"Fragancias","x":1.2482841217928047,"y":0.9002243887341381,"w":25848.0},{"cat":"Fragancias","x":0.1128533756769785,"y":0.02403091113049971,"w":40115.0},{"cat":"Fragancias","x":0.06995017247987745,"y":-0.46009330475349897,"w":7931.0},{"cat":"Fragancias","x":-0.2133922001471671,"y":-0.11682772571623545,"w":82061.0},{"cat":"Fragancias","x":-0.1810645538204365,"y":-0.11743231842932744,"w":130390.0},{"cat":"Fragancias","x":-0.279310904119746,"y":-0.21588133253088826,"w":84741.0},{"cat":"Fragancias","x":-0.15779702970297027,"y":-0.7740767559739319,"w":6905.0},{"cat":"Fragancias","x":-0.0035180299032542273,"y":0.04613935969868166,"w":1062.0},{"cat":"Fragancias","x":0.09227002231589387,"y":0.4685362350592761,"w":41079.0},{"cat":"Fragancias","x":-0.4838458819370802,"y":-0.16706025234464617,"w":29642.0},{"cat":"Makeup","x":-0.0701914311759344,"y":-0.07040328092959669,"w":1463.0},{"cat":"Makeup","x":-0.28975609756097565,"y":-0.24541607898448514,"w":1418.0},{"cat":"Makeup","x":-0.07726980038634901,"y":-0.06913827655310623,"w":1996.0},{"cat":"Makeup","x":-0.10498687664041995,"y":-0.0013020833333333703,"w":1536.0},{"cat":"Makeup","x":-0.13927227101631112,"y":-0.3728675873273761,"w":1231.0},{"cat":"Makeup","x":0.08421052631578951,"y":-0.2662241887905604,"w":1356.0},{"cat":"Makeup","x":-0.6407119021134594,"y":-0.7089423903697334,"w":2326.0},{"cat":"Makeup","x":-0.6760757314974182,"y":-0.7137426900584796,"w":3420.0},{"cat":"Makeup","x":-0.5826036193812025,"y":-0.7274305555555556,"w":2304.0},{"cat":"Makeup","x":-0.5200239091452481,"y":-0.5637325637325638,"w":2079.0},{"cat":"Fragancias","x":-0.595846351773571,"y":-0.7545621965511469,"w":5973.0},{"cat":"Fragancias","x":-0.06671449067431856,"y":0.17500000000000004,"w":4960.0},{"cat":"Fragancias","x":-0.3587452656113431,"y":-0.43415618096244357,"w":10411.0},{"cat":"Fragancias","x":-0.143039419783762,"y":-0.16535528386393894,"w":16522.0},{"cat":"Fragancias","x":-0.41702842739112167,"y":-0.38500682636216954,"w":8057.0},{"cat":"Makeup","x":-0.5738265464718681,"y":-0.6337194971653932,"w":4057.0},{"cat":"Fragancias","x":-0.5465233456499832,"y":-0.6633986928104575,"w":2754.0},{"cat":"Fragancias","x":-0.14371375208886272,"y":-0.2618497745518531,"w":9093.0},{"cat":"Fragancias","x":-0.2573373272019013,"y":-0.20626342860863334,"w":76795.0},{"cat":"Fragancias","x":-0.3720211906258418,"y":-0.3476778144135657,"w":53075.0},{"cat":"Makeup","x":-0.6389006342494714,"y":-0.565648854961832,"w":2620.0},{"cat":"Makeup","x":-0.1982838589981447,"y":-0.1591417910447761,"w":5360.0},{"cat":"Makeup","x":0.03658536585365857,"y":-0.06364749082007348,"w":2451.0},{"cat":"Makeup","x":-0.09058704453441291,"y":-0.10498581272800978,"w":2467.0},{"cat":"Makeup","x":-0.11953584485773328,"y":-0.018967484312606975,"w":7012.0},{"cat":"Makeup","x":-0.2729103726082578,"y":-0.10284810126582278,"w":1264.0},{"cat":"Makeup","x":-0.044919786096256686,"y":-0.02877697841726623,"w":1251.0},{"cat":"Makeup","x":-0.00881704628949298,"y":-0.07515777395295464,"w":1743.0},{"cat":"Makeup","x":-0.30099091659785304,"y":-0.29072762395363816,"w":3106.0},{"cat":"Makeup","x":-0.20887918486171764,"y":-0.20515411824153618,"w":1979.0},{"cat":"Makeup","x":-0.11963882618510158,"y":-0.13523914238592638,"w":1819.0},{"cat":"Makeup","x":-0.27076411960132896,"y":-0.21940393151553583,"w":1577.0},{"cat":"Makeup","x":-0.1440588853838065,"y":-0.18312101910828027,"w":1256.0},{"cat":"Fragancias","x":0.11097435897435903,"y":0.0793373493975904,"w":16600.0},{"cat":"Makeup","x":-0.2408985282726569,"y":-0.060788608981380055,"w":1826.0},{"cat":"Makeup","x":0.03896103896103886,"y":0.024404761904761818,"w":1680.0},{"cat":"Makeup","x":-0.5032679738562091,"y":-0.4085138162808065,"w":1339.0},{"cat":"Makeup","x":0.039723032069970854,"y":-0.04325353645266594,"w":3676.0},{"cat":"Makeup","x":-0.21883530482256597,"y":-0.21147646679561571,"w":3102.0},{"cat":"Makeup","x":-0.0029239766081871066,"y":-0.028085106382978675,"w":2350.0},{"cat":"Makeup","x":-0.1089026915113872,"y":-0.07723200494284832,"w":3237.0},{"cat":"Makeup","x":-0.028921023359288145,"y":-0.07535410764872519,"w":1765.0},{"cat":"Makeup","x":-0.16822305229455714,"y":0.21399012147910823,"w":7491.0},{"cat":"Fragancias","x":-0.026509697636994956,"y":0.05919701213818862,"w":21420.0},{"cat":"Fragancias","x":-0.19466748280704282,"y":-0.12421424405417669,"w":61724.0},{"cat":"Fragancias","x":-0.20134340890008395,"y":-0.17595204513399154,"w":5672.0},{"cat":"Fragancias","x":-0.25636335531739485,"y":-0.3234889250406707,"w":39955.0},{"cat":"Fragancias","x":-0.10539818916782273,"y":-0.03616299940171508,"w":75215.0},{"cat":"Fragancias","x":0.06512934953301919,"y":0.1032465881156226,"w":11797.0},{"cat":"Fragancias","x":-0.1942178077332387,"y":0.49524733268671195,"w":5155.0},{"cat":"Makeup","x":-0.16677588466579296,"y":-0.1373283395755306,"w":3204.0},{"cat":"Fragancias","x":-0.0864222401289283,"y":0.11291779584462502,"w":5535.0},{"cat":"Fragancias","x":0.33388807988350333,"y":0.22458893871449925,"w":8028.0},{"cat":"Fragancias","x":-0.20065580706579222,"y":-0.0866311256920238,"w":9754.0},{"cat":"Fragancias","x":-0.02812060615528822,"y":-0.01283169303600351,"w":16054.0},{"cat":"Fragancias","x":0.2595204513399154,"y":0.470619729621202,"w":7471.0},{"cat":"Fragancias","x":-0.14751611679939325,"y":-0.2524752475247525,"w":3434.0},{"cat":"Fragancias","x":-0.06101254868022499,"y":0.6421937195931005,"w":2261.0},{"cat":"Makeup","x":-0.4560051380860629,"y":-0.5389355742296918,"w":1785.0},{"cat":"Fragancias","x":0.9331069108092145,"y":0.42082563154651886,"w":11361.0},{"cat":"Makeup","x":0.1145374449339207,"y":0.18244013683010252,"w":877.0},{"cat":"Makeup","x":0.34313642875200134,"y":0.5562799760191846,"w":13344.0},{"cat":"Makeup","x":0.27547434996486286,"y":0.43001786777843964,"w":3358.0},{"cat":"Makeup","x":0.23933667566525263,"y":0.37382278132948366,"w":14547.0},{"cat":"Makeup","x":0.29871090448013526,"y":0.43401841346600945,"w":10753.0},{"cat":"Fragancias","x":-0.026909378709932708,"y":-0.26458100558659214,"w":8950.0},{"cat":"Fragancias","x":0.18896897524287048,"y":-0.2979367262723521,"w":3635.0},{"cat":"Fragancias","x":-0.41661557326793375,"y":-0.7217791411042944,"w":6520.0},{"cat":"Makeup","x":-0.5190958690568979,"y":-0.5593869731800767,"w":1566.0},{"cat":"Makeup","x":-0.5617206982543641,"y":-0.597666159309995,"w":1971.0},{"cat":"Fragancias","x":0.14198836594394493,"y":-0.6416895937854021,"w":6179.0},{"cat":"Fragancias","x":-0.8,"y":-0.6075731497418244,"w":1743.0},{"cat":"Fragancias","x":-0.2992624572764886,"y":-0.3545757565756906,"w":30301.0},{"cat":"Fragancias","x":-0.4266461301501733,"y":-0.4234033524294505,"w":9426.0},{"cat":"Fragancias","x":-0.4945521551033488,"y":-0.11456502636203869,"w":9104.0},{"cat":"Fragancias","x":-0.5673076923076923,"y":-0.6226826608505998,"w":2751.0},{"cat":"Fragancias","x":-0.2737478411053541,"y":-0.3521594684385382,"w":903.0},{"cat":"Fragancias","x":-0.39954022988505744,"y":-0.06305170239596469,"w":1586.0},{"cat":"Fragancias","x":-0.29090073529411764,"y":0.10319963947724209,"w":2219.0},{"cat":"Fragancias","x":-0.45588105142047974,"y":-0.488562091503268,"w":9792.0},{"cat":"Fragancias","x":-0.27440260999911825,"y":-0.2175077239958806,"w":9710.0},{"cat":"Fragancias","x":-0.001326963906581713,"y":0.02502475711265162,"w":37363.0},{"cat":"Fragancias","x":0.13607847610357027,"y":0.16455938697318007,"w":10440.0},{"cat":"Fragancias","x":-0.35351351351351357,"y":-0.00017047391749058782,"w":5866.0},{"cat":"Fragancias","x":-0.25154630894047714,"y":-0.2677031660951493,"w":30037.0},{"cat":"Makeup","x":-0.6159317211948792,"y":-0.5625,"w":1344.0},{"cat":"Makeup","x":-0.7193877551020409,"y":-0.6102877070619006,"w":3441.0},{"cat":"Makeup","x":-0.6707616707616708,"y":-0.33333333333333337,"w":1032.0},{"cat":"Makeup","x":-0.5564024390243902,"y":-0.3041655018171652,"w":3577.0},{"cat":"Makeup","x":0.12731829573934839,"y":0.21380112424888553,"w":5159.0},{"cat":"Fragancias","x":-0.4827619695056813,"y":-0.5773549594510293,"w":9618.0},{"cat":"Fragancias","x":-0.25383673503156257,"y":-0.22561970346629712,"w":277068.0},{"cat":"Fragancias","x":-0.23652151373768793,"y":-0.15996213245164115,"w":70773.0},{"cat":"Fragancias","x":-0.17659678598006157,"y":-0.061175925105176,"w":146659.0},{"cat":"Fragancias","x":0.17700301709688238,"y":-0.4123069257598405,"w":4014.0},{"cat":"Fragancias","x":-0.29263841005881164,"y":-0.10279931690205857,"w":86664.0},{"cat":"Fragancias","x":0.011011390276824073,"y":0.2745758596619017,"w":32949.0},{"cat":"Fragancias","x":-0.15297823385380138,"y":0.14315623537525557,"w":81198.0},{"cat":"Fragancias","x":-0.28604885188912266,"y":-0.04600099804926738,"w":44086.0},{"cat":"Fragancias","x":-0.40168448331713635,"y":-0.5233217088055797,"w":4588.0},{"cat":"Fragancias","x":-0.7111959287531806,"y":1.5,"w":830.0},{"cat":"Fragancias","x":-0.5417933130699089,"y":-0.8,"w":12974.0},{"cat":"Fragancias","x":-0.16289286921257184,"y":0.866695520450119,"w":4621.0},{"cat":"Fragancias","x":-0.28145553155983116,"y":-0.15118769417620492,"w":184433.0},{"cat":"Fragancias","x":-0.26617893280920146,"y":-0.6040691529518345,"w":52984.0},{"cat":"Fragancias","x":0.36535957169729416,"y":0.04555932203389834,"w":7375.0},{"cat":"Fragancias","x":0.19781619654231108,"y":0.5525590551181103,"w":5080.0},{"cat":"Fragancias","x":0.9735494400360178,"y":1.2863742725145495,"w":16667.0},{"cat":"Fragancias","x":0.038432531901414935,"y":-0.06830561720033435,"w":34697.0},{"cat":"Fragancias","x":-0.374557609123083,"y":-0.2693018101219061,"w":5414.0},{"cat":"Fragancias","x":-0.3541871921182266,"y":-0.5477154424522845,"w":3458.0},{"cat":"Makeup","x":-0.14692674712321074,"y":-0.10377019748653504,"w":8355.0},{"cat":"Makeup","x":-0.4189406099518459,"y":-0.4937810945273632,"w":1608.0},{"cat":"Fragancias","x":-0.47687821135953334,"y":0.11473335928376804,"w":10276.0},{"cat":"Fragancias","x":0.08096857004093527,"y":0.07240938166311306,"w":11725.0},{"cat":"Fragancias","x":-0.03418353931107021,"y":-0.07580852742143063,"w":24087.0},{"cat":"Fragancias","x":-0.44141922330735595,"y":-0.40727878278939356,"w":70259.0},{"cat":"Makeup","x":-0.15925058548009363,"y":0.9891640866873066,"w":646.0},{"cat":"Makeup","x":0.2755102040816326,"y":-0.16540722082283799,"w":1191.0},{"cat":"Makeup","x":-0.0030487804878048808,"y":-0.05366357069143446,"w":969.0},{"cat":"Makeup","x":-0.17432784041630534,"y":-0.23179965055329066,"w":1717.0},{"cat":"Makeup","x":-0.15560165975103735,"y":-0.026352288488210807,"w":721.0},{"cat":"Makeup","x":-0.27750525578135954,"y":-0.30903790087463556,"w":2058.0},{"cat":"Makeup","x":-0.25545171339563866,"y":-0.2355580482333146,"w":1783.0},{"cat":"Makeup","x":-0.14481707317073167,"y":-0.1428571428571429,"w":1701.0},{"cat":"Makeup","x":-0.025242718446601975,"y":-0.15111111111111108,"w":675.0},{"cat":"Makeup","x":-0.21160679036715357,"y":-0.1711026615969582,"w":3156.0},{"cat":"Makeup","x":-0.2843835616438356,"y":-0.29823825503355705,"w":2384.0},{"cat":"Makeup","x":-0.22937260439782126,"y":-0.16297173802673892,"w":5909.0},{"cat":"Makeup","x":-0.05921938088829071,"y":-0.0837239028547081,"w":9388.0},{"cat":"Makeup","x":-0.25297569153394805,"y":-0.18227919425271166,"w":7099.0},{"cat":"Makeup","x":-0.08866323128220677,"y":-0.010734389317973547,"w":7639.0},{"cat":"Fragancias","x":0.04753172449204146,"y":0.17361353331008011,"w":11468.0},{"cat":"Fragancias","x":-0.019128308149183315,"y":0.21486251661044675,"w":9783.0},{"cat":"Fragancias","x":-0.5410266774454324,"y":-0.678558601699988,"w":8353.0},{"cat":"Makeup","x":-0.148014440433213,"y":-0.06488011283497885,"w":709.0},{"cat":"Fragancias","x":-0.31374190421641623,"y":-0.4646745474224835,"w":47119.0},{"cat":"Fragancias","x":-0.34728682170542635,"y":-0.6912084498291395,"w":3219.0},{"cat":"Fragancias","x":-0.2267013712544439,"y":-0.21103025660666408,"w":13055.0},{"cat":"Fragancias","x":0.01153117535623105,"y":0.17670062776577122,"w":9717.0},{"cat":"Fragancias","x":-0.3822325327510917,"y":-0.4679523539421441,"w":14104.0},{"cat":"Fragancias","x":-0.35490045941807047,"y":-0.6051553842447603,"w":4151.0},{"cat":"Fragancias","x":-0.3138296674846349,"y":-0.3600027486371341,"w":43658.0},{"cat":"Makeup","x":-0.25649350649350644,"y":-0.23444347063978965,"w":2282.0},{"cat":"Makeup","x":-0.5202802359882006,"y":-0.59357334126748,"w":3361.0},{"cat":"Fragancias","x":-0.46753801013603624,"y":-0.45359694230625913,"w":93927.0},{"cat":"Fragancias","x":-0.34086478380404894,"y":-0.12014776236904257,"w":33026.0},{"cat":"Fragancias","x":-0.37916245195225573,"y":-0.115580564215649,"w":13151.0},{"cat":"Fragancias","x":-0.6381761442441054,"y":-0.6397585816672954,"w":13255.0},{"cat":"Makeup","x":0.08166666666666678,"y":-0.26776859504132233,"w":1210.0},{"cat":"Makeup","x":-0.43708165997322623,"y":-0.35344215755855213,"w":2818.0},{"cat":"Makeup","x":-0.36509298998569384,"y":-0.5871034841393656,"w":3846.0},{"cat":"Makeup","x":-0.15859938208032953,"y":-0.2569331158238173,"w":1226.0},{"cat":"Makeup","x":-0.2942028985507247,"y":-0.22445820433436536,"w":1938.0},{"cat":"Makeup","x":-0.21361502347417838,"y":0.25875706214689265,"w":885.0},{"cat":"Makeup","x":-0.13852242744063326,"y":0.10147991543340384,"w":946.0},{"cat":"Makeup","x":-0.2772556390977443,"y":-0.17354740061162077,"w":1308.0},{"cat":"Makeup","x":-0.19400499583680264,"y":-0.08781869688385269,"w":1412.0},{"cat":"Makeup","x":-0.3789954337899544,"y":-0.0019230769230769162,"w":520.0},{"cat":"Makeup","x":-0.274949083503055,"y":-0.007121057985757906,"w":1966.0},{"cat":"Makeup","x":-0.1262569832402235,"y":0.05560704355885071,"w":1079.0},{"cat":"Makeup","x":-0.30437622468974523,"y":-0.32721864154685176,"w":2017.0},{"cat":"Makeup","x":-0.3523489932885906,"y":-0.4672413793103448,"w":2900.0},{"cat":"Makeup","x":-0.2692307692307693,"y":-0.17245657568238215,"w":806.0},{"cat":"Makeup","x":-0.24303135888501737,"y":-0.22193548387096773,"w":1550.0},{"cat":"Fragancias","x":-0.5249734325185973,"y":-0.6998416050686378,"w":3788.0},{"cat":"Fragancias","x":-0.49611092323300643,"y":-0.6683518705763397,"w":2967.0},{"cat":"Fragancias","x":0.02080706179066838,"y":-0.581507215392838,"w":3742.0},{"cat":"Fragancias","x":-0.13974161431788545,"y":0.07969454545454546,"w":68750.0},{"cat":"Fragancias","x":-0.2167207374221124,"y":-0.1502721174534869,"w":79010.0},{"cat":"Fragancias","x":-0.21140234156634574,"y":-0.13051366120218577,"w":137250.0},{"cat":"Fragancias","x":-0.247474619610623,"y":-0.15587052755553754,"w":49246.0},{"cat":"Fragancias","x":-0.24862671660424474,"y":-0.4347826086956522,"w":29923.0},{"cat":"Fragancias","x":-0.10918385977725031,"y":-0.24149496885481547,"w":22957.0},{"cat":"Fragancias","x":-0.04674938968450182,"y":0.017952995086617074,"w":154069.0},{"cat":"Makeup","x":-0.02314445331205106,"y":0.011276268580215243,"w":1951.0},{"cat":"Makeup","x":0.04137931034482767,"y":0.04883588869960254,"w":1761.0},{"cat":"Makeup","x":-0.21917170777105632,"y":-0.14793449944175663,"w":5374.0},{"cat":"Fragancias","x":-0.20547253403117327,"y":-0.22982776869046473,"w":51965.0},{"cat":"Fragancias","x":-0.4665857605177993,"y":-0.4791968008168127,"w":11753.0},{"cat":"Fragancias","x":0.14555984555984547,"y":0.23293963254593186,"w":4572.0},{"cat":"Fragancias","x":-0.20719820044988757,"y":0.1698278377589728,"w":6854.0},{"cat":"Fragancias","x":-0.18641844721810874,"y":-0.03425823474338241,"w":23498.0},{"cat":"Fragancias","x":0.18477661334804196,"y":-0.4456586332122813,"w":30290.0},{"cat":"Fragancias","x":0.32773109243697474,"y":-0.032068965517241366,"w":5800.0},{"cat":"Fragancias","x":-0.16189736045962977,"y":0.022503206890232663,"w":27285.0},{"cat":"Fragancias","x":-0.31347842688048877,"y":-0.39581288845273144,"w":27513.0},{"cat":"Fragancias","x":-0.04443053817271592,"y":0.04527750730282376,"w":6162.0},{"cat":"Makeup","x":-0.43921191734742915,"y":-0.40931372549019607,"w":2856.0},{"cat":"Makeup","x":-0.3538358309103109,"y":-0.32507313715367403,"w":5811.0},{"cat":"Fragancias","x":-0.4430504036657211,"y":-0.6120482616651418,"w":34976.0},{"cat":"Fragancias","x":-0.09235195396787343,"y":-0.06787549526792047,"w":231188.0},{"cat":"Makeup","x":-0.6301229508196722,"y":-0.3967359050445104,"w":3370.0},{"cat":"Makeup","x":-0.21040047818290497,"y":-0.16835016835016836,"w":2079.0},{"cat":"Makeup","x":-0.5649532710280374,"y":-0.3964194373401535,"w":2346.0},{"cat":"Makeup","x":-0.5168918918918919,"y":-0.07754279959718025,"w":993.0},{"cat":"Fragancias","x":-0.3401909372058626,"y":0.032025908600215924,"w":5558.0},{"cat":"Fragancias","x":-0.38678425357873214,"y":-0.4422152366863905,"w":43264.0},{"cat":"Fragancias","x":-0.39879877357301863,"y":-0.39322840765568834,"w":20586.0},{"cat":"Makeup","x":-0.376536312849162,"y":-0.3174097664543525,"w":942.0},{"cat":"Makeup","x":-0.38263358778625955,"y":-0.4661016949152542,"w":1180.0},{"cat":"Makeup","x":-0.2567750677506775,"y":-0.3866279069767442,"w":1720.0},{"cat":"Makeup","x":-0.3939393939393939,"y":-0.43763676148796504,"w":1371.0},{"cat":"Makeup","x":-0.20837043633125552,"y":-0.04363001745200701,"w":1146.0},{"cat":"Makeup","x":-0.3709369024856597,"y":-0.35942857142857143,"w":1750.0},{"cat":"Makeup","x":-0.44474885844748857,"y":-0.47943156320119673,"w":1337.0},{"cat":"Makeup","x":-0.34988713318284426,"y":-0.3669527896995708,"w":932.0},{"cat":"Makeup","x":-0.02583586626139822,"y":0.25619834710743805,"w":605.0},{"cat":"Makeup","x":-0.34067357512953367,"y":-0.4035476718403548,"w":902.0},{"cat":"Makeup","x":-0.31034482758620685,"y":-0.3100581878636741,"w":1203.0},{"cat":"Makeup","x":-0.27008310249307477,"y":-0.15643964935940657,"w":1483.0},{"cat":"Makeup","x":-0.29588431590656283,"y":-0.36007130124777187,"w":1122.0},{"cat":"Fragancias","x":-0.296249665148674,"y":-0.3036927336531342,"w":93183.0},{"cat":"Makeup","x":-0.020335417518845267,"y":-0.17618369925004396,"w":62537.0},{"cat":"Makeup","x":-0.6196152804118125,"y":-0.6695767195767196,"w":3780.0},{"cat":"Makeup","x":-0.0857975843398584,"y":-0.21005903826220196,"w":22189.0},{"cat":"Makeup","x":0.669097659616787,"y":0.6611200572553229,"w":16767.0},{"cat":"Makeup","x":-0.4450120192307693,"y":-0.4428165129707834,"w":11603.0},{"cat":"Makeup","x":-0.06299006795608986,"y":-0.18826545143833662,"w":3511.0},{"cat":"Makeup","x":-0.6214382632293081,"y":-0.7070654976792161,"w":3878.0},{"cat":"Makeup","x":0.044921004407904475,"y":-0.28637549131249307,"w":27223.0},{"cat":"Makeup","x":-0.016710127188547697,"y":-0.29771759222052563,"w":24886.0},{"cat":"Makeup","x":-0.1289468107649926,"y":-0.2789643360870441,"w":19852.0},{"cat":"Makeup","x":-0.6114577424844017,"y":-0.46299722479185934,"w":4324.0},{"cat":"Makeup","x":0.2911382179497537,"y":0.3272427531254294,"w":14558.0},{"cat":"Makeup","x":0.09748302037554923,"y":0.09952535896593928,"w":33499.0},{"cat":"Makeup","x":-0.005692356891589423,"y":-0.23166764439229903,"w":18751.0},{"cat":"Makeup","x":-0.15597181008902072,"y":-0.08537063668453393,"w":15298.0},{"cat":"Makeup","x":-0.32441977800201816,"y":-0.25,"w":6020.0},{"cat":"Makeup","x":-0.27007858922752537,"y":-0.29688513951979234,"w":6164.0},{"cat":"Makeup","x":-0.2917822838847385,"y":-0.5664107932077227,"w":8598.0},{"cat":"Makeup","x":-0.5474201474201474,"y":-0.6493288590604027,"w":1788.0},{"cat":"Makeup","x":-0.8,"y":-0.6291834002677377,"w":2988.0},{"cat":"Makeup","x":-0.17112965500062272,"y":-0.5403830657658216,"w":16133.0},{"cat":"Makeup","x":-0.5180722891566265,"y":-0.5212765957446808,"w":1222.0},{"cat":"Makeup","x":-0.5967327887981331,"y":-0.4772971040400429,"w":2797.0},{"cat":"Makeup","x":-0.5675872093023255,"y":-0.35771889400921664,"w":1736.0},{"cat":"Makeup","x":-0.5018773466833542,"y":-0.41052631578947374,"w":855.0},{"cat":"Makeup","x":-0.6845463137996219,"y":-0.735638836637245,"w":6911.0},{"cat":"Makeup","x":0.21003886545935657,"y":0.30268564719694746,"w":13628.0},{"cat":"Makeup","x":-0.12290918644364657,"y":-0.45097527902367784,"w":38348.0},{"cat":"Makeup","x":-0.08083303918108009,"y":-0.1760539629005059,"w":2965.0},{"cat":"Makeup","x":0.08224803472955533,"y":0.16309242976624483,"w":9326.0},{"cat":"Makeup","x":-0.0736447323559496,"y":0.40577198402531844,"w":13271.0},{"cat":"Makeup","x":-0.7731508444962143,"y":-0.8,"w":5438.0},{"cat":"Makeup","x":0.227707698999565,"y":-0.08152542372881355,"w":17700.0},{"cat":"Makeup","x":-0.581937672249311,"y":-0.6591511936339522,"w":5278.0},{"cat":"Makeup","x":-0.14093908821967682,"y":-0.15146486244973512,"w":15667.0},{"cat":"Makeup","x":0.2785824778512165,"y":0.364063492063492,"w":7875.0},{"cat":"Makeup","x":-0.037706105406672075,"y":-0.4823141411344125,"w":39721.0},{"cat":"Makeup","x":-0.01631020156947227,"y":0.1222990492653413,"w":6942.0},{"cat":"Makeup","x":0.04691572545612521,"y":0.01067615658362997,"w":1124.0},{"cat":"Makeup","x":-0.11178788964528841,"y":0.07925481528260181,"w":3167.0},{"cat":"Makeup","x":-0.06688039896696052,"y":-0.009215462404175478,"w":12262.0},{"cat":"Makeup","x":0.29268292682926833,"y":1.4065040650406506,"w":738.0},{"cat":"Makeup","x":-0.7168903001126703,"y":-0.8,"w":10676.0},{"cat":"Makeup","x":-0.45232333010648595,"y":-0.6241071428571429,"w":4480.0},{"cat":"Makeup","x":-0.41874462596732587,"y":-0.495026778882938,"w":1307.0},{"cat":"Makeup","x":-0.3379501385041551,"y":-0.8,"w":25649.0},{"cat":"Makeup","x":-0.7631057268722468,"y":-0.8,"w":11793.0},{"cat":"Makeup","x":-0.25490749894082754,"y":-0.4962768042102905,"w":17861.0},{"cat":"Makeup","x":-0.40969364426154553,"y":-0.7422231028333663,"w":10094.0},{"cat":"Makeup","x":-0.2838488568825648,"y":-0.6839088735923504,"w":34721.0},{"cat":"Makeup","x":-0.38600260048617785,"y":-0.7472547584187408,"w":27320.0},{"cat":"Makeup","x":-0.6089640365002684,"y":-0.5713224368499257,"w":4038.0},{"cat":"Makeup","x":-0.42091116785378313,"y":-0.39824060865430333,"w":8412.0},{"cat":"Makeup","x":-0.7646859658032843,"y":-0.8,"w":15731.0},{"cat":"Makeup","x":-0.7240308776640376,"y":-0.8,"w":17877.0},{"cat":"Makeup","x":-0.08045042953331782,"y":0.22874015748031495,"w":7620.0},{"cat":"Makeup","x":-0.4908591065292096,"y":-0.5784713375796178,"w":7850.0},{"cat":"Makeup","x":-0.13775087937099106,"y":-0.0623702630943761,"w":20715.0},{"cat":"Makeup","x":-0.6440160642570281,"y":-0.5831147540983607,"w":6100.0},{"cat":"Makeup","x":0.045691581822696836,"y":0.19641192917054995,"w":4292.0},{"cat":"Makeup","x":0.17504655493482302,"y":-0.08493427704752277,"w":2967.0},{"cat":"Makeup","x":-0.2357200321802092,"y":-0.59375,"w":2240.0},{"cat":"Makeup","x":-0.20711864406779656,"y":-0.1280788177339901,"w":3248.0},{"cat":"Makeup","x":0.16439001413094667,"y":-0.06568557071069636,"w":2786.0},{"cat":"Makeup","x":0.3099649474211317,"y":-0.03943161634103021,"w":2815.0},{"cat":"Makeup","x":-0.04152128401953947,"y":0.009193993257738287,"w":6526.0},{"cat":"Makeup","x":0.11767508337303467,"y":-0.03709254402397899,"w":2669.0},{"cat":"Makeup","x":-0.20009760858955583,"y":-0.3127619047619048,"w":2625.0},{"cat":"Makeup","x":-0.12497636604273021,"y":-0.09121006455884784,"w":6041.0},{"cat":"Makeup","x":0.2890983804689389,"y":0.2626614722165266,"w":4877.0},{"cat":"Makeup","x":0.04235294117647048,"y":-0.2264288314524936,"w":2747.0},{"cat":"Makeup","x":-0.031212484993997647,"y":0.15607950116913494,"w":5132.0},{"cat":"Makeup","x":0.19276485788113695,"y":-0.04899249308573683,"w":2531.0},{"cat":"Makeup","x":0.3324652777777777,"y":-0.24778761061946908,"w":2034.0},{"cat":"Makeup","x":0.014403292181069949,"y":-0.5245382585751979,"w":1895.0},{"cat":"Makeup","x":0.1831442463533226,"y":-0.5962264150943396,"w":2120.0},{"cat":"Makeup","x":-0.2148760330578512,"y":-0.6871670702179177,"w":2065.0},{"cat":"Makeup","x":-0.6431057968820948,"y":-0.7082244427363567,"w":6505.0},{"cat":"Makeup","x":-0.27304359243697474,"y":-0.005331437711036058,"w":11254.0},{"cat":"Makeup","x":-0.2831278066861501,"y":-0.15991608842988547,"w":12394.0},{"cat":"Makeup","x":-0.3584786053882726,"y":-0.2770458116765382,"w":8273.0},{"cat":"Makeup","x":-0.7380393996247655,"y":-0.7878858746492049,"w":4276.0},{"cat":"Makeup","x":-0.35496929089893914,"y":-0.3160091557829541,"w":7427.0},{"cat":"Makeup","x":0.09052041869379335,"y":0.019951862173802848,"w":15788.0},{"cat":"Makeup","x":-0.5658994618115195,"y":-0.659639164808433,"w":9866.0},{"cat":"Makeup","x":0.16840304773752135,"y":0.01750623830318143,"w":25648.0},{"cat":"Makeup","x":-0.4312681510164569,"y":-0.526115669401641,"w":4997.0},{"cat":"Makeup","x":0.44840689856767035,"y":0.534128393808678,"w":3941.0},{"cat":"Makeup","x":0.09907997169143656,"y":-0.050145618215515,"w":18885.0},{"cat":"Makeup","x":-0.21585636473673597,"y":1.5,"w":854.0},{"cat":"Makeup","x":-0.1538568257491676,"y":1.5,"w":2711.0},{"cat":"Makeup","x":-0.028269648959304172,"y":1.2066354932086396,"w":8982.0},{"cat":"Makeup","x":0.16234872254594346,"y":1.2956669498725573,"w":8239.0},{"cat":"Makeup","x":-0.171802563403327,"y":-0.04678223699833772,"w":4211.0},{"cat":"Makeup","x":-0.8,"y":-0.7402482269503546,"w":4512.0},{"cat":"Makeup","x":-0.7126839523475823,"y":-0.6570532915360501,"w":3190.0},{"cat":"Makeup","x":0.452102140830539,"y":1.3773091773091775,"w":16835.0},{"cat":"Makeup","x":-0.24844085471833144,"y":0.35857352222765027,"w":6141.0},{"cat":"Makeup","x":-0.7086693548387097,"y":-0.8,"w":6818.0},{"cat":"Makeup","x":-0.48024054982817865,"y":-0.6633919338159255,"w":9670.0},{"cat":"Makeup","x":0.30264503872570514,"y":0.3113283342260311,"w":7468.0},{"cat":"Makeup","x":-0.11604743083003954,"y":-0.10643330179754018,"w":14798.0},{"cat":"Makeup","x":-0.20458553791887124,"y":-0.6724806201550387,"w":2064.0},{"cat":"Makeup","x":-0.31474880624117296,"y":-0.0828840970350404,"w":17808.0},{"cat":"Makeup","x":0.17118737383006066,"y":0.36017337931470883,"w":31607.0},{"cat":"Makeup","x":-0.22334437086092718,"y":-0.2757729775518848,"w":23610.0},{"cat":"Makeup","x":-0.34394250513347024,"y":-0.3614644207631489,"w":17454.0},{"cat":"Makeup","x":-0.11425404780262138,"y":0.1073724524688826,"w":21933.0},{"cat":"Makeup","x":-0.04275200529231782,"y":0.8774102924275315,"w":7831.0},{"cat":"Makeup","x":-0.07683594487445722,"y":-0.0702636704555365,"w":34399.0},{"cat":"Makeup","x":-0.7793618465716226,"y":-0.8,"w":4400.0},{"cat":"Makeup","x":-0.5656527489136596,"y":-0.492467227548425,"w":10222.0},{"cat":"Fragancias","x":-0.16686731505403984,"y":-0.11787499701007009,"w":83614.0},{"cat":"Fragancias","x":-0.4274255482549706,"y":-0.43104490239922644,"w":33094.0},{"cat":"Fragancias","x":-0.3745397159389795,"y":-0.26066350710900477,"w":5486.0},{"cat":"Fragancias","x":0.16580310880829008,"y":-0.6411451398135819,"w":3004.0},{"cat":"Fragancias","x":0.06006674082313679,"y":0.8551951104842501,"w":2127.0},{"cat":"Fragancias","x":-0.11662531017369726,"y":0.4679282727337162,"w":14109.0},{"cat":"Fragancias","x":0.06307472243035206,"y":0.15687153148805622,"w":29011.0},{"cat":"Fragancias","x":-0.10869922710080582,"y":-0.06479936781104578,"w":11389.0},{"cat":"Fragancias","x":-0.22899198807527488,"y":-0.020352444775378453,"w":8058.0}],"n":380,"corr":0.6437318404036311,"same":0.7921052631578948,"by_house":{"BURBERRY":{"corr":0.6251249186920335,"same":0.75,"n":64},"Gucci":{"corr":0.6645047927480096,"same":0.8103448275862069,"n":58},"Gucci Make up":{"corr":0.7614283117926348,"same":0.8857142857142857,"n":105},"Kylie Makeup":{"corr":0.6557024893923483,"same":0.7857142857142857,"n":112},"Marc Jacobs":{"corr":0.5554045579411481,"same":0.6097560975609756,"n":41}},"persist":{"Total":{"n":416,"keep_epos":0.7908653846153846,"keep_ship":0.6514423076923077,"corr_epos":0.6056179284606248,"corr_ship":0.2023281432591807,"epos_to_ship":0.2933781656322807},"Fragancias":{"n":161,"keep_epos":0.7950310559006211,"keep_ship":0.6335403726708074,"corr_epos":0.43887884700443314,"corr_ship":0.26352643785878443,"epos_to_ship":0.10617211170865859},"Makeup":{"n":255,"keep_epos":0.788235294117647,"keep_ship":0.6627450980392157,"corr_epos":0.7077843600859082,"corr_ship":0.13573140378433343,"epos_to_ship":0.402475575909699}}},"launch":{"Fragancias":{"n":40,"ship":[0.6396309465424228,0.2541699362432565,0.16751593918587543,0.1664455615497793,0.14419077979401668,0.0817533104462972,0.05638548307994115,0.06809220205983325,0.0646640510053948,0.06999754781755763,0.07980995586071604,0.04850662089259441,0.06793648847474253],"epos":[0.0006669936243256498,0.03429867582148112,0.11164541441883276,0.1072952427660618,0.09488229524276606,0.13166871015203532,0.0866049534085336,0.10559710642471799,0.059774399215301616,0.05891245708680726,0.06351888180480628,0.06600416871015204,0.07913070132417852],"cum":[958.9761029411765,25.562241391401923,7.23899444704623,4.835493466482524,3.9334802722236284,3.025672368518429,2.6630089773749392,2.3461861649481155,2.242998930316569,2.1644706873952235,2.097004136380065,1.9993742186054129,1.9090988229524277],"m0_ship":0.6396309465424228,"n_y2":18,"y1":2.028249417723102,"y2":0.9690264301845025,"epos_y2_vs_y1":-0.021811069685407136,"vet_ratio":1.1178362326256088},"Makeup":{"n":86,"ship":[0.4102956892838541,0.5834344075130705,0.09357096128303233,0.09744752402802083,0.08242426645376509,0.08714786987292587,0.10524570487300698,0.09739345760200983,0.11085059103614701,0.10148989047944304,0.12548096591472283,0.09624004051377523,0.07895139968965871],"epos":[0.0011876591580415698,0.028498413150396577,0.08789398655187763,0.10782106896533081,0.09665094535145881,0.07993180421465813,0.10427611363320977,0.09652839478583387,0.08022916955771861,0.087841722340067,0.08125282722352682,0.07730958255312477,0.07057831251475563],"cum":[345.46585735963583,33.474623603691114,9.247325342570736,5.256178589418641,3.934683096621115,3.3690921318090115,2.8830372717240396,2.5829294617470575,2.4418266541420834,2.2952313263772153,2.2236291649570443,2.1422153105130586,2.0699727685434324],"m0_ship":0.4102956892838541,"n_y2":42,"y1":2.510267309246565,"y2":0.8443370141106374,"epos_y2_vs_y1":-0.18715561742358333,"vet_ratio":1.11810070396102}},"veterans":{"houses":{"BURBERRY":{"epos_yoy":-0.18231480215103635,"pct_caen":0.7288135593220338,"n":59,"casa_epos_yoy":-0.12534166970901384},"Gucci":{"epos_yoy":-0.22510132505329472,"pct_caen":0.7678571428571429,"n":56,"casa_epos_yoy":-0.1387527799791859},"Marc Jacobs":{"epos_yoy":0.0046838163464668625,"pct_caen":0.5428571428571428,"n":35,"casa_epos_yoy":0.044712276989559374},"Gucci Make up":{"epos_yoy":-0.1908221026973671,"pct_caen":0.8832116788321168,"n":137,"casa_epos_yoy":-0.06082686176624352},"Kylie Makeup":{"epos_yoy":-0.11720389464719183,"pct_caen":0.7019230769230769,"n":104,"casa_epos_yoy":0.17262284356028923}},"cohorts":{"Fragancias":{"Antes de FY24":[0.8855127508067795,0.6896863243606682,0.6436042388353344],"Lanzados FY24":[0.11127236543117237,0.17390824489152376,0.10857101991483616],"Lanzados FY25":[0.00029178378689838174,0.1361219318253313,0.10341220232540702],"Lanzados FY26":[0.002923099975149704,0.00028349892247668903,0.14441253892442246]},"Makeup":{"Antes de FY24":[0.6946085461637029,0.5272719206963133,0.33219609216379997],"Lanzados FY24":[0.28583188932945214,0.23352977798095606,0.3716149710112177],"Lanzados FY25":[0.0002700119278080183,0.23763210764705528,0.21001540433356852],"Lanzados FY26":[0.01928955257903697,0.0015661936756753505,0.08617353249141377]}}},"load":{"months":["Jun-25","Jul-25","Aug-25","Sep-25","Oct-25","Nov-25","Dec-25","Jan-26","Feb-26","Mar-26","Apr-26","May-26","Jun-26","Jul-26"],"r12":{"BURBERRY":[1.1959450715423605,1.156951570672488,1.0788924536069004,1.1166342373656912,1.1114102265398396,1.1420418168415198,1.2327114145566247,1.2078213865371166,1.1861659139104346,1.2484623232497458,1.2327649055763736,1.2477375201476053,1.273665894423065,1.2634859831006455],"Gucci":[1.2140836501725565,1.1444590626615054,1.085518738966011,1.1047558353059066,1.1454113956479963,1.1215322319090333,1.2589267631126253,1.25126551021668,1.2448587975987075,1.2487820311256557,1.254980134140118,1.2360440189027286,1.2491081308043543,1.2433527926165358],"Marc Jacobs":[1.30129860202471,1.2675743350777364,1.1794194696499094,1.1201194862347763,1.1138215410583117,1.1349965956080577,1.090721004291674,1.0918661981004985,1.0970515828705067,1.1450265945783398,1.1126043300909947,1.2154199823165341,1.1621402828697973,1.1528754721395347],"Gucci Make up":[1.2037114787135779,1.2759608688261197,1.2539610432778603,1.3067877352722097,1.284380910687927,1.2703033726402564,1.2896050891513522,1.3039360164823373,1.3342549255626048,1.353298916367956,1.3922157583708792,1.3750188797537795,1.404596753027633,1.2771509127013994],"Kylie Makeup":[1.3106119136158145,1.3631364754144535,1.3629259553787074,1.2027112017929011,1.2052583173968263,1.2330973927171296,1.1075102075497856,1.109198495565042,1.1181307374998282,1.172762030680991,1.2106299612547213,1.2205746511011144,1.2165599504390063,1.1943147460771888]},"next":{"BURBERRY":[-0.18385410985863393,-0.14801298945783137,0.12773665454823946,0.20764788368877807,0.14986281838017668,-0.059072771327430385,-0.10986984852446324,-0.09909474790523343,0.042683137438158436,-0.06307060503318407,0.01751492652216302,-0.015345211047233076,null,null],"Gucci":[-0.2780636648709677,-0.12192297032897481,-0.012860845829139933,0.27910871887412747,0.1308420043223748,0.22870586815871619,-0.08952224018136401,-0.0478044356677918,-0.09459519045229403,-0.14772967664787995,-0.14302922809740237,-0.14171538207872414,null,null],"Marc Jacobs":[-0.2994397224605334,-0.265839801497066,-0.05780744374294744,0.04894304007064787,0.094683971746643,-0.026963367528830773,0.15422889100884118,-0.01969344903121184,0.41141624446659875,0.10624974166081103,0.25796105161292404,-0.19967851874998344,null,null],"Gucci Make up":[0.1935086955869334,-0.055293406798923916,0.012393316882259642,-0.14305456778948733,-0.016634156463996685,0.11360655888044158,0.04830376979229123,0.3160087350915506,0.1704848850228231,0.3929262189761278,-0.36624091817565774,-0.39676821320725697,null,null],"Kylie Makeup":[-0.23017871873837725,-0.3154313804011578,-0.24028128982869335,-0.09649130444625165,-0.03643985452930232,-0.025951099426128166,0.6595295161121548,0.8963992185661906,0.8473793959841616,0.3577335203123615,-0.004815871149111195,0.07037214385595947,null,null]},"ean_house":{"BURBERRY":{"cargado":-0.06996769670011944,"normal":0.0948689215361659,"descargado":0.17184353439728556,"meses":8,"de":8},"Gucci":{"cargado":0.04751021963443104,"normal":0.11310635527231619,"descargado":0.15275703977506455,"meses":4,"de":8},"Gucci Make up":{"cargado":-0.21959954241688676,"normal":-0.033882938848055266,"descargado":0.2089563611276044,"meses":7,"de":8},"Kylie Makeup":{"cargado":0.16616937536793508,"normal":-0.09407358137093465,"descargado":0.007016954508681178,"meses":1,"de":8},"Marc Jacobs":{"cargado":-0.07074509118554258,"normal":0.09706710870067686,"descargado":0.07585226944786719,"meses":6,"de":8}},"ean_cat":{"Fragancias":{"cargado":-0.018812338138623874,"normal":0.10050822349121487,"descargado":0.12986814007124475,"meses":8,"de":8},"Makeup":{"cargado":0.13307120381012755,"normal":-0.07917863528550392,"descargado":0.029708879817158054,"meses":2,"de":8}},"exits":{"Fragancias":{"n":15,"curve":[1.0,0.7055606198723792,0.8477666362807657,0.7694728560188827,0.5769230769230769,0.9448818897637795,0.5769230769230769,0.5581395348837209,0.5360230547550432,0.3090705487122061,0.2678859601936525,0.2687569988801792,0.1845464725643897]},"Makeup":{"n":40,"curve":[0.8665600447212728,0.8324331911821718,0.7230950268407403,0.8080223880597015,0.8809751216209312,0.5491056129584568,0.3008757318380473,0.2562401622208339,0.15346508954725796,0.11941831253587003,0.03948509783812021,0.021808908777477064,0.0038066235249333844]}}}};
+const HOUSES = ["BURBERRY", "Gucci", "Marc Jacobs", "Gucci Make up", "Kylie Makeup"];
+const CAT = {"BURBERRY": "Fragancias", "Gucci": "Fragancias", "Marc Jacobs": "Fragancias", "Gucci Make up": "Makeup", "Kylie Makeup": "Makeup"};
+const nm = h => h === "BURBERRY" ? "Burberry" : h;
+const MESES = {Jan: "ene", Feb: "feb", Mar: "mar", Apr: "abr", May: "may", Jun: "jun", Jul: "jul", Aug: "ago", Sep: "sep", Oct: "oct", Nov: "nov", Dec: "dic"};
+const mes = m => { const [a, b] = m.split("-"); return MESES[a] + "-" + b; };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const col = c => c === "Fragancias" ? "var(--frag)" : "var(--mu)";
+const colH = h => col(CAT[h]);
+const pc = (x, s = true) => { const r = Math.round(x * 100); if (r === 0) return "0%"; return (r < 0 ? "−" : (s ? "+" : "")) + Math.abs(r) + "%"; };
+const pp = x => Math.round(x * 100) + "%";
+const dec = (x, d) => x.toFixed(d).replace(".", ",");
+const lerp = (v, a, b, A, B) => A + (v - a) / (b - a) * (B - A);
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+const tipRow = (k, v, c) => `<div class='r'><span>${c ? `<i class='sw' style='background:${c}'></i>` : ""}${k}</span><span>${v}</span></div>`;
+const units = x => Math.round(x).toLocaleString("es-ES");
+
+let state = { cat: "all", h1: "BURBERRY", h2: "Gucci Make up", launch: "Fragancias" };
+const housesIn = () => HOUSES.filter(h => state.cat === "all" || CAT[h] === state.cat);
+const catsIn = () => state.cat === "all" ? ["Fragancias", "Makeup"] : [state.cat];
+const $ = id => document.getElementById(id);
+
+/* ---------- ejes y piezas comunes ---------- */
+function yAxis(x0, x1, y0, y1, lo, hi, ticks, fmt, side = "left") {
+  return ticks.map(t => {
+    const y = lerp(t, lo, hi, y1, y0);
+    const zero = Math.abs(t) < 1e-9;
+    const tx = side === "left" ? `<text x="${x0 - 8}" y="${y + 4}" text-anchor="end" class="ax">${fmt(t)}</text>` : `<text x="${x1 + 8}" y="${y + 4}" class="ax">${fmt(t)}</text>`;
+    return (side === "left" ? `<line x1="${x0}" x2="${x1}" y1="${y}" y2="${y}" class="${zero ? "gl0" : "gl"}"/>` : "") + tx;
+  }).join("");
+}
+const W = el => Math.max(280, el.clientWidth);
+const poly = (pts, color, w, extra = "") => `<polyline points="${pts.map(p => p.join(",")).join(" ")}" fill="none" stroke="${color}" stroke-width="${w}" stroke-linejoin="round" stroke-linecap="round" ${extra}/>`;
+
+/* ---------- línea envío vs EPOS (portada y sección 1) ---------- */
+function noiseChart(el, h, opt = {}) {
+  const d = D.noise.houses[h], months = D.noise.months, w = W(el), H = opt.H || Math.round(Math.min(340, Math.max(220, w * .42)));
+  const x0 = 46, x1 = w - (opt.labels ? 70 : 12), y0 = 12, y1 = H - 28, lo = -.8, hi = .8, n = months.length;
+  const X = i => lerp(i, 0, n - 1, x0, x1), cl = v => Math.max(lo, Math.min(hi, v)), Y = v => lerp(cl(v), lo, hi, y1, y0);
+  const c = colH(h);
+  let s = `<svg viewBox="0 0 ${w} ${H}" role="img" aria-label="Envío y EPOS de ${nm(h)}, crecimiento mensual">`;
+  s += yAxis(x0, x1, y0, y1, lo, hi, [-.8, -.4, 0, .4, .8], t => pc(t));
+  months.forEach((m, i) => { if (i % (w < 520 ? 3 : 2) === 0 || i === n - 1) s += `<text x="${X(i)}" y="${H - 8}" text-anchor="middle" class="ax">${mes(m)}</text>`; });
+  // banda entre las dos líneas
+  const band = d.ship.map((v, i) => [X(i), Y(v)]).concat(d.epos.map((v, i) => [X(i), Y(v)]).reverse());
+  s += `<polygon points="${band.map(p => p.join(",")).join(" ")}" fill="${c}" opacity=".07"/>`;
+  s += poly(d.ship.map((v, i) => [X(i), Y(v)]), "var(--ship)", 1.8, `stroke-dasharray="5 4"`);
+  s += poly(d.epos.map((v, i) => [X(i), Y(v)]), c, 2.6, `class="draw" pathLength="1"`);
+  d.epos.forEach((v, i) => { s += `<circle cx="${X(i)}" cy="${Y(v)}" r="3" fill="${c}" stroke="var(--paper)" stroke-width="1.5"/>`; });
+  if (opt.labels) {
+    let ys = Y(d.ship[n - 1]), ye = Y(d.epos[n - 1]);
+    if (Math.abs(ys - ye) < 16) { const m = (ys + ye) / 2, up = d.ship[n - 1] >= d.epos[n - 1]; ys = m + (up ? -8 : 8); ye = m + (up ? 8 : -8); }
+    s += `<text x="${x1 + 8}" y="${ys + 4}" class="lb" style="fill:var(--ship)">Envío</text>`;
+    s += `<text x="${x1 + 8}" y="${ye + 4}" class="lb" style="fill:${c}">EPOS</text>`;
+  }
+  const bw = (x1 - x0) / (n - 1);
+  months.forEach((m, i) => {
+    const tip = `<div class='h'>${nm(h)} · ${mes(m)}</div>` + tipRow("Envío", pc(d.ship[i]), css("--ship")) + tipRow("EPOS", pc(d.epos[i]), c.startsWith("var") ? css(c.slice(4, -1)) : c);
+    s += `<g class="col" data-tip="${esc(tip)}"><line class="xh" x1="${X(i)}" x2="${X(i)}" y1="${y0}" y2="${y1}"/><rect class="hit" x="${X(i) - bw / 2}" y="${y0}" width="${bw}" height="${y1 - y0}"/></g>`;
+  });
+  el.innerHTML = s + "</svg>";
+}
+
+function rangeChart(el) {
+  const hs = housesIn(), w = W(el), rowH = 46, H = hs.length * rowH + 30, x0 = Math.min(118, w * .3), x1 = w - 46, hi = 1.2;
+  let s = `<svg viewBox="0 0 ${w} ${H}">`;
+  [0, .4, .8, 1.2].forEach(t => { const x = lerp(t, 0, hi, x0, x1); s += `<line x1="${x}" x2="${x}" y1="4" y2="${H - 22}" class="gl"/><text x="${x}" y="${H - 6}" text-anchor="middle" class="ax">${Math.round(t * 100)} pts</text>`; });
+  hs.forEach((h, i) => {
+    const r = D.noise.rango[h], y = 10 + i * rowH, c = colH(h);
+    const tip = `<div class='h'>${nm(h)}</div>` + tipRow("Rango envío", Math.round(r.ship * 100) + " pts") + tipRow("Rango EPOS", Math.round(r.epos * 100) + " pts") + tipRow("EANs maduros", D.noise.houses[h].n);
+    s += `<g data-tip="${esc(tip)}"><rect x="0" y="${y - 4}" width="${w}" height="${rowH - 6}" fill="transparent"/>`;
+    s += `<text x="${x0 - 10}" y="${y + 14}" text-anchor="end" class="lb">${nm(h)}</text>`;
+    s += `<rect class="growx" x="${x0}" y="${y}" width="${lerp(r.ship, 0, hi, 0, x1 - x0)}" height="10" rx="3" fill="var(--ship)"/>`;
+    s += `<text x="${x0 + lerp(r.ship, 0, hi, 0, x1 - x0) + 6}" y="${y + 9}" class="vl">${Math.round(r.ship * 100)}</text>`;
+    s += `<rect class="growx" x="${x0}" y="${y + 13}" width="${lerp(r.epos, 0, hi, 0, x1 - x0)}" height="10" rx="3" fill="${c}"/>`;
+    s += `<text x="${x0 + lerp(r.epos, 0, hi, 0, x1 - x0) + 6}" y="${y + 22}" class="vl">${Math.round(r.epos * 100)}</text></g>`;
+  });
+  el.innerHTML = s + "</svg>";
+}
+
+/* ---------- dispersión ---------- */
+function scatter(el) {
+  const pts = D.trend.points.filter(p => state.cat === "all" || p.cat === state.cat);
+  const w = W(el), H = Math.round(Math.min(480, Math.max(300, w * .78))), x0 = 48, x1 = w - 12, y0 = 10, y1 = H - 40, lo = -.8, hi = 1.5;
+  const X = v => lerp(v, lo, hi, x0, x1), Y = v => lerp(v, lo, hi, y1, y0);
+  let s = `<svg viewBox="0 0 ${w} ${H}" role="img" aria-label="Dispersión de crecimiento EPOS frente a envío por EAN">`;
+  s += `<rect x="${X(0)}" y="${y0}" width="${x1 - X(0)}" height="${Y(0) - y0}" fill="var(--line2)" opacity=".7"/>`;
+  s += `<rect x="${x0}" y="${Y(0)}" width="${X(0) - x0}" height="${y1 - Y(0)}" fill="var(--line2)" opacity=".7"/>`;
+  const ticks = [-.5, 0, .5, 1, 1.5];
+  s += yAxis(x0, x1, y0, y1, lo, hi, ticks, t => pc(t));
+  ticks.forEach(t => { s += `<line x1="${X(t)}" x2="${X(t)}" y1="${y0}" y2="${y1}" class="${t === 0 ? "gl0" : "gl"}"/><text x="${X(t)}" y="${y1 + 16}" text-anchor="middle" class="ax">${pc(t)}</text>`; });
+  s += `<line x1="${X(lo)}" y1="${Y(lo)}" x2="${X(hi)}" y2="${Y(hi)}" stroke="var(--muted)" stroke-dasharray="3 4"/>`;
+  s += `<text x="${X(1.12)}" y="${Y(1.2) - 4}" class="ax halo" text-anchor="middle">envío = EPOS</text>`;
+  if (w >= 460) {
+    s += `<text x="${X(1.45)}" y="${Y(-.7)}" class="ax" text-anchor="end">EPOS crece, envío cae</text>`;
+    s += `<text x="${X(-.75)}" y="${Y(1.38)}" class="ax">envío crece, EPOS cae</text>`;
+  }
+  [...pts].sort((a, b) => b.w - a.w).forEach(p => {
+    const r = Math.max(3, Math.min(10, Math.sqrt(p.w) / 10));
+    const same = Math.sign(p.x) === Math.sign(p.y);
+    const tip = `<div class='h'>${p.cat} · EAN maduro</div>` + tipRow("EPOS FY26 vs FY25", pc(p.x)) + tipRow("Envío FY26 vs FY25", pc(p.y)) + tipRow("Envío FY25", units(p.w) + " uds") + `<div style='opacity:.7;margin-top:3px'>${same ? "Misma dirección" : "Dirección contraria"}</div>`;
+    s += `<circle class="pt" cx="${X(p.x)}" cy="${Y(p.y)}" r="${r}" fill="${col(p.cat)}" fill-opacity=".55" stroke="var(--paper)" stroke-width=".8" data-tip="${esc(tip)}"/>`;
+  });
+  s += `<text x="${(x0 + x1) / 2}" y="${H - 4}" text-anchor="middle" class="axl">EPOS FY26 vs FY25 →</text>`;
+  s += `<text x="12" y="${(y0 + y1) / 2}" text-anchor="middle" class="axl" transform="rotate(-90 12 ${(y0 + y1) / 2})">Envío FY26 vs FY25 →</text>`;
+  el.innerHTML = s + "</svg>";
+  $("scSub").textContent = `${pts.length} EANs maduros · tamaño = envío FY25 · pasa el ratón por un punto`;
+}
+
+function persistChart(el) {
+  const P = D.trend.persist, rows = state.cat === "all" ? ["Total", "Fragancias", "Makeup"] : [state.cat];
+  const w = W(el), rowH = 52, H = rows.length * rowH + 26, x0 = 96, x1 = w - 44;
+  let s = `<svg viewBox="0 0 ${w} ${H}">`;
+  [0, .25, .5, .75, 1].forEach(t => { const x = lerp(t, 0, 1, x0, x1); s += `<line x1="${x}" x2="${x}" y1="2" y2="${H - 20}" class="gl"/><text x="${x}" y="${H - 5}" text-anchor="middle" class="ax">${pp(t)}</text>`; });
+  rows.forEach((r, i) => {
+    const p = P[r], y = 8 + i * rowH, c = r === "Total" ? "var(--ink2)" : col(r);
+    const tip = `<div class='h'>${r} · ${p.n} EANs</div>` + tipRow("Mantienen signo (EPOS)", pp(p.keep_epos)) + tipRow("Mantienen signo (envío)", pp(p.keep_ship)) + tipRow("Correlación EPOS", dec(p.corr_epos, 2)) + tipRow("Correlación envío", dec(p.corr_ship, 2));
+    s += `<g data-tip="${esc(tip)}"><rect x="0" y="${y - 4}" width="${w}" height="${rowH - 8}" fill="transparent"/><text x="${x0 - 10}" y="${y + 17}" text-anchor="end" class="lb">${r}</text>`;
+    s += `<rect class="growx" x="${x0}" y="${y}" width="${lerp(p.keep_epos, 0, 1, 0, x1 - x0)}" height="14" rx="4" fill="${c}"/><text x="${x0 + lerp(p.keep_epos, 0, 1, 0, x1 - x0) + 6}" y="${y + 11}" class="vl">${pp(p.keep_epos)}</text>`;
+    s += `<rect class="growx" x="${x0}" y="${y + 18}" width="${lerp(p.keep_ship, 0, 1, 0, x1 - x0)}" height="14" rx="4" fill="var(--ship)" opacity=".55"/><text x="${x0 + lerp(p.keep_ship, 0, 1, 0, x1 - x0) + 6}" y="${y + 29}" class="vl">${pp(p.keep_ship)}</text></g>`;
+  });
+  el.innerHTML = s + "</svg>";
+}
+
+/* ---------- lanzamientos ---------- */
+function launchChart(el) {
+  const c = state.launch, x = D.launch[c], w = W(el), H = Math.round(Math.min(330, Math.max(230, w * .44))), x0 = 44, x1 = w - 8, y0 = 14, y1 = H - 40, hi = .7, n = x.ship.length, bw = (x1 - x0) / n;
+  let s = `<svg viewBox="0 0 ${w} ${H}" role="img" aria-label="Envío y EPOS en los 13 primeros meses de un lanzamiento">`;
+  s += yAxis(x0, x1, y0, y1, 0, hi, [0, .2, .4, .6], t => pp(t));
+  for (let i = 0; i < n; i++) {
+    const cx = x0 + bw * i;
+    const tip = `<div class='h'>${c} · mes ${i}</div>` + tipRow("Envío", dec(x.ship[i] * 100, 1) + "%", css("--ship")) + tipRow("EPOS", dec(x.epos[i] * 100, 1) + "%", css(c === "Fragancias" ? "--frag" : "--mu")) + `<div style='opacity:.7;margin-top:3px'>% de lo que el consumidor compra en 13 meses</div>`;
+    s += `<g data-tip="${esc(tip)}"><rect x="${cx}" y="${y0}" width="${bw}" height="${y1 - y0}" class="hit"/>`;
+    [[x.ship[i], "var(--ship)"], [x.epos[i], col(c)]].forEach(([v, cc], k) => {
+      const h = lerp(Math.min(v, hi), 0, hi, 0, y1 - y0);
+      s += `<rect class="grow" style="transition-delay:${i * 25}ms" x="${cx + bw * .14 + k * bw * .37}" y="${y1 - h}" width="${bw * .34}" height="${Math.max(h, .5)}" rx="3" fill="${cc}"/>`;
+    });
+    s += `<text x="${cx + bw / 2}" y="${y1 + 15}" text-anchor="middle" class="ax">${i}</text></g>`;
+    if (x.ship[i] > .3) s += `<text x="${cx + bw * .31}" y="${lerp(Math.min(x.ship[i], hi), 0, hi, y1, y0) - 6}" text-anchor="middle" class="vl">${pp(x.ship[i])}</text>`;
+  }
+  s += `<text x="${(x0 + x1) / 2}" y="${H - 4}" text-anchor="middle" class="axl">meses desde el lanzamiento</text>`;
+  el.innerHTML = s + "</svg>";
+  $("launchSub").textContent = `${x.n} lanzamientos de ${c.toLowerCase()} jul-24 → jul-25 · pasa el ratón por cada mes`;
+  $("launchDot").style.background = col(c);
+}
+
+function ratioChart(el) {
+  const c = state.launch, x = D.launch[c], w = W(el), hi = 2.8, x0 = Math.min(150, w * .38), x1 = w - 50;
+  const rows = [["Año 1 (meses 0–11)", x.y1, col(c), 1], ["Año 2 (meses 12–19)", x.y2, col(c), .55], ["Veteranos", x.vet_ratio, "var(--ship)", 1]];
+  const H = rows.length * 38 + 10, xv = lerp(x.vet_ratio, 0, hi, x0, x1);
+  let s = `<svg viewBox="0 0 ${w} ${H}">`;
+  rows.forEach(([lab, v, cc, op], i) => {
+    const y = 8 + i * 38;
+    s += `<text x="${x0 - 10}" y="${y + 14}" text-anchor="end" class="lb">${lab}</text>`;
+    s += `<rect class="growx" x="${x0}" y="${y}" width="${lerp(v, 0, hi, 0, x1 - x0)}" height="20" rx="4" fill="${cc}" fill-opacity="${op}"/>`;
+    s += `<text x="${x0 + lerp(v, 0, hi, 0, x1 - x0) + 7}" y="${y + 14}" class="vl" style="fill:var(--ink)">${dec(v, 2)}×</text>`;
+  });
+  s += `<line x1="${xv}" x2="${xv}" y1="2" y2="${H - 4}" stroke="var(--ink2)" stroke-dasharray="2 3"/>`;
+  el.innerHTML = s + "</svg>";
+  const e2 = x.epos_y2_vs_y1;
+  $("kRatioL").innerHTML = `En el año 2 el EPOS ${Math.abs(e2) < .05 ? "se mantiene" : "cae un " + pc(e2).replace("−", "")} frente a los meses 4–11, pero el envío baja a <b>${dec(x.y2, 2)}×</b> del EPOS, por debajo de los veteranos (${dec(x.vet_ratio, 2)}×): señal de que el cliente vende el stock del lanzamiento. (${x.n_y2} lanzados jul–dic-24)`;
+}
+
+/* ---------- veteranos ---------- */
+function vetChart(el) {
+  const hs = housesIn(), V = D.veterans.houses, w = W(el), H = Math.round(Math.min(360, Math.max(260, w * .55))), x0 = 46, x1 = w - 8, y0 = 18, y1 = H - 52, lo = -.3, hi = .2, bw = (x1 - x0) / hs.length, yz = lerp(0, lo, hi, y1, y0);
+  let s = `<svg viewBox="0 0 ${w} ${H}" role="img" aria-label="EPOS de veteranos frente al total de la casa">`;
+  s += yAxis(x0, x1, y0, y1, lo, hi, [-.3, -.2, -.1, 0, .1, .2], t => pc(t));
+  hs.forEach((h, i) => {
+    const v = V[h], cx = x0 + bw * i;
+    const tip = `<div class='h'>${nm(h)}</div>` + tipRow("Veteranos", pc(v.epos_yoy)) + tipRow("Total de la casa", pc(v.casa_epos_yoy)) + tipRow("Veteranos que caen", pp(v.pct_caen)) + tipRow("EANs veteranos", v.n);
+    s += `<g data-tip="${esc(tip)}"><rect class="hit" x="${cx}" y="${y0}" width="${bw}" height="${y1 - y0 + 40}"/>`;
+    [[v.epos_yoy, colH(h), 1], [v.casa_epos_yoy, "var(--ship)", .45]].forEach(([val, c, op], k) => {
+      const y = lerp(val, lo, hi, y1, y0), top = Math.min(y, yz), hgt = Math.max(Math.abs(y - yz), 1), bx = cx + bw * .17 + k * bw * .34, bww = bw * .3;
+      s += `<rect class="grow" style="transform-origin:50% ${val >= 0 ? "100%" : "0%"}" x="${bx}" y="${top}" width="${bww}" height="${hgt}" rx="4" fill="${c}" fill-opacity="${op}"/>`;
+      s += `<text x="${bx + bww / 2}" y="${val >= 0 ? y - 6 : y + 14}" text-anchor="middle" class="vl">${pc(val)}</text>`;
+    });
+    s += `<text x="${cx + bw / 2}" y="${H - 28}" text-anchor="middle" class="lb">${nm(h)}</text>`;
+    s += `<text x="${cx + bw / 2}" y="${H - 12}" text-anchor="middle" class="ax">${pp(v.pct_caen)} caen</text></g>`;
+  });
+  el.innerHTML = s + "</svg>";
+}
+
+function cohorts() {
+  const keys = ["Antes de FY24", "Lanzados FY24", "Lanzados FY25", "Lanzados FY26"];
+  const shades = { Fragancias: ["#3E2FA3", "#6250D6", "#9A8CE6", "#CFC8F5"], Makeup: ["#B4441B", "#E3602B", "#F29B77", "#F9CFBE"] };
+  const box = $("cohortStack");
+  box.innerHTML = catsIn().map(c => `<div class="card reveal in"><div class="ct" style="color:${col(c)}">${c}: peso de cada generación en el envío</div>
+    <div class="cs">Reparto del envío de cada año fiscal según el año de lanzamiento del EAN</div><div class="chart" data-c="${c}"></div>
+    <div class="legend">${keys.map((k, i) => `<span><i style="background:${shades[c][i]};border-radius:3px"></i>${k}</span>`).join("")}</div></div>`).join("");
+  box.querySelectorAll(".chart").forEach(el => {
+    const c = el.dataset.c, co = D.veterans.cohorts[c], w = W(el), x0 = 44, x1 = w - 4, H = 3 * 36 + 4;
+    let s = `<svg viewBox="0 0 ${w} ${H}">`;
+    ["FY24", "FY25", "FY26"].forEach((fy, j) => {
+      const y = 4 + j * 36; let acc = x0;
+      s += `<text x="${x0 - 8}" y="${y + 18}" text-anchor="end" class="lb">${fy}</text>`;
+      keys.forEach((k, i) => {
+        const v = (co[k] || [0, 0, 0])[j], ww = (x1 - x0) * v;
+        if (ww > .5) {
+          const tip = `<div class='h'>${c} · ${fy}</div>` + tipRow(k, pp(v));
+          s += `<rect class="growx" x="${acc + 1}" y="${y}" width="${Math.max(ww - 2, 0)}" height="26" rx="4" fill="${shades[c][i]}" data-tip="${esc(tip)}"/>`;
+          if (v >= .07) s += `<text x="${acc + ww / 2}" y="${y + 17}" text-anchor="middle" class="vl" style="fill:${i < 2 ? "#fff" : "#15171C"};pointer-events:none">${pp(v)}</text>`;
+        }
+        acc += ww;
+      });
+    });
+    el.innerHTML = s + "</svg>";
+  });
+}
+
+/* ---------- carga ---------- */
+function dumbbell(el) {
+  const order = ["BURBERRY", "Gucci Make up", "Marc Jacobs", "Gucci", "Kylie Makeup"].filter(h => housesIn().includes(h));
+  const by = D.load.ean_house, w = W(el), rowH = 44, H = order.length * rowH + 34, x0 = Math.min(118, w * .3), x1 = w - 92, lo = -.3, hi = .25;
+  let s = `<svg viewBox="0 0 ${w} ${H}">`;
+  [-.2, -.1, 0, .1, .2].forEach(t => { const x = lerp(t, lo, hi, x0, x1); s += `<line x1="${x}" x2="${x}" y1="6" y2="${H - 24}" class="${t === 0 ? "gl0" : "gl"}"/><text x="${x}" y="${H - 8}" text-anchor="middle" class="ax">${pc(t)}</text>`; });
+  order.forEach((h, i) => {
+    const b = by[h], y = 24 + i * rowH, xc = lerp(b.cargado, lo, hi, x0, x1), xn = lerp(b.normal, lo, hi, x0, x1), good = b.cargado < b.normal && b.meses >= 6;
+    const tip = `<div class='h'>${nm(h)}</div>` + tipRow("Cargados", pc(b.cargado)) + tipRow("Normales", pc(b.normal)) + tipRow("Descargados", pc(b.descargado)) + tipRow("Meses cargados < normales", `${b.meses} de ${b.de}`);
+    s += `<g data-tip="${esc(tip)}"><rect x="0" y="${y - 18}" width="${w}" height="${rowH - 6}" fill="transparent"/>`;
+    s += `<text x="${x0 - 12}" y="${y + 4}" text-anchor="end" class="lb">${nm(h)}</text>`;
+    s += `<line x1="${xc}" x2="${xn}" y1="${y}" y2="${y}" stroke="var(--line)" stroke-width="6" stroke-linecap="round"/>`;
+    s += `<circle cx="${xn}" cy="${y}" r="6" fill="var(--paper)" stroke="var(--ship)" stroke-width="2"/>`;
+    s += `<circle cx="${xc}" cy="${y}" r="7" fill="${colH(h)}" stroke="var(--paper)" stroke-width="2"/>`;
+    s += `<text x="${x1 + 12}" y="${y + 4}" class="vl" style="fill:${good ? "var(--ok)" : "var(--muted)"};font-weight:700">${b.meses} de ${b.de} meses</text></g>`;
+  });
+  el.innerHTML = s + "</svg>";
+  const c = D.load.ean_cat;
+  $("kDumbL").innerHTML = catsIn().map(k => `<b style="color:${col(k)}">${k}:</b> cargados ${pc(c[k].cargado)} frente a normales ${pc(c[k].normal)} (${c[k].meses} de ${c[k].de} meses).`).join(" ") +
+    (housesIn().includes("Kylie Makeup") ? " En Kylie los «cargados» siguen creciendo: puede que gane tiendas o clientes sin EPOS; con el EPOS solo no se puede distinguir." : "");
+}
+
+function loadChart(el) {
+  const h = state.h2, r = D.load.r12[h], nx = D.load.next[h], months = D.load.months, n = months.length;
+  const w = W(el), H = Math.round(Math.min(320, Math.max(230, w * .5))), x0 = 46, x1 = w - 46, y0 = 14, y1 = H - 30, bw = (x1 - x0) / n;
+  const rv = r.filter(v => v != null), rlo = Math.floor((Math.min(...rv) - .05) * 10) / 10, rhi = Math.ceil((Math.max(...rv) + .05) * 10) / 10;
+  const lo2 = -.5, hi2 = .5, X = i => x0 + bw * (i + .5), Y2 = v => lerp(Math.max(lo2, Math.min(hi2, v)), lo2, hi2, y1, y0), Y1 = v => lerp(v, rlo, rhi, y1, y0);
+  let s = `<svg viewBox="0 0 ${w} ${H}" role="img" aria-label="Carga de ${nm(h)} a lo largo del año">`;
+  [-.5, -.25, 0, .25, .5].forEach(t => { const y = Y2(t); s += `<line x1="${x0}" x2="${x1}" y1="${y}" y2="${y}" class="${t === 0 ? "gl0" : "gl"}"/><text x="${x1 + 8}" y="${y + 4}" class="ax">${pc(t)}</text>`; });
+  const tk = []; for (let t = rlo; t <= rhi + 1e-9; t += (rhi - rlo) > .5 ? .2 : .1) tk.push(+t.toFixed(2));
+  tk.forEach(t => { s += `<text x="${x0 - 8}" y="${Y1(t) + 4}" text-anchor="end" class="ax" style="fill:${colH(h)}">${dec(t, 1)}×</text>`; });
+  months.forEach((m, i) => {
+    const v = nx[i];
+    if (v != null) { const y = Y2(v), z = Y2(0); s += `<rect class="grow" style="transform-origin:50% ${v >= 0 ? "100%" : "0%"}" x="${X(i) - bw * .3}" y="${Math.min(y, z)}" width="${bw * .6}" height="${Math.max(Math.abs(y - z), 1)}" rx="3" fill="var(--ship)" opacity=".42"/>`; }
+    if (i % (w < 520 ? 3 : 2) === 0) s += `<text x="${X(i)}" y="${H - 8}" text-anchor="middle" class="ax">${mes(m)}</text>`;
+  });
+  s += poly(r.map((v, i) => [X(i), Y1(v)]), colH(h), 2.6, `class="draw" pathLength="1"`);
+  r.forEach((v, i) => { s += `<circle cx="${X(i)}" cy="${Y1(v)}" r="3" fill="${colH(h)}" stroke="var(--paper)" stroke-width="1.5"/>`; });
+  months.forEach((m, i) => {
+    const tip = `<div class='h'>${nm(h)} · ${mes(m)}</div>` + tipRow("Envío ÷ EPOS, 12 meses", dec(r[i], 2) + "×") + tipRow("Envío 3 meses siguientes", nx[i] == null ? "sin dato aún" : pc(nx[i]));
+    s += `<g class="col" data-tip="${esc(tip)}"><line class="xh" x1="${X(i)}" x2="${X(i)}" y1="${y0}" y2="${y1}"/><rect class="hit" x="${X(i) - bw / 2}" y="${y0}" width="${bw}" height="${y1 - y0}"/></g>`;
+  });
+  el.innerHTML = s + "</svg>";
+  $("loadDot").style.background = colH(h);
+  const iMax = r.indexOf(Math.max(...r));
+  $("kLoadL").innerHTML = `${nm(h)}: el envío por unidad de EPOS llega a su máximo en <b>${mes(months[iMax])}</b> (${dec(r[iMax], 2)}×). Las barras muestran cómo creció el envío de los 3 meses siguientes frente al año anterior. El nivel del ratio depende de qué clientes reportan; lo que importa es si sube o baja.`;
+}
+
+function exitChart(el) {
+  const ex = D.load.exits, w = W(el), H = Math.round(Math.min(300, Math.max(220, w * .48))), x0 = 46, x1 = w - 14, y0 = 14, y1 = H - 40;
+  const X = k => lerp(k, -6, 6, x0, x1), Y = v => lerp(Math.min(v, 1.1), 0, 1.1, y1, y0);
+  let s = `<svg viewBox="0 0 ${w} ${H}">`;
+  s += yAxis(x0, x1, y0, y1, 0, 1.1, [0, .25, .5, .75, 1], t => pp(t));
+  s += `<rect x="${X(0)}" y="${y0}" width="${x1 - X(0)}" height="${y1 - y0}" fill="var(--line2)" opacity=".5"/>`;
+  s += `<line x1="${X(0)}" x2="${X(0)}" y1="${y0}" y2="${y1}" stroke="var(--ink2)" stroke-dasharray="3 3"/><text x="${X(0) + 6}" y="${y0 + 12}" class="ax">último envío</text>`;
+  for (let k = -6; k <= 6; k += 2) s += `<text x="${X(k)}" y="${y1 + 16}" text-anchor="middle" class="ax">${k > 0 ? "+" + k : k === 0 ? "0" : "−" + (-k)}</text>`;
+  s += `<text x="${(x0 + x1) / 2}" y="${H - 4}" text-anchor="middle" class="axl">meses frente al último envío relevante</text>`;
+  catsIn().forEach(c => {
+    const cv = ex[c].curve;
+    s += poly(cv.map((v, i) => [X(i - 6), Y(v)]), col(c), 2.6, `class="draw" pathLength="1"`);
+    cv.forEach((v, i) => { s += `<circle cx="${X(i - 6)}" cy="${Y(v)}" r="3" fill="${col(c)}" stroke="var(--paper)" stroke-width="1.5"/>`; });
+    s += `<text x="${X(6)}" y="${Y(cv[12]) + (c === "Fragancias" ? -12 : 18)}" text-anchor="end" class="vl halo" style="fill:${col(c)}">${c} ${pp(cv[12])}</text>`;
+  });
+  const bw = (x1 - x0) / 12;
+  for (let i = 0; i <= 12; i++) {
+    const k = i - 6;
+    const tip = `<div class='h'>${k === 0 ? "Mes del último envío" : (k > 0 ? k + " meses después" : -k + " meses antes")}</div>` + catsIn().map(c => tipRow(c, pp(ex[c].curve[i]), css(c === "Fragancias" ? "--frag" : "--mu"))).join("") + `<div style='opacity:.7;margin-top:3px'>EPOS frente a su nivel de 6–12 meses antes</div>`;
+    s += `<g class="col" data-tip="${esc(tip)}"><line class="xh" x1="${X(k)}" x2="${X(k)}" y1="${y0}" y2="${y1}"/><rect class="hit" x="${X(k) - bw / 2}" y="${y0}" width="${bw}" height="${y1 - y0}"/></g>`;
+  }
+  el.innerHTML = s + "</svg>";
+  $("exitSub").textContent = "Mediana del EPOS de los EANs que dejaron de enviarse (" + catsIn().map(c => `${ex[c].n} de ${c.toLowerCase()}`).join(", ") + ") · 100% = su EPOS de 6–12 meses antes";
+  $("kExitL").innerHTML = (catsIn().includes("Fragancias") ? `<b style="color:var(--frag)">Fragancias:</b> el EPOS sigue 6 meses después del último envío (aún al ${pp(ex.Fragancias.curve[12])}). ` : "") +
+    (catsIn().includes("Makeup") ? `<b style="color:var(--mu)">Makeup:</b> se agota en 3–4 meses (${pp(ex.Makeup.curve[10])} a los 4 meses). ` : "") +
+    `<br><br>Antes del corte el EPOS ya cae: es la señal de declive. Al planificar la salida de un código, cuenta con esa cola de venta en el cliente.`;
+}
+
+/* ---------- textos que dependen de los datos ---------- */
+function texts() {
+  const n = D.noise, t = D.trend, la = D.launch, v = D.veterans, lo = D.load;
+  const vetFall = HOUSES.map(h => v.houses[h].epos_yoy).filter(x => x < -.05);
+  const lo_ = Math.round(-Math.max(...vetFall) * 100), hi_ = Math.round(-Math.min(...vetFall) * 100), vr = `−${lo_} a −${hi_}%`, vrTxt = `entre un ${lo_} y un ${hi_}%`;
+  const newF = 1 - v.cohorts.Fragancias["Antes de FY24"][2], newM = 1 - v.cohorts.Makeup["Antes de FY24"][2];
+  $("h-ruido").textContent = `Los pedidos van a saltos: el crecimiento mensual del envío oscila unas ${Math.round(n.ratio_ruido)} veces más que el del EPOS`;
+  $("h-trend").textContent = `A 12 meses, envío y EPOS van en la misma dirección en ${Math.round(t.same * 10)} de cada 10 EANs. La tendencia del EPOS se mantiene de un semestre a otro; la del envío, no`;
+  $("h-launch").textContent = `El primer año se envía el doble de lo que se vende; el segundo, menos de lo normal mientras el cliente vende ese stock`;
+  $("h-vet").textContent = `Los códigos veteranos pierden ${vrTxt} de venta al consumidor cada año. La casa crece por los lanzamientos`;
+  $("h-load").textContent = `Si un EAN acumula 12 meses enviando más de lo que vende, los 3 meses siguientes envía menos: en fragancias pasa los ${lo.ean_cat.Fragancias.meses} meses medidos`;
+  $("kNoise").textContent = pp(n.pct_env_mas_ruidoso);
+  $("kNoiseL").innerHTML = `Mediana: el crecimiento mensual del envío se mueve <b>${dec(n.ratio_ruido, 1)} veces</b> más que el del EPOS (desviación típica del crecimiento de cada mes, EAN a EAN).`;
+  const b = n.houses.BURBERRY, mn = a => Math.min(...a), mx = a => Math.max(...a);
+  $("n-ruido").innerHTML = `Ejemplo: en Burberry el EPOS de cada mes está entre ${pc(mx(b.epos))} y ${pc(mn(b.epos))} frente al año anterior; el envío salta de ${pc(mn(b.ship))} a ${pc(mx(b.ship))}.
+    <b>Un mes de envíos no dice nada de la demanda; un trimestre de EPOS, sí.</b> Por eso el trend del envío a 3–6 meses falla y la forma mensual del envío cambia de un año a otro.`;
+  $("kSame").textContent = pp(t.same);
+  $("kSameL").innerHTML = `de los EANs crecen o caen a la vez en FY26. Correlación ${dec(t.corr, 2)}. Como el EPOS no cubre a todos los clientes, se compara cada EAN consigo mismo, nunca en unidades.`;
+  const P = t.persist;
+  $("kPersistL").innerHTML = `Total: <b>${pp(P.Total.keep_epos)}</b> frente a ${pp(P.Total.keep_ship)}. Correlación de un semestre al siguiente: EPOS ${dec(P.Total.corr_epos, 2)} frente a envío ${dec(P.Total.corr_ship, 2)}.
+    En makeup el EPOS de jul–dic anticipa el envío de ene–jun mejor que el propio envío (${dec(P.Makeup.epos_to_ship, 2)} frente a ${dec(P.Makeup.corr_ship, 2)}).`;
+  $("n-launch").innerHTML = `En fragancias el mes del lanzamiento se envía el ${pp(la.Fragancias.m0_ship)} de lo que el consumidor comprará en 13 meses.
+    <b>Consecuencia para la regla:</b> para un EAN de 12–23 meses, el «mismo mes del año pasado» es llenado de canal y la base sale inflada. Es donde más falla la regla de fragancias (EANs de 6–17 meses).
+    Para esos EANs la base debería ser el EPOS × la relación de los veteranos (o algo menos), no el envío del año anterior.`;
+  $("n-vet").innerHTML = `<b>Consecuencia para el trend:</b> el trend de la casa mezcla dos poblaciones. A un EAN veterano de Gucci no le aplica el ${pc(v.houses.Gucci.casa_epos_yoy)} de la casa sino un ${pc(v.houses.Gucci.epos_yoy)}; a uno de Kylie, un ${pc(v.houses["Kylie Makeup"].epos_yoy)} y no el ${pc(v.houses["Kylie Makeup"].casa_epos_yoy)}.
+    En FY26 los lanzamientos desde FY24 ya son el ${pp(newF)} del envío en fragancias y el ${pp(newM)} en makeup. El trend de un EAN debería salir de su generación (los de su edad en su casa) y medirse en EPOS.`;
+  const tiles = [
+    [`${Math.round(n.ratio_ruido)}×`, "más ruido en el envío", `El crecimiento mensual del envío oscila ~${Math.round(n.ratio_ruido)} veces más que el del EPOS (${pp(n.pct_env_mas_ruidoso)} de los EANs).`, "#ruido"],
+    [pp(t.same), "misma dirección a 12 meses", `Envío y EPOS crecen o caen juntos en ${Math.round(t.same * 10)} de cada 10 EANs en el año.`, "#tendencia"],
+    [`${pp(P.Total.keep_epos)} <span style="color:var(--muted)">vs</span> ${pp(P.Total.keep_ship)}`, "la tendencia persiste", "El EPOS mantiene su dirección de un semestre a otro; el envío, mucho menos.", "#tendencia"],
+    [`${dec(la.Fragancias.y1, 1)}× → ${dec(la.Fragancias.y2, 2)}×`, "lanzamientos de fragancias", `Envío por unidad vendida en el año 1 y en el año 2 (veteranos ${dec(la.Fragancias.vet_ratio, 2)}×).`, "#lanzamientos"],
+    [vr, "veteranos, cada año", "Venta al consumidor de los códigos con historia; la casa crece por los lanzamientos (Marc Jacobs, 0%).", "#ciclo"],
+    [`${lo.ean_cat.Fragancias.meses} de ${lo.ean_cat.Fragancias.de}`, "meses: la carga se corrige", "Fragancias: si en 12 meses se envía de más frente al EPOS, los 3 meses siguientes se envía menos.", "#carga"],
+  ];
+  $("tiles").innerHTML = tiles.map(([a, k, d, href]) => `<a class="tile reveal" href="${href}"><span class="go">ver →</span><div class="tv">${a}</div><div class="tk">${k}</div><div class="td">${d}</div></a>`).join("");
+  const rules = [
+    ["La tendencia, del EPOS", "Trend del EAN = crecimiento de 12 meses de su EPOS, comparándolo consigo mismo.", `El EPOS mantiene su dirección de un semestre a otro en el ${pp(P.Total.keep_epos)} de los EANs; el envío, en el ${pp(P.Total.keep_ship)}.`, "#tendencia"],
+    ["Seguir a mi generación", "Veteranos: el crecimiento del EPOS de los veteranos de su casa, nunca el trend total de la casa.", `Los veteranos pierden ${vrTxt} al año (Marc Jacobs, 0%); el total de la casa incluye los lanzamientos y engaña.`, "#ciclo"],
+    ["Lanzamientos: año 2 ≠ año 1", `Del mes 12 al 23, base = EPOS × ${dec(Math.min(la.Fragancias.y2, la.Makeup.y2), 2)}–${dec(Math.max(la.Fragancias.y2, la.Makeup.y2), 2)}, no el envío del año pasado.`, `El envío del año 1 fue llenado de canal: ${dec(la.Fragancias.y1, 1)}× (fragancias) y ${dec(la.Makeup.y1, 1)}× (makeup) lo que se vendió.`, "#lanzamientos"],
+    ["Semáforo de carga", "Si envío/EPOS de 12 meses supera en un 15% su propio FY25, recortar los meses siguientes.", "Funciona en fragancias y Gucci Make up; en Kylie no, hasta tener el WOS.", "#carga"],
+    ["Bajas", "Al planificar la salida de un código, contar con que el cliente sigue vendiendo después del último envío.", "Unos 6 meses en fragancias y 3–4 en makeup.", "#carga"],
+  ];
+  $("rules").innerHTML = rules.map(([t_, s_, ev, href], i) => `<div class="rule${i === 0 ? " open" : ""}"><button aria-expanded="${i === 0}"><span class="rn">${i + 1}</span><span><span class="rt">${t_}</span><div class="rs">${s_}</div></span>
+    <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button>
+    <div class="rd"><div><div class="in"><b>Evidencia:</b> ${ev}<div class="ev"><a href="${href}">Ver el gráfico ↑</a></div></div></div></div></div>`).join("");
+  document.querySelectorAll(".rule button").forEach(b => b.addEventListener("click", () => {
+    const r = b.parentElement, o = !r.classList.contains("open"); r.classList.toggle("open", o); b.setAttribute("aria-expanded", o);
+  }));
+}
+
+/* ---------- controles ---------- */
+function seg(el, items, value, onPick) {
+  el.innerHTML = `<span class="pill"></span>` + items.map(([v, lab, c]) => `<button data-v="${esc(v)}" aria-pressed="${v === value}">${c ? `<i class="dot" style="background:${c}"></i>` : ""}${lab}</button>`).join("");
+  bindSeg(el, onPick);
+}
+function bindSeg(el, onPick) {
+  if (!el.querySelector(".pill")) el.insertAdjacentHTML("afterbegin", `<span class="pill"></span>`);
+  const place = () => {
+    const on = el.querySelector('button[aria-pressed="true"]'), pill = el.querySelector(".pill");
+    if (on) { pill.style.width = on.offsetWidth + "px"; pill.style.transform = `translateX(${on.offsetLeft}px)`; }
+  };
+  el.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+    if (b.disabled) return;
+    el.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); place(); onPick(b.dataset.v);
+  }));
+  el._place = place; requestAnimationFrame(place);
+}
+function houseSegs() {
+  const hs = housesIn();
+  if (!hs.includes(state.h1)) state.h1 = hs[0];
+  if (!hs.includes(state.h2)) state.h2 = hs.includes("Gucci Make up") ? "Gucci Make up" : hs[0];
+  const items = hs.map(h => [h, nm(h), colH(h)]);
+  seg($("houseSeg1"), items, state.h1, v => { state.h1 = v; drawNoise(); });
+  seg($("houseSeg2"), items, state.h2, v => { state.h2 = v; loadChart($("cLoad")); });
+}
+function drawNoise() {
+  noiseChart($("cNoise"), state.h1);
+  $("noiseDot").style.background = colH(state.h1);
+  $("noiseSub").textContent = `${nm(state.h1)} · ${D.noise.houses[state.h1].n} EANs maduros · pasa el ratón por cada mes`;
+}
+function drawHero() {
+  const h = "BURBERRY";
+  $("sigT").textContent = `${nm(h)}, jul-25 → jul-26: el EPOS se mueve en una franja estrecha; el envío, no`;
+  noiseChart($("cHero"), h, { labels: true, H: Math.round(Math.min(300, Math.max(210, W($("cHero")) * .3))) });
+}
+function table() {
+  const hs = housesIn(), T = D.trend.by_house;
+  $("tbHouse").innerHTML = `<tr><th>Casa</th><th>EANs</th><th>Misma dirección</th><th>Correlación</th></tr>` + hs.map(h => `<tr><td><i class="sw" style="background:${colH(h)}"></i>${nm(h)}</td><td>${T[h].n}</td>
+    <td><div class="meter"><div class="m"><span style="width:${T[h].same * 100}%;background:${colH(h)}"></span></div>${pp(T[h].same)}</div></td><td>${dec(T[h].corr, 2)}</td></tr>`).join("");
+}
+function launchSeg() {
+  const el = $("launchSeg");
+  if (state.cat !== "all") state.launch = state.cat;
+  el.querySelectorAll("button").forEach(b => { b.setAttribute("aria-pressed", b.dataset.v === state.launch); b.disabled = state.cat !== "all" && b.dataset.v !== state.cat; });
+  el._place && el._place();
+}
+
+function drawAll() {
+  drawHero(); drawNoise(); rangeChart($("cRange")); scatter($("cScatter")); table(); persistChart($("cPersist"));
+  launchSeg(); launchChart($("cLaunch")); ratioChart($("cRatio")); vetChart($("cVet")); cohorts();
+  dumbbell($("cDumb")); loadChart($("cLoad")); exitChart($("cExit"));
+}
+
+/* ---------- tooltip ---------- */
+const tip = $("tip");
+let tipOn = null;
+function moveTip(x, y) {
+  const r = tip.getBoundingClientRect(), pad = 14;
+  let tx = x + pad, ty = y + pad;
+  if (tx + r.width > innerWidth - 8) tx = x - r.width - pad;
+  if (ty + r.height > innerHeight - 8) ty = y - r.height - pad;
+  tip.style.left = Math.max(8, tx) + "px"; tip.style.top = Math.max(8, ty) + "px";
+}
+document.addEventListener("pointerover", e => {
+  const t = e.target.closest("[data-tip]");
+  if (!t) return;
+  tipOn = t; tip.innerHTML = t.getAttribute("data-tip"); tip.classList.add("on"); moveTip(e.clientX, e.clientY);
+  const pt = t.classList.contains("pt") ? t : null;
+  if (pt) pt.setAttribute("r", +pt.getAttribute("r") + 2);
+});
+document.addEventListener("pointermove", e => { if (tipOn) moveTip(e.clientX, e.clientY); });
+document.addEventListener("pointerout", e => {
+  const t = e.target.closest("[data-tip]");
+  if (t && t === tipOn && !t.contains(e.relatedTarget)) {
+    tip.classList.remove("on"); tipOn = null;
+    if (t.classList.contains("pt")) t.setAttribute("r", +t.getAttribute("r") - 2);
+  }
+});
+addEventListener("scroll", () => { if (tipOn) { tip.classList.remove("on"); tipOn = null; } }, { passive: true });
+
+/* ---------- arranque ---------- */
+texts();
+bindSeg($("catSeg"), v => { state.cat = v; houseSegs(); drawAll(); markDrawn(); });
+bindSeg($("launchSeg"), v => { state.launch = v; launchChart($("cLaunch")); ratioChart($("cRatio")); markDrawn(); });
+houseSegs();
+drawAll();
+
+// Tras la primera aparición, los redibujados (filtros, pestañas) no repiten la animación de entrada.
+function markDrawn() { document.querySelectorAll(".reveal.in").forEach(el => setTimeout(() => el.classList.add("drawn"), 0)); }
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); setTimeout(() => e.target.classList.add("drawn"), 1700); }
+}), { threshold: .12, rootMargin: "0px 0px -6% 0px" });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+const secs = [...document.querySelectorAll("section.sec")], links = [...document.querySelectorAll("#nav a")];
+addEventListener("scroll", () => {
+  $("bar").classList.toggle("scrolled", scrollY > 8);
+  let cur = null; secs.forEach(s => { if (s.getBoundingClientRect().top < 140) cur = s.id; });
+  links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + cur));
+}, { passive: true });
+
+let rz; addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { drawAll(); markDrawn(); document.querySelectorAll(".seg").forEach(s => s._place && s._place()); }, 120); });
+
+$("theme").addEventListener("click", () => {
+  const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.dataset.theme = dark ? "light" : "dark";
+  try { localStorage.setItem("epos-theme", document.documentElement.dataset.theme); } catch (e) {}
+  drawAll(); markDrawn();
+});
+try { const t = localStorage.getItem("epos-theme"); if (t) { document.documentElement.dataset.theme = t; drawAll(); } } catch (e) {}
+document.fonts && document.fonts.ready.then(() => document.querySelectorAll(".seg").forEach(s => s._place && s._place()));
+</script>
+</body>
+</html>
