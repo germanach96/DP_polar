@@ -1,0 +1,798 @@
+<title>Parlamento de la demanda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: columna institucional de 1160px; la cámara (hemiciclo) abre en un panel oscuro y cada sección es un punto del orden del día */
+:root {
+  --bg: #F2F2F5; --surface: #FFFFFF; --ink: #17161D; --ink-2: #4B4958; --muted: #706E82; --line: #DEDDE6; --soft: #EAE9F0;
+  --chamber: #15141B; --chamber-2: #1F1E27; --chamber-ink: #F1F0F6; --chamber-muted: #A3A1B4; --chamber-line: #302E3B;
+  --rule: #0F8A86; --empate: #B7BCC4; --focus: #6250d6;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); --ease-io: cubic-bezier(0.77, 0, 0.175, 1);
+  --s1: .75rem; --s2: 1rem; --s3: 1.5rem; --s4: 2.25rem; --s5: 3.5rem; --s6: 5.5rem;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0F0E13; --surface: #18171E; --ink: #ECEBF2; --ink-2: #B9B7C8; --muted: #8E8CA1; --line: #2B2A34; --soft: #22212A;
+  --chamber: #09080C; --chamber-2: #16151C; --chamber-ink: #F1F0F6; --chamber-muted: #A3A1B4; --chamber-line: #2A2833;
+  --rule: #2BB3AE; --empate: #6E7380; --focus: #9d90ff; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0F0E13; --surface: #18171E; --ink: #ECEBF2; --ink-2: #B9B7C8; --muted: #8E8CA1; --line: #2B2A34; --soft: #22212A;
+  --chamber: #09080C; --chamber-2: #16151C; --chamber-ink: #F1F0F6; --chamber-muted: #A3A1B4; --chamber-line: #2A2833;
+  --rule: #2BB3AE; --empate: #6E7380; --focus: #9d90ff; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.6 var(--f-body); -webkit-font-smoothing: antialiased; }
+::selection { background: color-mix(in oklab, var(--focus) 30%, transparent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1160px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 40px); }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.9rem, 3.6vw, 2.9rem); font-weight: 700; font-stretch: 88%; line-height: 1.04; max-width: 22ch; }
+h3 { font-size: 1.15rem; font-weight: 650; line-height: 1.2; }
+p { margin: 0; }
+.lead { font-size: 1.1rem; color: var(--ink-2); max-width: 62ch; }
+.num { font-variant-numeric: tabular-nums; }
+section.s { padding-block: var(--s6) 0; }
+.s-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s3) var(--s5); align-items: end; margin-bottom: var(--s4); }
+.s-head .lead { justify-self: start; }
+.order { font: 600 .78rem/1 var(--f-body); color: var(--muted); letter-spacing: .1em; text-transform: uppercase; display: block; margin-bottom: var(--s2); font-variant-numeric: tabular-nums; }
+
+/* ── barra del orden del día */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in oklab, var(--chamber) 92%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--chamber-line); }
+.nav .wrap { display: flex; align-items: center; gap: var(--s3); height: 56px; }
+.brand { font: 700 .95rem/1 var(--f-display); font-stretch: 110%; color: var(--chamber-ink); text-decoration: none; letter-spacing: .02em; white-space: nowrap; display: flex; gap: .55rem; align-items: center; }
+.brand svg { flex: none; }
+.nav ol { display: flex; gap: .25rem; list-style: none; margin: 0 0 0 auto; padding: 0; overflow-x: auto; scrollbar-width: none; }
+.nav ol a { display: block; padding: .45rem .7rem; border-radius: 6px; color: var(--chamber-muted); text-decoration: none; font-size: .85rem; white-space: nowrap; transition: color .2s ease, background-color .2s ease; }
+.nav ol a.on { color: var(--chamber-ink); background: var(--chamber-2); }
+@media (hover: hover) and (pointer: fine) { .nav ol a:hover { color: var(--chamber-ink); } }
+
+/* ── la cámara */
+.chamber { background: var(--chamber); color: var(--chamber-ink); padding-block: var(--s5) var(--s5); overflow: hidden; }
+.hero { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.25fr); gap: var(--s5); align-items: center; }
+.hero h1 { font-size: clamp(2.6rem, 6vw, 4.9rem); font-weight: 800; font-stretch: 78%; line-height: .95; letter-spacing: -0.03em; }
+.hero .lead { color: var(--chamber-muted); margin-top: var(--s3); }
+.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--chamber-line); border: 1px solid var(--chamber-line); border-radius: 10px; overflow: hidden; margin-top: var(--s4); }
+.facts div { background: var(--chamber); padding: .85rem 1rem; }
+.facts b { display: block; font: 700 1.6rem/1.1 var(--f-display); font-stretch: 90%; font-variant-numeric: tabular-nums; }
+.facts span { font-size: .82rem; color: var(--chamber-muted); line-height: 1.35; display: block; margin-top: .2rem; }
+.hemi-wrap { position: relative; }
+.hemi { width: 100%; height: auto; display: block; overflow: visible; }
+.hemi .seat { transform-box: fill-box; transform-origin: center; animation: seatIn .55s var(--ease-out) both; animation-delay: var(--d, 0ms); transition: opacity .2s ease; }
+.hemi.dim .seat:not(.hl) { opacity: .16; }
+@keyframes seatIn { from { opacity: 0; transform: scale(.35) translateY(6px); } }
+.hemi .big { font: 800 64px/1 var(--f-display); font-stretch: 85%; font-variant-numeric: tabular-nums; }
+.hemi .cap { font: 500 13px/1 var(--f-body); letter-spacing: .12em; text-transform: uppercase; }
+.majority { display: flex; justify-content: space-between; gap: 1rem; font-size: .82rem; color: var(--chamber-muted); margin-top: var(--s2); }
+.vbar { display: flex; height: 26px; border-radius: 5px; overflow: hidden; gap: 2px; margin-top: .5rem; }
+.vbar i { display: flex; align-items: center; justify-content: center; font: 600 .74rem/1 var(--f-body); font-style: normal; color: #fff; min-width: 0; transform-origin: left; animation: grow .9s var(--ease-out) both; animation-delay: var(--d, 0ms); font-variant-numeric: tabular-nums; }
+@keyframes grow { from { transform: scaleX(0); } }
+.vlab { font-size: .8rem; color: var(--chamber-muted); margin-top: var(--s3); }
+.legend { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: var(--s3); }
+.chip { display: inline-flex; align-items: center; gap: .45rem; padding: .38rem .7rem .38rem .38rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 500 .84rem/1 var(--f-body); cursor: pointer; transition: opacity .2s ease, border-color .2s ease, transform .16s var(--ease-out); }
+.chip:active { transform: scale(.97); }
+.chip[aria-pressed="true"] { border-color: var(--ink); }
+.legend.has-focus .chip[aria-pressed="false"] { opacity: .45; }
+.chamber .chip { background: var(--chamber-2); border-color: var(--chamber-line); color: var(--chamber-ink); }
+.chamber .chip b { color: var(--chamber-muted); }
+.chip b { font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.nb { display: inline-grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 50%; color: #fff; font: 700 .74rem/1 var(--f-body); font-style: normal; flex: none; }
+
+/* ── glosario */
+.gloss { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.gloss div { padding: var(--s3) var(--s3) var(--s3) 0; border-bottom: 1px solid var(--line); }
+.gloss div + div { padding-left: var(--s3); border-left: 1px solid var(--line); }
+.gloss div:nth-child(3n+1) { padding-left: 0; border-left: 0; }
+.gloss dt { font: 700 1.25rem/1.1 var(--f-display); font-stretch: 92%; display: flex; gap: .6rem; align-items: baseline; }
+.gloss dt small { font: 500 .78rem/1 var(--f-body); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.gloss dd { margin: .55rem 0 0; color: var(--ink-2); font-size: .95rem; max-width: 46ch; }
+.dni { display: grid; grid-template-columns: auto repeat(6, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-top: var(--s4); }
+.dni > div { background: var(--surface); padding: .9rem 1rem; font-size: .84rem; color: var(--ink-2); line-height: 1.4; }
+.dni > div b { display: block; color: var(--ink); font-size: .9rem; margin-bottom: .2rem; }
+.dni .dni-t { display: flex; flex-direction: column; justify-content: center; background: var(--ink); color: var(--bg); font: 700 1rem/1.15 var(--f-display); font-stretch: 95%; min-width: 7.5rem; }
+.dni .dni-t span { font: 400 .76rem/1.3 var(--f-body); opacity: .75; margin-top: .3rem; }
+.q3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s3); margin-top: var(--s5); }
+.q { border-top: 2px solid var(--ink); padding-top: var(--s2); display: flex; flex-direction: column; gap: .6rem; }
+.q .qn { font: 800 2.6rem/1 var(--f-display); font-stretch: 75%; color: var(--muted); }
+.q p { color: var(--ink-2); font-size: .94rem; }
+.firm { display: flex; align-items: center; gap: .6rem; font-size: .82rem; color: var(--muted); margin-top: auto; padding-top: .4rem; }
+.firm i { display: flex; gap: 3px; }
+.firm i span { width: 18px; height: 6px; border-radius: 2px; background: var(--soft); }
+.firm i span.on { background: var(--ink); }
+
+/* ── calendario de la prueba */
+.tl { position: relative; margin-top: var(--s5); padding: var(--s4) 0 0; }
+.tl-track { position: relative; height: 2px; background: var(--line); margin: 0 4% 0 4%; }
+.tl-fill { position: absolute; inset: 0; background: var(--ink); transform-origin: left; transform: scaleX(1); }
+.tl.play .tl-fill { animation: grow 1.6s var(--ease-io) both; }
+.tl-pts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: -7px; }
+.tl-pt { display: flex; flex-direction: column; align-items: center; text-align: center; gap: .4rem; padding-inline: .4rem; }
+.tl-pt::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); }
+.tl-pt.key::before { background: var(--ink); }
+.tl-pt b { font: 700 1.05rem/1 var(--f-display); font-stretch: 95%; margin-top: .4rem; }
+.tl-pt span { font-size: .82rem; color: var(--ink-2); line-height: 1.4; max-width: 24ch; }
+.tl-band { display: grid; grid-template-columns: 3fr 1fr 1fr; margin: var(--s3) 0 0; gap: 6px; font-size: .78rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.tl-band div { padding: .55rem .8rem; border-radius: 6px; background: var(--soft); color: var(--ink-2); }
+.tl-band div:nth-child(2) { background: var(--ink); color: var(--bg); }
+.note { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s3); margin-top: var(--s4); }
+.note div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: var(--s3); font-size: .92rem; color: var(--ink-2); }
+.note b { color: var(--ink); }
+
+/* ── escrutinio */
+.vote { display: grid; gap: var(--s3); }
+.vote-b { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s3); align-items: stretch; }
+.vote-b .verdict { margin-top: 0; }
+.ballot { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.ballot-h { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: var(--s2) var(--s3); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.ballot-h h3 { font-size: 1.05rem; }
+.ballot-h span { font-size: .8rem; color: var(--muted); }
+.btn { font: 600 .88rem/1 var(--f-body); padding: .65rem 1rem; border-radius: 8px; border: 0; background: var(--ink); color: var(--bg); cursor: pointer; display: inline-flex; gap: .5rem; align-items: center; transition: transform .16s var(--ease-out), opacity .2s ease; }
+.btn:active { transform: scale(.97); }
+.btn[disabled] { opacity: .5; cursor: progress; }
+.tscroll { overflow-x: auto; }
+table.ev { width: 100%; border-collapse: collapse; font-size: .88rem; min-width: 640px; }
+.ev th { font: 600 .72rem/1.25 var(--f-body); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; text-align: right; padding: .7rem .6rem; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.ev th:first-child, .ev td:first-child { text-align: left; padding-left: var(--s3); }
+.ev td { padding: .55rem .6rem; text-align: right; border-bottom: 1px solid var(--soft); font-variant-numeric: tabular-nums; position: relative; transition: background-color .25s ease, color .25s ease; }
+.ev td.pn { display: flex; align-items: center; gap: .5rem; white-space: nowrap; }
+.ev .cur { background: var(--soft); }
+.ev td.win { color: var(--t, #fff); font-weight: 700; background: var(--c); }
+.ev td.win::after { content: "✓"; font-size: .7rem; margin-left: .25rem; }
+.ev td.top2 { box-shadow: inset 0 0 0 2px var(--c); font-weight: 700; }
+.ev tfoot td { font-weight: 600; color: var(--ink-2); border-bottom: 0; }
+.ev th.cm, .ev td.cm { border-left: 1px solid var(--line); }
+.tally { display: flex; flex-direction: column; gap: .55rem; }
+.tally .row { display: grid; grid-template-columns: minmax(0, 13rem) minmax(0, 1fr) 2.2rem; align-items: center; gap: .6rem; font-size: .88rem; }
+.tally .bar { height: 10px; border-radius: 3px; background: var(--soft); overflow: hidden; }
+.tally .bar i { display: block; height: 100%; width: 100%; background: var(--c); transform-origin: left; transform: scaleX(0); transition: transform .45s var(--ease-out); }
+.tally .row b { text-align: right; font-variant-numeric: tabular-nums; }
+.tally .pn { display: flex; align-items: center; gap: .5rem; white-space: nowrap; overflow: hidden; }
+.verdict { margin-top: var(--s3); padding: var(--s3); border-radius: 12px; background: var(--chamber); color: var(--chamber-ink); }
+.verdict h3 { font-size: 1.3rem; }
+.verdict p { color: var(--chamber-muted); font-size: .9rem; margin-top: .5rem; }
+.verdict p b { color: var(--chamber-ink); }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: var(--s3); }
+.panel h3 { margin-bottom: var(--s2); }
+.kv { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .35rem 1rem; font-size: .9rem; margin-top: var(--s2); }
+.kv span { color: var(--ink-2); } .kv b { text-align: right; font-variant-numeric: tabular-nums; }
+.kv .sep { grid-column: 1 / -1; height: 1px; background: var(--line); margin: .3rem 0; }
+
+/* ── partidos */
+.parties { border-top: 1px solid var(--ink); }
+.party { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr) minmax(0, 1fr); gap: var(--s3) var(--s4); padding-block: var(--s3); border-bottom: 1px solid var(--line); align-items: start; }
+.party .id { display: flex; gap: .9rem; align-items: flex-start; }
+.party .id .nb { width: 2.4rem; height: 2.4rem; font-size: 1rem; }
+.party .id h3 { font-size: 1.35rem; font-stretch: 90%; }
+.party .bloc { font-size: .78rem; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-top: .3rem; display: block; }
+.party .lema { font-style: italic; color: var(--ink-2); margin-top: .7rem; font-size: .95rem; }
+.ans { display: grid; gap: .5rem; }
+.ans div { display: grid; grid-template-columns: 7.2rem minmax(0, 1fr); gap: .8rem; font-size: .9rem; line-height: 1.45; }
+.ans span { color: var(--muted); font-size: .8rem; padding-top: .1rem; }
+.pm { display: grid; gap: .7rem; }
+.pm .seats { display: flex; align-items: baseline; gap: .5rem; }
+.pm .seats b { font: 800 2.2rem/1 var(--f-display); font-stretch: 85%; font-variant-numeric: tabular-nums; }
+.pm .seats span { color: var(--muted); font-size: .82rem; }
+.pm .sbar { height: 6px; border-radius: 3px; background: var(--soft); overflow: hidden; }
+.pm .sbar i { display: block; height: 100%; background: var(--c); }
+.pm dl { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .2rem .8rem; font-size: .84rem; }
+.pm dt { color: var(--muted); } .pm dd { margin: 0; text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ── brújulas */
+.cmp-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: var(--s4); align-items: start; }
+.tabs { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: var(--s2); }
+.tab { font: 600 .9rem/1.1 var(--f-body); padding: .65rem .95rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); cursor: pointer; text-align: left; transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
+.tab small { display: block; font-weight: 500; font-size: .74rem; color: var(--muted); margin-top: .2rem; }
+.tab[aria-selected="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.tab[aria-selected="true"] small { color: color-mix(in oklab, var(--bg) 70%, transparent); }
+.cmp-box { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: .6rem; position: relative; }
+svg.cmp { width: 100%; height: auto; display: block; }
+.cmp .q-bg { transition: fill .3s ease; }
+.cmp .ql { font: 600 12px/1 var(--f-body); fill: var(--muted); letter-spacing: .02em; }
+.cmp .al { font: 600 12.5px/1 var(--f-body); fill: var(--ink-2); }
+.cmp .axis { stroke: var(--line); stroke-width: 1.2; }
+.cmp .dot { transition: transform .95s var(--ease-io), opacity .25s ease; transition-delay: var(--d, 0ms), 0ms; }
+.cmp.focus .dot:not(.hl) { opacity: .06; }
+.cmp .mk { transition: transform .95s var(--ease-io), opacity .25s ease; }
+.cmp.focus .mk:not(.hl) { opacity: .25; }
+.cmp .mk text { font: 700 13px/1 var(--f-body); }
+.cmp .lead-l { transition: d .95s var(--ease-io); fill: none; stroke-width: 1.4; stroke-dasharray: 2 3; }
+.cmp-side h3 { font-size: 1.6rem; font-stretch: 90%; }
+.cmp-side .sub { color: var(--muted); font-size: .85rem; margin-top: .3rem; }
+.cmp-side .read { margin-top: var(--s3); display: grid; gap: var(--s2); }
+.split { display: grid; gap: .35rem; }
+.split .lab { display: flex; justify-content: space-between; font-size: .8rem; color: var(--muted); gap: .5rem; }
+.split .sb { display: flex; height: 22px; border-radius: 4px; overflow: hidden; gap: 2px; }
+.split .sb i { display: flex; align-items: center; padding-inline: .45rem; font: 600 .74rem/1 var(--f-body); font-style: normal; transition: flex-grow .6s var(--ease-out); white-space: nowrap; overflow: hidden; font-variant-numeric: tabular-nums; }
+.split .sb i:nth-child(1) { background: var(--ink); color: var(--bg); }
+.split .sb i:nth-child(2) { background: var(--soft); color: var(--ink-2); justify-content: center; }
+.split .sb i:nth-child(3) { background: var(--ink-2); color: var(--bg); justify-content: flex-end; }
+.cmp-side .txt { font-size: .95rem; color: var(--ink-2); }
+.cmp-side .txt b { color: var(--ink); }
+.how { font-size: .82rem; color: var(--muted); margin-top: var(--s2); }
+.tip { position: absolute; pointer-events: none; background: var(--chamber); color: var(--chamber-ink); font-size: .8rem; padding: .45rem .6rem; border-radius: 6px; opacity: 0; transform: translateY(4px); transition: opacity .15s ease, transform .15s var(--ease-out); white-space: nowrap; z-index: 5; }
+.tip.on { opacity: 1; transform: none; }
+
+/* ── resultados */
+.res { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s4); align-items: start; }
+.filters { display: grid; gap: .8rem; margin-bottom: var(--s3); }
+.filters .fr { display: flex; flex-wrap: wrap; gap: .35rem; align-items: center; }
+.filters .fr > span { font-size: .74rem; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; width: 5.6rem; flex: none; }
+.fb { font: 500 .84rem/1 var(--f-body); padding: .45rem .7rem; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); cursor: pointer; transition: background-color .2s ease, color .2s ease; }
+.fb[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.res .hemi .big { fill: var(--ink); } .res .hemi .cap { fill: var(--muted); }
+.res .vbar { height: 22px; }
+.res-tab { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.res-tab th { font: 600 .72rem/1 var(--f-body); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; text-align: right; padding: .5rem; border-bottom: 1px solid var(--line); }
+.res-tab th:first-child, .res-tab td:first-child { text-align: left; }
+.res-tab td { padding: .5rem; border-bottom: 1px solid var(--soft); text-align: right; font-variant-numeric: tabular-nums; }
+.res-tab td.pn { display: flex; gap: .5rem; align-items: center; }
+.res-tab .bw { width: 34%; }
+.res-tab .bw i { display: block; height: 8px; border-radius: 2px; background: var(--c); transform-origin: left; animation: grow .6s var(--ease-out) both; }
+.res-tab tr.lead-r td { font-weight: 700; }
+.headline { font: 650 1.25rem/1.3 var(--f-display); font-stretch: 95%; margin-bottom: var(--s2); text-wrap: balance; }
+
+/* ── veredicto */
+.status { display: inline-flex; align-items: center; gap: .5rem; font: 600 .8rem/1 var(--f-body); padding: .45rem .75rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); }
+.status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #d9a400; box-shadow: 0 0 0 3px color-mix(in oklab, #d9a400 25%, transparent); }
+.ver { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s3); }
+.bars h3 { font-size: 1.05rem; }
+.bars .sub { font-size: .82rem; color: var(--muted); margin: .3rem 0 var(--s2); }
+.br { display: grid; grid-template-columns: 11.5rem minmax(0, 1fr) 3rem; gap: .7rem; align-items: center; font-size: .86rem; padding-block: .26rem; }
+.br .bt { height: 14px; background: var(--soft); border-radius: 3px; overflow: hidden; }
+.br .bt i { display: block; height: 100%; background: var(--muted); transform-origin: left; animation: grow .8s var(--ease-out) both; animation-delay: var(--d, 0ms); border-radius: 0 3px 3px 0; }
+.br.ref .bt i { background: var(--rule); }
+.br.best { font-weight: 700; }
+.br b { text-align: right; font-variant-numeric: tabular-nums; }
+.br .pn { display: flex; align-items: center; gap: .45rem; min-width: 0; }
+.br .pn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.br.gap { margin-top: .5rem; padding-top: .7rem; border-top: 1px solid var(--line); }
+.why { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s3); margin-top: var(--s4); }
+.why div { border-top: 2px solid var(--ink); padding-top: var(--s2); }
+.why b { display: block; font: 800 2.4rem/1 var(--f-display); font-stretch: 82%; font-variant-numeric: tabular-nums; }
+.why p { font-size: .92rem; color: var(--ink-2); margin-top: .5rem; }
+.htab { width: 100%; border-collapse: collapse; font-size: .88rem; margin-top: var(--s2); }
+.htab th { font: 600 .72rem/1 var(--f-body); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; padding: .55rem .5rem; text-align: right; border-bottom: 1px solid var(--line); }
+.htab th:first-child, .htab td:first-child { text-align: left; }
+.htab td { padding: .55rem .5rem; text-align: right; border-bottom: 1px solid var(--soft); font-variant-numeric: tabular-nums; }
+.htab tr.hl td { font-weight: 700; background: var(--soft); }
+.open { margin-top: var(--s4); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s3); }
+.open ul { margin: .6rem 0 0; padding-left: 1.1rem; color: var(--ink-2); font-size: .93rem; display: grid; gap: .45rem; }
+footer { margin-top: var(--s6); padding-block: var(--s4); border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; }
+footer code { font-size: .8rem; }
+
+@media (max-width: 900px) {
+  .vote-b, .hero, .vote, .cmp-grid, .res, .ver, .s-head, .note, .open { grid-template-columns: minmax(0, 1fr); }
+  .gloss { grid-template-columns: minmax(0, 1fr); }
+  .gloss div, .gloss div + div { padding-left: 0; border-left: 0; padding-right: 0; }
+  .dni { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dni .dni-t { grid-column: 1 / -1; }
+  .q3, .why { grid-template-columns: minmax(0, 1fr); }
+  .party { grid-template-columns: minmax(0, 1fr); }
+  .tl-pts { grid-template-columns: minmax(0, 1fr); gap: var(--s2); margin-top: 0; }
+  .tl-track { display: none; }
+  .tl-pt { flex-direction: row; text-align: left; align-items: baseline; gap: .7rem; }
+  .tl-pt b { margin-top: 0; min-width: 4.2rem; }
+  .tl-band { grid-template-columns: minmax(0, 1fr); }
+  .nav ol { display: none; }
+}
+@media (max-width: 520px) {
+  .ans div { grid-template-columns: minmax(0, 1fr); gap: .1rem; }
+  .br { grid-template-columns: 8.5rem minmax(0, 1fr) 2.6rem; }
+  .filters .fr > span { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hemi .seat, .vbar i, .res-tab .bw i, .br .bt i, .tl.play .tl-fill { animation: fadeOnly .3s ease both !important; animation-delay: 0ms !important; }
+  .cmp .dot, .cmp .mk, .cmp .lead-l { transition: opacity .25s ease !important; }
+  @keyframes fadeOnly { from { opacity: 0; } }
+}
+</style>
+
+<nav class="nav" aria-label="Orden del día">
+  <div class="wrap">
+    <a class="brand" href="#camara"><svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true"><path d="M1 11a10 10 0 0 1 20 0" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 11a5 5 0 0 1 10 0" fill="none" stroke="currentColor" stroke-width="2"/></svg>Parlamento de la demanda</a>
+    <ol>
+      <li><a href="#camara">La cámara</a></li>
+      <li><a href="#reglas">Cómo funciona</a></li>
+      <li><a href="#escrutinio">Escrutinio</a></li>
+      <li><a href="#partidos">Partidos</a></li>
+      <li><a href="#brujulas">Brújulas</a></li>
+      <li><a href="#resultados">Resultados</a></li>
+      <li><a href="#veredicto">Veredicto</a></li>
+    </ol>
+  </div>
+</nav>
+
+<header class="chamber" id="camara">
+  <div class="wrap hero">
+    <div>
+      <h1>Parlamento<br>de la demanda</h1>
+      <p class="lead">Cada código EAN es un ciudadano que elige cómo quiere que se le pronostique. Seis partidos, seis formas de hacer el forecast, compiten por su voto. Votan con lo que pasó en el año fiscal 2025, eligen desde la foto S&amp;OP de sep-25 y se les mide con el real de sep-26.</p>
+      <div class="facts" id="facts"></div>
+    </div>
+    <div class="hemi-wrap">
+      <svg class="hemi" id="hemi-main" role="img" aria-label="Hemiciclo: un punto por EAN, pintado con el partido que elige"></svg>
+      <div class="majority"><span id="maj-l"></span><span id="maj-r"></span></div>
+      <div class="vlab">Volumen real FY26 (oct-25 a jun-26) de los EANs que elige cada partido</div>
+      <div class="vbar" id="vbar-main"></div>
+      <div class="legend" id="legend-main"></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="s" id="reglas">
+  <div class="wrap">
+    <div class="s-head">
+      <div><span class="order">Punto 1 del orden del día</span><h2>Cómo funciona la cámara</h2></div>
+      <p class="lead">Un parlamento con ciudadanos, partidos, urnas y escaños. Cada pieza tiene su equivalente en el forecast. La idea es la misma que el best-fit de o9, pero cada EAN decide con su propio pasado y a la vista de todos.</p>
+    </div>
+    <dl class="gloss" id="gloss"></dl>
+    <div class="dni" id="dni"></div>
+    <div class="q3" id="q3"></div>
+    <div class="tl" id="tl">
+      <h3>El calendario de la prueba</h3>
+      <div class="tl-band" style="margin-top:var(--s3)"><div>Votación · FY25 (solo histórico)</div><div>Elección</div><div>Juicio</div></div>
+      <div style="margin-top:var(--s3)"><div class="tl-track"><div class="tl-fill"></div></div>
+      <div class="tl-pts">
+        <div class="tl-pt"><b>sep-24</b><span>Foto simulada: los partidos pronostican Q2, Q3 y Q4 de FY25</span></div>
+        <div class="tl-pt"><b>dic-24</b><span>Foto simulada: Q3 y Q4 de FY25</span></div>
+        <div class="tl-pt"><b>mar-25</b><span>Foto simulada: Q4 de FY25. Son 6 urnas en total.</span></div>
+        <div class="tl-pt key"><b>sep-25</b><span>Foto real, tal cual: el partido elegido pronostica oct-25 a jun-26</span></div>
+        <div class="tl-pt key"><b>sep-26</b><span>Solo aporta el real: Q2 queda a 1–3 meses de la foto, Q3 a 4–6 y Q4 a 7–9</span></div>
+      </div></div>
+    </div>
+    <div class="note">
+      <div><b>Igual para todos, no es ideología.</b> Los DAs futuros de la foto son información de mercado y se suman según la bandera isf: 100% sin bandera, 50% con bandera 1 y 0% con bandera 2 (ahí el forecast de o9 ya son los DAs). El trend siempre se calcula con actuals.</div>
+      <div><b>Fuera de la cámara.</b> El consenso es lo que calcula o9 y lo que el parlamento quiere sustituir, así que no vota ni sirve de referencia. Las referencias son las dos reglas y los propios partidos.</div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="escrutinio">
+  <div class="wrap">
+    <div class="s-head">
+      <div><span class="order">Punto 2 del orden del día</span><h2>Un escrutinio real, urna a urna</h2></div>
+      <p class="lead" id="ex-lead"></p>
+    </div>
+    <div class="vote">
+      <div class="ballot">
+        <div class="ballot-h"><div><h3 id="ex-name"></h3><span id="ex-ean"></span></div><button class="btn" id="ex-play" type="button"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z" fill="currentColor"/></svg>Repetir escrutinio</button></div>
+        <div class="tscroll"><table class="ev" id="ex-table"></table></div>
+      </div>
+      <div class="vote-b">
+        <div class="panel"><h3>Recuento de urnas ganadas</h3><div class="tally" id="ex-tally"></div></div>
+        <div class="verdict" id="ex-verdict"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="partidos">
+  <div class="wrap">
+    <div class="s-head">
+      <div><span class="order">Punto 3 del orden del día</span><h2>Los 6 partidos y su programa</h2></div>
+      <p class="lead">Dos reglas fijas, el ciclo de vida y tres partidos de nivel reciente. Cada uno responde a su manera a las 3 preguntas. «Solo» es el error EAN a EAN desde la foto sep-25 si ese partido se usara para todos los EANs; por plazo, a 7–9, 4–6 y 1–3 meses de la foto.</p>
+    </div>
+    <div class="parties" id="parties"></div>
+  </div>
+</section>
+
+<section class="s" id="brujulas">
+  <div class="wrap">
+    <div class="s-head">
+      <div><span class="order">Punto 4 del orden del día</span><h2>Las brújulas políticas</h2></div>
+      <p class="lead">Una brújula por pregunta. El círculo numerado es el partido, colocado por su receta. Cada punto es un EAN, colocado según la respuesta que mejor le funcionó en FY25 y pintado con el partido que eligió. El tamaño del punto es su volumen de FY26.</p>
+    </div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="cmp-grid">
+      <div class="cmp-box"><svg class="cmp" id="cmp" viewBox="0 0 600 600" role="img" aria-label="Brújula política de los partidos y los EANs"></svg><div class="tip" id="tip"></div></div>
+      <div class="cmp-side" id="cmp-side"></div>
+    </div>
+    <div class="legend" id="legend-cmp"></div>
+    <p class="how">Pulsa un partido para ver solo sus votantes. Si dos partidos comparten posición, el marcador se separa y una línea punteada señala su sitio real. Se dibujan los <span id="n-cmp"></span> EANs con historia en FY25 que eligen un partido (sin empates).</p>
+  </div>
+</section>
+
+<section class="s" id="resultados">
+  <div class="wrap">
+    <div class="s-head">
+      <div><span class="order">Punto 5 del orden del día</span><h2>La cámara por grupos</h2></div>
+      <p class="lead">Cómo se reparten los escaños dentro de cada categoría, casa, edad y fase. Los nuevos sin FY25 heredan el voto de sus parecidos: códigos de su casa y tamaño o función que en sep-24 tenían su edad.</p>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="res">
+      <div>
+        <svg class="hemi" id="hemi-res" role="img" aria-label="Hemiciclo del grupo seleccionado"></svg>
+        <div class="vlab" style="color:var(--muted)">Volumen real FY26 de los EANs que elige cada partido</div>
+        <div class="vbar" id="vbar-res"></div>
+      </div>
+      <div><p class="headline" id="res-head"></p><table class="res-tab" id="res-tab"></table></div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="veredicto">
+  <div class="wrap">
+    <div class="s-head">
+      <div><span class="order">Punto 6 del orden del día</span><h2>El veredicto: Ciclo de vida para todos</h2></div>
+      <div><span class="status">Propuesta de Claude · pendiente de aprobación</span><p class="lead" style="margin-top:var(--s2)" id="ver-lead"></p></div>
+    </div>
+    <div class="ver">
+      <div class="panel bars" id="bars-1"></div>
+      <div class="panel bars" id="bars-2"></div>
+    </div>
+    <div class="why" id="why"></div>
+    <div class="panel" style="margin-top:var(--s4)">
+      <h3>Error EAN a EAN según lo lejos que estaba la foto (real sep-26)</h3>
+      <div class="tscroll"><table class="htab" id="htab"></table></div>
+    </div>
+    <div class="open">
+      <div class="panel"><h3>Dónde no basta</h3><ul>
+        <li>En el total de la casa el Ciclo de vida se queda corto: sesgo de <span id="cv-sesgo"></span>. Ahí acierta más la regla con el 100% de los DAs.</li>
+        <li>Con bandera 1 falla más que con el resto, y sumarle el 100% de los DAs lo empeora.</li>
+        <li>Gana con claridad en los nuevos de 6–11 meses y en los EANs con bandera 2.</li>
+      </ul></div>
+      <div class="panel"><h3>Preguntas abiertas</h3><ul>
+        <li>¿Se aprueba el Ciclo de vida como base para todos?</li>
+        <li>¿Por qué acierta EAN a EAN pero se queda corto en el total de la casa?</li>
+        <li>¿Qué hacer con la bandera 1, donde no funcionan ni el 50% ni el 100% de los DAs?</li>
+        <li>Próximo paso: el partido «Consumidor (EPOS)» y una coalición en lugar de un solo ganador.</li>
+      </ul></div>
+    </div>
+    <footer>Datos del último reporte del parlamento (<code>reportes/REPORTE_IDEOLOGIA.pdf</code>): voto con FY25 en 6 urnas, prueba desde la foto sep-25 y real de la foto sep-26. Generado con <code>src/parlamento_html.py</code>. Error EAN a EAN = |forecast − real| / real de cada EAN y quarter. WAPE90 = |Σ forecast − Σ real| / Σ real por casa y quarter.</footer>
+  </div>
+</section>
+</main>
+
+<script>
+const D = {"parties":[{"name":"Regla fragancias","col":"#6250d6","num":1,"bloc":"Año pasado","lema":"Lo del año pasado, corregido por cómo va mi tamaño en mi casa","resp":["Mismo mes del año pasado (temporada propia)","Su casa × tamaño · trend 12M entero · tope ±30%","Resta 50% de los DAs planificados · suma 25% de los cortes"],"solo":[0.6334,0.5722,0.6709,0.6263]},{"name":"Media 12M estacional","col":"#eda100","num":2,"bloc":"Estacional","lema":"Mi año entero con la temporada de mi línea y medio trend propio","resp":["Media de 12 meses × perfil mensual de su línea","Él mismo · mitad de su trend 12M · tope ±30%","Base tal cual"],"solo":[0.8097,0.6641,0.568,0.6676]},{"name":"Media 6M estacional","col":"#00a3c4","num":3,"bloc":"Estacional","lema":"Mi medio año con la temporada de mi casa y el trend de mi fase","resp":["Media de 6 meses × perfil mensual de su casa","Su fase (crecimiento / estable / declive) · trend 12M entero · tope ±60%","Suma 25% de los cortes"],"solo":[0.7384,0.5911,0.5778,0.6264]},{"name":"Regla makeup","col":"#eb6834","num":4,"bloc":"Nivel plano","lema":"Mi nivel de medio año, con medio trend de mi función","resp":["Media de 6 meses, plana","Su casa × función · mitad del trend 12M · tope ±30%","Resta 25% de los DAs · suma cortes (máx. 10% del envío)"],"solo":[0.7264,0.5189,0.459,0.553]},{"name":"Media 6M prudente","col":"#2a78d6","num":5,"bloc":"Nivel plano","lema":"Mi medio año, con la caída de mi categoría","resp":["Media de 6 meses, plana","Su categoría · trend 6M entero · tope ±60%","Resta 50% de los DAs planificados"],"solo":[0.6316,0.559,0.542,0.5725]},{"name":"Ciclo de vida","col":"#e87ba4","num":6,"bloc":"Ciclo de vida","lema":"¿Cómo les fue a los otros códigos a mi edad?","resp":["Nivel de 6 meses · fragancias con la temporada de su casa, makeup plano","Los que tuvieron su edad (fragancias: toda la categoría; makeup: su línea) hasta 17 meses · después, el trend 12M de su fase (±30%)","Base tal cual (los DAs de lanzamiento se repiten)"],"solo":[0.6289,0.4971,0.486,0.529]}],"empate":"#C7CCD3","por":{"Total":{"Total":{"eans":851,"real":4692847.0,"seats":{"Regla fragancias":247,"Regla makeup":85,"Ciclo de vida":147,"Media 6M prudente":126,"Media 6M estacional":151,"Media 12M estacional":93,"Empate":2},"vol":{"Regla fragancias":0.3292001635680856,"Regla makeup":0.041511687894363485,"Ciclo de vida":0.22523960401862664,"Media 6M prudente":0.15579391358806285,"Media 6M estacional":0.07513136481969261,"Media 12M estacional":0.16285210235918623,"Empate":0.010271163751982539},"win_eans":"Regla fragancias","win_vol":"Regla fragancias"}},"Categoría":{"Fragancias":{"eans":270,"real":3069016.0,"seats":{"Regla fragancias":122,"Regla makeup":12,"Ciclo de vida":31,"Media 6M prudente":29,"Media 6M estacional":28,"Media 12M estacional":46,"Empate":2},"vol":{"Regla fragancias":0.3526240984080891,"Regla makeup":0.03283462842813462,"Ciclo de vida":0.18163052913376795,"Media 6M prudente":0.12978394377872257,"Media 6M estacional":0.0632297127157369,"Media 12M estacional":0.22419140206502672,"Empate":0.01570568547052215},"win_eans":"Regla fragancias","win_vol":"Regla fragancias"},"Makeup":{"eans":581,"real":1623831.0,"seats":{"Regla fragancias":125,"Regla makeup":73,"Ciclo de vida":116,"Media 6M prudente":97,"Media 6M estacional":123,"Media 12M estacional":47,"Empate":0},"vol":{"Regla fragancias":0.2849292814338438,"Regla makeup":0.057911198887076305,"Ciclo de vida":0.3076600951700023,"Media 6M prudente":0.20495236265350272,"Media 6M estacional":0.09762530706705316,"Media 12M estacional":0.04692175478852171,"Empate":0.0},"win_eans":"Regla fragancias","win_vol":"Ciclo de vida"}},"Casa":{"Burberry":{"eans":85,"real":1361740.0,"seats":{"Regla fragancias":28,"Regla makeup":4,"Ciclo de vida":18,"Media 6M prudente":7,"Media 6M estacional":4,"Media 12M estacional":23,"Empate":1},"vol":{"Regla fragancias":0.22580081366486995,"Regla makeup":0.013943924684594709,"Ciclo de vida":0.34119582299117307,"Media 6M prudente":0.05945481516295328,"Media 6M estacional":0.0037297868903021134,"Media 12M estacional":0.3215966337186247,"Empate":0.03427820288748219},"win_eans":"Regla fragancias","win_vol":"Ciclo de vida"},"Gucci":{"eans":125,"real":933477.0,"seats":{"Regla fragancias":76,"Regla makeup":2,"Ciclo de vida":8,"Media 6M prudente":10,"Media 6M estacional":15,"Media 12M estacional":13,"Empate":1},"vol":{"Regla fragancias":0.6376193521640062,"Regla makeup":0.015880412693617518,"Ciclo de vida":0.029199433944275006,"Media 6M prudente":0.07004564654512109,"Media 6M estacional":0.11317257950651168,"Media 12M estacional":0.1324510405719691,"Empate":0.0016315345744994253},"win_eans":"Regla fragancias","win_vol":"Regla fragancias"},"Gucci Make up":{"eans":261,"real":234644.0,"seats":{"Regla fragancias":57,"Regla makeup":59,"Ciclo de vida":33,"Media 6M prudente":22,"Media 6M estacional":55,"Media 12M estacional":35,"Empate":0},"vol":{"Regla fragancias":0.16427865191524182,"Regla makeup":0.13021428206133548,"Ciclo de vida":0.19551320297983327,"Media 6M prudente":0.14143127461175228,"Media 6M estacional":0.21065102879255382,"Media 12M estacional":0.15791155963928333,"Empate":0.0},"win_eans":"Regla makeup","win_vol":"Media 6M estacional"},"Kylie Makeup":{"eans":320,"real":1389187.0,"seats":{"Regla fragancias":68,"Regla makeup":14,"Ciclo de vida":83,"Media 6M prudente":75,"Media 6M estacional":68,"Media 12M estacional":12,"Empate":0},"vol":{"Regla fragancias":0.30530806867613935,"Regla makeup":0.04569867123720565,"Ciclo de vida":0.32660253803123696,"Media 6M prudente":0.21568154611294232,"Media 6M estacional":0.07853442337136757,"Media 12M estacional":0.028174752571108137,"Empate":0.0},"win_eans":"Ciclo de vida","win_vol":"Ciclo de vida"},"Marc Jacobs":{"eans":60,"real":773799.0,"seats":{"Regla fragancias":18,"Regla makeup":6,"Ciclo de vida":5,"Media 6M prudente":12,"Media 6M estacional":9,"Media 12M estacional":10,"Empate":0},"vol":{"Regla fragancias":0.2320034014001052,"Regla makeup":0.08653151529014641,"Ciclo de vida":0.08471192131289909,"Media 6M prudente":0.3256155668332474,"Media 6M estacional":0.10768946457671824,"Media 12M estacional":0.16344813058688368,"Empate":0.0},"win_eans":"Regla fragancias","win_vol":"Media 6M prudente"}},"Edad":{"12–17":{"eans":71,"real":978031.0,"seats":{"Regla fragancias":32,"Regla makeup":3,"Ciclo de vida":27,"Media 6M prudente":4,"Media 6M estacional":2,"Media 12M estacional":3,"Empate":0},"vol":{"Regla fragancias":0.5342131282137274,"Regla makeup":0.04354360955838823,"Ciclo de vida":0.3941153194530644,"Media 6M prudente":0.02697051524951663,"Media 6M estacional":0.00048464721465884007,"Media 12M estacional":0.0006727803106445501,"Empate":0.0},"win_eans":"Regla fragancias","win_vol":"Regla fragancias"},"18–25":{"eans":136,"real":384181.0,"seats":{"Regla fragancias":28,"Regla makeup":5,"Ciclo de vida":26,"Media 6M prudente":64,"Media 6M estacional":11,"Media 12M estacional":2,"Empate":0},"vol":{"Regla fragancias":0.17506071356990585,"Regla makeup":0.010151465064644009,"Ciclo de vida":0.26097334329391614,"Media 6M prudente":0.5180657034054261,"Media 6M estacional":0.0081888484854795,"Media 12M estacional":0.027559926180628403,"Empate":0.0},"win_eans":"Media 6M prudente","win_vol":"Media 6M prudente"},"26+":{"eans":563,"real":3122402.0,"seats":{"Regla fragancias":146,"Regla makeup":76,"Ciclo de vida":59,"Media 6M prudente":55,"Media 6M estacional":138,"Media 12M estacional":87,"Empate":2},"vol":{"Regla fragancias":0.2507752044739915,"Regla makeup":0.045233125010808985,"Ciclo de vida":0.17685294846723773,"Media 6M prudente":0.16162620956558443,"Media 6M estacional":0.11176011288745011,"Media 12M estacional":0.2383152457627173,"Empate":0.015437153832209945},"win_eans":"Regla fragancias","win_vol":"Regla fragancias"},"6–11":{"eans":81,"real":208233.0,"seats":{"Regla fragancias":41,"Regla makeup":1,"Ciclo de vida":35,"Media 6M prudente":3,"Media 6M estacional":0,"Media 12M estacional":1,"Empate":0},"vol":{"Regla fragancias":0.8266365081423214,"Regla makeup":0.034024386144367126,"Ciclo de vida":0.09168095354722834,"Media 6M prudente":0.005023219182358224,"Media 6M estacional":0.0,"Media 12M estacional":0.04263493298372496,"Empate":0.0},"win_eans":"Regla fragancias","win_vol":"Regla fragancias"}},"Fase":{"Consolidación":{"eans":71,"real":978031.0,"seats":{"Regla fragancias":32,"Regla makeup":3,"Ciclo de vida":27,"Media 6M prudente":4,"Media 6M estacional":2,"Media 12M estacional":3,"Empate":0},"vol":{"Regla fragancias":0.5342131282137274,"Regla makeup":0.04354360955838823,"Ciclo de vida":0.3941153194530644,"Media 6M prudente":0.02697051524951663,"Media 6M estacional":0.00048464721465884007,"Media 12M estacional":0.0006727803106445501,"Empate":0.0},"win_eans":"Regla fragancias","win_vol":"Regla fragancias"},"Crecimiento":{"eans":292,"real":1661262.0,"seats":{"Regla fragancias":57,"Regla makeup":68,"Ciclo de vida":30,"Media 6M prudente":62,"Media 6M estacional":30,"Media 12M estacional":44,"Empate":1},"vol":{"Regla fragancias":0.26143799111759614,"Regla makeup":0.08452610124110466,"Ciclo de vida":0.1083585852201519,"Media 6M prudente":0.22139734731788244,"Media 6M estacional":0.038567065279287674,"Media 12M estacional":0.25761499390222614,"Empate":0.028097915921751055},"win_eans":"Regla makeup","win_vol":"Regla fragancias"},"Declive":{"eans":277,"real":920460.0,"seats":{"Regla fragancias":88,"Regla makeup":3,"Ciclo de vida":40,"Media 6M prudente":39,"Media 6M estacional":87,"Media 12M estacional":20,"Empate":0},"vol":{"Regla fragancias":0.24930143623840254,"Regla makeup":0.002251048388849054,"Ciclo de vida":0.32148382330573844,"Media 6M prudente":0.2645850987549703,"Media 6M estacional":0.1254753058253482,"Media 12M estacional":0.03690328748669144,"Empate":0.0},"win_eans":"Regla fragancias","win_vol":"Ciclo de vida"},"Estable":{"eans":130,"real":924861.0,"seats":{"Regla fragancias":29,"Regla makeup":10,"Ciclo de vida":15,"Media 6M prudente":18,"Media 6M estacional":32,"Media 12M estacional":25,"Empate":1},"vol":{"Regla fragancias":0.20163786774445025,"Regla makeup":0.0028588079722250154,"Ciclo de vida":0.19088490054181115,"Media 6M prudente":0.09985716772574474,"Media 6M estacional":0.18655884505887912,"Media 12M estacional":0.3165556770152488,"Empate":0.0016467339416409601},"win_eans":"Media 6M estacional","win_vol":"Media 12M estacional"},"Lanzamiento":{"eans":81,"real":208233.0,"seats":{"Regla fragancias":41,"Regla makeup":1,"Ciclo de vida":35,"Media 6M prudente":3,"Media 6M estacional":0,"Media 12M estacional":1,"Empate":0},"vol":{"Regla fragancias":0.8266365081423214,"Regla makeup":0.034024386144367126,"Ciclo de vida":0.09168095354722834,"Media 6M prudente":0.005023219182358224,"Media 6M estacional":0.0,"Media 12M estacional":0.04263493298372496,"Empate":0.0},"win_eans":"Regla fragancias","win_vol":"Regla fragancias"}},"Historia":{"Con historia FY25":{"eans":775,"real":4501623.0,"seats":{"Regla fragancias":206,"Regla makeup":85,"Ciclo de vida":112,"Media 6M prudente":126,"Media 6M estacional":151,"Media 12M estacional":93,"Empate":2},"vol":{"Regla fragancias":0.3049462382789496,"Regla makeup":0.043275058795461105,"Ciclo de vida":0.23056662008346768,"Media 6M prudente":0.16241186789742276,"Media 6M estacional":0.07832286266530983,"Media 12M estacional":0.16976988077411193,"Empate":0.010707471505277096},"win_eans":"Regla fragancias","win_vol":"Regla fragancias"},"Sin historia FY25 (parecidos)":{"eans":76,"real":191224.0,"seats":{"Regla fragancias":41,"Regla makeup":0,"Ciclo de vida":35,"Media 6M prudente":0,"Media 6M estacional":0,"Media 12M estacional":0,"Empate":0},"vol":{"Regla fragancias":0.900164205329875,"Regla makeup":0.0,"Ciclo de vida":0.09983579467012509,"Media 6M prudente":0.0,"Media 6M estacional":0.0,"Media 12M estacional":0.0,"Empate":0.0},"win_eans":"Regla fragancias","win_vol":"Regla fragancias"}}},"coaliciones":[{"par":"Ciclo de vida + Media 6M estacional","eans":141,"vol":0.11748816869588972},{"par":"Ciclo de vida + Media 6M prudente","eans":141,"vol":0.1655690032085001},{"par":"Regla makeup + Media 6M prudente","eans":125,"vol":0.11866613166804714},{"par":"Regla fragancias + Ciclo de vida","eans":106,"vol":0.1751829965903427},{"par":"Regla fragancias + Media 12M estacional","eans":65,"vol":0.07910208877468197},{"par":"Regla fragancias + Media 6M estacional","eans":40,"vol":0.006349450557412164}],"n_votantes":860,"n_prueba":851,"sin_historia":76,"ensayo":{"regla":{"7–9":{"ean":1.1507,"wape90":0.9712,"sesgo":0.9712},"4–6":{"ean":1.0715,"wape90":0.8653,"sesgo":0.8653},"1–3":{"ean":0.8834,"wape90":0.5697,"sesgo":0.5697},"total":{"ean":1.0266,"wape90":0.7893,"sesgo":0.7893}},"un_partido":{"7–9":{"ean":0.9898,"wape90":0.7613,"sesgo":0.7613},"4–6":{"ean":1.1942,"wape90":0.9417,"sesgo":0.9417},"1–3":{"ean":1.0494,"wape90":0.72,"sesgo":0.72},"total":{"ean":1.0817,"wape90":0.8084,"sesgo":0.8084}},"coalicion":{"7–9":{"ean":1.0374,"wape90":0.8298,"sesgo":0.8298},"4–6":{"ean":1.1282,"wape90":0.9494,"sesgo":0.9494},"1–3":{"ean":0.858,"wape90":0.6222,"sesgo":0.6222},"total":{"ean":1.0037,"wape90":0.7957,"sesgo":0.7957}},"media6":{"7–9":{"ean":1.1625,"wape90":0.9925,"sesgo":0.9925},"4–6":{"ean":1.2521,"wape90":1.1341,"sesgo":1.1341},"1–3":{"ean":0.8435,"wape90":0.6918,"sesgo":0.6918},"total":{"ean":1.0778,"wape90":0.9323,"sesgo":0.9323}},"F:Regla fragancias":{"7–9":{"ean":1.1874,"wape90":0.963,"sesgo":0.9627},"4–6":{"ean":1.4269,"wape90":1.2214,"sesgo":1.2137},"1–3":{"ean":1.3334,"wape90":1.0417,"sesgo":1.019},"total":{"ean":1.3227,"wape90":1.0804,"sesgo":1.0695}},"F:Regla makeup":{"7–9":{"ean":1.3839,"wape90":1.2606,"sesgo":1.2606},"4–6":{"ean":1.3779,"wape90":1.2661,"sesgo":1.2661},"1–3":{"ean":0.7653,"wape90":0.5496,"sesgo":0.5496},"total":{"ean":1.1577,"wape90":1.0049,"sesgo":1.0049}},"F:Ciclo de vida":{"7–9":{"ean":0.9773,"wape90":0.7242,"sesgo":0.7242},"4–6":{"ean":0.8334,"wape90":0.5889,"sesgo":0.5889},"1–3":{"ean":0.6524,"wape90":0.3437,"sesgo":0.3437},"total":{"ean":0.8101,"wape90":0.5398,"sesgo":0.5398}},"F:Media 6M prudente":{"7–9":{"ean":1.1169,"wape90":0.977,"sesgo":0.977},"4–6":{"ean":1.2023,"wape90":1.0737,"sesgo":1.0737},"1–3":{"ean":0.5708,"wape90":0.2616,"sesgo":0.2616},"total":{"ean":0.9485,"wape90":0.7511,"sesgo":0.7511}},"F:Media 6M estacional":{"7–9":{"ean":1.3995,"wape90":1.1251,"sesgo":1.1251},"4–6":{"ean":1.7537,"wape90":1.5368,"sesgo":1.5368},"1–3":{"ean":1.0811,"wape90":0.9003,"sesgo":0.9003},"total":{"ean":1.406,"wape90":1.1853,"sesgo":1.1853}},"F:Media 12M estacional":{"7–9":{"ean":1.111,"wape90":0.9055,"sesgo":0.9055},"4–6":{"ean":1.2731,"wape90":1.1252,"sesgo":1.1252},"1–3":{"ean":1.2303,"wape90":1.0767,"sesgo":1.0767},"total":{"ean":1.21,"wape90":1.0431,"sesgo":1.0431}}},"confirmacion":{"regla":{"7–9":{"ean":0.6431,"wape90":0.1912,"sesgo":-0.1276},"4–6":{"ean":0.5266,"wape90":0.1138,"sesgo":-0.0997},"1–3":{"ean":0.5521,"wape90":0.0713,"sesgo":-0.001},"total":{"ean":0.5681,"wape90":0.1189,"sesgo":-0.07}},"un_partido":{"7–9":{"ean":0.6432,"wape90":0.2014,"sesgo":-0.1538},"4–6":{"ean":0.5519,"wape90":0.1481,"sesgo":-0.1058},"1–3":{"ean":0.5546,"wape90":0.1001,"sesgo":-0.0663},"total":{"ean":0.5779,"wape90":0.1247,"sesgo":-0.104}},"coalicion":{"7–9":{"ean":0.637,"wape90":0.2071,"sesgo":-0.1393},"4–6":{"ean":0.512,"wape90":0.1348,"sesgo":-0.0923},"1–3":{"ean":0.5043,"wape90":0.1177,"sesgo":-0.1161},"total":{"ean":0.5433,"wape90":0.131,"sesgo":-0.1142}},"media6":{"7–9":{"ean":0.6404,"wape90":0.2026,"sesgo":-0.0274},"4–6":{"ean":0.4954,"wape90":0.0835,"sesgo":-0.0249},"1–3":{"ean":0.4907,"wape90":0.0825,"sesgo":-0.065},"total":{"ean":0.5333,"wape90":0.0813,"sesgo":-0.0407}},"F:Regla fragancias":{"7–9":{"ean":0.6334,"wape90":0.2502,"sesgo":-0.1866},"4–6":{"ean":0.5722,"wape90":0.1373,"sesgo":-0.1232},"1–3":{"ean":0.6709,"wape90":0.073,"sesgo":0.0683},"total":{"ean":0.6263,"wape90":0.117,"sesgo":-0.0681}},"F:Regla makeup":{"7–9":{"ean":0.7264,"wape90":0.3648,"sesgo":0.1076},"4–6":{"ean":0.5189,"wape90":0.1233,"sesgo":-0.0187},"1–3":{"ean":0.459,"wape90":0.0835,"sesgo":-0.0705},"total":{"ean":0.553,"wape90":0.1417,"sesgo":-0.0037}},"F:Ciclo de vida":{"7–9":{"ean":0.6289,"wape90":0.1752,"sesgo":-0.1041},"4–6":{"ean":0.4971,"wape90":0.1249,"sesgo":-0.0565},"1–3":{"ean":0.486,"wape90":0.1529,"sesgo":-0.1278},"total":{"ean":0.529,"wape90":0.1092,"sesgo":-0.0965}},"F:Media 6M prudente":{"7–9":{"ean":0.6316,"wape90":0.3292,"sesgo":-0.3292},"4–6":{"ean":0.559,"wape90":0.3725,"sesgo":-0.3725},"1–3":{"ean":0.542,"wape90":0.3975,"sesgo":-0.3975},"total":{"ean":0.5725,"wape90":0.3701,"sesgo":-0.3701}},"F:Media 6M estacional":{"7–9":{"ean":0.7384,"wape90":0.1496,"sesgo":0.1223},"4–6":{"ean":0.5911,"wape90":0.1533,"sesgo":0.1533},"1–3":{"ean":0.5778,"wape90":0.209,"sesgo":0.0262},"total":{"ean":0.6264,"wape90":0.1195,"sesgo":0.0967}},"F:Media 12M estacional":{"7–9":{"ean":0.8097,"wape90":0.2607,"sesgo":0.2257},"4–6":{"ean":0.6641,"wape90":0.2682,"sesgo":0.2682},"1–3":{"ean":0.568,"wape90":0.1449,"sesgo":0.1112},"total":{"ean":0.6676,"wape90":0.1972,"sesgo":0.1972}}},"persistencia":{"igual":0.17548387096774193,"n":775},"stats":{"c1x":{"der":0.3792172739541161,"izq":0.3913630229419703,"centro":0.22941970310391363,"der_fr":0.36,"izq_fr":0.4533333333333333,"der_mu":0.3875968992248062,"izq_mu":0.3643410852713178},"c1y":{"der":0.26180836707152494,"izq":0.32793522267206476,"centro":0.41025641025641024,"der_fr":0.3511111111111111,"izq_fr":0.2577777777777778,"der_mu":0.22286821705426357,"izq_mu":0.35852713178294576},"c2x":{"der":0.19568151147098514,"izq":0.3292847503373819,"centro":0.4750337381916329,"der_fr":0.2222222222222222,"izq_fr":0.4177777777777778,"der_mu":0.18410852713178294,"izq_mu":0.29069767441860467},"c2y":{"der":0.6464237516869096,"izq":0.04588394062078273,"centro":0.3076923076923077,"der_fr":0.7022222222222222,"izq_fr":0.0,"der_mu":0.622093023255814,"izq_mu":0.06589147286821706},"c3y":{"der":0.0310391363022942,"izq":0.11470985155195682,"centro":0.854251012145749,"der_fr":0.04,"izq_fr":0.2,"der_mu":0.027131782945736434,"izq_mu":0.07751937984496124},"c3x":{"der":0.0,"izq":0.0,"centro":1.0,"der_fr":0.0,"izq_fr":0.0,"der_mu":0.0,"izq_mu":0.0}},"n_brujula":741,"pts":[[1.004,0.978,-0.226,0.642,0.004,-0.018,1,1.0],[0.995,0.931,0.995,0.942,-0.005,0.011,5,0.9344],[-0.979,0.969,-0.99,1.003,0.01,0.002,0,0.8229],[0.999,0.005,0.007,0.029,0.005,0.031,1,0.7429],[1.031,-0.042,1.025,0.787,0.032,-0.074,5,0.7185],[0.962,-0.054,-0.026,-0.02,-0.027,-0.007,1,0.6865],[0.969,-0.887,0.969,0.883,-0.031,-0.814,5,0.5448],[-0.161,-0.013,0.448,0.076,-0.009,-0.001,1,0.4163],[0.522,-0.023,-0.416,0.354,0.004,-0.452,1,0.3832],[0.985,0.049,-0.153,0.238,0.002,-0.22,1,0.3832],[-0.258,-0.043,0.95,0.798,-0.012,-0.029,0,0.3803],[0.389,0.967,-0.685,0.936,-0.016,-0.01,2,0.3744],[0.662,0.478,-0.007,0.035,0.038,-0.016,0,0.3571],[0.93,0.139,-0.912,0.844,0.018,-0.108,5,0.3459],[1.01,0.998,1.01,1.004,0.01,0.004,0,0.3431],[0.963,-1.007,0.963,0.943,-0.036,-0.008,5,0.3403],[0.965,0.137,-1.018,1.016,-0.018,0.016,2,0.3238],[0.986,0.988,0.945,0.767,0.001,-1.003,1,0.3157],[-1.014,0.045,-0.078,0.072,-0.024,0.023,4,0.2999],[-0.972,0.285,-0.43,0.955,0.014,-0.112,0,0.2973],[-0.195,-0.104,-0.107,-0.104,-0.007,0.012,3,0.2947],[-0.986,0.026,-0.54,0.548,-0.002,0.176,0,0.2921],[0.421,-0.424,0.939,1.001,-0.006,-0.99,4,0.2895],[0.99,1.001,0.984,0.973,-0.008,-0.115,4,0.2769],[1.004,0.583,0.916,0.929,0.009,-1.023,5,0.25],[0.972,0.985,-1.024,0.986,-0.025,-0.014,5,0.2429],[0.993,0.982,-1.003,0.982,-0.007,-0.806,2,0.2429],[0.216,0.987,-0.356,0.708,0.002,0.03,1,0.2429],[-0.98,-0.026,-0.921,0.923,-0.009,-0.035,4,0.2359],[0.587,0.902,0.029,0.51,-0.034,-0.002,4,0.2359],[0.979,-1.012,-0.884,0.987,-0.02,-0.012,4,0.229],[0.569,-0.026,0.029,-0.014,0.004,0.011,1,0.2245],[-0.512,0.288,-0.399,0.876,-0.014,-0.989,0,0.2178],[1.01,0.967,-0.981,0.973,0.019,-0.027,4,0.2156],[0.047,0.032,-0.883,0.469,-0.01,-0.031,1,0.209],[0.117,0.189,-0.233,0.871,-0.005,-0.002,1,0.2068],[0.697,1.013,-0.542,0.956,0.006,-0.884,4,0.2046],[0.277,-0.002,-0.282,0.292,-0.013,0.002,4,0.2046],[0.733,0.015,-0.023,0.023,-0.018,0.021,1,0.2046],[-0.38,-1.003,-0.095,0.532,-0.015,-0.002,5,0.2046],[1.0,0.087,-0.72,0.89,0.025,-1.004,1,0.1982],[-0.912,0.574,0.265,0.259,0.01,-0.005,0,0.1919],[0.641,0.638,-1.008,0.989,-0.009,-0.011,2,0.1898],[-0.879,-0.991,-0.839,0.992,0.003,-0.008,2,0.1878],[0.904,-1.045,0.986,0.955,-0.015,-0.359,0,0.1857],[-0.642,-0.008,0.031,0.01,0.02,-0.044,4,0.1796],[0.016,-0.001,1.016,0.991,0.016,-0.001,5,0.1776],[-0.972,1.002,0.142,-0.025,0.006,0.007,4,0.1716],[-0.874,0.68,-0.944,0.929,-0.01,-0.244,1,0.1677],[-0.731,-0.972,-0.168,0.994,0.001,-0.298,4,0.1658],[0.302,0.043,0.073,0.766,0.009,-0.022,4,0.1658],[0.529,0.088,-0.066,-0.002,-0.025,-0.962,0,0.1638],[-0.928,-0.664,-0.268,0.806,0.019,0.006,0,0.16],[0.595,0.058,-0.321,0.625,0.012,0.027,4,0.1562],[-0.976,0.472,0.047,-0.075,0.001,-0.008,3,0.1562],[0.758,1.016,-0.039,0.844,0.029,0.017,1,0.1525],[-0.946,0.357,-0.171,0.461,0.005,0.046,4,0.1488],[-0.221,0.053,0.014,0.033,0.007,0.039,0,0.1433],[-0.893,-0.559,0.945,1.009,-0.022,-0.034,0,0.1433],[-0.993,0.224,-0.582,1.009,0.004,0.008,1,0.1415],[-0.985,0.083,-0.735,1.014,0.002,0.03,0,0.1415],[-0.997,-0.004,-0.009,-0.019,-0.023,-0.091,3,0.1397],[-1.01,-0.043,-0.14,0.521,-0.021,0.065,4,0.1397],[-0.94,0.891,-0.769,0.934,0.022,-0.689,0,0.138],[0.852,0.891,-0.002,-0.053,-0.005,0.005,4,0.1344],[0.764,1.0,-0.14,0.712,0.002,0.0,1,0.1327],[-0.787,0.024,0.022,0.017,0.017,0.005,4,0.1276],[0.888,0.994,1.026,0.995,0.026,-0.056,0,0.1259],[-0.989,-0.982,-0.353,1.017,0.003,0.424,5,0.1225],[-0.632,-0.698,-0.043,0.997,-0.001,0.04,4,0.1159],[-0.906,-1.021,-0.509,0.977,-0.018,-0.959,5,0.1143],[-0.742,0.669,-0.877,0.962,-0.04,-0.002,2,0.1111],[-0.617,0.447,-0.974,1.018,-0.036,-0.224,5,0.108],[-0.806,0.994,0.285,0.745,-0.021,-0.006,1,0.1064],[1.017,-1.021,-0.983,0.979,0.017,-0.022,4,0.1064],[-0.545,-1.012,-1.005,0.964,-0.005,-0.036,4,0.1064],[1.01,-1.016,1.015,0.91,0.023,-0.017,5,0.0988],[-0.976,-1.009,-0.477,0.991,0.019,-0.689,5,0.0973],[-0.644,0.217,-0.534,0.68,0.006,0.0,1,0.0958],[0.982,-0.676,0.026,-0.041,-0.005,0.951,2,0.0943],[0.97,1.006,0.97,1.006,-0.029,0.007,0,0.0943],[-0.814,0.992,0.002,0.973,0.018,-0.012,4,0.0929],[-1.0,1.01,-1.008,1.01,-0.009,0.008,0,0.0929],[0.835,0.992,-0.686,0.982,-0.025,0.008,4,0.0929],[0.686,0.968,0.029,-0.356,0.006,0.017,0,0.0914],[0.717,-0.01,-0.38,0.793,-0.005,0.07,2,0.0914],[-0.686,-0.229,-0.842,0.971,0.009,-0.013,5,0.09],[-0.966,-0.993,-0.503,1.007,0.014,-0.954,5,0.09],[-0.857,-0.898,-0.043,0.526,0.014,-0.056,4,0.0886],[-0.117,0.92,-0.186,0.902,0.017,0.693,0,0.0886],[-0.986,0.548,-0.986,0.961,0.009,-0.989,1,0.0872],[-0.998,-0.604,-0.048,0.136,-0.014,0.138,0,0.0872],[0.251,0.953,-0.04,0.207,-0.008,-0.051,0,0.0858],[-0.477,0.911,0.054,-0.432,0.017,-0.026,0,0.0858],[0.997,-0.002,-0.013,0.22,0.001,0.003,0,0.083],[-0.998,0.016,-0.006,0.007,-0.007,0.016,0,0.0789],[1.004,-1.016,-0.995,0.984,0.004,-0.962,2,0.0789],[0.838,-0.177,0.601,-0.97,0.019,-0.007,4,0.0776],[-0.337,0.341,0.831,0.719,-0.012,-0.002,0,0.0763],[0.979,0.987,-1.015,0.987,-0.015,-0.056,0,0.0737],[-0.955,0.031,-0.982,0.829,-0.009,0.01,5,0.0737],[-0.018,0.017,-0.018,0.017,-0.018,-0.038,0,0.0737],[-0.909,-0.991,-0.979,1.009,0.02,0.01,2,0.0737],[-0.909,-0.892,-0.635,0.961,-0.011,-0.346,4,0.0737],[0.634,0.774,0.069,-0.733,0.012,0.023,0,0.0724],[-0.085,0.019,-0.091,0.569,0.03,0.02,0,0.0711],[-0.338,-0.02,0.367,0.622,0.019,0.944,0,0.0698],[1.017,-0.028,0.036,0.349,0.023,0.003,1,0.0686],[-0.117,-0.014,0.074,0.069,-0.009,-0.024,3,0.0686],[0.993,0.902,0.979,1.027,-0.006,-0.786,0,0.0674],[-0.831,1.004,0.999,1.009,-0.002,0.007,0,0.0661],[0.993,1.03,-0.951,1.028,-0.008,-0.97,1,0.0661],[-0.966,-1.019,-1.003,0.981,-0.002,-0.019,4,0.0649],[-0.979,-0.462,0.023,0.326,0.0,-0.11,1,0.0649],[-0.123,0.013,-0.038,0.088,-0.026,-0.47,1,0.0649],[-0.004,0.016,-0.004,0.016,-0.004,0.016,5,0.0637],[-0.986,0.101,-0.942,0.841,-0.012,0.008,2,0.0637],[-0.803,-1.009,-1.028,0.988,-0.029,-0.013,2,0.0637],[-0.773,0.121,-0.722,0.73,0.024,-0.988,4,0.0625],[0.795,1.015,0.412,0.997,0.002,0.016,1,0.0625],[1.031,1.008,1.016,0.957,0.031,0.008,0,0.0625],[-0.299,0.368,-0.161,0.781,-0.037,-1.027,4,0.0625],[0.957,-0.019,-0.026,-0.02,-0.008,-0.002,1,0.0613],[-0.085,0.126,0.033,0.02,0.004,0.041,3,0.0613],[-1.047,-0.995,0.952,1.004,-0.047,0.997,5,0.0613],[-0.938,-0.482,0.353,0.892,-0.009,-0.764,5,0.059],[0.185,0.971,0.633,0.842,0.012,-0.027,3,0.0578],[-0.94,0.109,0.496,-0.017,0.038,0.01,0,0.0578],[-0.895,0.004,0.996,0.92,0.021,-0.014,0,0.0578],[-0.98,0.079,-0.836,0.702,0.016,0.009,3,0.0578],[0.372,0.985,-0.983,0.986,0.011,-0.935,1,0.0578],[-0.112,0.146,0.261,0.919,0.009,0.023,5,0.0567],[-1.025,-0.751,-0.166,0.987,-0.05,-0.013,2,0.0556],[0.903,0.115,-0.391,1.014,-0.02,-0.369,5,0.0556],[1.05,-1.003,1.05,0.998,0.05,-1.002,4,0.0544],[0.599,1.001,0.704,0.744,0.026,-0.999,5,0.0544],[0.367,0.355,-0.993,0.994,0.006,-0.006,0,0.0533],[0.663,-1.009,0.98,0.98,-0.019,-1.007,4,0.0533],[0.925,0.704,0.022,0.331,0.013,0.056,1,0.0533],[-0.085,0.591,0.727,0.675,0.009,-0.853,1,0.0533],[0.446,0.998,1.0,0.998,0.0,-0.002,0,0.0522],[0.672,0.05,-0.987,0.976,-0.019,0.015,2,0.0512],[-0.845,-0.968,-1.016,1.031,-0.016,0.031,2,0.0512],[0.98,0.836,-0.175,-0.262,-0.001,0.025,0,0.0512],[0.268,-0.177,-1.0,0.992,-0.004,-0.045,5,0.049],[-0.917,-0.788,-0.971,1.016,0.006,-0.043,0,0.049],[-0.852,0.537,-0.713,0.694,0.002,0.069,4,0.049],[0.193,-0.293,0.128,0.079,0.021,-0.026,5,0.048],[-0.916,-0.05,-0.74,0.417,0.019,0.031,4,0.048],[-0.982,0.545,-1.015,1.021,-0.015,0.509,1,0.0469],[-0.783,0.968,-0.043,0.317,-0.012,-0.43,0,0.0459],[-1.01,-1.024,-0.825,0.976,-0.009,-0.74,5,0.0449],[-0.575,0.005,-0.992,0.973,0.009,-0.028,0,0.0449],[-0.693,-0.674,-1.01,1.001,-0.018,-0.135,2,0.0439],[0.02,-0.021,0.02,-0.021,0.02,-0.021,0,0.0439],[0.126,0.496,-0.03,0.334,-0.036,-0.007,3,0.0429],[-0.831,0.726,0.016,0.878,-0.014,0.03,2,0.0429],[0.017,0.01,-0.499,0.974,-0.005,-0.304,0,0.0429],[1.024,0.997,-0.924,0.979,0.025,-0.003,1,0.0429],[-0.738,-1.012,0.03,0.363,-0.019,-0.013,4,0.0429],[-0.182,0.002,-0.946,0.992,0.004,-0.008,2,0.0429],[0.879,0.035,0.06,0.809,-0.012,0.011,2,0.0419],[0.748,0.094,-0.013,0.44,0.012,0.016,2,0.0419],[-0.89,-0.984,-1.009,1.016,-0.009,0.016,2,0.041],[-0.972,0.94,-0.965,0.931,0.006,-0.036,0,0.041],[-0.189,-0.593,-1.0,0.993,0.0,-0.004,2,0.04],[0.687,-1.025,-0.994,0.975,0.006,-0.025,2,0.04],[-0.612,-0.021,0.034,0.008,-0.002,-0.028,3,0.0391],[-0.962,0.838,0.728,0.808,0.036,-0.008,0,0.0391],[0.862,0.16,0.398,0.601,0.012,-0.028,4,0.0391],[-1.0,-0.814,0.37,0.008,-0.006,-0.03,4,0.0381],[0.391,0.997,-1.0,0.997,0.0,-0.574,1,0.0381],[0.86,-0.452,-0.979,1.001,0.02,0.002,5,0.0381],[0.956,0.974,0.351,0.974,-0.021,-1.025,5,0.0372],[0.005,-0.005,0.005,-0.005,0.005,-0.005,4,0.0372],[-0.88,0.017,0.012,0.046,0.02,0.087,0,0.0372],[-0.033,0.0,-0.033,0.787,-0.033,-0.002,0,0.0363],[-0.848,-0.92,-0.771,0.731,-0.037,-0.009,2,0.0354],[1.024,0.896,-0.959,0.986,0.041,-1.013,2,0.0354],[-0.361,-1.012,-1.007,0.955,-0.008,-0.046,2,0.0345],[-1.009,-0.047,-0.064,0.035,-0.026,-0.05,0,0.0345],[-0.598,-0.938,0.946,0.96,0.001,0.07,4,0.0345],[0.776,0.012,0.004,0.466,0.02,0.02,0,0.0345],[-0.928,-0.005,0.032,-0.074,0.032,-0.061,0,0.0336],[0.159,0.334,-0.693,1.024,0.0,0.024,1,0.0336],[-0.484,-0.99,0.94,0.026,-0.055,0.002,4,0.0327],[-0.496,-0.983,-0.617,0.678,-0.011,0.017,5,0.0327],[0.971,0.293,0.986,0.998,-0.013,-0.208,0,0.0327],[-0.806,-0.977,0.997,1.01,-0.003,0.01,4,0.0319],[-0.92,1.034,-0.99,1.034,0.002,-0.758,0,0.0319],[0.401,0.029,-0.071,0.733,0.001,-0.005,2,0.0319],[-1.033,-1.01,0.952,0.99,-0.047,-0.636,5,0.031],[-0.922,-0.437,-0.053,-0.07,-0.01,-0.008,0,0.031],[-0.983,-0.976,-0.984,1.023,0.016,0.02,2,0.031],[-0.832,0.85,0.93,0.995,0.03,0.01,5,0.031],[-0.86,0.918,-0.576,0.957,0.012,-0.013,0,0.031],[0.867,-0.032,-0.156,0.622,0.019,0.005,0,0.0302],[-0.168,-0.136,-0.766,0.848,-0.017,0.001,3,0.0302],[-0.219,-0.26,-0.983,0.998,0.017,-0.002,5,0.0302],[-0.084,-0.078,-0.746,0.942,0.014,0.023,5,0.0302],[0.54,-0.074,-0.022,0.571,-0.004,-0.022,5,0.0302],[1.002,-0.022,-0.763,0.992,0.005,-1.001,5,0.0302],[-0.639,0.049,-0.907,0.978,-0.005,0.021,2,0.0294],[0.986,1.007,-0.976,1.007,0.025,0.005,0,0.0294],[0.477,-0.014,-0.361,0.337,0.019,-0.104,1,0.0294],[-0.961,-1.01,-0.784,0.989,0.027,-0.011,2,0.0286],[-0.997,0.949,-0.344,0.565,0.002,-0.012,3,0.0286],[0.951,0.999,-1.014,0.999,-0.014,-0.002,2,0.0286],[0.458,-0.01,0.004,0.924,0.012,-0.145,2,0.0278],[-0.907,1.013,-0.972,1.013,0.029,-0.986,4,0.0278],[-0.746,0.896,-1.007,1.019,-0.008,-0.836,1,0.0278],[-0.999,-0.082,0.048,-0.082,-0.012,-0.022,4,0.0278],[-0.56,-0.994,-0.993,1.001,0.005,0.005,0,0.027],[0.925,0.035,0.835,0.988,-0.063,-0.008,0,0.027],[-0.934,0.795,0.001,-0.028,0.001,0.428,3,0.0262],[-1.002,-0.068,0.034,0.034,-0.003,-0.011,2,0.0262],[0.712,0.028,-0.005,0.98,-0.005,0.991,0,0.0262],[0.516,0.001,-0.022,0.007,0.005,0.982,0,0.0254],[0.002,0.005,0.002,0.005,0.002,0.005,0,0.0254],[0.679,0.096,-1.017,1.0,-0.024,-0.001,5,0.0254],[-0.582,-0.041,-0.986,0.991,0.007,-0.009,2,0.0254],[0.368,-1.027,-1.038,0.973,-0.038,-0.619,5,0.0247],[-0.61,0.436,-0.452,0.999,-0.001,0.001,1,0.0247],[-1.03,0.026,0.941,0.98,-0.03,-0.452,1,0.024],[-0.364,-0.891,-0.988,1.007,0.012,-0.01,2,0.0232],[-1.008,-0.087,-1.009,0.987,-0.009,0.007,1,0.0232],[0.542,0.874,0.081,0.073,0.009,-0.033,1,0.0232],[0.031,-0.026,0.031,-0.026,0.031,-0.026,4,0.0225],[0.946,0.005,-0.044,0.759,-0.044,-0.013,0,0.0225],[0.529,-0.044,-0.948,0.93,0.026,0.088,5,0.0225],[-0.744,-1.004,0.991,0.995,-0.009,-0.004,4,0.0225],[-0.574,0.301,-0.495,0.935,-0.042,-0.028,5,0.0225],[-0.961,0.98,-0.419,0.94,0.03,-0.017,4,0.0225],[0.015,0.022,0.015,0.022,0.015,0.022,5,0.0225],[-0.986,-0.758,-0.986,1.018,0.014,0.014,0,0.0225],[-0.893,-0.04,-0.038,0.099,0.007,-0.018,3,0.0225],[-0.544,0.545,-0.827,0.916,0.0,0.009,2,0.0218],[0.747,0.982,-0.993,0.982,0.006,-0.019,0,0.0211],[-0.192,-0.721,0.008,-0.164,0.012,0.086,3,0.0211],[0.58,0.936,-0.019,0.332,0.023,0.011,0,0.0211],[0.984,0.89,0.003,-0.388,0.043,-0.013,0,0.0211],[1.01,-0.019,0.083,-0.02,0.038,0.057,3,0.0204],[-1.018,-1.007,-1.018,0.992,-0.019,-0.019,0,0.0204],[-0.934,0.962,0.79,0.959,0.008,-1.024,4,0.0204],[-0.995,-0.008,-0.059,-0.076,-0.005,0.019,2,0.0204],[0.427,-0.062,-0.839,1.0,0.06,0.003,1,0.0197],[-1.019,-0.967,-1.019,1.033,-0.019,0.026,2,0.0197],[0.621,-0.636,-0.892,0.998,-0.043,-0.002,0,0.0197],[0.074,-0.445,0.543,-0.209,-0.012,0.018,3,0.0197],[-0.591,0.063,-0.873,0.913,-0.012,-0.019,2,0.0197],[-1.007,-0.983,0.993,1.017,-0.007,0.017,4,0.0197],[0.429,-0.04,0.447,-0.723,0.016,0.024,1,0.0191],[-0.827,-0.995,0.023,0.001,0.018,0.006,3,0.0191],[0.867,-1.003,0.15,0.875,0.019,0.014,2,0.0191],[1.004,-0.676,-0.224,-0.218,0.02,-0.018,2,0.0184],[-0.701,0.004,-0.019,0.023,-0.002,-0.013,4,0.0184],[-0.081,0.225,-0.407,1.025,-0.01,0.025,1,0.0184],[-0.095,-0.392,-0.689,1.009,0.027,-0.347,5,0.0184],[-0.739,1.022,-1.015,1.022,-0.022,0.022,4,0.0184],[-0.766,-0.22,0.033,-0.197,0.027,-0.025,3,0.0184],[0.053,-0.058,-0.043,0.556,-0.034,0.001,0,0.0184],[-0.651,-0.05,-1.007,1.007,-0.036,0.01,1,0.0178],[0.515,0.877,-0.967,0.998,0.033,-0.002,2,0.0178],[0.897,0.349,0.065,0.968,0.009,-0.931,0,0.0178],[0.646,1.049,-1.021,1.049,-0.021,-0.869,1,0.0171],[-0.071,0.008,0.011,0.026,0.009,0.011,0,0.0165],[0.803,0.457,0.311,1.006,-0.012,-0.063,0,0.0165],[-0.951,1.034,0.038,-0.466,0.002,0.071,1,0.0159],[-0.959,-0.018,0.026,-0.085,0.002,-0.659,0,0.0153],[0.848,-0.045,0.029,-0.048,-0.027,-0.034,2,0.0153],[-0.489,0.145,-0.913,0.962,0.022,-0.029,0,0.0153],[-0.975,0.178,-0.181,0.987,-0.019,0.014,4,0.0153],[0.945,-0.983,0.853,1.016,-0.023,-0.034,5,0.0153],[-0.984,-1.016,0.016,0.984,0.016,-0.058,0,0.0153],[-0.814,0.963,0.015,0.999,0.055,-0.001,0,0.0147],[0.714,-1.009,0.966,0.977,-0.033,-0.008,5,0.0147],[0.772,-0.056,0.007,0.694,0.007,0.004,2,0.0147],[0.617,-0.023,-1.003,0.997,-0.002,-0.248,2,0.0147],[-0.123,-0.109,0.004,0.398,-0.019,-0.002,0,0.0147],[-0.43,0.961,-0.971,1.022,0.029,-0.916,1,0.0147],[-0.848,0.005,-0.206,-0.104,-0.013,0.032,1,0.0147],[-0.608,1.017,-0.984,1.017,0.016,0.017,4,0.0142],[1.047,0.968,-0.952,0.978,0.048,-0.022,4,0.0142],[0.943,-0.014,-0.04,0.034,-0.028,0.001,1,0.0142],[0.002,-0.005,0.002,-0.005,0.002,-0.005,2,0.0142],[-0.468,-0.055,-0.987,0.97,-0.005,-0.022,3,0.0136],[-0.09,-0.06,-0.813,0.892,0.014,-0.052,2,0.0136],[0.636,-0.015,0.054,-0.086,0.024,-0.01,2,0.0136],[-0.258,-0.238,-0.659,1.009,-0.011,0.01,4,0.0136],[0.606,-0.036,-0.061,0.205,-0.019,-0.858,2,0.0136],[0.926,-0.01,-0.005,-0.009,-0.005,-0.005,1,0.0131],[-0.991,-0.005,0.011,0.02,-0.005,0.004,0,0.0131],[0.999,-0.002,-0.001,0.877,0.0,0.005,0,0.0131],[-0.822,1.003,-0.984,1.025,0.016,0.023,4,0.0131],[1.0,0.259,0.109,-0.002,0.007,0.012,1,0.0131],[-1.014,1.001,0.842,0.428,-0.016,-0.999,1,0.0131],[0.888,0.023,0.015,0.023,0.004,0.023,1,0.0131],[0.741,-0.233,-0.005,-0.012,-0.013,-0.025,2,0.0131],[-0.982,-0.993,-0.981,1.007,0.018,0.007,2,0.0131],[-1.001,0.988,0.96,0.986,-0.02,-0.011,1,0.0125],[0.184,-0.408,-0.824,0.966,-0.009,-0.011,5,0.0125],[0.978,-1.006,0.837,0.994,-0.019,-0.004,4,0.0125],[-1.021,-0.337,-0.62,0.771,-0.026,0.005,4,0.0125],[0.748,0.022,0.001,0.025,-0.002,0.027,2,0.012],[0.691,-0.055,-1.011,1.023,-0.02,0.024,3,0.012],[0.993,0.011,-0.416,0.603,0.03,-0.006,0,0.012],[-0.769,0.993,-0.009,-0.46,-0.01,0.128,0,0.012],[0.814,0.993,-0.007,0.009,-0.012,0.024,1,0.0115],[-0.717,-0.022,0.002,-0.113,-0.006,-0.013,1,0.0115],[-0.951,-0.215,-0.015,-0.031,-0.02,-0.001,0,0.0115],[0.942,-0.029,-0.019,-0.029,-0.021,-0.029,1,0.0115],[-0.962,0.021,-0.024,0.021,0.022,-0.019,0,0.0115],[-0.91,0.957,0.976,0.957,-0.025,-0.043,0,0.011],[0.952,-0.843,0.115,-0.107,0.0,0.014,0,0.011],[0.974,-1.011,0.987,0.989,-0.01,-0.039,5,0.0105],[-0.882,0.955,0.561,0.662,0.0,-0.01,1,0.0105],[-0.278,-0.994,-1.045,1.006,-0.044,-0.841,0,0.0105],[0.319,0.613,-1.004,0.909,-0.016,-0.083,0,0.0105],[0.565,0.17,-0.827,0.988,0.021,0.015,2,0.0105],[-0.899,0.031,-0.002,0.829,-0.003,-0.044,4,0.0105],[0.583,-0.629,0.024,-0.002,0.025,-0.002,0,0.0105],[-0.855,-0.028,0.018,-0.028,0.019,0.188,1,0.01],[0.854,-0.056,-0.036,0.632,-0.014,-0.011,0,0.01],[0.858,-0.028,0.004,-0.028,-0.001,-0.035,1,0.01],[0.565,0.984,0.516,0.924,-0.003,-0.016,0,0.01],[-0.183,-0.707,0.841,0.985,0.001,-0.294,2,0.01],[0.979,-0.001,-0.016,0.502,-0.009,-0.022,0,0.01],[-1.017,0.413,-0.139,-0.401,-0.026,0.008,3,0.01],[-0.134,0.24,0.129,0.035,-0.015,0.475,2,0.01],[-0.12,-0.011,-0.964,0.938,-0.005,-0.022,5,0.0095],[0.937,-0.99,0.165,0.891,-0.043,0.025,3,0.0095],[-0.952,-0.014,0.012,-0.014,0.018,-0.014,3,0.0095],[-0.875,0.1,-0.157,0.968,0.024,-0.266,1,0.0095],[0.523,-0.995,-1.021,1.005,-0.021,0.005,2,0.0095],[0.963,0.107,-0.067,1.012,-0.024,-0.526,2,0.0095],[-0.997,-1.022,1.002,0.977,0.002,-0.023,4,0.0095],[0.906,0.035,0.012,0.007,0.005,0.029,3,0.0095],[0.629,0.478,0.019,-0.014,0.018,0.004,3,0.0095],[-0.655,0.983,1.012,0.983,0.02,-1.014,0,0.0095],[-0.234,-0.146,-0.991,1.035,0.002,0.036,2,0.0095],[-0.854,0.012,-0.038,0.013,-0.026,0.035,3,0.0091],[-0.224,0.01,-1.004,1.012,-0.004,0.091,2,0.0091],[-0.97,-0.975,-0.97,1.025,0.03,0.025,2,0.0091],[0.335,0.047,-0.565,1.011,-0.05,0.102,5,0.0091],[-1.013,0.067,-1.017,1.001,-0.019,-0.047,2,0.0091],[-0.075,0.007,-0.81,0.998,0.036,0.006,1,0.0091],[0.886,-0.993,0.999,1.007,0.002,0.066,0,0.0091],[0.544,-0.028,-0.526,0.992,-0.017,0.009,3,0.0086],[0.987,-0.022,0.005,-0.048,0.029,-0.016,3,0.0086],[0.656,-0.039,-0.004,0.343,-0.004,-0.098,4,0.0086],[-0.233,0.024,0.069,0.807,-0.011,-0.004,1,0.0086],[-0.483,-0.174,-0.969,0.986,0.027,-0.013,2,0.0086],[0.927,-0.985,-0.04,0.876,0.0,0.101,3,0.0086],[-0.983,0.964,-0.989,0.964,0.012,-1.036,1,0.0086],[0.04,0.001,0.04,0.001,0.04,0.001,5,0.0086],[0.782,0.05,0.002,-0.053,-0.011,0.021,2,0.0082],[0.995,-0.992,0.03,0.635,0.008,0.031,3,0.0082],[0.896,0.013,0.467,-0.884,-0.003,-0.993,0,0.0082],[-0.135,0.397,0.047,-0.125,0.015,0.0,0,0.0082],[-0.144,-0.04,-0.838,0.923,-0.02,0.004,2,0.0082],[-1.0,0.763,0.221,-0.628,-0.007,-0.011,3,0.0082],[-0.786,0.942,-0.997,1.028,0.002,-0.886,2,0.0082],[-0.999,0.238,-0.016,-0.002,-0.008,0.005,3,0.0082],[-0.827,0.501,0.059,0.138,0.007,-0.096,3,0.0082],[0.919,0.815,0.099,0.091,0.009,-0.994,0,0.0078],[1.013,-0.004,0.048,1.0,0.024,-0.362,2,0.0078],[-0.982,-0.989,-0.982,1.01,0.019,0.011,2,0.0078],[-0.968,0.372,0.233,0.032,0.022,-0.002,3,0.0078],[0.379,0.342,1.0,0.989,0.027,-1.008,4,0.0078],[-0.13,0.164,-0.375,0.604,0.01,-0.003,0,0.0078],[-0.475,0.98,0.13,0.98,0.003,-0.063,5,0.0078],[-0.975,-0.25,0.029,0.962,-0.001,-0.128,5,0.0078],[0.884,1.003,0.045,0.085,0.04,0.07,5,0.0078],[-0.313,-0.904,0.392,1.004,-0.023,-0.611,2,0.0073],[1.029,-0.986,0.133,0.144,0.047,-0.005,4,0.0073],[0.97,-0.029,-0.025,0.718,-0.025,0.028,2,0.0073],[0.008,-0.02,1.008,0.98,0.008,-0.02,4,0.0073],[0.588,0.334,0.036,0.45,-0.019,0.0,1,0.0073],[1.024,-0.988,-0.976,1.012,0.024,0.009,5,0.0073],[-0.648,-0.064,0.075,-0.02,-0.042,-0.042,3,0.0069],[-0.772,-0.989,0.834,1.011,0.028,0.115,5,0.0069],[0.901,0.749,-0.067,-0.047,-0.029,-0.037,0,0.0069],[-0.571,-0.602,-0.442,0.522,0.011,-0.01,0,0.0069],[0.011,0.011,0.011,0.011,0.011,0.011,4,0.0069],[-0.05,0.068,-0.952,0.98,0.037,-0.019,5,0.0069],[-0.558,0.486,0.012,-0.073,-0.006,0.002,3,0.0069],[-0.166,0.187,-0.988,1.019,0.002,0.02,2,0.0069],[-0.983,0.916,-0.606,0.336,-0.043,-0.299,3,0.0069],[0.885,-0.035,-0.037,0.076,-0.032,-0.038,0,0.0066],[0.664,0.223,0.039,0.045,0.031,-0.034,4,0.0066],[-0.865,-0.017,0.023,0.72,0.023,-0.328,1,0.0066],[0.99,-1.004,0.362,0.992,0.002,0.164,4,0.0066],[0.373,-0.05,-0.06,-0.015,0.044,0.017,1,0.0066],[0.976,0.361,-0.913,0.912,0.026,0.009,2,0.0066],[0.259,-0.458,-0.002,0.975,-0.01,-0.025,2,0.0066],[0.954,-0.11,-0.047,-0.553,-0.021,-0.023,0,0.0066],[0.973,0.04,-0.011,0.108,-0.017,0.02,2,0.0066],[0.534,-0.989,0.586,0.979,0.015,0.011,4,0.0066],[0.229,-0.289,0.279,1.029,-0.004,-0.721,0,0.0066],[-0.211,0.995,0.092,0.349,-0.005,0.013,1,0.0062],[0.51,0.456,-0.442,1.025,-0.009,-0.027,2,0.0062],[0.98,0.389,0.002,1.008,0.0,0.009,2,0.0062],[-0.005,-0.017,-0.005,-0.017,-0.005,-0.017,4,0.0058],[-0.888,0.008,0.077,0.075,0.002,0.004,3,0.0058],[-0.827,-0.017,-0.033,0.352,0.01,0.028,3,0.0058],[-0.018,0.009,-0.018,0.009,-0.018,0.009,4,0.0058],[1.022,0.392,1.012,1.014,0.027,0.032,0,0.0058],[0.129,-0.131,-0.858,0.847,0.011,-0.014,3,0.0058],[-0.968,-0.989,-0.976,1.01,0.024,-0.989,2,0.0058],[-0.103,-0.134,-0.255,0.988,-0.008,0.001,2,0.0058],[-0.699,-0.975,-0.327,1.024,-0.006,0.025,0,0.0058],[-0.9,-1.023,-0.853,0.976,0.0,-0.023,4,0.0058],[0.047,-1.023,0.906,0.977,-0.008,-0.654,4,0.0054],[0.012,0.017,0.012,0.017,0.012,0.017,2,0.0054],[0.979,-1.018,0.009,0.931,-0.001,-0.008,4,0.0054],[0.037,-1.01,-0.579,0.671,-0.009,-0.01,2,0.0054],[-1.01,-0.999,-1.01,1.001,-0.009,0.001,2,0.0054],[0.86,-0.985,-0.989,0.989,0.012,-0.011,2,0.0054],[0.005,-0.024,0.005,-0.024,0.005,-0.024,5,0.0054],[0.739,-1.036,0.979,0.964,-0.021,-0.044,0,0.0051],[0.001,0.005,1.0,1.005,0.001,0.005,0,0.0051],[-0.976,-0.161,0.008,0.922,0.008,0.017,4,0.0051],[-0.979,-0.995,0.968,0.976,-0.012,-0.995,4,0.0051],[0.007,-0.016,0.007,-0.016,0.007,-0.016,0,0.0051],[-0.82,-0.107,0.264,0.532,0.031,-0.01,4,0.0051],[-0.964,-0.068,0.048,-0.04,0.019,-0.011,3,0.0048],[-0.992,1.009,-0.015,0.986,-0.015,-0.006,1,0.0048],[0.036,-0.02,0.036,-0.02,0.036,-0.02,4,0.0048],[0.986,-0.979,0.869,1.021,0.001,0.02,5,0.0048],[0.176,-0.173,-0.345,-0.115,0.003,0.115,0,0.0048],[0.968,-0.059,0.309,0.68,-0.005,0.014,2,0.0048],[0.985,0.987,0.988,0.987,-0.012,-0.013,5,0.0048],[0.359,0.285,-0.942,0.983,0.057,-0.017,0,0.0048],[0.021,0.019,0.021,0.019,0.021,0.019,3,0.0044],[1.01,-0.967,1.02,1.033,0.026,0.227,4,0.0044],[0.199,-0.977,-0.796,0.805,-0.016,0.02,2,0.0044],[0.739,0.04,0.381,-0.581,-0.02,0.001,1,0.0044],[0.808,-0.079,0.227,0.892,0.02,0.243,5,0.0044],[0.52,-1.007,-1.004,0.992,-0.005,-0.011,2,0.0044],[0.964,-0.014,-0.276,0.994,-0.014,-0.005,1,0.0044],[0.406,0.374,1.017,0.986,0.018,-1.014,2,0.0044],[0.869,0.08,-0.541,0.97,-0.023,-0.084,2,0.0041],[0.978,0.031,-0.013,0.937,-0.016,0.008,0,0.0041],[-0.852,0.381,-0.019,0.167,0.01,0.004,3,0.0041],[-0.686,-0.637,-0.146,0.922,0.028,0.016,3,0.0041],[-0.988,1.025,0.955,0.827,0.012,0.722,3,0.0041],[-0.321,0.092,-0.672,0.981,0.022,-0.019,2,0.0041],[-0.936,0.61,0.03,0.226,-0.019,0.092,0,0.0041],[0.75,0.119,-0.977,1.011,0.003,0.029,2,0.0038],[0.98,-1.013,0.997,0.987,-0.003,-0.362,0,0.0038],[-1.017,1.025,-1.015,1.025,-0.017,0.025,1,0.0038],[-0.332,-0.294,-0.162,0.884,-0.016,0.069,2,0.0038],[-0.832,0.001,-0.038,0.271,-0.029,-0.029,3,0.0038],[-0.979,0.756,0.005,0.537,0.005,-0.009,3,0.0038],[-0.012,0.002,-0.012,0.002,-0.012,0.002,2,0.0038],[-0.597,1.002,0.021,0.836,0.019,0.027,5,0.0035],[-0.994,-1.015,0.959,0.985,-0.04,-0.014,5,0.0035],[-0.934,0.304,-0.085,-0.31,0.005,0.005,3,0.0035],[0.009,-0.002,0.009,-0.002,0.009,-0.002,0,0.0035],[0.826,-0.986,0.179,0.55,-0.012,0.014,2,0.0035],[0.033,0.02,0.033,0.02,0.033,0.02,0,0.0035],[0.865,-1.006,0.192,0.99,0.013,-0.01,5,0.0035],[-0.772,-0.055,0.168,0.049,0.001,0.016,3,0.0035],[0.986,0.054,0.01,0.754,0.01,-0.025,0,0.0033],[0.689,0.566,-0.914,0.797,0.02,0.244,5,0.0033],[0.801,-1.005,0.57,0.777,-0.004,-0.005,2,0.0033],[-0.96,-0.839,0.023,0.263,0.034,-0.025,1,0.0033],[-0.505,-0.865,-1.01,1.0,-0.011,-0.99,4,0.0033],[0.925,0.966,0.248,0.827,-0.002,-0.064,2,0.0033],[0.74,0.956,-0.897,0.964,-0.005,-0.009,0,0.0033],[0.913,-0.97,0.959,1.03,-0.032,0.384,4,0.003],[1.017,-1.002,1.02,0.998,0.02,-0.144,5,0.003],[-0.886,0.086,0.029,0.418,-0.032,-0.005,1,0.003],[0.031,-0.025,0.031,-0.025,0.031,-0.025,2,0.003],[-1.021,-0.013,-0.016,0.916,-0.036,-0.033,0,0.003],[-0.016,-0.008,-0.016,0.965,-0.016,-0.008,0,0.003],[0.573,-0.527,0.055,0.824,0.002,-0.025,3,0.0027],[-0.63,-0.927,-0.227,-0.325,0.027,0.051,3,0.0027],[0.761,-0.98,0.595,0.815,0.007,0.02,2,0.0027],[-0.927,-0.407,0.19,-0.12,0.011,0.007,3,0.0027],[-1.004,-0.041,0.177,-0.041,-0.023,-0.026,3,0.0027],[-0.814,-0.529,0.119,0.047,0.033,-0.02,3,0.0027],[0.938,-0.082,-0.551,0.942,-0.023,-0.104,1,0.0027],[-0.897,-0.94,0.991,1.017,-0.009,0.017,4,0.0027],[0.824,0.87,0.989,1.015,-0.001,0.022,0,0.0025],[-0.966,-0.819,-0.195,1.042,0.005,0.042,2,0.0025],[0.95,0.944,-0.737,0.935,0.005,-0.44,0,0.0025],[0.803,0.752,0.599,1.006,0.034,0.005,0,0.0025],[-0.973,-0.157,0.085,0.939,-0.002,-0.034,0,0.0025],[0.929,-0.427,-0.005,0.656,-0.005,-0.019,3,0.0025],[-1.017,0.134,-0.144,0.334,-0.017,-0.004,5,0.0025],[0.322,0.313,-0.13,-0.628,-0.003,-0.025,3,0.0025],[-0.53,-0.999,-1.023,1.001,-0.023,0.001,2,0.0025],[0.319,0.906,0.003,-0.039,0.003,-0.036,0,0.0025],[0.048,-0.967,-0.389,0.111,0.016,0.032,3,0.0025],[-0.803,-0.892,-1.014,1.029,-0.015,0.029,5,0.0025],[-0.058,-0.184,-0.06,0.991,0.005,-0.009,2,0.0023],[0.642,-0.992,0.729,0.913,-0.002,0.008,4,0.0023],[0.717,0.536,0.235,-0.489,-0.007,-0.008,4,0.0023],[-0.64,0.94,0.432,-0.708,0.001,0.025,1,0.0023],[0.333,-0.965,0.568,0.801,0.019,0.035,2,0.0023],[0.723,0.353,-0.914,1.03,-0.034,0.03,2,0.0023],[0.02,0.01,0.02,0.01,0.02,0.01,0,0.0023],[-1.0,-1.012,-1.001,0.988,-0.001,-1.012,5,0.0023],[0.555,-0.184,-0.014,0.915,-0.014,-0.128,2,0.0023],[-0.236,-0.987,-1.042,1.013,-0.042,0.013,2,0.0023],[0.005,-0.006,0.005,-0.006,0.005,-0.006,0,0.0023],[0.583,0.428,0.059,-0.047,-0.012,-0.016,0,0.0023],[0.961,0.847,-0.868,0.707,0.029,0.376,2,0.0023],[0.264,-0.962,0.952,1.021,-0.027,0.038,4,0.0023],[0.513,-0.992,-0.943,1.001,0.01,0.008,2,0.0023],[-0.014,-0.012,-0.014,-0.012,-0.014,-0.012,0,0.0023],[0.724,-0.998,0.013,0.782,-0.006,0.002,4,0.002],[-0.872,-0.979,0.413,-0.851,0.015,0.062,3,0.002],[-0.03,0.005,-0.03,0.005,-0.03,0.005,0,0.002],[-0.018,0.029,-0.018,1.03,-0.018,0.029,0,0.002],[-0.845,0.062,-0.019,-0.059,-0.019,0.005,5,0.002],[-0.979,1.011,0.125,0.382,0.02,0.024,0,0.002],[-0.286,-0.272,0.306,0.319,0.01,-0.886,5,0.002],[0.68,-0.212,-0.891,1.012,0.026,0.026,2,0.0018],[-0.012,-0.015,-0.012,-0.015,-0.012,-0.015,2,0.0018],[0.214,-0.983,0.96,1.011,-0.014,0.017,4,0.0018],[-0.94,0.968,-1.009,0.986,-0.012,-0.64,3,0.0018],[-1.035,-1.0,-1.036,1.001,-0.036,-0.994,2,0.0018],[0.535,-0.65,-0.592,0.949,0.038,-0.647,0,0.0018],[0.997,0.896,-0.61,0.648,-0.003,0.023,1,0.0016],[-0.03,-0.02,-0.03,-0.02,-0.03,-0.02,0,0.0016],[-1.005,-0.99,-1.005,1.01,-0.005,0.01,2,0.0016],[0.001,-0.028,0.001,-0.028,0.001,-0.028,4,0.0016],[0.768,-0.992,0.629,0.981,-0.019,0.008,4,0.0016],[-0.994,0.043,-0.049,0.694,-0.012,0.007,3,0.0016],[0.43,-0.991,0.9,0.938,-0.027,0.009,4,0.0016],[0.003,0.008,0.003,0.008,0.003,0.008,2,0.0016],[-1.015,0.931,-0.976,0.931,-0.019,0.461,4,0.0016],[0.701,-1.005,0.012,-0.461,-0.017,-0.005,4,0.0016],[-0.023,0.002,-0.023,0.002,-0.023,0.002,0,0.0016],[-0.988,0.829,-0.88,0.829,0.009,0.352,5,0.0016],[0.854,-1.003,-1.015,0.997,-0.016,-0.003,2,0.0016],[1.004,0.065,0.007,0.782,0.007,0.004,0,0.0015],[0.582,-0.876,0.128,-0.263,0.0,-0.016,3,0.0015],[0.547,-1.0,0.054,0.382,0.002,0.001,4,0.0015],[0.66,-1.009,0.748,0.724,0.022,-0.009,2,0.0015],[0.416,0.994,0.681,1.007,0.025,-0.092,1,0.0015],[0.003,0.009,0.003,0.009,0.003,0.009,2,0.0015],[-0.979,-0.043,-0.002,-0.077,-0.002,0.793,3,0.0015],[0.733,0.596,0.478,-0.542,0.009,-0.032,0,0.0015],[-0.741,0.878,-0.741,0.878,-0.002,0.152,3,0.0015],[0.035,-0.035,0.035,-0.035,0.035,-0.035,5,0.0015],[0.981,-0.841,0.572,1.01,-0.016,0.01,0,0.0015],[0.11,-0.974,0.5,0.283,0.002,0.026,2,0.0015],[0.812,-1.018,-0.333,0.981,0.021,-0.018,4,0.0013],[0.959,-0.985,-0.898,1.015,-0.033,-0.504,2,0.0013],[-0.985,-0.978,-1.025,1.022,-0.026,-0.978,2,0.0013],[-1.014,1.017,0.499,0.859,-0.022,0.313,1,0.0013],[-0.992,-0.997,-0.992,1.003,0.008,-0.997,5,0.0013],[0.741,-1.007,-0.009,-0.288,0.009,-0.007,4,0.0013],[0.986,0.976,-0.9,0.99,-0.01,0.025,2,0.0013],[0.009,-0.016,0.009,-0.016,0.009,-0.016,0,0.0013],[-1.01,0.534,-0.725,0.534,-0.023,-0.023,3,0.0013],[-1.002,-0.035,0.03,-0.035,-0.011,0.005,3,0.0013],[-0.993,-0.218,0.244,0.833,0.001,0.007,2,0.0013],[-1.014,-0.947,-0.402,1.019,-0.017,0.02,0,0.0013],[0.682,-1.009,-0.014,-0.398,0.002,-0.009,4,0.0013],[-0.906,-0.726,-1.007,1.018,-0.007,0.019,0,0.0013],[-0.989,-0.539,0.218,0.817,0.0,0.016,5,0.0013],[0.751,-1.001,0.611,0.821,-0.008,-0.001,2,0.0013],[-0.991,-0.969,-0.791,1.031,-0.024,0.031,4,0.0013],[0.472,-0.994,0.366,0.714,0.004,0.007,4,0.0011],[-0.007,-0.021,-0.007,-0.021,-0.007,-0.021,0,0.0011],[0.002,0.013,0.002,0.013,0.002,0.013,0,0.0011],[0.46,-0.998,0.013,-0.23,0.016,-0.019,3,0.0011],[0.022,0.518,-0.015,0.042,-0.024,0.014,0,0.0011],[-0.437,0.468,0.018,-0.11,0.019,-0.019,1,0.0011],[0.975,0.02,0.093,-0.063,-0.015,0.014,1,0.0011],[-0.963,-0.982,-0.094,-0.385,0.018,0.344,3,0.0011],[-0.677,0.956,-1.009,1.009,-0.012,0.706,3,0.0011],[-0.866,-1.013,-0.993,0.987,0.007,-1.013,2,0.0011],[0.011,-0.033,0.011,-0.033,0.011,-0.033,2,0.0011],[0.656,-0.997,-0.019,-0.43,-0.012,0.003,4,0.0011],[-0.985,-0.998,-0.992,1.001,0.008,0.002,2,0.0011],[0.016,-0.044,0.016,-0.044,0.016,-0.044,2,0.001],[0.015,-0.036,0.015,-0.036,0.015,-0.036,2,0.001],[0.442,-1.004,-0.976,0.983,0.022,0.095,2,0.001],[-0.836,-0.378,0.15,-0.077,0.023,-0.001,3,0.001],[-0.757,-1.011,-0.985,0.957,0.006,-0.359,2,0.001],[0.013,0.022,0.013,0.022,0.013,0.022,2,0.001],[0.454,-1.007,-0.995,0.993,0.005,-0.007,2,0.001],[-0.771,-0.043,-0.008,0.331,-0.008,-0.008,0,0.001],[-0.493,-0.856,0.145,-0.09,-0.011,0.004,3,0.001],[0.782,-1.026,0.971,0.962,0.015,-0.026,4,0.001],[0.998,-0.955,0.125,-0.224,0.012,-0.005,1,0.001],[0.776,-0.973,0.747,0.941,0.002,0.028,4,0.001],[1.014,0.373,-0.031,0.651,0.015,-0.038,5,0.001],[-0.768,-0.881,-1.001,0.97,-0.002,-0.03,2,0.001],[-0.969,0.391,0.521,-0.109,-0.001,0.007,3,0.001],[0.451,-0.529,-0.999,1.01,0.0,0.01,2,0.0008],[0.783,0.777,-0.986,0.986,0.015,-0.014,2,0.0008],[-0.956,-0.184,-0.821,0.976,0.027,-0.024,0,0.0008],[0.737,0.16,-0.967,1.009,-0.009,0.015,2,0.0008],[-0.974,0.948,0.174,-0.099,-0.009,0.011,3,0.0008],[-0.523,-0.996,-0.814,1.003,0.031,0.505,0,0.0008],[0.003,0.055,0.003,0.055,0.003,0.055,2,0.0008],[-0.817,-0.456,0.313,-0.125,-0.005,-0.05,3,0.0007],[-0.009,0.039,-0.009,0.039,-0.009,0.039,2,0.0007],[-0.714,0.23,0.023,0.775,0.017,0.022,1,0.0007],[-0.992,-0.929,-0.757,0.998,-0.003,-0.002,2,0.0007],[0.707,-0.982,-0.802,1.01,-0.019,0.01,0,0.0007],[-0.968,0.75,0.168,-0.613,0.022,-0.016,5,0.0007],[0.016,0.011,0.016,0.011,0.016,0.011,2,0.0007],[-0.682,-0.021,-0.039,-0.01,-0.008,-0.016,5,0.0007],[-0.871,-0.888,-0.041,0.479,-0.013,0.013,2,0.0007],[-0.898,-0.376,0.012,0.014,-0.004,-0.05,1,0.0007],[0.722,-0.977,-0.05,0.241,0.002,0.022,4,0.0007],[-0.183,0.397,-0.004,-0.007,-0.011,-0.01,0,0.0007],[-0.004,-0.014,-0.004,-0.014,-0.004,-0.014,5,0.0007],[-0.996,-0.916,-0.854,0.187,-0.002,-0.234,0,0.0006],[0.249,-0.85,0.163,-0.296,-0.015,0.044,3,0.0006],[-0.032,-0.001,-0.032,-0.001,-0.032,-0.001,5,0.0006],[-0.023,0.006,-0.023,0.006,-0.023,0.006,2,0.0006],[0.651,-1.016,0.845,0.983,-0.009,-0.016,5,0.0006],[0.725,-0.364,0.026,-0.109,-0.031,0.003,0,0.0006],[0.744,-0.991,-0.992,-0.155,-0.024,0.01,2,0.0006],[0.759,0.415,0.119,-0.101,0.002,0.01,0,0.0006],[0.262,-1.04,0.696,0.861,-0.029,-0.04,4,0.0006],[0.692,-1.005,0.465,0.431,0.011,-0.005,4,0.0006],[-0.028,-0.014,-0.028,-0.014,-0.028,-0.014,0,0.0006],[0.709,-0.995,0.109,0.559,-0.016,0.005,4,0.0006],[-0.128,-1.019,0.44,0.76,0.003,-0.019,4,0.0006],[0.308,0.254,0.231,-0.839,-0.013,-0.017,1,0.0006],[-0.972,1.007,0.07,-0.106,0.012,0.008,1,0.0006],[-0.762,-0.028,-0.143,-0.142,0.008,-0.028,3,0.0005],[0.042,0.029,0.042,0.029,0.042,0.029,0,0.0005],[-0.745,1.0,0.081,-0.111,0.007,0.0,1,0.0005],[0.903,-0.673,-1.02,1.011,-0.02,-0.989,5,0.0005],[-0.934,-0.925,0.171,0.871,-0.019,0.034,0,0.0005],[-0.618,1.024,0.163,-0.077,-0.011,0.028,3,0.0005],[0.793,-1.013,0.97,0.955,0.001,-0.014,4,0.0005],[-0.972,-1.003,0.275,-0.136,-0.006,-0.017,3,0.0005],[0.627,-1.006,0.7,0.502,0.0,-0.007,0,0.0005],[0.965,-0.98,-0.084,0.014,0.059,0.014,3,0.0005],[0.697,-1.008,0.673,0.853,0.006,-0.008,4,0.0005],[0.444,-1.015,0.938,0.977,-0.033,-0.016,4,0.0005],[-0.946,-1.009,0.972,0.991,0.024,-0.009,5,0.0005],[-0.703,0.466,0.092,0.01,0.035,-0.015,5,0.0005],[0.951,0.793,0.068,-0.389,-0.028,-0.006,0,0.0005],[-0.832,-0.892,0.037,-0.14,-0.006,-0.01,0,0.0005],[0.717,0.886,0.382,0.365,0.043,0.025,0,0.0004],[0.461,-1.002,-1.0,0.998,0.0,-0.002,2,0.0004],[-0.179,-1.003,0.779,0.991,-0.013,-0.003,4,0.0004],[0.019,0.008,-0.98,1.009,0.019,0.008,2,0.0004],[-0.969,0.951,0.154,-0.13,-0.015,0.526,3,0.0004],[-0.03,0.019,-0.03,0.019,-0.03,0.019,2,0.0004],[-0.024,-1.009,-0.83,0.964,-0.008,-0.014,0,0.0004],[0.499,-1.015,0.771,0.97,0.002,-0.015,4,0.0004],[0.627,-0.978,-0.027,-0.279,-0.011,0.022,4,0.0004],[-0.664,-1.024,0.488,0.966,0.019,-0.024,0,0.0004],[-0.879,-0.923,0.171,-0.488,-0.002,-0.004,0,0.0004],[0.49,0.873,1.0,0.916,0.011,1.034,0,0.0004],[-0.337,0.964,0.42,-0.863,0.024,-0.01,2,0.0004],[-0.092,-0.977,-0.957,1.0,0.022,0.002,0,0.0004],[0.738,-0.984,-0.77,1.012,0.006,0.015,3,0.0004],[-0.271,-1.028,0.835,0.001,0.033,-0.028,4,0.0003],[0.742,-0.976,0.699,0.905,0.005,0.024,2,0.0003],[-1.002,-0.998,-0.016,1.001,-0.016,0.002,4,0.0003],[0.93,0.99,0.346,-0.956,-0.022,-0.01,0,0.0003],[0.876,0.971,0.423,-0.843,0.048,-0.01,4,0.0003],[0.523,0.339,0.171,0.998,0.019,-0.002,2,0.0003],[-1.013,-0.988,0.987,1.013,-0.013,0.013,4,0.0003],[-0.983,0.952,0.187,0.625,0.012,0.929,1,0.0003],[-0.926,-0.426,0.088,0.176,-0.006,-0.041,0,0.0003],[0.012,0.007,0.012,0.007,0.012,0.007,2,0.0003],[-1.0,-0.04,-0.073,0.269,-0.022,-0.017,1,0.0002],[0.012,-0.023,0.012,-0.023,0.012,-0.023,0,0.0002],[0.701,1.012,-0.001,0.022,-0.009,0.014,1,0.0002],[-0.93,-0.916,-0.997,1.002,0.002,0.003,2,0.0002],[-0.984,-0.982,1.016,1.018,0.016,0.019,4,0.0002],[-1.0,-1.018,1.0,0.982,0.0,-0.018,4,0.0002],[-0.218,-1.001,0.995,0.998,-0.003,-0.001,4,0.0001],[-0.178,-1.016,0.369,0.559,-0.016,-0.016,5,0.0001],[-1.006,0.992,-1.021,0.998,-0.022,-0.002,1,0.0001],[-0.857,-0.944,-0.976,1.042,0.023,0.041,0,0.0001],[0.42,-0.151,-0.806,0.945,-0.015,0.967,0,0.0001],[0.029,0.013,0.029,0.013,0.029,0.013,2,0.0001],[-0.498,-0.973,-0.236,0.897,0.007,0.012,0,0.0001],[0.008,-0.007,0.008,-0.007,0.008,-0.007,0,0.0001],[-0.977,-0.985,1.023,1.015,0.022,0.014,4,0.0001],[0.904,0.984,0.003,0.679,0.003,-0.016,1,0.0001],[-0.371,-0.971,-0.88,1.029,-0.003,0.029,0,0.0001],[-0.022,-0.017,-0.022,-0.017,-0.022,-0.017,0,0.0001],[-0.945,0.785,-0.987,1.024,0.012,0.024,5,0.0001],[0.018,0.023,0.018,0.023,0.018,0.023,4,0.0001],[0.924,1.006,-0.369,0.552,-0.014,0.007,0,0.0001],[-0.919,0.756,-0.975,0.995,0.025,-0.005,0,0.0001],[0.699,-1.009,0.906,0.665,-0.005,-0.008,3,0.0001],[-0.002,0.005,-0.002,0.005,-0.002,0.005,0,0.0001],[-0.039,0.006,-0.039,0.006,-0.039,0.006,4,0.0],[0.06,0.012,0.06,0.012,0.06,0.012,2,0.0],[-0.006,0.013,-0.006,0.013,-0.006,0.013,2,0.0],[-0.012,-0.02,-0.012,-0.02,-0.012,-0.02,4,0.0],[-0.018,0.025,-0.018,0.025,-0.018,0.025,5,0.0]],"markers":{"c1":{"Regla fragancias":[0.86,0.86,0.86,0.86],"Regla makeup":[-0.284,-0.395,-0.688,-0.516],"Ciclo de vida":[0.0,-0.516,0.0,-0.516],"Media 6M prudente":[-1.0,-0.637,-0.688,-0.516],"Media 6M estacional":[0.688,-0.516,0.688,-0.516],"Media 12M estacional":[0.688,0.344,0.688,0.344]},"c2":{"Regla fragancias":[-0.043,0.0,-0.043,0.0],"Regla makeup":[-0.043,-0.43,-0.043,-0.43],"Ciclo de vida":[0.301,0.516,0.301,0.516],"Media 6M prudente":[0.86,0.86,0.86,0.86],"Media 6M estacional":[0.172,0.86,0.172,0.86],"Media 12M estacional":[-0.86,-0.43,-0.86,-0.43]},"c3":{"Regla fragancias":[0.0,0.0,0.0,0.0],"Regla makeup":[-0.43,-0.516,-0.43,-0.516],"Ciclo de vida":[-0.456,-0.739,-0.86,-0.86],"Media 6M prudente":[0.0,-0.86,0.0,-0.86],"Media 6M estacional":[-0.86,0.0,-0.86,0.0],"Media 12M estacional":[-1.0,-0.981,-0.86,-0.86]}},"ejemplo":{"name":"BBY HER ELIXIR EDP PS 10 ML IV","ean":"3616304085116","urnas":["sep-24 Q2","sep-24 Q3","sep-24 Q4","dic-24 Q3","dic-24 Q4","mar-25 Q4"],"rows":{"Regla fragancias":{"err":[139,149,111,149,111,95],"fc":51024},"Regla makeup":{"err":[262,123,149,129,156,83],"fc":74592},"Ciclo de vida":{"err":[226,159,100,75,39,15],"fc":67952},"Media 6M prudente":{"err":[181,73,93,79,99,36],"fc":53253},"Media 6M estacional":{"err":[340,249,171,98,58,12],"fc":70768},"Media 12M estacional":{"err":[197,136,83,112,68,46],"fc":69098}},"real":85066}};
+const P = D.parties, ORDER = P.map(p => p.name).concat("Empate");
+const COL = Object.fromEntries(P.map(p => [p.name, p.col])); COL.Empate = D.empate;
+const NUM = Object.fromEntries(P.map(p => [p.name, p.num]));
+const lum = h => { const c = [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255).map(v => v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; };
+const ON = Object.fromEntries(P.map(p => [p.name, lum(p.col) > .3 ? "#17161D" : "#fff"]));  // texto legible sobre el color del partido
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const NS = "http://www.w3.org/2000/svg";
+const pc = x => Math.round(x * 100) + "%";
+const sg = x => (x > 0 ? "+" : "−") + Math.round(Math.abs(x) * 100) + "%";
+const n0 = x => Math.round(x).toLocaleString("es-ES");
+const $ = id => document.getElementById(id);
+const nb = n => n === "Empate" ? `<i class="nb" style="background:var(--empate)">–</i>` : `<i class="nb" style="background:${COL[n]};color:${ON[n]}">${NUM[n]}</i>`;
+const el = (tag, attrs = {}) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+const T = D.por.Total.Total;
+
+/* ── geometría del hemiciclo (misma que src/votes_report.seats) */
+function seats(n) {
+  const opts = [];
+  for (let rows = n <= 10 ? 1 : 2; rows < 40; rows++) for (let i = 20; i <= 1000; i++) {
+    const d = i / 1000, r0 = 1 - (rows - 1) * d;
+    if (rows > 1 && !(r0 >= 0.479 && r0 <= 0.641)) continue;
+    if (rows === 1 && d < Math.PI / Math.max(n - 1, 1)) continue;
+    let cap = 0;
+    if (rows > 1) for (let j = 0; j < rows; j++) cap += Math.floor(Math.PI * (r0 + (1 - r0) * j / (rows - 1)) / d) + 1;
+    else cap = Math.floor(Math.PI / d) + 1;
+    if (cap >= n) opts.push([d, cap - n, rows]);
+  }
+  let ok = opts.filter(o => o[1] <= Math.max(1, 0.15 * n));
+  if (!ok.length) ok = [opts.reduce((a, b) => b[1] < a[1] ? b : a)];
+  ok.sort((a, b) => b[0] - a[0] || b[1] - a[1] || b[2] - a[2]);
+  const [d, , rows] = ok[0], R0 = 1 - (rows - 1) * d;
+  const radii = rows === 1 ? [1] : Array.from({ length: rows }, (_, i) => R0 + (1 - R0) * i / (rows - 1));
+  const cap = radii.map(r => Math.floor(Math.PI * r / d) + 1), sc = cap.reduce((a, b) => a + b, 0);
+  const k = cap.map(c => Math.floor(n * c / sc));
+  const rest = radii.map((_, i) => i).sort((a, b) => (n * cap[b] / sc - k[b]) - (n * cap[a] / sc - k[a]));
+  for (const i of rest.slice(0, n - k.reduce((a, b) => a + b, 0))) k[i]++;
+  const pts = [];
+  radii.forEach((r, ri) => { for (let j = 0; j < k[ri]; j++) pts.push([k[ri] > 1 ? Math.PI * (1 - j / (k[ri] - 1)) : Math.PI / 2, r]); });
+  pts.sort((a, b) => b[0] - a[0] || a[1] - b[1]);
+  const dd = Math.min(d, ...radii.map((r, i) => k[i] ? Math.PI * r / Math.max(k[i] - 1, 1) : Infinity));
+  return [pts, dd];
+}
+
+function countUp(node, to, ms = 1100) {
+  if (RM) { node.textContent = n0(to); return; }
+  const t0 = performance.now();
+  const f = t => { const p = Math.min((t - t0) / ms, 1), e = 1 - Math.pow(1 - p, 4); node.textContent = n0(to * e); if (p < 1) requestAnimationFrame(f); };
+  requestAnimationFrame(f);
+}
+
+function hemicycle(svg, st, { w = 600, label = "escaños", sweep = 1200 } = {}) {
+  const n = ORDER.reduce((a, p) => a + (st[p] || 0), 0);
+  const [pts, d] = seats(n), S0 = w / 2;
+  const r = Math.min(0.40 * d * (S0 - 2) / (1 + 0.40 * d), 24), S = S0 - r - 2, cx = w / 2, cy = S + r + 2;
+  const cols = ORDER.flatMap(p => Array(st[p] || 0).fill(p));
+  svg.setAttribute("viewBox", `0 0 ${w} ${Math.ceil(cy + r + 2)}`);
+  svg.replaceChildren();
+  pts.forEach(([a, rad], i) => {
+    const c = el("circle", { cx: (cx + S * rad * Math.cos(a)).toFixed(1), cy: (cy - S * rad * Math.sin(a)).toFixed(1), r: r.toFixed(2), fill: COL[cols[i]], class: "seat" });
+    c.dataset.p = cols[i]; c.style.setProperty("--d", (Math.PI - a) / Math.PI * sweep + "ms");
+    svg.append(c);
+  });
+  const big = el("text", { x: cx, y: cy - 40, "text-anchor": "middle", class: "big", fill: "currentColor" });
+  const cap = el("text", { x: cx, y: cy - 12, "text-anchor": "middle", class: "cap", fill: "currentColor", opacity: ".7" }); cap.textContent = label;
+  svg.append(big, cap); countUp(big, n);
+}
+
+function volbar(node, vol) {
+  node.innerHTML = ORDER.filter(p => (vol[p] || 0) > 0.002).map((p, i) =>
+    `<i style="flex:${vol[p]} 1 0;background:${COL[p]};--d:${300 + i * 70}ms;color:${p === "Empate" ? "var(--ink)" : ON[p]}" title="${p}: ${pc(vol[p])} del volumen">${vol[p] >= 0.07 ? pc(vol[p]) : ""}</i>`).join("");
+}
+
+function legend(node, onFocus, counts) {
+  node.innerHTML = ORDER.filter(p => p !== "Empate" || (counts && counts.Empate)).map(p =>
+    `<button class="chip" type="button" aria-pressed="false" data-p="${p}">${nb(p)}${p}${counts ? ` <b>${counts[p] || 0}</b>` : ""}</button>`).join("");
+  let cur = null;
+  node.addEventListener("click", e => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    cur = cur === b.dataset.p ? null : b.dataset.p;
+    node.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.p === cur));
+    node.classList.toggle("has-focus", !!cur); onFocus(cur);
+  });
+}
+
+/* ── 1. la cámara */
+(function camara() {
+  const st = T.seats, svg = $("hemi-main"), top = P.map(p => p.name).sort((a, b) => st[b] - st[a])[0];
+  hemicycle(svg, st, { label: "EANs · escaños", sweep: 1300 });
+  svg.style.color = "var(--chamber-ink)";
+  volbar($("vbar-main"), T.vol);
+  const maj = Math.floor(T.eans / 2) + 1;
+  $("maj-l").textContent = `Mayoría absoluta: ${maj} escaños`;
+  $("maj-r").textContent = `Nadie llega: el más votado tiene ${st[top]} (${pc(st[top] / T.eans)})`;
+  legend($("legend-main"), p => { svg.classList.toggle("dim", !!p); svg.querySelectorAll(".seat").forEach(s => s.classList.toggle("hl", s.dataset.p === p)); }, st);
+  $("facts").innerHTML = [
+    [T.eans, "EANs Central con actividad en la foto sep-25: cada uno es un escaño"],
+    [6, "partidos: dos reglas fijas, el ciclo de vida y tres de nivel reciente"],
+    [6, "urnas por EAN: los quarters de FY25 cerrados antes de sep-25"],
+    [D.sin_historia, "EANs nuevos sin FY25: votan lo que votaron sus parecidos"]
+  ].map(([b, s]) => `<div><b class="num">${n0(b)}</b><span>${s}</span></div>`).join("");
+})();
+
+/* ── 2. cómo funciona */
+(function reglas() {
+  const g = [
+    ["Ciudadano", "el EAN", `Cada código Central (6 meses o más de envíos) con actividad. Votan ${n0(D.n_votantes)} EANs con FY25.`],
+    ["Partido", "una receta", "Una forma completa de hacer el forecast: de dónde parte, a quién sigue y cómo limpia la base."],
+    ["Urna", "un quarter", "Cada quarter de FY25 pronosticado desde una foto simulada. Hay 6 urnas por EAN."],
+    ["Voto", "el que menos falla", "En cada urna el EAN vota al partido con menor error: |forecast − real| / real. Si empatan exacto, vota a todos (hasta 3)."],
+    ["Escaño", "el más votado", "El EAN se queda con el partido que gana más urnas. Si empatan, el de menor error sumado; si siguen, Empate y se queda la regla."],
+    ["Parecidos", "para los nuevos", `Los ${D.sin_historia} EANs sin FY25 toman el voto de los códigos de su casa y tamaño o función que tenían su edad.`]
+  ];
+  $("gloss").innerHTML = g.map(([a, b, c]) => `<div><dt>${a} <small>${b}</small></dt><dd>${c}</dd></div>`).join("");
+  const dni = [["Historia", "Envíos, cortes y DAs"], ["Familia", "Categoría, casa, brand, línea"], ["Formato", "Tamaño en fragancias, función en makeup"],
+    ["Edad", "Meses desde el lanzamiento: 6–11, 12–17, 18–25, 26+"], ["Fase", "Desde 18 meses: crece, estable o en declive frente a su casa"], ["Gestión", "Bandera isf (0, 1, 2) y Central o Local"]];
+  $("dni").innerHTML = `<div class="dni-t">El DNI del EAN<span>Lo que le define y entra en los partidos</span></div>` + dni.map(([a, b]) => `<div><b>${a}</b>${b}</div>`).join("");
+  const s = D.stats;
+  const q = [
+    ["1", "¿De dónde parto?", "La base: el año pasado o el nivel reciente (6 o 12 meses), con temporada propia, de su línea o de su casa, o plana.", "La forma de la base cambia el error en 9 de cada 10 EANs. Fragancias tiene temporada; makeup es casi plano.", 3, "Alta"],
+    ["2", "¿A quién sigo?", "El trend: yo, mi línea, mi casa, mi categoría, mi fase o los códigos que tuvieron mi edad. Y cuánto me lo creo.", `En FY25 el ${pc(s.c2y.der)} acertaba más creyéndose el trend entero; la fuente le da igual al ${pc(s.c2x.centro)}.`, 2, "Alta en edad, baja en fuente"],
+    ["3", "¿Cómo limpio la base?", "Cuánto resto de los DAs planificados de los meses base y cuánto sumo de cortes.", "Solo el 42% del DA planificado de fragancias se convirtió en envío extra (80% en makeup).", 1, "Media en DAs, baja en cortes"]
+  ];
+  $("q3").innerHTML = q.map(([n, t, a, b, f, fl]) => `<div class="q"><span class="qn">${n}</span><h3>${t}</h3><p>${a}</p><p style="color:var(--muted);font-size:.88rem">${b}</p>
+    <div class="firm"><i aria-hidden="true">${[1, 2, 3].map(i => `<span class="${i <= f ? "on" : ""}"></span>`).join("")}</i>Firmeza: ${fl}</div></div>`).join("");
+})();
+
+/* ── 3. escrutinio */
+(function escrutinio() {
+  const X = D.ejemplo, names = P.map(p => p.name), U = X.urnas;
+  $("ex-name").textContent = X.name; $("ex-ean").textContent = `EAN ${X.ean} · error de cada partido en cada urna de FY25`;
+  const capd = names.map(n => X.rows[n].err.map(e => Math.min(e, 200)));
+  const mean = names.map((n, i) => capd[i].reduce((a, b) => a + b, 0) / 6);
+  const winners = U.map((_, j) => { const m = Math.min(...names.map(n => X.rows[n].err[j])); return names.filter(n => X.rows[n].err[j] === m).slice(0, 3); });
+  const votes = Object.fromEntries(names.map(n => [n, winners.filter(w => w.includes(n)).length]));
+  const mx = Math.max(...Object.values(votes));
+  const tied = names.filter(n => votes[n] === mx);
+  const elected = tied.sort((a, b) => X.rows[a].err.reduce((s, x) => s + x, 0) - X.rows[b].err.reduce((s, x) => s + x, 0))[0];
+  const top2 = names.map((n, i) => [n, mean[i]]).sort((a, b) => a[1] - b[1]).slice(0, 2).map(x => x[0]);
+  const coal = (X.rows[top2[0]].fc + X.rows[top2[1]].fc) / 2;
+  $("ex-lead").textContent = `Un perfume de Burberry de 10 ml. Cada columna es una urna: el quarter de FY25 que cada partido pronosticó desde una foto simulada. En cada urna gana el partido que menos se equivocó con este EAN.`;
+  const th = U.map(u => { const [f, q] = u.split(" "); return `<th>${f}<br>${q}</th>`; }).join("");
+  $("ex-table").innerHTML = `<thead><tr><th>Partido</th>${th}<th class="cm">Media</th><th>Forecast<br>oct–jun</th></tr></thead><tbody>` +
+    names.map((n, i) => `<tr style="--c:${COL[n]};--t:${ON[n]}" data-p="${n}"><td class="pn">${nb(n)}${n}</td>${X.rows[n].err.map((e, j) => `<td data-j="${j}">${e}%</td>`).join("")}
+      <td class="cm mean">${Math.round(mean[i])}%</td><td>${n0(X.rows[n].fc)}</td></tr>`).join("") +
+    `</tbody><tfoot><tr><td>Real oct-25 a jun-26</td><td colspan="7"></td><td>${n0(X.real)}</td></tr></tfoot>`;
+  $("ex-tally").innerHTML = names.map(n => `<div class="row" style="--c:${COL[n]}" data-p="${n}"><span class="pn">${nb(n)}${n}</span><div class="bar"><i></i></div><b>0</b></div>`).join("");
+  $("ex-verdict").innerHTML = `<h3>Elige ${elected}: gana ${votes[elected]} de 6 urnas</h3>
+    <p>Ningún partido gana más de ${mx} urnas, así que un solo quarter decide. Su forecast para oct-25 a jun-26 fue <b>${n0(X.rows[elected].fc)}</b> unidades frente a un real de <b>${n0(X.real)}</b>.</p>
+    <p>En coalición se queda con los 2 de menor error medio, <b>${top2[0]}</b> y <b>${top2[1]}</b> (marcados en la columna Media), y usa la media de sus forecasts: <b>${n0(coal)}</b>. Los errores por encima de 200% cuentan como 200% en la media.</p>`;
+  const tb = $("ex-table"), tally = $("ex-tally");
+  const setTally = v => names.forEach(n => { const r = tally.querySelector(`[data-p="${n}"]`); r.querySelector("i").style.transform = `scaleX(${v[n] / 6})`; r.querySelector("b").textContent = v[n]; });
+  const mark = j => winners[j].forEach(n => tb.querySelector(`tr[data-p="${n}"] td[data-j="${j}"]`).classList.add("win"));
+  const markMean = () => top2.forEach(n => tb.querySelector(`tr[data-p="${n}"] .mean`).classList.add("top2"));
+  const final = () => { U.forEach((_, j) => mark(j)); markMean(); setTally(votes); };
+  final();
+  let timer = null;
+  function play() {
+    if (RM) return;
+    clearTimeout(timer); const btn = $("ex-play"); btn.disabled = true;
+    tb.querySelectorAll(".win,.top2,.cur").forEach(c => c.classList.remove("win", "top2", "cur"));
+    const v = Object.fromEntries(names.map(n => [n, 0])); setTally(v);
+    let j = 0;
+    const step = () => {
+      tb.querySelectorAll(".cur").forEach(c => c.classList.remove("cur"));
+      if (j === U.length) { markMean(); btn.disabled = false; return; }
+      tb.querySelectorAll(`td[data-j="${j}"]`).forEach(c => c.classList.add("cur"));
+      const jj = j;
+      timer = setTimeout(() => { mark(jj); winners[jj].forEach(n => v[n]++); setTally(v); j++; timer = setTimeout(step, 380); }, 420);
+    };
+    timer = setTimeout(step, 250);
+  }
+  $("ex-play").addEventListener("click", play);
+  if (!RM && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); play(); } }, { threshold: .55 });
+    io.observe($("ex-table"));
+  }
+})();
+
+/* ── 4. partidos */
+(function partidos() {
+  const smax = Math.max(...P.map(p => T.seats[p.name]));
+  const lab = ["1 · Parto de", "2 · Sigo a", "3 · Limpio"];
+  $("parties").innerHTML = P.map(p => `<article class="party" style="--c:${p.col}">
+    <div><div class="id">${nb(p.name)}<div><h3>${p.name}</h3><span class="bloc">${p.name.startsWith("Regla") ? "Regla fija · " : ""}Bloque ${p.bloc}</span></div></div><p class="lema">«${p.lema}»</p></div>
+    <div class="ans">${p.resp.map((r, i) => `<div><span>${lab[i]}</span>${r}</div>`).join("")}</div>
+    <div class="pm"><div class="seats"><b>${T.seats[p.name]}</b><span>escaños · ${pc(T.seats[p.name] / T.eans)} de la cámara</span></div>
+      <div class="sbar"><i style="width:${T.seats[p.name] / smax * 100}%"></i></div>
+      <dl><dt>Volumen</dt><dd>${pc(T.vol[p.name])}</dd><dt>Solo por plazo</dt><dd>${p.solo.slice(0, 3).map(pc).join(" / ")}</dd><dt>Solo · total</dt><dd>${pc(p.solo[3])}</dd></dl></div>
+  </article>`).join("");
+})();
+
+/* ── 5. brújulas */
+(function brujulas() {
+  const svg = $("cmp"), L = 1.14, ml = 44, mt = 14, PW = 542, PH = 542;
+  const X = x => ml + (x + L) / (2 * L) * PW, Y = y => mt + (1 - (y + L) / (2 * L)) * PH;
+  const SPEC = [
+    { k: "c1", t: "¿De dónde parto?", sub: "La base", xl: ["Plana", "Con temporada"], yl: ["Reciente (6M)", "Lejana (12M / año pasado)"],
+      q: ["Planos de memoria larga", "Estacionales de memoria larga", "Planos de lo reciente", "Estacionales de lo reciente"] },
+    { k: "c2", t: "¿A quién sigo?", sub: "El trend", xl: ["Individual: EAN, línea", "Colectivo: casa, categoría"], yl: ["Trend suave", "Trend completo"],
+      q: ["Individualistas creyentes", "Colectivistas creyentes", "Individualistas escépticos", "Colectivistas escépticos"] },
+    { k: "c3", t: "¿Cómo limpio la base?", sub: "DAs y cortes", xl: ["Deja los DAs planificados", "Los resta"], yl: ["No suma cortes", "Suma cortes"],
+      q: ["Suma cortes, deja DAs", "Suma cortes y resta DAs", "Base tal cual", "Solo resta DAs"] }
+  ];
+  const s = D.stats;
+  const READ = {
+    c1: { ax: [["x", "c1x", "Plana", "Con temporada"], ["y", "c1y", "Reciente (6M)", "Lejana"]],
+      txt: `Con temporada gana en el <b>${pc(s.c1x.der)}</b> y plana en el <b>${pc(s.c1x.izq)}</b>; lo reciente gana en el ${pc(s.c1y.izq)} y lo lejano en el ${pc(s.c1y.der)}. <b>Nadie domina</b>: la base buena depende del EAN.` },
+    c2: { ax: [["x", "c2x", "Individual", "Colectivo"], ["y", "c2y", "Suave", "Completo"]],
+      txt: `El <b>${pc(s.c2y.der)}</b> acierta más creyéndose el trend entero: FY25 cayó y hacía falta poder bajar hasta un 60%. Seguirse a sí mismo o a su casa le da igual al <b>${pc(s.c2x.centro)}</b>.` },
+    c3: { ax: [["y", "c3y", "No suma cortes", "Suma cortes"]],
+      txt: `En sep-24 no hay DAs guardados (o9 los borra y solo existen desde ene-25), así que <b>el eje de DAs no se puede juzgar con FY25</b>. Los cortes le dan igual al <b>${pc(s.c3y.centro)}</b>.` }
+  };
+  $("n-cmp").textContent = n0(D.pts.length);
+  // estructura fija
+  const qcol = ["var(--soft)", "var(--bg)", "var(--bg)", "var(--soft)"];
+  const g0 = el("g");
+  [[ml, mt], [X(0), mt], [ml, Y(0)], [X(0), Y(0)]].forEach(([x, y], i) => g0.append(el("rect", { x, y, width: PW / 2, height: PH / 2, fill: qcol[i], class: "q-bg" })));
+  g0.append(el("line", { x1: X(0), y1: mt, x2: X(0), y2: mt + PH, class: "axis" }), el("line", { x1: ml, y1: Y(0), x2: ml + PW, y2: Y(0), class: "axis" }));
+  const tq = [[ml + 10, mt + 20, "start"], [ml + PW - 10, mt + 20, "end"], [ml + 10, mt + PH - 12, "start"], [ml + PW - 10, mt + PH - 12, "end"]].map(([x, y, a]) => { const t = el("text", { x, y, "text-anchor": a, class: "ql" }); g0.append(t); return t; });
+  const xl0 = el("text", { x: ml, y: mt + PH + 22, class: "al" }), xl1 = el("text", { x: ml + PW, y: mt + PH + 22, "text-anchor": "end", class: "al" });
+  const yl0 = el("text", { transform: `translate(${ml - 14} ${mt + PH}) rotate(-90)`, class: "al" }), yl1 = el("text", { transform: `translate(${ml - 14} ${mt}) rotate(-90)`, "text-anchor": "end", class: "al" });
+  const arrows = el("path", { d: `M${ml + PW / 2 - 18} ${mt + PH + 18}h36m-5 -4l5 4-5 4M${ml - 18} ${mt + PH / 2 + 18}v-36m-4 5l4-5 4 5`, fill: "none", stroke: "var(--muted)", "stroke-width": 1.2 });
+  g0.append(xl0, xl1, yl0, yl1, arrows); svg.append(g0);
+  // EANs
+  const gd = el("g"), names = P.map(p => p.name);
+  const dots = D.pts.map((p, i) => {
+    const c = el("circle", { cx: 0, cy: 0, r: (2 + 6 * Math.sqrt(p[7])).toFixed(2), fill: P[p[6]].col, "fill-opacity": .62, stroke: "var(--surface)", "stroke-width": .6, class: "dot" });
+    c.style.setProperty("--d", Math.round((i * 7919) % 260) + "ms"); c.dataset.p = names[p[6]]; c.dataset.i = i; gd.append(c); return c;
+  });
+  svg.append(gd);
+  // partidos
+  const gm = el("g");
+  const mks = names.map(n => {
+    const g = el("g", { class: "mk" }); g.dataset.p = n;
+    const ln = el("path", { class: "lead-l", stroke: COL[n] }), od = el("circle", { r: 3, fill: COL[n] });
+    const c = el("circle", { r: 15, fill: COL[n], stroke: "var(--surface)", "stroke-width": 3 });
+    const t = el("text", { "text-anchor": "middle", dy: "4.5", fill: ON[n] }); t.textContent = NUM[n];
+    const ttl = el("title"); ttl.textContent = n;
+    g.append(ln, od, c, t, ttl); gm.append(g); return { g, ln, od, n };
+  });
+  svg.append(gm);
+  const tabs = $("tabs");
+  tabs.innerHTML = SPEC.map((sp, i) => `<button class="tab" role="tab" type="button" aria-selected="${i === 0}" data-i="${i}">${i + 1} · ${sp.t}<small>${sp.sub}</small></button>`).join("");
+  function show(i) {
+    const sp = SPEC[i], o = 2 * i;
+    tabs.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", +b.dataset.i === i));
+    sp.q.forEach((q, j) => tq[j].textContent = q);
+    xl0.textContent = "← " + sp.xl[0]; xl1.textContent = sp.xl[1] + " →"; yl0.textContent = "← " + sp.yl[0]; yl1.textContent = sp.yl[1] + " →";
+    dots.forEach((c, j) => { const p = D.pts[j]; c.style.transform = `translate(${X(p[o]).toFixed(1)}px, ${Y(p[o + 1]).toFixed(1)}px)`; });
+    mks.forEach(({ g, ln, od, n }) => {
+      const [x, y, ox, oy] = D.markers[sp.k][n], dx = X(ox) - X(x), dy = Y(oy) - Y(y), far = Math.hypot(dx, dy) > 4;
+      g.style.transform = `translate(${X(x).toFixed(1)}px, ${Y(y).toFixed(1)}px)`;
+      ln.style.d = `path("M0 0 L${far ? dx.toFixed(1) : 0} ${far ? dy.toFixed(1) : 0}")`;
+      od.setAttribute("cx", far ? dx.toFixed(1) : 0); od.setAttribute("cy", far ? dy.toFixed(1) : 0); od.style.opacity = far ? 1 : 0;
+    });
+    const R = READ[sp.k];
+    $("cmp-side").innerHTML = `<span class="order">Pregunta ${i + 1} de 3</span><h3>${sp.t}</h3><p class="sub">Dónde le fue mejor a cada EAN en FY25</p>
+      <div class="read">${R.ax.map(([a, k, l0, l1]) => { const v = s[k]; return `<div class="split"><div class="lab"><span>${l0}</span><span>Le da igual</span><span>${l1}</span></div>
+        <div class="sb"><i style="flex-grow:${v.izq}">${pc(v.izq)}</i><i style="flex-grow:${v.centro}">${pc(v.centro)}</i><i style="flex-grow:${Math.max(v.der, 0.001)}">${v.der > .04 ? pc(v.der) : ""}</i></div></div>`; }).join("")}
+      <p class="txt">${R.txt}</p></div>`;
+  }
+  tabs.addEventListener("click", e => { const b = e.target.closest(".tab"); if (b) show(+b.dataset.i); });
+  tabs.addEventListener("keydown", e => {
+    if (!["ArrowRight", "ArrowLeft"].includes(e.key)) return;
+    const cur = +tabs.querySelector('[aria-selected="true"]').dataset.i, nx = (cur + (e.key === "ArrowRight" ? 1 : 2)) % 3;
+    show(nx); tabs.querySelector(`[data-i="${nx}"]`).focus();
+  });
+  show(0);
+  const cnt = Object.fromEntries(names.map(n => [n, 0])); D.pts.forEach(p => cnt[names[p[6]]]++);
+  legend($("legend-cmp"), p => {
+    svg.classList.toggle("focus", !!p);
+    dots.forEach(c => c.classList.toggle("hl", c.dataset.p === p)); mks.forEach(m => m.g.classList.toggle("hl", m.n === p));
+  }, cnt);
+  const tip = $("tip"), box = svg.parentElement;
+  svg.addEventListener("pointerover", e => {
+    const t = e.target; if (!t.classList.contains("dot") && !t.closest(".mk")) return;
+    const p = t.classList.contains("dot") ? t.dataset.p : t.closest(".mk").dataset.p;
+    tip.innerHTML = t.classList.contains("dot") ? `EAN que elige <b>${p}</b>` : `<b>${p}</b>: posición por su receta`;
+    const r = box.getBoundingClientRect(), b = t.getBoundingClientRect();
+    tip.style.left = Math.min(b.left - r.left + 10, r.width - 220) + "px"; tip.style.top = (b.top - r.top - 34) + "px"; tip.classList.add("on");
+  });
+  svg.addEventListener("pointerout", () => tip.classList.remove("on"));
+})();
+
+/* ── 6. resultados por grupo */
+(function resultados() {
+  const groups = [["Total", ["Total"]], ["Categoría", ["Fragancias", "Makeup"]], ["Casa", Object.keys(D.por.Casa)],
+    ["Edad", ["6–11", "12–17", "18–25", "26+"].filter(k => D.por.Edad[k])], ["Fase", ["Lanzamiento", "Consolidación", "Crecimiento", "Estable", "Declive"].filter(k => D.por.Fase[k])],
+    ["Historia", Object.keys(D.por.Historia)]];
+  const lab = (g, k) => g === "Edad" ? k + " meses" : k.replace("Sin historia FY25 (parecidos)", "Sin FY25 (parecidos)");
+  $("filters").innerHTML = groups.map(([g, ks]) => `<div class="fr"><span>${g}</span>${ks.map(k => `<button class="fb" type="button" aria-pressed="${g === "Total"}" data-g="${g}" data-k="${k}">${lab(g, k)}</button>`).join("")}</div>`).join("");
+  function show(g, k) {
+    const d = D.por[g][k];
+    $("filters").querySelectorAll(".fb").forEach(b => b.setAttribute("aria-pressed", b.dataset.g === g && b.dataset.k === k));
+    hemicycle($("hemi-res"), d.seats, { label: "escaños", sweep: 600 });
+    volbar($("vbar-res"), d.vol);
+    const top = P.map(p => p.name).sort((a, b) => d.seats[b] - d.seats[a])[0];
+    const topv = P.map(p => p.name).sort((a, b) => d.vol[b] - d.vol[a])[0];
+    $("res-head").textContent = top === topv
+      ? `${lab(g, k)}: ${top} gana en escaños (${d.seats[top]} de ${d.eans}) y en volumen (${pc(d.vol[topv])}).`
+      : `${lab(g, k)}: más escaños para ${top} (${d.seats[top]} de ${d.eans}); más volumen para ${topv} (${pc(d.vol[topv])}).`;
+    const mx = Math.max(...ORDER.map(p => d.seats[p] || 0), 1);
+    $("res-tab").innerHTML = `<thead><tr><th>Partido</th><th>Escaños</th><th></th><th>Volumen</th></tr></thead><tbody>` +
+      ORDER.filter(p => p !== "Empate" || d.seats.Empate).map(p => `<tr class="${p === top ? "lead-r" : ""}" style="--c:${COL[p]}"><td class="pn">${nb(p)}${p}</td><td>${d.seats[p] || 0}</td>
+        <td class="bw"><i style="width:${(d.seats[p] || 0) / mx * 100}%"></i></td><td>${pc(d.vol[p] || 0)}</td></tr>`).join("") + `</tbody>`;
+  }
+  $("filters").addEventListener("click", e => { const b = e.target.closest(".fb"); if (b) show(b.dataset.g, b.dataset.k); });
+  show("Total", "Total");
+})();
+
+/* ── 7. veredicto */
+(function veredicto() {
+  const rows = [["regla", "Regla de su categoría"], ["un_partido", "Un partido por EAN"], ["coalicion", "Coalición de 2"], ["media6", "Media de los 6"]]
+    .concat(P.map(p => ["F:" + p.name, p.name]));
+  const best = "F:Ciclo de vida", E = D.ensayo, C = D.confirmacion;
+  function bars(node, R, title, sub) {
+    const mx = Math.max(...rows.map(([c]) => R[c].total.ean));
+    node.innerHTML = `<h3>${title}</h3><p class="sub">${sub}. Debajo de la línea, cada partido usado solo para todos.</p>` + rows.map(([c, l], i) => {
+      const isP = c.startsWith("F:"), col = isP ? COL[c.slice(2)] : null;
+      return `<div class="br ${c === "regla" ? "ref" : ""} ${c === best ? "best" : ""} ${c === "F:" + P[0].name ? "gap" : ""}"><span class="pn">${isP ? nb(c.slice(2)) : ""}<span>${l}</span></span>
+        <span class="bt"><i style="width:${R[c].total.ean / mx * 100}%;--d:${i * 50}ms;${col ? `background:${col}` : ""}"></i></span><b>${pc(R[c].total.ean)}</b></div>`;
+    }).join("");
+  }
+  bars($("bars-1"), E, "Ensayo con el pasado: lo que se sabía en sep-25", "Elegir con Q2–Q3 de FY25 y medir en Q4 de FY25 · error EAN a EAN, menos es mejor");
+  bars($("bars-2"), C, "Confirmación con el real de sep-26", "Foto sep-25 → Q2 a Q4 de FY26 · no estaba disponible al decidir");
+  $("ver-lead").textContent = `Con lo que se sabía en sep-25, usar el Ciclo de vida para todos era la mejor apuesta: ${pc(E[best].total.ean)} de error contra ${pc(E.regla.total.ean)} de la regla. El real de sep-26 lo confirma: ${pc(C[best].total.ean)} contra ${pc(C.regla.total.ean)}.`;
+  const pe = D.persistencia.igual;
+  $("why").innerHTML = [
+    [pc(pe), `de los EANs repite ganador en FY26. Al azar sería un 17%: el partido que gana con el pasado no se repite.`],
+    [pc(C.un_partido.total.ean), `de error eligiendo un partido por EAN, frente a ${pc(C.regla.total.ean)} de la regla. Elegir no mejora.`],
+    [pc(C[best].total.ean), `de error con el Ciclo de vida para todos. Ya lleva dentro el DNI: la curva de su edad y el trend de su fase.`]
+  ].map(([b, p]) => `<div><b>${b}</b><p>${p}</p></div>`).join("");
+  const hz = ["7–9", "4–6", "1–3", "total"], hr = [["regla", "Regla de su categoría"], ["un_partido", "Un partido por EAN"], ["coalicion", "Coalición de 2"], [best, "Ciclo de vida para todos"]];
+  $("htab").innerHTML = `<thead><tr><th></th><th>7–9 meses</th><th>4–6 meses</th><th>1–3 meses</th><th>Total</th><th>WAPE90</th><th>Sesgo</th></tr></thead><tbody>` +
+    hr.map(([c, l]) => `<tr class="${c === best ? "hl" : ""}"><td>${l}</td>${hz.map(h => `<td>${pc(C[c][h].ean)}</td>`).join("")}<td>${pc(C[c].total.wape90)}</td><td>${sg(C[c].total.sesgo)}</td></tr>`).join("") + `</tbody>`;
+  $("cv-sesgo").textContent = sg(C[best].total.sesgo);
+})();
+
+/* ── barra del orden del día: sección activa */
+(function nav() {
+  const links = [...document.querySelectorAll(".nav ol a")];
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id)); }), { rootMargin: "-40% 0px -55% 0px" });
+  document.querySelectorAll("#camara, main section").forEach(s => io.observe(s));
+  const tl = $("tl");
+  if (!RM) new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { tl.classList.add("play"); o.disconnect(); } }, { threshold: .4 }).observe(tl);
+})();
+</script>
