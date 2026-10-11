@@ -1,4 +1,4 @@
-# Contexto (vigente a 2026-10-10)
+# Contexto (vigente a 2026-10-11)
 Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falta un número o un resultado anterior.
 
 ## Usuario y objetivo
@@ -52,7 +52,7 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   2. **¿A quién sigo?** (trend) Yo, mi línea, mi brand, mi tamaño/función, mi casa, mi categoría, mi fase o los de mi edad; y cuánto me lo creo (fuerza y tope).
      - La edad va aquí: ciclo de vida = seguir a los códigos que tuvieron mi edad (curva hasta 17 meses) y a mi fase después.
      - Sustento: en nuevos (6–11 meses) el ciclo de vida falla 105% vs 276% de las reglas; el 51% acierta más con el trend completo. La fuente del trend no se puede juzgar con sep-25 (casi todos en el tope de −30%; 64% indiferente). Firmeza alta en edad, baja en fuente.
-     - Candidato: EPOS (sell-out desde jul-24) como otra fuente de trend.
+     - EPOS (sell-out desde jul-24): mejor fuente de trend que los envíos y la edad decide la base (ver «Investigación y EPOS»).
   3. **¿Cómo limpio la base?** Cuánto resto de los DAs planificados de los meses base y cuánto sumo de cortes.
      - Sustento: solo el 42% del DA planificado de fragancias se convirtió en envío extra (80% makeup); al 72% de los EANs le da igual restar o no y al 79% los cortes. Firmeza media (DAs) y baja (cortes).
 - **No son preguntas del EAN:**
@@ -94,6 +94,19 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - Si elegir por EAN sigue teniendo sentido con un solo año de voto (el ganador no se repite).
 - **Reportes:** `reportes/REPORTE_IDEOLOGIA.pdf` es el vigente; el resto, en pausa.
 
+## Investigación y EPOS (2026-10-11; detalle en `INVESTIGACION_DEMAND_PLANNING.md`, `HISTORIAL.md` §13)
+- Literatura: combinar gana a elegir; el voto por EAN sirve para vetar a los peores partidos, no para elegir uno.
+- EPOS: forma mensual estable año a año (envíos no); el envío va 3 meses por delante de la venta; envío que crece más que el EPOS = canal cargado → envíos futuros bajan.
+- Patrón: un pico de envío de un trimestre no se repite ni se devuelve; la carga acumulada en 12M (envío/EPOS vs FY25 >+15%) sí anticipa ~12 puntos menos de envío a 3 meses en fragancias (8 de 8 meses; Burberry, Gucci Make up, Marc Jacobs; no en Kylie).
+- Patrones en relativo (`reportes/REPORTE_EPOS_PATRONES.pdf`): el envío oscila 4× el EPOS; el EPOS mantiene su tendencia (79% vs 65%); lanzamientos envían 2–2,5× el EPOS el año 1 y 0,84–0,97× el año 2 (veteranos 1,12×); veteranos pierden 12–23% de EPOS al año (Marc Jacobs 0%), así que el trend de casa no les aplica.
+- Los primeros 6 meses (Local) son llenado + safety stock: no juzgar ese envío. En Central, fragancias envía 0,87–0,90× el EPOS en meses 6–17 (veteranos ~1,1×); la base "año pasado" de un EAN de 12–17 meses cae en su Local.
+- **Regla por edad (probada en 6M, `src/epos_reco_test.py`):**
+  - 6–11 meses: base = EPOS × relación de su categoría (fragancias 58% vs 215% del año pasado).
+  - 12–17 meses: media de EPOS × relación y media 6M de envío (fragancias 33%, makeup 41%).
+  - 18+ meses: regla con el trend de EPOS de los veteranos de su casa (31% vs 33%; 47% vs 49%).
+  - **Próximo paso:** meterla como partido "Consumidor (EPOS)" en el parlamento (error mensual, 9 meses, con DAs) + semáforo de carga, y elegir por coalición.
+- Abierto con el usuario: intentará conseguir el WOS (semanas de stock por EAN y cliente; stock = WOS × EPOS semanal). Pregunta pendiente: ¿el envío de lanzamiento incluye probadores o material de exposición?
+
 ## Reportes (preferencias)
 - PDF A4 horizontal: HTML + SVG impreso con Chromium (`/opt/pw-browsers/chromium-1194/chrome-linux/chrome`), fuente Inter. Diseño cuidado, con gráficos, nada que parezca hecho con prisa.
 - **Hemiciclo de escaños:**
@@ -129,4 +142,5 @@ Resultados históricos y evidencia: `HISTORIAL.md`. Léelo solo cuando haga falt
   - `six_multi.py` / `six_sin_consenso.py`: diseño anterior (votar con quarters de FY26 de varias fotos), reemplazado.
   - `ideologia_report.py` → `reportes/REPORTE_IDEOLOGIA.pdf`: concepto (DNI, 3 preguntas, diseño de la prueba), los 6 partidos, brújulas, coalición, prueba honesta y elección.
   - `six_report.py` / `six_infografia.py`: versiones anteriores que comparan con el consenso (históricas).
+- **Diagnóstico EPOS:** `python3 src/epos_diag.py` → `work/results/epos_diag.md`; patrón envío ↔ EPOS: `cd src && python3 epos_pattern.py` → `work/results/epos_pattern.md`; patrones en relativo y reporte: `cd src && python3 epos_patrones.py && python3 epos_patrones_report.py`; prueba de la regla por edad: `cd src && python3 epos_reco_test.py`.
 - **Resto de scripts y reportes:** ver `HISTORIAL.md`.

@@ -223,3 +223,40 @@ Resultados de todas las pruebas hasta 2026-10-10. El contexto vigente está en `
   - Por edad: 6–11 98 vs 128% · 12–17 63 vs 64% · 18–25 45 vs 44% · 26+ 37 vs 40%.
   - Por bandera: 0 42 vs 46% · 1 77 vs 57% (con 100% DAs, 102%) · 2 82 vs 121%.
 - Conclusión: gana código a código, no en el total de la casa; la bandera 1 es su punto débil.
+
+## 13. Investigación externa y diagnóstico de EPOS (2026-10-11)
+- Documento: `INVESTIGACION_DEMAND_PLANNING.md` (literatura + datos). Script: `src/epos_diag.py` → `work/results/epos_diag.md`.
+- Literatura: combinar gana a elegir (M1–M5, FTP §2.6.1); elegir modelo por serie evita el peor pero no acierta el mejor (Petropoulos 2018); ajustes positivos empeoran (Fildes 2025); EPOS ayuda sobre todo combinado con pedidos y stock del canal (Williams & Waller 2014; Van Belle 2021), evidencia mixta (IJOPM 2025).
+- EPOS (jul-24 → jul-26): 98–100% del envío tiene EPOS; EPOS = 79–87% del envío.
+- Forma mensual FY25 vs FY26 (correlación): fragancias envío 0,74 / EPOS 1,00; makeup envío −0,14 / EPOS 0,82. Envío adelantado 3 meses ≈ EPOS (0,73).
+- Carga del canal (envío/EPOS FY25 → FY26) y envío jul–ago-26: GUMU 1,20→1,40, −50%; KYMU 1,31→1,19, +18%; MJ 1,30→1,16, +28%; BBY 1,18→1,23, −6%; Gucci 1,21→1,25, +1%.
+- EANs 18+ meses, cortes ene–mar-26, 6M siguientes, LY × (1 + trend 6M): fragancias error 35,2% plano / 33,0% trend envíos / 31,1% trend EPOS; makeup 62,5 / 56,0 / 56,7% con tope ±30%, sin tope 46,8 / 43,9%. Makeup: coef. trend EPOS 0,66 vs envíos 0,21 (R² 0,55); carga −0,66.
+- Propuesta: partido "Consumidor (EPOS)" (EPOS previsto → envío con desfase 3 meses y corrección de carga) y coalición en vez de ganador único; backtest con cortes oct-25 a mar-26.
+- Patrón envío ↔ EPOS (`src/epos_pattern.py` → `work/results/epos_pattern.md`; cortes sep-25 → may-26, YoY trimestral):
+  - Un pico trimestral de envío no se repite (envío +69% con EPOS plano → −1% el trimestre siguiente), pero el exceso no se devuelve en 6 meses (fragancias 0%). "Sube y luego baja por debajo de lo normal" solo en 1 de 9 meses.
+  - Makeup: envío siguiente ≈ 0,75 × EPOS ahora, −0,04 × envío ahora (R² 0,47); fragancias R² 0,03.
+  - Carga acumulada (envío/EPOS 12M vs FY25, ±15%): fragancias, cargados −2% vs normales +10% (envío − EPOS a 3 meses), 8 de 8 meses; Burberry 8/8, Gucci Make up 7/8, Marc Jacobs 6/8, Gucci 4/8, Kylie 1/8 (siguen cargando). Descargados recuperan: makeup 6/8, fragancias 3/8.
+  - Casa: Gucci Make up cargó 9 meses (+7% → +16%) y corrigió de golpe (−34% may–jul-26); Kylie y Marc Jacobs descargadas (−15%) enviaron después muy por encima del EPOS.
+  - Usuario: el stock del retailer es difícil de conseguir; puede intentar el WOS (semanas de stock) → stock = WOS × EPOS semanal.
+- Patrones en relativo (`src/epos_patrones.py` → `work/results/epos_patrones.md`; `src/epos_patrones_report.py` → `reportes/REPORTE_EPOS_PATRONES.pdf`):
+  - Ruido: el YoY mensual del envío oscila 4,1× el del EPOS (98% de 380 EANs maduros).
+  - Dirección a 12M: misma dirección en el 79% de los EANs (correlación 0,64).
+  - Persistencia de jul–dic a ene–jun: EPOS mantiene el signo en el 79% vs envío 65% (correlación 0,61 vs 0,20); makeup, EPOS → envío siguiente 0,40 vs 0,14.
+  - Lanzamientos jul-24 → jul-25:
+    - Envío/EPOS año 1: 2,03 (fragancias) / 2,51 (makeup); meses 12–19: 0,97 / 0,84; veteranos 1,12.
+    - Mes 0 de fragancias = 64% del EPOS de 13 meses.
+  - Veteranos activos, EPOS FY26: Burberry −18%, Gucci −23%, Gucci Make up −19%, Kylie −12%, Marc Jacobs 0%. Peso en envío de los anteriores a FY24: fragancias 89% → 64%, makeup 69% → 33%.
+  - Bajas: EPOS de fragancias al 18% seis meses después del último envío; makeup a 0 en 4–6 meses.
+  - Pregunta abierta al usuario: ¿el envío de lanzamiento incluye probadores o material de exposición?
+- Usuario: los primeros 6 meses son Local (llenado + safety stock); no juzgar el envío de esos meses.
+- Envío/EPOS por edad, meses Central (`src/epos_reco_test.py` → `work/results/epos_reco_test.md`):
+  - Fragancias: 6–11 = 0,90; 12–17 = 0,87.
+  - Makeup: 1,20 / 1,09.
+  - Veteranos: 1,09–1,21.
+- Prueba de base para jóvenes (cortes oct-25 → feb-26, total de 6 meses), error EAN:
+  - Fragancias 6–11: año pasado 215%, media 6M envío 173%, EPOS × relación 58%.
+  - Fragancias 12–17: 101 / 43 / 36%; media de las dos 33%.
+  - Makeup 6–11: 110 / 64 / 54%; media 53%.
+  - Makeup 12–17: 171 / 43 / 51%; media 41%.
+- Veteranos (cortes ene–mar-26), año pasado × trend: envíos de casa 33% / 49%; EPOS de veteranos de casa 31% / 47%; EPOS propio 31% / 51% (fragancias / makeup).
+- Propuesta: regla por edad (6–11 EPOS × relación; 12–17 media EPOS × relación + media 6M envío; 18+ regla con trend EPOS de veteranos de casa + semáforo de carga).
