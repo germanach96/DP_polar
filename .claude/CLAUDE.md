@@ -34,7 +34,14 @@ Error cometido: se cargaron skills para el primer HTML y el segundo (explorador)
 Reglas:
 - **Avisos de hooks** (Impeccable u otros): cada uno se arregla, se ignora con motivo o se pregunta, y se dice en la respuesta. Nunca en silencio.
 - **Pasos que una skill exige y se saltan** (p. ej. la entrevista de Impeccable): decirlo en la respuesta y por qué, no omitirlo.
-- **Respuesta final:** una línea «Skills usadas: …» y otra «Pasos de skills no hechos: …» (o «ninguno»).
+- **Respuesta final (obligatoria, la comprueba un hook):** termina con
+  `Skills y plugins: Ponytail (…) · Agent Skills (…) · OmniRoute (…) · Graphify (…) · Taste (…) · Impeccable (…) · Emil (…)`
+  con «usado: qué skill» o «no aplica: motivo» en cada una, y di qué pasos de skills no se hicieron.
+
+## Hooks que lo hacen cumplir (`.claude/settings.json`)
+- `UserPromptSubmit` → `.claude/hooks/skills-reminder.sh`: en cada mensaje recuerda que es tarea nueva y qué cargar.
+- `Stop` → `.claude/hooks/skills-stop-check.py`: no deja cerrar el turno si falta la línea con las 7, si se escribió HTML/CSS/SVG sin `impeccable` + una de Taste, o Python sin `code-review-and-quality` (o `ponytail:ponytail-review`). Solo mira lo cargado en el turno actual. Bloquea una vez por turno (no hace bucle) y si falla deja pasar.
+- No se fuerza usar las 7 en todo: OmniRoute necesita servidor y API keys; Graphify es para preguntas sobre el código. Se fuerza dar cuenta de las 7.
 
 # graphify
 - **graphify** (`.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
