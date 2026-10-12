@@ -126,9 +126,9 @@
     "semantic_hash": "62affff471bdca4f9647150421c36fed"
   },
   "src/explorador_html.py": {
-    "mtime": 1791756592.131984,
-    "seen": 1791756626.9946723,
-    "ast_hash": "2e806bf161079fedd0db0d97d606db0e",
+    "mtime": 1791824975.2022665,
+    "seen": 1791828833.9635396,
+    "ast_hash": "224ba094d10faa92c35afcdeef522c38",
     "semantic_hash": ""
   },
   "src/final_forecast.py": {
@@ -498,9 +498,9 @@
     "semantic_hash": "548f34dc3bc8e83f3d821ab3935c74ca"
   },
   "src/explorador_template.html": {
-    "mtime": 1791756606.683325,
-    "seen": 1791756626.994861,
-    "ast_hash": "b4799558310a51eddca453e5b455d456",
+    "mtime": 1791825534.7797723,
+    "seen": 1791828833.9636264,
+    "ast_hash": "cf413dd3e3d4f427276688cc1a8c212b",
     "semantic_hash": ""
   },
   "src/parlamento_template.html": {
@@ -510,15 +510,15 @@
     "semantic_hash": "c5fc8588d7a3fe5c87de96f5797f6bd0"
   },
   ".impeccable/design.json": {
-    "mtime": 1791756606.6639836,
-    "seen": 1791756626.994649,
-    "ast_hash": "0fb5b4fb270682df4a4415b4505a7a7a",
+    "mtime": 1791825800.5233612,
+    "seen": 1791828833.9635081,
+    "ast_hash": "270e778d0988ce3a4004b0fc0f88a348",
     "semantic_hash": ""
   },
   "DESIGN.md": {
-    "mtime": 1791756606.6741078,
-    "seen": 1791756626.994854,
-    "ast_hash": "f68b4b18a8aa979d23eb1a92e2752c1d",
+    "mtime": 1791825800.4979703,
+    "seen": 1791828833.9636188,
+    "ast_hash": "26adece39c6ab524b5e8ab45f5010468",
     "semantic_hash": ""
   },
   "PRODUCT.md": {
@@ -546,9 +546,9 @@
     "semantic_hash": ""
   },
   ".impeccable/surfaces/src-explorador-template-html.md": {
-    "mtime": 1791756606.1210043,
-    "seen": 1791756626.9948514,
-    "ast_hash": "2c184ba6aec82285659ff0f29ab78b5d",
+    "mtime": 1791825366.6299098,
+    "seen": 1791828833.9636164,
+    "ast_hash": "74a23d86f3d93630ecb260d8483209a0",
     "semantic_hash": ""
   },
   "src/fonts/OFL-bricolage-grotesque.txt": {
@@ -564,9 +564,9 @@
     "semantic_hash": ""
   },
   ".impeccable/review/desktop-cards.png": {
-    "mtime": 1791756606.6694958,
-    "seen": 1791756626.9948654,
-    "ast_hash": "2504b199e7402710102122ebdaaf2d7c",
+    "mtime": 1791825543.7490633,
+    "seen": 1791828833.963635,
+    "ast_hash": "cc22046828ace5bc75d3f3d0d1bfaa61",
     "semantic_hash": ""
   },
   ".impeccable/review/desktop-dark-ean.png": {
@@ -576,15 +576,15 @@
     "semantic_hash": ""
   },
   ".impeccable/review/desktop-dark.png": {
-    "mtime": 1791756606.6719239,
-    "seen": 1791756626.994867,
-    "ast_hash": "dbd7ae298c93c0316652a8ed1c2bd62a",
+    "mtime": 1791825546.7130632,
+    "seen": 1791828833.963638,
+    "ast_hash": "deb76c5c9922b721403dba2a943129e3",
     "semantic_hash": ""
   },
   ".impeccable/review/desktop-filter.png": {
-    "mtime": 1791756606.1097555,
-    "seen": 1791756626.9948683,
-    "ast_hash": "0fc97ebd927496a27ca6dcda5c1b892a",
+    "mtime": 1791825558.893064,
+    "seen": 1791828833.963639,
+    "ast_hash": "695610b17e55dc13044e193daef68be3",
     "semantic_hash": ""
   },
   ".impeccable/review/desktop-partidos.png": {
@@ -594,33 +594,39 @@
     "semantic_hash": ""
   },
   ".impeccable/review/desktop-tidy-1280.png": {
-    "mtime": 1791756606.112118,
-    "seen": 1791756626.9948702,
-    "ast_hash": "cee09f88086707234a899e7bb60ea881",
+    "mtime": 1791825571.5490649,
+    "seen": 1791828833.9636416,
+    "ast_hash": "4840cbbeb04ef40b8a1f1450184bed71",
     "semantic_hash": ""
   },
   ".impeccable/review/desktop-tidy.png": {
-    "mtime": 1791756606.1140363,
-    "seen": 1791756626.9948711,
-    "ast_hash": "d50a69f3d4a3bfdbae2f7856e171fb66",
+    "mtime": 1791825565.2570643,
+    "seen": 1791828833.9636426,
+    "ast_hash": "ebe5a97e2ed14b4e71479feec3e833dc",
     "semantic_hash": ""
   },
   ".impeccable/review/desktop.png": {
-    "mtime": 1791756606.1163325,
-    "seen": 1791756626.994872,
-    "ast_hash": "2e055d58592233124e16c8758b693e46",
+    "mtime": 1791825539.569063,
+    "seen": 1791828833.9636436,
+    "ast_hash": "3a3894bf187611a335c34de426661190",
     "semantic_hash": ""
   },
   ".impeccable/review/mobile-dark.png": {
-    "mtime": 1791756606.1189685,
-    "seen": 1791756626.9948728,
-    "ast_hash": "51866105b0dbb4120ad913d4e9587f67",
+    "mtime": 1791825556.5570638,
+    "seen": 1791828833.9636447,
+    "ast_hash": "d661f733e604b990ed3eb40f65cb0769",
     "semantic_hash": ""
   },
   ".impeccable/review/mobile.png": {
-    "mtime": 1791756606.1210043,
-    "seen": 1791756626.9948738,
-    "ast_hash": "163cff53bb7a1acb84c1591d9fd831d7",
+    "mtime": 1791825553.9850638,
+    "seen": 1791828833.9636457,
+    "ast_hash": "6105072f0c2ca43346a0d915d503ab89",
+    "semantic_hash": ""
+  },
+  "src/fonts/OFL-inter.txt": {
+    "mtime": 1791824760.1808767,
+    "seen": 1791828833.9636304,
+    "ast_hash": "2f3fe7618c3332ad553a6eec42709ca4",
     "semantic_hash": ""
   }
 }

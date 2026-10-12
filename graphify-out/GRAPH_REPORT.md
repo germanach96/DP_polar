@@ -1,17 +1,17 @@
-# Graph Report - DP_polar  (2026-10-11)
+# Graph Report - DP_polar  (2026-10-12)
 
 ## Corpus Check
-- 90 files · ~245,355 words
+- 90 files · ~255,758 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 5 file(s) not represented in the graph (top: (none) 2, .woff2 2, .csv 1)
+- Unclassified: 6 file(s) not represented in the graph (top: .woff2 3, (none) 2, .csv 1)
 
 ## Summary
-- 859 nodes · 2385 edges · 47 communities (41 shown, 6 thin omitted)
-- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 88 edges (avg confidence: 0.86)
+- 859 nodes · 2379 edges · 49 communities (43 shown, 6 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 82 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8c674cc8`
+- Built from commit: `f79b163f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -58,8 +58,10 @@
 - panel.py
 - mu_season_ean.py
 - check-tools.sh
-- six_infografia.py
+- six_report.py
 - src-explorador-template-html.md
+- Design System: Explorador del parlamento
+- Parties
 - session-start.sh
 - skills-reminder.sh
 - SPP3
@@ -77,16 +79,16 @@
 10. `main()` - 16 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Buttons` --references--> `line()`  [INFERRED]
-  DESIGN.md → src/epos_patrones_report.py
-- `Cards / Containers` --references--> `line()`  [INFERRED]
-  DESIGN.md → src/epos_patrones_report.py
-- `Chips` --references--> `line()`  [INFERRED]
-  DESIGN.md → src/epos_patrones_report.py
-- `Inputs / Fields` --references--> `line()`  [INFERRED]
-  DESIGN.md → src/epos_patrones_report.py
-- `Neutral` --references--> `line()`  [INFERRED]
-  DESIGN.md → src/epos_patrones_report.py
+- `drawhemi()` --implements--> `Hemiciclo de escanos (reporte)`  [INFERRED]
+  src/explorador_template.html → CLAUDE.md
+- `drawtrends()` --references--> `EPOS (sell-out desde jul-24)`  [INFERRED]
+  src/explorador_template.html → CLAUDE.md
+- `Explorador del parlamento (template)` --conceptually_related_to--> `Check obligatorio de skills y plugins`  [INFERRED]
+  src/explorador_template.html → .claude/CLAUDE.md
+- `Contexto del proyecto (CLAUDE.md)` --references--> `Skills y plugins check (.claude/CLAUDE.md)`  [EXTRACTED]
+  CLAUDE.md → .claude/CLAUDE.md
+- `Parlamento de la demanda (template)` --conceptually_related_to--> `Check obligatorio de skills y plugins`  [INFERRED]
+  src/parlamento_template.html → .claude/CLAUDE.md
 
 ## Import Cycles
 - None detected.
@@ -96,7 +98,7 @@
 - **Renderizado del hemiciclo en reportes HTML** — src_parlamento_template_hemicycle, src_parlamento_template_seats, src_explorador_template_drawhemi, src_explorador_template_seats, claude_hemiciclo [INFERRED 0.85]
 - **Flujo sell-in desde sell-out con EPOS** — claude_epos, claude_regla_por_edad, claude_partido_consumidor_epos, claude_semaforo_carga, investigacion_demand_planning_sell_in_desde_sell_out [INFERRED 0.85]
 
-## Communities (47 total, 6 thin omitted)
+## Communities (49 total, 6 thin omitted)
 
 ### Community 0 - "add_types"
 Cohesion: 0.07
@@ -111,8 +113,8 @@ Cohesion: 0.05
 Nodes (55): main(), main(), flagged(), index(), main(), position(), twin(), main() (+47 more)
 
 ### Community 3 - "ideo_report.py"
-Cohesion: 0.15
-Nodes (21): cards_page(), compass_pts(), compasses(), curve_chart(), floor_chart(), hbars(), load(), main() (+13 more)
+Cohesion: 0.16
+Nodes (20): compass_pts(), compasses(), curve_chart(), floor_chart(), hbars(), load(), main(), page_compass() (+12 more)
 
 ### Community 4 - "_ly"
 Cohesion: 0.12
@@ -123,16 +125,16 @@ Cohesion: 0.13
 Nodes (16): Consenso de o9 (cons), Decision sep-25: Ciclo de vida para todos, Contexto del proyecto (CLAUDE.md), Media 12M estacional, Media 6M estacional, Media 6M prudente, Trend YoY 6M plano (metodo actual del equipo), WAPE90 (+8 more)
 
 ### Community 6 - "epos_patrones_report.py"
-Cohesion: 0.07
-Nodes (48): Buttons, Cards / Containers, Chips, Colors, Components, Design System: Parlamento de la demanda, Do:, Do's and Don'ts (+40 more)
+Cohesion: 0.21
+Nodes (20): axis_y(), cohort_bars(), cover(), dumbbell(), exits_chart(), launch_chart(), lerp(), line() (+12 more)
 
 ### Community 7 - "epos_diag.py"
 Cohesion: 0.14
 Nodes (13): caps(), channel(), coverage(), house_next(), load_effect(), main(), panel(), predictive() (+5 more)
 
 ### Community 8 - "ideo_viz.py"
-Cohesion: 0.10
-Nodes (18): P6, page_cover(), card(), compass(), hemicycle(), legend(), pc(), seatrow() (+10 more)
+Cohesion: 0.16
+Nodes (13): cards_page(), page_cover(), card(), compass(), hemicycle(), legend(), pc(), seatrow() (+5 more)
 
 ### Community 9 - "f"
 Cohesion: 0.13
@@ -183,7 +185,7 @@ Cohesion: 0.42
 Nodes (7): fragrances(), main(), makeup(), rows_for(), main(), g_flat(), _group_g()
 
 ### Community 21 - "rulevote_report.py"
-Cohesion: 0.36
+Cohesion: 0.40
 Nodes (8): card(), chip(), hemicycle(), legend(), main(), page(), rules_box(), volbar()
 
 ### Community 22 - "epos_patrones.py"
@@ -215,8 +217,8 @@ Cohesion: 0.18
 Nodes (10): Agent Skills, dataviz skill, Skills y plugins check (.claude/CLAUDE.md), Emil Kowalski skill, Hooks (session-start, skills-reminder, skills-stop-check), Graphify, Impeccable plugin, OmniRoute CLI (+2 more)
 
 ### Community 29 - "ideo_infografia.py"
-Cohesion: 0.19
-Nodes (10): flow(), ideas_rows(), key(), main(), page1(), page2(), party_card(), voters() (+2 more)
+Cohesion: 0.33
+Nodes (9): flow(), ideas_rows(), key(), main(), page1(), page2(), party_card(), voters() (+1 more)
 
 ### Community 30 - "epos_reco_test.py"
 Cohesion: 0.31
@@ -262,25 +264,33 @@ Nodes (4): analyse(), main(), shares(), summary()
 Cohesion: 0.52
 Nodes (5): PATH, plugin_row(), row(), check-tools.sh script, skill_row()
 
+### Community 42 - "six_report.py"
+Cohesion: 0.14
+Nodes (8): P6, card(), main(), voters(), bars(), flag_share(), sec(), timeline()
+
+### Community 44 - "Design System: Explorador del parlamento"
+Cohesion: 0.07
+Nodes (28): Buttons, Cards / Containers, Chips, Colors, Components, Design System: Explorador del parlamento, Do:, Do's and Don'ts (+20 more)
+
 ## Knowledge Gaps
 - **22 isolated node(s):** `PATH`, `PATH`, `Forecast Value Added contra metodo ingenuo`, `Estee Lauder 10-K FY2025`, `Revisiting the value of data sharing (IJOPM 2025)` (+17 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 254 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 260 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
+- **Why does `main()` connect `ideo_viz.py` to `ideo_panel.py`, `numpy`, `six_report.py`, `pandas`, `subprocess`?**
+  _High betweenness centrality (0.014) - this node is a cross-community bridge._
 - **What connects `PATH`, `PATH`, `Forecast Value Added contra metodo ingenuo` to the rest of the system?**
   _22 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `add_types` be split into smaller, more focused modules?**
   _Cohesion score 0.06596035543403965 - nodes in this community are weakly interconnected._
+- **Why does `main()` connect `ideo_viz.py` to `six_report.py`, `numpy`, `pandas`, `subprocess`?**
+  _High betweenness centrality (0.010) - this node is a cross-community bridge._
 - **Should `ideo_panel.py` be split into smaller, more focused modules?**
   _Cohesion score 0.06436487638533675 - nodes in this community are weakly interconnected._
+- **Why does `Contexto del proyecto (CLAUDE.md)` connect `Contexto del proyecto (CLAUDE.md)` to `DAs (promos/inputs de mercado)`, `Las 3 preguntas del EAN (base, trend, limpieza)`, `Investigacion demand planning`, `Explorador del parlamento (template)`, `Estrategia de forecast Makeup`, `Check obligatorio de skills y plugins`, `Parlamento de la demanda (template)`?**
+  _High betweenness centrality (0.010) - this node is a cross-community bridge._
 - **Should `numpy` be split into smaller, more focused modules?**
   _Cohesion score 0.05219072164948454 - nodes in this community are weakly interconnected._
-- **Should `_ly` be split into smaller, more focused modules?**
-  _Cohesion score 0.12318840579710146 - nodes in this community are weakly interconnected._
-- **Should `Contexto del proyecto (CLAUDE.md)` be split into smaller, more focused modules?**
-  _Cohesion score 0.12648221343873517 - nodes in this community are weakly interconnected._
-- **Should `epos_patrones_report.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.06636500754147813 - nodes in this community are weakly interconnected._
