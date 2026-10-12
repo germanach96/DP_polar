@@ -1,0 +1,179 @@
+<title>Brújulas políticas</title>
+<style>
+@font-face { font-family: "Inter Var"; font-style: normal; font-weight: 100 900; font-display: swap; src: url(data:font/woff2;base64,/*__FONT__*/) format("woff2"); }
+/* Layout: una página. Título y cómo leerla; tres paneles en fila (una pregunta = una brújula); debajo, los 6 partidos con su receta.
+   Tokens y lenguaje de DESIGN.md (Apple): lienzo gris, paneles blancos de 20px, acento grafito, colores de partido fijos. */
+:root {
+  --bg: #F5F5F7; --panel: #FFFFFF; --fill: rgba(120,120,128,.12); --fill-2: rgba(120,120,128,.07);
+  --ink: #1D1D1F; --ink-2: #424245; --muted: #6E6E73; --hair: rgba(0,0,0,.09); --accent: #1D1D1F;
+  --glass: rgba(255,255,255,.97); --glass-edge: rgba(0,0,0,.10); --empate: #B7BCC4;
+  --sh-panel: 0 1px 1px rgba(0,0,0,.02), 0 6px 20px rgba(0,0,0,.04);
+  --sh-win: 0 0 0 .5px var(--glass-edge), 0 2px 6px rgba(0,0,0,.05), 0 18px 44px rgba(0,0,0,.12);
+  --f: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter Var", system-ui, sans-serif;
+  --f-d: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter Var", system-ui, sans-serif;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #000000; --panel: #1C1C1E; --fill: rgba(118,118,128,.24); --fill-2: rgba(118,118,128,.14);
+  --ink: #F5F5F7; --ink-2: #D2D2D7; --muted: #98989D; --hair: rgba(255,255,255,.10); --accent: #F5F5F7;
+  --glass: rgba(40,40,42,.96); --glass-edge: rgba(255,255,255,.12); --empate: #6E7380;
+  --sh-panel: 0 0 0 .5px rgba(255,255,255,.06); --sh-win: 0 0 0 .5px var(--glass-edge), 0 2px 6px rgba(0,0,0,.4), 0 18px 44px rgba(0,0,0,.55);
+  color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #000000; --panel: #1C1C1E; --fill: rgba(118,118,128,.24); --fill-2: rgba(118,118,128,.14);
+  --ink: #F5F5F7; --ink-2: #D2D2D7; --muted: #98989D; --hair: rgba(255,255,255,.10); --accent: #F5F5F7;
+  --glass: rgba(40,40,42,.96); --glass-edge: rgba(255,255,255,.12); --empate: #6E7380;
+  --sh-panel: 0 0 0 .5px rgba(255,255,255,.06); --sh-win: 0 0 0 .5px var(--glass-edge), 0 2px 6px rgba(0,0,0,.4), 0 18px 44px rgba(0,0,0,.55);
+  color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 13px/1.45 var(--f); letter-spacing: -.003em; -webkit-font-smoothing: antialiased; }
+::selection { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+svg { display: block; }
+main { max-width: 1440px; margin: 0 auto; padding-block: 26px 32px; padding-inline: 24px; display: grid; gap: 18px; }
+header { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 560px); gap: 12px 40px; align-items: end; }
+h1 { margin: 0; font: 700 30px/1.06 var(--f-d); letter-spacing: -.03em; text-wrap: balance; }
+.lead { margin: 6px 0 0; color: var(--muted); font-size: 13.5px; max-width: 62ch; }
+.how { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; align-items: center; font-size: 12.5px; color: var(--ink-2); background: var(--panel); border-radius: 14px; padding: 12px 14px; box-shadow: var(--sh-panel); }
+.how svg { flex: none; }
+.row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.card { background: var(--panel); border-radius: 20px; box-shadow: var(--sh-panel); padding: 18px 18px 16px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.card h2 { margin: 0; font: 600 18px/1.2 var(--f-d); letter-spacing: -.022em; }
+.card .q { margin: 2px 0 0; color: var(--muted); font-size: 12.5px; }
+.cmp { width: 100%; height: auto; overflow: visible; }
+.cmp .quad { fill: var(--fill-2); }
+.cmp .axis { stroke: var(--hair); stroke-width: 1; }
+.cmp .pole { font: 600 11.5px/1 var(--f); fill: var(--ink-2); }
+.cmp .pole.dim { font-weight: 500; fill: var(--muted); }
+.cmp .dot { transition: opacity 220ms ease; }
+.cmp .mk rect { stroke: var(--panel); stroke-width: 2.5; }
+.cmp .mk text { font: 700 11px/1 var(--f); pointer-events: none; }
+.cmp .mk { cursor: pointer; transition: opacity 220ms ease; }
+.cmp .dots { animation: in 520ms var(--ease-out) both; transform-origin: center; }
+@keyframes in { from { opacity: 0; transform: scale(.94); filter: blur(4px); } }
+body.focus .cmp .dot:not(.on) { opacity: .06; }
+body.focus .cmp .mk:not(.on), body.focus .party:not(.on) { opacity: .3; }
+.split { display: grid; gap: 7px; }
+.sp .lab { display: flex; justify-content: space-between; gap: 8px; font-size: 11.5px; color: var(--muted); margin-bottom: 4px; }
+.sp .lab b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.bar { display: flex; height: 8px; gap: 2px; border-radius: 4px; overflow: hidden; }
+.bar i { display: block; }
+.bar .l, .bar .r { background: var(--ink-2); } .bar .c { background: var(--fill); }
+.bar .l { opacity: .55; }
+h3 { margin: 6px 2px 0; font: 600 17px/1.2 var(--f-d); letter-spacing: -.022em; }
+.parties { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+.party { background: var(--panel); border-radius: 14px; box-shadow: var(--sh-panel); padding: 12px 13px; display: grid; gap: 6px; align-content: start; cursor: pointer; transition: opacity 220ms ease, transform 160ms var(--ease-out); min-width: 0; }
+.party:active { transform: scale(.98); }
+.party .t { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 13px; }
+.party .t i { width: 20px; height: 20px; border-radius: 7px; display: grid; place-items: center; font: 700 11px/1 var(--f); font-style: normal; flex: none; }
+.party dl { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 8px; font-size: 11.5px; }
+.party dt { color: var(--muted); } .party dd { margin: 0; color: var(--ink-2); }
+.tip { position: fixed; z-index: 10; pointer-events: none; background: var(--glass); -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
+  color: var(--ink); font-size: 12px; border-radius: 10px; padding: 7px 10px; box-shadow: var(--sh-win); max-width: 320px; opacity: 0; transform: scale(.97); transform-origin: top left;
+  transition: opacity 140ms ease, transform 160ms var(--ease-out); }
+.tip.on { opacity: 1; transform: none; }
+.tip b { display: block; font-weight: 600; } .tip span { color: var(--muted); }
+.foot { color: var(--muted); font-size: 12px; max-width: 110ch; margin: 0 2px; }
+@media (hover: hover) and (pointer: fine) { .party:hover { box-shadow: var(--sh-win); } }
+@media (max-width: 1100px) { .row { grid-template-columns: minmax(0, 1fr); max-width: 560px; } .parties { grid-template-columns: repeat(3, minmax(0, 1fr)); } header { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 600px) { main { padding-inline: 16px; } .parties { grid-template-columns: minmax(0, 1fr); } h1 { font-size: 24px; } }
+@media (prefers-reduced-transparency: reduce) { .tip { background: var(--panel); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+@media (prefers-reduced-motion: reduce) { .cmp .dots { animation: none; } .party, .tip { transition: opacity 150ms ease; } .party:active { transform: none; } }
+</style>
+<main>
+  <header>
+    <div><h1>Brújulas políticas del parlamento</h1>
+      <p class="lead">Cada partido es una receta de forecast que responde a tres preguntas. Cada brújula sitúa a los partidos por su receta y a cada EAN por lo que le habría acertado más en FY26 (foto sep-25, real oct-25 a jun-26): <span id="nean"></span> EANs del parlamento con datos de FY26.</p></div>
+    <div class="how" aria-label="Cómo leer las brújulas">
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="7" fill="var(--ink-2)"/><text x="11" y="15" text-anchor="middle" font-size="11" font-weight="700" fill="var(--panel)">1</text></svg>
+      <span><b>Cuadrado numerado:</b> un partido, colocado por cómo está hecha su receta.</span>
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="6" cy="14" r="3" fill="var(--muted)" opacity=".7"/><circle cx="12" cy="8" r="3" fill="var(--muted)" opacity=".7"/><circle cx="17" cy="15" r="3" fill="var(--muted)" opacity=".7"/></svg>
+      <span><b>Punto:</b> un EAN, del color del partido al que votó. Cuanto más lejos del centro, más claro le iba mejor ese lado; en el centro le da igual.</span>
+    </div>
+  </header>
+  <section class="row" id="row"></section>
+  <h3>Los 6 partidos y su receta <span style="font: 400 12.5px var(--f); color: var(--muted); letter-spacing: 0">· pasa por uno para ver sus EANs en las tres brújulas</span></h3>
+  <section class="parties" id="parties"></section>
+  <p class="foot">Posición de un EAN en cada eje: error de la mejor receta de un lado menos error de la mejor del otro, sobre todas las recetas probadas (tanh, escala 5 puntos de error). Las barras cuentan EANs: más de 0,3 hacia un lado = acierta más con ese lado; entre −0,3 y 0,3 = indiferente.</p>
+</main>
+<div class="tip" id="tip" role="tooltip"></div>
+<script>
+const D = /*__DATA__*/null;
+const NS = "http://www.w3.org/2000/svg", $ = id => document.getElementById(id);
+const el = (t, a = {}) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); return e; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const COL = Object.fromEntries(D.parties.map((p, i) => [p, D.colors[i]])); COL.Empate = "var(--empate)";
+const NUM = Object.fromEntries(D.parties.map((p, i) => [p, i + 1]));
+const lum = h => { const c = [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255).map(v => v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; };
+const ON = p => lum(COL[p]) > .3 ? "#151515" : "#FFFFFF";
+// las tres preguntas y sus polos (mismos ejes que src/explorador_data.brujulas)
+const CS = [
+  { k: "c1", t: "¿De dónde parto?", q: "La base: media de los últimos meses, sin o con la temporada de su casa, y cuánta historia mira.",
+    xl: ["Plana", "Con temporada"], yl: ["Reciente (6M)", "Lejana (12M)"] },
+  { k: "c2", t: "¿A quién sigo?", q: "El trend: el suyo o el de su línea (individual) frente al de su casa o categoría (colectivo), y cuánto se lo cree: suave ≤25%, completo ≥75%.",
+    xl: ["Individual", "Colectivo"], yl: ["Trend suave", "Trend completo"] },
+  { k: "c3", t: "¿Cómo limpio la base?", q: "Qué hace con los meses de la base: restar los DAs planificados y sumar los cortes.",
+    xl: ["Deja los DAs", "Resta 50% DAs"], yl: ["No suma cortes", "Suma 50% cortes"] }];
+const pc = x => Math.round(x * 100) + "%";
+const S = 360, PL = 30, PB = 30, PT = 6, PR = 6, Q = S - PL - PR, L = 1.12;   // dibujo cuadrado: Q = S - PB - PT
+const X = v => PL + (v + L) / (2 * L) * Q, Y = v => PT + (1 - (v + L) / (2 * L)) * Q;
+console.assert(Q === S - PB - PT && X(0) === PL + Q / 2 && Y(0) === PT + Q / 2, "la brújula es cuadrada y su centro cae en el centro del área");
+
+$("nean").textContent = D.eans.length.toLocaleString("es-ES");
+D.eans.sort((a, b) => (a[0] === "Empate") - (b[0] === "Empate"));   // los empates debajo
+$("row").innerHTML = CS.map((c, i) => {
+  const sx = D.stats[c.k + "x"], sy = D.stats[c.k + "y"];
+  const bar = (s, lab) => `<div class="sp"><div class="lab"><span>${esc(lab[0])} <b>${pc(s.izq)}</b></span><span>indiferente <b>${pc(s.centro)}</b></span><span>${esc(lab[1])} <b>${pc(s.der)}</b></span></div>
+    <div class="bar" role="img" aria-label="${esc(lab[0])} ${pc(s.izq)}, indiferente ${pc(s.centro)}, ${esc(lab[1])} ${pc(s.der)}"><i class="l" style="flex:${s.izq}"></i><i class="c" style="flex:${s.centro}"></i><i class="r" style="flex:${s.der}"></i></div></div>`;
+  return `<article class="card"><div><h2>${c.t}</h2><p class="q">${c.q}</p></div><svg class="cmp" id="cmp${i}" viewBox="0 0 ${S} ${S}" role="img" aria-label="Brújula ${esc(c.t)}"></svg>
+    <div class="split">${bar(sx, c.xl)}${bar(sy, c.yl)}</div></article>`;
+}).join("");
+
+CS.forEach((c, i) => {
+  const svg = $("cmp" + i), f = document.createDocumentFragment(), o = 2 * i;
+  f.append(el("rect", { x: PL, y: PT, width: Q, height: Q, rx: 14, class: "quad" }));
+  f.append(el("line", { x1: X(0), x2: X(0), y1: PT, y2: PT + Q, class: "axis" }), el("line", { x1: PL, x2: PL + Q, y1: Y(0), y2: Y(0), class: "axis" }));
+  const txt = (x, y, s, a = {}) => { const t = el("text", { x, y, class: "pole", ...a }); t.textContent = s; return t; };
+  const yb = PT + Q + 19, xl = PL - 12;
+  f.append(txt(PL, yb, "← " + c.xl[0]), txt(PL + Q, yb, c.xl[1] + " →", { "text-anchor": "end" }));
+  f.append(txt(xl, PT + Q, c.yl[0], { transform: `rotate(-90 ${xl} ${PT + Q})` }), txt(xl, PT, c.yl[1] + " →", { transform: `rotate(-90 ${xl} ${PT})`, "text-anchor": "end" }));
+  const g = el("g", { class: "dots" });
+  for (const [v, d, h, pos] of D.eans) {
+    const dot = el("circle", { cx: X(pos[o]).toFixed(1), cy: Y(pos[o + 1]).toFixed(1), r: 2.6, fill: COL[v] || "var(--empate)", "fill-opacity": .62, class: "dot" });
+    dot.dataset.p = v; dot.dataset.tip = `${d}|${h} · vota ${v}`; g.append(dot);
+  }
+  f.append(g);
+  // partidos con la misma receta en este eje caen en el mismo sitio: se reparten en fila para que se vean todos
+  const at = {}; D.parties.forEach(p => { const [x, y] = D.markers[c.k][p], k = x + "," + y; (at[k] ||= []).push(p); });
+  for (const k in at) at[k].forEach((p, j, a) => {
+    const [x, y] = D.markers[c.k][p], cx = X(x) + (j - (a.length - 1) / 2) * 25, cy = Y(y);
+    const m = el("g", { class: "mk", transform: `translate(${cx.toFixed(1)} ${cy.toFixed(1)})` }); m.dataset.p = p; m.dataset.tip = `${p}|${recipe(p)}`;
+    m.append(el("rect", { x: -11, y: -11, width: 22, height: 22, rx: 7, fill: COL[p] }));
+    const t = el("text", { y: 4, "text-anchor": "middle", fill: ON(p) }); t.textContent = NUM[p]; m.append(t); f.append(m);
+  });
+  svg.append(f);
+});
+
+function trendTxt(r) { return r.trend === "—" ? r.fuente : `${r.trend} · ${r.fuente}`; }
+function cleanTxt(r) { return `${r.dap === "0%" ? "no resta DAs" : "resta " + r.dap + " DAs"} · ${r.cortes === "0" ? "no suma cortes" : "suma " + r.cortes + " cortes"}`; }
+function recipe(p) { const r = D.ideas[D.parties.indexOf(p)]; return `Base ${r.familia.toLowerCase()} (${r.memoria}), temporada ${r.estac}; trend ${trendTxt(r)}; ${cleanTxt(r)}`; }
+$("parties").innerHTML = D.parties.map(p => { const r = D.ideas[D.parties.indexOf(p)];
+  return `<article class="party" data-p="${esc(p)}" tabindex="0"><div class="t"><i style="background:${COL[p]};color:${ON(p)}">${NUM[p]}</i>${esc(p)}</div>
+  <dl><dt>Base</dt><dd>${esc(r.familia)} · ${esc(r.memoria)}</dd><dt>Temporada</dt><dd>${esc(r.estac)}</dd><dt>Trend</dt><dd>${esc(trendTxt(r))}</dd>
+  <dt>Limpia</dt><dd>${esc(cleanTxt(r))}</dd></dl></article>`; }).join("");
+
+// foco: un partido ilumina sus EANs y su marca en las tres brújulas
+function focus(p) {
+  document.body.classList.toggle("focus", !!p);
+  for (const n of document.querySelectorAll(".dot, .mk, .party")) n.classList.toggle("on", n.dataset.p === p);
+}
+const tip = $("tip");
+document.addEventListener("pointerover", e => {
+  const t = e.target.closest?.("[data-p]"); if (!t) return;
+  if (t.matches(".mk, .party")) focus(t.dataset.p);
+  if (t.dataset.tip && e.pointerType === "mouse") { const [a, b] = t.dataset.tip.split("|"); tip.innerHTML = `<b>${esc(a)}</b><span>${esc(b)}</span>`; tip.classList.add("on"); }
+});
+document.addEventListener("pointermove", e => { if (tip.classList.contains("on")) { tip.style.left = Math.min(e.clientX + 14, innerWidth - 330) + "px"; tip.style.top = e.clientY + 16 + "px"; } });
+document.addEventListener("pointerout", e => { const t = e.target.closest?.("[data-p]"); if (!t) return; tip.classList.remove("on"); if (t.matches(".mk, .party") && !t.contains(e.relatedTarget)) focus(null); });
+document.addEventListener("focusin", e => { const t = e.target.closest?.(".party"); focus(t ? t.dataset.p : null); });
+document.addEventListener("click", e => { if (!e.target.closest?.("[data-p]")) focus(null); });
+</script>
