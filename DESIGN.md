@@ -1,20 +1,27 @@
 ---
-name: Parlamento de la demanda
-description: Mesa de trabajo sobre tapete de corte. El parlamento es una hoja impresa y cada EAN, partido o grupo se abre como una ficha que se levanta, se mueve y se compara.
+name: Explorador del parlamento
+description: Una app de macOS para el parlamento de métodos. Paneles quietos sobre lienzo gris; cada EAN o partido se abre como una ventana translúcida que nace de su escaño, se lanza con inercia y se asienta con un muelle.
 colors:
-  mat: "#3D7862"
-  mat-2: "#356B57"
-  mat-line: "rgba(255,255,255,.09)"
-  mat-line-5: "rgba(255,255,255,.2)"
-  mat-ink: "#D8EDE2"
-  paper: "#FCFCFA"
-  paper-2: "#F2F3F0"
-  card: "#FCFCFA"
-  ink: "#1B1E1C"
-  ink-2: "#474D49"
-  muted: "#5E6561"
-  line: "#DADDD7"
-  shadow-tint: "rgba(12,34,26,.10)"
+  canvas: "#F5F5F7"
+  panel: "#FFFFFF"
+  panel-2: "#FAFAFC"
+  fill: "rgba(120,120,128,.12)"
+  fill-2: "rgba(120,120,128,.07)"
+  ink: "#1D1D1F"
+  ink-2: "#424245"
+  muted: "#6E6E73"
+  hair: "rgba(0,0,0,.09)"
+  accent-graphite: "#1D1D1F"
+  accent-ink: "#FFFFFF"
+  accent-soft: "rgba(0,0,0,.06)"
+  glass: "rgba(255,255,255,.97)"
+  glass-edge: "rgba(0,0,0,.10)"
+  glass-hi: "rgba(255,255,255,.75)"
+  thumb: "#FFFFFF"
+  tl-red: "#FF5F57"
+  tl-yellow: "#FEBC2E"
+  tl-off: "#D5D5D8"
+  tl-glyph: "rgba(0,0,0,.55)"
   empate: "#B7BCC4"
   status-good: "#0ca30c"
   status-critical: "#d03b3b"
@@ -28,263 +35,324 @@ colors:
   makeup: "#eb6834"
   rule-teal: "#0F8A86"
   consenso-navy: "#26408B"
-  dark-mat: "#1C362D"
-  dark-mat-2: "#182F27"
-  dark-mat-line: "rgba(255,255,255,.05)"
-  dark-mat-line-5: "rgba(255,255,255,.11)"
-  dark-mat-ink: "#9EC1AF"
-  dark-paper: "#222624"
-  dark-paper-2: "#2A2F2C"
-  dark-card: "#2B302D"
-  dark-card-edge: "rgba(255,255,255,.07)"
-  dark-ink: "#E9EDEA"
-  dark-ink-2: "#C1C8C3"
-  dark-muted: "#9AA39E"
-  dark-line: "#383E3B"
+  dark-canvas: "#000000"
+  dark-panel: "#1C1C1E"
+  dark-panel-2: "#232325"
+  dark-fill: "rgba(118,118,128,.24)"
+  dark-fill-2: "rgba(118,118,128,.14)"
+  dark-ink: "#F5F5F7"
+  dark-ink-2: "#D2D2D7"
+  dark-muted: "#98989D"
+  dark-hair: "rgba(255,255,255,.10)"
+  dark-accent-graphite: "#F5F5F7"
+  dark-accent-ink: "#1D1D1F"
+  dark-accent-soft: "rgba(255,255,255,.12)"
+  dark-glass: "rgba(40,40,42,.96)"
+  dark-glass-edge: "rgba(255,255,255,.12)"
+  dark-glass-hi: "rgba(255,255,255,.08)"
+  dark-thumb: "#636366"
+  dark-tl-off: "#4A4A4E"
+  dark-tl-glyph: "rgba(0,0,0,.6)"
   dark-empate: "#6E7380"
 typography:
   numeral:
-    fontFamily: "Bricolage Grotesque, Segoe UI, system-ui, sans-serif"
-    fontSize: "54px"
-    fontWeight: 800
+    fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Display, Inter Var, system-ui, sans-serif"
+    fontSize: "58px"
+    fontWeight: 700
     lineHeight: 1
     letterSpacing: "-0.035em"
-    fontVariation: "'opsz' 96"
-  brand:
-    fontFamily: "Bricolage Grotesque, Segoe UI, system-ui, sans-serif"
-    fontSize: "18px"
-    fontWeight: 800
-    lineHeight: 1.05
-    letterSpacing: "-0.02em"
-    fontVariation: "'opsz' 36"
-  headline:
-    fontFamily: "Bricolage Grotesque, Segoe UI, system-ui, sans-serif"
-    fontSize: "18px"
-    fontWeight: 750
-    lineHeight: 1.2
-    letterSpacing: "-0.01em"
-    fontVariation: "'opsz' 32"
+    fontFeature: "'tnum'"
+  large-title:
+    fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Display, Inter Var, system-ui, sans-serif"
+    fontSize: "24px"
+    fontWeight: 700
+    lineHeight: 1.08
+    letterSpacing: "-0.028em"
   title:
-    fontFamily: "Bricolage Grotesque, Segoe UI, system-ui, sans-serif"
-    fontSize: "17px"
+    fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Display, Inter Var, system-ui, sans-serif"
+    fontSize: "21px"
     fontWeight: 700
     lineHeight: 1.15
-    letterSpacing: "-0.01em"
-    fontVariation: "'opsz' 28"
-  card-title:
-    fontFamily: "Bricolage Grotesque, Segoe UI, system-ui, sans-serif"
-    fontSize: "15.5px"
-    fontWeight: 750
+    letterSpacing: "-0.025em"
+  headline:
+    fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Display, Inter Var, system-ui, sans-serif"
+    fontSize: "17px"
+    fontWeight: 600
+    lineHeight: 1.2
+    letterSpacing: "-0.022em"
+  window-title:
+    fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Display, Inter Var, system-ui, sans-serif"
+    fontSize: "16px"
+    fontWeight: 700
     lineHeight: 1.25
-    letterSpacing: "-0.01em"
-    fontVariation: "'opsz' 24"
+    letterSpacing: "-0.02em"
+  window-title-folded:
+    fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Display, Inter Var, system-ui, sans-serif"
+    fontSize: "14px"
+    fontWeight: 700
+    lineHeight: 1.25
+    letterSpacing: "-0.02em"
   body:
-    fontFamily: "Bricolage Grotesque, Segoe UI, system-ui, sans-serif"
-    fontSize: "13.5px"
+    fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Text, Inter Var, system-ui, sans-serif"
+    fontSize: "13px"
     fontWeight: 400
     lineHeight: 1.45
-  label:
-    fontFamily: "Bricolage Grotesque, Segoe UI, system-ui, sans-serif"
+    letterSpacing: "-0.003em"
+  callout:
+    fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Text, Inter Var, system-ui, sans-serif"
+    fontSize: "12.5px"
+    fontWeight: 400
+    lineHeight: 1.45
+  footnote:
+    fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Text, Inter Var, system-ui, sans-serif"
     fontSize: "12px"
-    fontWeight: 650
+    fontWeight: 400
+    lineHeight: 1.5
+  label:
+    fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Text, Inter Var, system-ui, sans-serif"
+    fontSize: "11.5px"
+    fontWeight: 600
     lineHeight: 1.2
+  axis:
+    fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Text, Inter Var, system-ui, sans-serif"
+    fontSize: "11px"
+    fontWeight: 400
+    lineHeight: 1
+    fontFeature: "'tnum'"
   code:
     fontFamily: "ui-monospace, SF Mono, Menlo, Consolas, monospace"
     fontSize: "12px"
-    fontWeight: 600
+    fontWeight: 500
     lineHeight: 1.2
 rounded:
-  r: "3px"
-  tick: "2px"
+  window-tag: "2.5px"
+  swatch: "3px"
+  check: "4px"
+  vbar: "4px"
+  segment: "7px"
+  control-small: "7px"
+  list-row: "8px"
+  segmented: "9px"
+  control: "10px"
+  tooltip: "10px"
+  grouped-list: "12px"
+  menu: "12px"
+  window: "14px"
+  panel: "20px"
+  pill: "980px"
 spacing:
-  gutter: "14px"
-  sheet: "16px"
-  card: "12px"
-  rule: "22px"
-  grid: "1cm"
+  hair: "2px"
+  xs: "6px"
+  sm: "8px"
+  md: "12px"
+  gap: "14px"
+  lg: "18px"
+  xl: "22px"
 components:
-  button-primary:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.paper}"
-    rounded: "{rounded.r}"
-    padding: "7px 12px"
-  button-primary-hover:
-    backgroundColor: "{colors.ink-2}"
-  button-ghost:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.r}"
-    padding: "7px 12px"
-  input-search:
-    backgroundColor: "{colors.paper-2}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.r}"
-    padding: "8px 12px 8px 32px"
-  chip-filter:
-    backgroundColor: "{colors.paper-2}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.r}"
-    padding: "4px 6px 4px 9px"
-  sheet:
-    backgroundColor: "{colors.paper}"
-    rounded: "{rounded.r}"
-    padding: "{spacing.sheet}"
-  card-floating:
-    backgroundColor: "{colors.card}"
-    rounded: "{rounded.r}"
+  panel:
+    backgroundColor: "{colors.panel}"
+    rounded: "{rounded.panel}"
+    padding: "16px 18px"
+  window:
+    backgroundColor: "{colors.glass}"
+    rounded: "{rounded.window}"
     width: "340px"
-  card-compact:
-    backgroundColor: "{colors.card}"
-    rounded: "{rounded.r}"
+  window-folded:
+    backgroundColor: "{colors.glass}"
+    rounded: "{rounded.window}"
     width: "300px"
-  tab-active:
+  button-primary:
+    backgroundColor: "{colors.accent-graphite}"
+    textColor: "{colors.accent-ink}"
+    rounded: "{rounded.pill}"
+    padding: "7px 15px"
+  button-ghost:
+    backgroundColor: "{colors.fill}"
     textColor: "{colors.ink}"
-    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    padding: "7px 15px"
+  filter-chip:
+    backgroundColor: "{colors.fill}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.pill}"
+    padding: "5px 8px 5px 11px"
+  search-field:
+    backgroundColor: "{colors.panel}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.control}"
+    height: "34px"
+  segmented-control:
+    backgroundColor: "{colors.fill}"
+    rounded: "{rounded.segmented}"
+    padding: "2px"
+  segmented-thumb:
+    backgroundColor: "{colors.thumb}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.segment}"
+  grouped-list:
+    backgroundColor: "{colors.fill-2}"
+    rounded: "{rounded.grouped-list}"
+    padding: "0 12px"
+  traffic-light-close:
+    backgroundColor: "{colors.tl-red}"
+    size: "12px"
+  traffic-light-fold:
+    backgroundColor: "{colors.tl-yellow}"
+    size: "12px"
+  traffic-light-inactive:
+    backgroundColor: "{colors.tl-off}"
+    size: "12px"
 ---
 
-# Design System: Parlamento de la demanda
+# Design System: Explorador del parlamento
 
 ## Overview
 
-**Creative North Star: "La mesa de trabajo sobre el tapete de corte"**
+**Creative North Star: "La app de macOS del parlamento"**
 
-La página es una mesa: un tapete verde de corte con cuadrícula de 1 cm (líneas finas cada centímetro y más marcadas cada 5 cm) y reglas numeradas en centímetros reales en el borde superior e izquierdo. Encima descansan hojas de papel blanco neutro (filtros, parlamento, histórico, selección) en una rejilla fija, y sobre ellas fichas flotantes que el planner levanta, arrastra, apila y compara sin perder de vista el parlamento.
+El explorador se comporta como una app nativa de Apple a pantalla completa (lenguaje pedido por el usuario el 2026-10-12). Lienzo gris claro, negro en oscuro; encima, paneles blancos sin borde y quietos (filtros, parlamento, histórico, selección). Lo que se abre no sustituye la vista: cada EAN o partido nace como una ventana translúcida desde el escaño o la fila pulsada, se lanza con inercia, se asienta con un muelle y se pliega o se compara en fila sin tapar el parlamento.
 
-Densidad de herramienta de análisis: texto de 13.5px, tablas de especificaciones con filete de tinta arriba, cifras tabulares. La tinta es casi negra; el color está reservado a los partidos y al estado. La profundidad es física y corta: el papel apoya, la ficha levantada proyecta una sombra larga y se inclina un poco. El modo oscuro es el mismo tapete de noche, no otro mundo.
+Densidad de herramienta: texto de 13px, cifras tabulares, listas agrupadas tipo Ajustes, controles segmentados. El color es casi solo de los datos: el cromo es gris y grafito para que los seis colores de partido, el morado de fragancias y el naranja de makeup sean lo único que se lee como color. Funciona descargado y sin conexión: la letra es la del sistema de Apple y, fuera de Apple, Inter Var incrustada.
 
-Rechazados por el usuario: la «carta de tonos» y la cámara oscura con tarjetas (gritan IA), y el dashboard de tres columnas que sustituye la vista al pulsar.
+Rechazados por el usuario: la carta de tonos y la cámara oscura con tarjetas, y la mesa de trabajo sobre tapete de corte (el sistema anterior, sustituido entero).
 
 **Key Characteristics:**
-- Tapete verde con cuadrícula de 1 cm y 5 cm y reglas numeradas en cm reales.
-- Hojas de papel con esquina de 3px y sombra corta tintada en verde.
-- Fichas flotantes que nacen junto al punto pulsado, unidas a su escaño por un hilo del color del partido, y que se encajan en la cuadrícula de 1 cm.
-- Una grotesca humanista variable (Bricolage Grotesque) y monoespaciada solo para códigos EAN.
-- Colores de partido fijos; tinta para todo lo demás.
+- Paneles de 20px sin borde con sombra difusa sobre lienzo #F5F5F7 / #000000.
+- Ventanas de 14px en material translúcido con semáforo de macOS (rojo cierra, amarillo pliega).
+- Acento grafito, nunca azul de sistema.
+- Muelles por eje, proyección de la inercia, resistencia en los bordes; todo interrumpible.
+- Un significado por color; el estado nunca va solo en el color.
 
 ## Colors
 
-Tapete verde, papel neutro y tinta casi negra; el único color vivo es el de los partidos y el estado.
+Cromo neutro de Apple (grises y grafito) al servicio de una paleta de datos fija.
 
 ### Primary
-- **Tinta de imprenta** (`ink`): texto, botón principal, filete superior de tablas, subrayado de pestaña activa, foco, casilla marcada. En oscuro, `dark-ink`.
+- **Grafito** (`accent-graphite`; en oscuro, `dark-accent-graphite`): botón principal, casilla marcada, contador de filtro, resultado activo del buscador, foco (anillo de 3.5px al 45% del acento), caret. Su versión suave (`accent-soft`) marca fila caliente, selección de texto y botón de icono activo.
 
-### Secondary
-- **Verde tapete** (`mat`, `mat-2`): fondo de la página y de las reglas. Sus líneas (`mat-line` cada 1 cm, `mat-line-5` cada 5 cm) y números (`mat-ink`) son blancos translúcidos y verde pálido. En oscuro, `dark-mat*`.
-
-### Tertiary (colores con significado fijo)
-- **Partidos** (`party-*`): Regla fragancias, Media 12M estacional, Media 6M estacional, Regla makeup, Media 6M prudente, Ciclo de vida, en ese orden de bloques; **Empate** en gris (`empate` / `dark-empate`). Salen de `src/ideo_brujulas6.py` (`COL6`).
+### Secondary (datos; colores fijos de PRODUCT.md)
+- **Partidos:** Regla fragancias (`party-regla-fragancias`), Media 12M estacional, Media 6M estacional, Regla makeup, Media 6M prudente, Ciclo de vida. Salen de `COL6` en `src/ideo_brujulas6.py`; el número sobre el color va en #151515 o blanco según luminancia.
 - **Categoría:** morado = fragancias (`fragancias`), naranja = makeup (`makeup`).
-- **Regla + DAs:** verde azulado (`rule-teal`). No aparece en el explorador; lo usan otras páginas.
-- **Consenso:** azul marino (`consenso-navy`), solo en reportes históricos.
-- **Estado:** bueno (`status-good`) y crítico (`status-critical`), siempre con triángulo hacia arriba o hacia abajo.
+- **Empate** (`empate` / `dark-empate`): gris, siempre al final del hemiciclo.
+- **Regla + DAs** (`rule-teal`) y **consenso** (`consenso-navy`, solo en reportes históricos): reservados aunque el explorador no los pinte.
+
+### Tertiary (estado)
+- **Bueno / crítico** (`status-good`, `status-critical`): solo en el triángulo de 8×7px junto a una variación; el número va en tinta.
 
 ### Neutral
-- **Papel** (`paper`, `card`): hojas y fichas. **Papel 2** (`paper-2`): campos, chips, fila resaltada, zona de proyección del gráfico.
-- **Tinta 2** (`ink-2`) para texto secundario fuerte y hover del botón; **gris de lápiz** (`muted`) para notas, ejes y contadores; **filete** (`line`) para divisores.
-- **Sombra tintada** (`shadow-tint`): las sombras del modo claro son verde muy oscuro translúcido, nunca negro puro.
-- En oscuro el papel baja a `dark-paper` y las fichas a `dark-card`, un punto más claras que la hoja, con un canto interior `dark-card-edge`.
+- **Lienzo** (`canvas`), **panel** (`panel`, `panel-2` para el fondo de la lista agrupada dentro de ventanas), **rellenos** (`fill` para controles y chips, `fill-2` para hover, listas agrupadas y campos), **tinta** (`ink`, `ink-2` secundaria), **apagado** (`muted`: ejes, pistas, metadatos), **filete** (`hair`, siempre como sombra interior de .5px, no como borde).
+- **Semáforo:** `tl-red`, `tl-yellow`, `tl-off` (ventana de detrás), `tl-glyph` (× y − que aparecen al pasar).
 
 ### Named Rules
-**La Regla de Un Significado.** Un color = una cosa en todo el proyecto. El color de un partido sigue a la entidad, no a su posición; filtrar nunca repinta a los que quedan. Morado = fragancias, naranja = makeup, verde azulado = regla + DAs, azul marino = consenso (solo histórico).
+**The Graphite Rule.** El acento es grafito. El azul de sistema de Apple se midió a ΔE 3.3 del partido Media 6M prudente (#2a78d6): se leería como ese partido. Ningún color de cromo puede acercarse a un color de partido.
 
-**La Regla del Triángulo.** Verde y rojo de estado nunca van solos: el signo va con un triángulo hacia arriba (bueno) o hacia abajo (crítico) y la cifra con su signo.
+**The One Meaning Rule.** Cada color significa una sola cosa en todo el proyecto: partido, categoría, regla + DAs, consenso o estado. El cromo no usa ninguno de ellos.
+
+**The Triangle Rule.** Verde y rojo solo aparecen como triángulo (arriba bueno, abajo crítico) al lado de la cifra; nunca colorean el número ni van solos.
 
 ## Typography
 
-**Display Font:** Bricolage Grotesque, autoalojada en el HTML (woff2 variable, ejes wght 200–800 y opsz), con Segoe UI y system-ui de reserva.
-**Body Font:** Bricolage Grotesque.
-**Label/Mono Font:** ui-monospace (SF Mono, Menlo, Consolas) solo para códigos EAN.
+**Display Font:** SF Pro Display (vía `-apple-system`), con Inter Var incrustada en base64 (OFL) como reserva
+**Body Font:** SF Pro Text (vía `-apple-system`), con Inter Var
+**Label/Mono Font:** SF Mono / ui-monospace para EAN y códigos
 
-**Character:** Grotesca humanista con tamaño óptico: los titulares grandes cierran el tracking y suben el eje opsz; el texto de trabajo queda abierto y legible. La monoespaciada marca que algo es un código, no un nombre.
+**Character:** la letra del sistema de Apple, ajustada como en macOS: tracking negativo en los titulares, cifras tabulares en todo lo que se compara.
 
 ### Hierarchy
-- **Numeral** (800, 54px, opsz 96): total de escaños en el centro del hemiciclo.
-- **Brand** (800, 18px, opsz 36): nombre en la tira superior.
-- **Headline** (750, 18px, opsz 32): nombre de la selección.
-- **Title** (700, 17px, opsz 28): título de cada hoja; cifras grandes de la tabla de especificaciones (750, 17px).
-- **Card title** (750, 15.5px, opsz 24): nombre dentro de la ficha.
-- **Body** (400, 13.5px, 1.45): todo el texto de trabajo; notas a 12px en `muted`, máximo 64ch.
-- **Label** (650, 12px): cabeceras de tabla, pestañas (650 al tamaño del cuerpo), facetas (650, 13px).
-- **Code** (600, 12px, monoespaciada): código EAN en tablas y en la cabecera de la ficha.
+- **Numeral** (700, 58px, 1): el número de escaños en el centro del hemiciclo.
+- **Large title** (700, 24px, 1.08): título de la app sobre el lienzo.
+- **Title** (700, 21px, 1.15): nombre de la selección en el panel derecho.
+- **Headline** (600, 17px, 1.2): título de panel y cifra de la lista agrupada.
+- **Window title** (700, 16px, 1.25): nombre dentro de la ventana; 14px plegada.
+- **Body** (400, 13px, 1.45): filas, leyenda, filtros.
+- **Callout** (12.5px): tablas, chips, segmentos, subtítulos.
+- **Footnote** (12px, 1.5): notas (máx. 64ch), pistas, tooltips.
+- **Label** (600, 11.5px): cabeceras de tabla, grupos del buscador.
+- **Axis** (11px, tabular): ejes de los gráficos y etiqueta de proyección.
 
 ### Named Rules
-**La Regla del Código.** La monoespaciada es solo para códigos EAN; nombres, cifras y etiquetas van en Bricolage con cifras tabulares.
+**The Display Tracking Rule.** De 16px hacia arriba se aprieta: −0.02em (16–17px) a −0.035em (58px). El cuerpo lleva −0.003em.
+
+**The One Unit Rule.** Cada eje usa una sola unidad, elegida por el valor más alto (`k` desde 1.000, `M` desde 1.000.000, coma decimal española): nunca «10 k» junto a «5000».
 
 ## Layout
 
-La mesa es una rejilla fija bajo las reglas (22px): tira superior a lo ancho; filtros (252px) | parlamento encima del histórico (flexible) | selección (372px); separación de 14px y margen de 16px. Por debajo de 1240px las columnas laterales bajan a 228px y 330px.
-
-La cuadrícula del tapete arranca en (22px, 22px) y mide centímetros CSS reales (1cm ≈ 37.8px). Las fichas sueltas se encajan en sus líneas de 1 cm al soltarlas; al arrastrar, la ficha proyecta su ancho y alto como una marca en las reglas. «Comparar en fila» pliega las fichas (300px) y las coloca en rejilla bajo la hoja del parlamento, que sigue entera a la vista, con un paso redondeado a centímetros y medio centímetro entre filas.
-
-Por debajo de 960px la mesa pasa a una columna: desaparecen la regla vertical, la capa flotante, los hilos y la bandeja; las fichas se apilan en flujo entre el parlamento y el histórico.
+App a pantalla completa con rejilla de tres columnas (filtros 256px | parlamento + histórico | selección 372px; 232/332px por debajo de 1240px), separación de 14px y margen 6/18/18px. La barra de título no es panel: va sobre el lienzo con título, buscador (máx. 440px), chips de filtros y, con ventanas abiertas, «Comparar en fila» / «Misma escala» / «Cerrar fichas». Los paneles rellenan con 16–18px. Por debajo de 960px todo pasa a una columna que se desplaza; las ventanas flotantes desaparecen y las fichas se apilan como paneles normales con el semáforo encendido.
 
 ## Elevation & Depth
 
-Profundidad física y corta, de objeto sobre una mesa: cada sombra tiene un canto de 1px (el grosor del papel) y una difusa. La hoja apoya; la ficha levantada se separa con una sombra larga. En claro las sombras van tintadas en verde muy oscuro; en oscuro, negras y más densas.
+Profundidad por capas de Apple: lienzo, paneles con sombra casi imperceptible y ventanas que flotan con sombra larga. La ventana activa sube de sombra; la que se arrastra sube más y crece al 102%. Los filetes son sombras interiores de .5px; no hay bordes de 1px salvo en la casilla vacía y el chip de leyenda apagado.
 
 ### Shadow Vocabulary
-- **Apoyada** (`box-shadow: 0 1px 0 rgba(12,34,26,.10), 0 2px 7px rgba(12,34,26,.20)`): hojas y fichas en reposo. Oscuro: `0 1px 0 rgba(0,0,0,.35), 0 3px 10px rgba(0,0,0,.45)`.
-- **Encima** (`--sh-top: 0 1px 0 rgba(12,34,26,.10), 0 8px 22px rgba(12,34,26,.28)`; en oscuro, la misma sombra en negro): la ficha que está delante del montón.
-- **Levantada** (`box-shadow: 0 2px 0 rgba(12,34,26,.08), 0 22px 44px rgba(12,34,26,.38)`): ficha arrastrándose, desplegable de búsqueda, tooltips. Oscuro: `0 2px 0 rgba(0,0,0,.3), 0 24px 48px rgba(0,0,0,.6)`.
+- **Panel** (`0 1px 1px rgba(0,0,0,.02), 0 6px 20px rgba(0,0,0,.04)`; oscuro: `0 0 0 .5px rgba(255,255,255,.06)`): paneles y buscador.
+- **Win** (`0 0 0 .5px edge, 0 2px 6px rgba(0,0,0,.05), 0 18px 44px rgba(0,0,0,.12)`): ventana de detrás y tooltips.
+- **Top** (`… 0 4px 10px rgba(0,0,0,.06), 0 24px 56px rgba(0,0,0,.16)`): ventana delante.
+- **Lift** (`… 0 8px 18px rgba(0,0,0,.08), 0 36px 80px rgba(0,0,0,.22)`): ventana arrastrada y menú del buscador.
+- **Thumb** (`0 0 0 .5px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.12), 0 3px 8px rgba(0,0,0,.06)`): cursor del control segmentado.
+
+### Material translúcido
+Ventanas: `glass` con `backdrop-filter: blur(40px) saturate(180%)` y filo de luz `inset 0 .5px 0 glass-hi`. Menú del buscador: blur 30px; tooltips: blur 24px. El vidrio claro es casi opaco (.97; .96 en oscuro) para que las cifras se lean encima del hemiciclo.
 
 ### Named Rules
-**La Regla del Levantar.** Al coger una ficha crece la sombra a «levantada», se inclina −0.8deg y escala a 1.015; al soltarla vuelve a apoyar y se encaja en la cuadrícula.
+**The Reduced Transparency Rule.** Con `prefers-reduced-transparency: reduce`, ventanas, menú y tooltips pasan a `panel` macizo sin desenfoque.
+
+**The Still Panels Rule.** Los paneles no se mueven ni suben de sombra; solo las ventanas tienen elevación variable.
 
 ## Shapes
 
-Esquina de papel cortado: 3px (`rounded.r`) en hojas, fichas, botones, campos, chips, tooltips y filas. 2px (`rounded.tick`) para muestras de color, casillas y segmentos de la barra de volumen. Escaños del hemiciclo, círculos. Los divisores son filetes de 1px en `line`; las tablas abren con un filete de tinta de 1.5px.
+Esquinas continuas de Apple en escala fija: 20px paneles, 14px ventanas, 12px listas agrupadas y menú, 10px campo de búsqueda y tooltips, 9px fondo del control segmentado con segmentos de 7px, 8px filas de la leyenda, 7px filas y campos pequeños, 4px casilla y barra de volumen, píldora (980px) en botones y chips. Formas de dato: escaño y punto de leyenda en círculo; cuadrado de partido de 10px con radio 3px; etiqueta de ventana de 8px con radio 2.5px.
 
 ## Components
 
 ### Buttons
-- **Shape:** esquina de papel (3px).
-- **Primary:** tinta sobre papel invertido (`ink` de fondo, `paper` de texto), 7px 12px, peso 600.
-- **Hover / Focus:** hover a `ink-2` (solo con puntero fino); foco con contorno de 2px en tinta y 2px de separación; al pulsar escala a 0.97 en 160ms.
-- **Ghost:** transparente con filete `line`; en hover el filete pasa a `ink-2`.
-- **Icono (28px):** sin borde, `muted`; activo (chincheta) en `ink` sobre `paper-2`.
+- **Shape:** píldora (980px).
+- **Primary:** grafito con texto blanco (negro en oscuro), 7px 15px, 500 13px; hover mezcla 88% acento con tinta.
+- **Ghost:** relleno `fill`, tinta; es el de la barra de título.
+- **Press:** escala .97 al pulsar, 160ms `cubic-bezier(.23,1,.32,1)`. Desactivado al 40%.
 
 ### Chips
-- **Filtro activo:** `paper-2` con filete `line`, 12.5px, etiqueta de la faceta en `muted` y aspa para quitarlo.
-- **Leyenda del gráfico:** papel con filete; apagada = texto `muted` y muestra al 30%.
+- **Filtro activo:** píldora `fill`, clave en apagado, valor en tinta, círculo de 16px para quitar.
+- **Leyenda del gráfico:** `fill-2` encendida; apagada transparente con filete de 1px y muestra al 30%.
 
 ### Cards / Containers
-- **Hoja:** `paper`, 3px, sombra apoyada, cabecera con título a 16px de margen y pista en `muted` a la derecha.
-- **Ficha flotante:** 340px, `card`, canto interior `card-edge`, cabecera arrastrable con muestra del partido, código o nombre, chincheta y cierre; cuerpo 11px 13px.
-- **Ficha plegada (comparar):** 300px; solo nombre, una cifra y su curva (la curva se quita si no cabe).
-- **Tabla de especificaciones:** filete de tinta arriba, filas con filete `line`, etiqueta a la izquierda y cifra tabular grande a la derecha con su triángulo.
+- **Panel:** 20px, blanco, sombra panel, sin borde, título 17px.
+- **Lista agrupada** (estilo Ajustes): `fill-2`, 12px, filas de 9px separadas por filete de .5px; etiqueta a la izquierda con subtítulo de 11.5px, cifra de 17px a la derecha.
 
 ### Inputs / Fields
-- **Style:** `paper-2`, filete `line`, 3px, icono de lupa en `muted`.
-- **Focus:** el campo pasa a `paper` y el filete a `ink-2` (160ms).
+- **Buscador:** 34px, 10px, panel con sombra panel y filete interior; foco con anillo de 3.5px al 40% del acento. Resultados en menú de vidrio con grupos de 11.5px y fila activa en grafito.
+- **Filtro de faceta:** `fill-2`, 7px; casilla de 15px y 4px que se rellena de grafito con la marca dibujada.
 
 ### Navigation
-- **Pestañas:** texto 650 en `muted`; la activa en `ink` con subrayado de 2px que crece desde la izquierda (220ms).
-- **Segmentado:** borde de tinta; la opción activa invertida.
+- **Control segmentado:** fondo `fill` de 9px con 2px de aire; segmentos de 7px en 500 12.5px y tinta 2; el seleccionado en 600 y tinta. En las pestañas un cursor (`thumb`, sombra thumb) se desliza en transform y ancho, 340ms `cubic-bezier(.32,.72,0,1)`.
+- **Barra lateral de filtros:** facetas plegables con chevron que gira 90° (260ms) y separador de .5px.
 
-### Hemiciclo
-Un punto por EAN en filas uniformes, número total en el centro, partidos por bloques de izquierda a derecha, Empate en gris; aparece con un barrido de 320ms. Escaño abierto con contorno de tinta de 2.4px. Debajo, la barra de volumen (9px, segmentos de 2px de radio).
-
-### Hilos
-Línea de 1.6px del color del partido entre la ficha y su escaño, con un punto de anclaje bordeado en papel. Rodea la hoja por el tapete sin tachar nombres; en la fila de comparar no se dibujan.
+### Ventana flotante (firma)
+- 340px (plegada 300px), radio 14px, material translúcido.
+- **Semáforo:** dos botones de 12px separados 8px, área táctil ampliada 6px; rojo cierra, amarillo pliega; el × y el − aparecen al pasar. En la ventana de detrás, sin hover, los dos se apagan a `tl-off`. La etiqueta del partido es un cuadrado de 8px separado 10px, para que no se lea como tercer semáforo.
+- Título en mono de 12px (EAN) o 600 13px (partido); al pasar por la ventana, su escaño se ilumina en el hemiciclo.
 
 ### Movimiento
-- **Curva:** `cubic-bezier(0.23, 1, 0.32, 1)` para casi todo; `cubic-bezier(0.77, 0, 0.175, 1)` para los puntos de la brújula (700ms).
-- **Duraciones:** abrir ficha 230ms (desde escala 0.93), cerrar 150ms (a 0.96), encajar 180ms, deslizar 220ms, recolocar en fila 360ms; pulsación y hover 160ms.
-- **Movimiento reducido:** sin escala, inclinación ni deslizamiento; las fichas se colocan al instante, el barrido del hemiciclo pasa a fundido de 150ms y el resto de transiciones solo cambia la opacidad.
+- **Muelles por eje** (respuesta, amortiguación): apertura .48 / .92; asentar tras soltar .45 / 1, o .8 si se lanzó a más de 500 px/s; «Comparar en fila» .5 / .9 con 40ms de escalonado por ventana.
+- **Inercia:** proyección de Apple `v/1000 · d/(1−d)` con d = .995. **Resistencia** en los bordes: `o·dim·.55/(dim + .55·o)`.
+- **Abrir:** desde el punto pulsado, WAAPI 340ms de escala .6 y blur 8px a nada, `cubic-bezier(.23,1,.32,1)`. **Cerrar:** 200ms a escala .7 y blur 6px, con el origen en su escaño o fila. Reabrir una ya abierta: salto de 5px en 260ms.
+- **Hemiciclo:** entra en 520ms desde escala .96 y blur 6px.
+- **Reduced motion:** las ventanas se colocan sin muelle, abren y cierran sin animación, nada escala al pulsar ni al arrastrar y el resto se reduce a fundidos de 150ms.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** poner el contenido en hojas de papel (3px, sombra apoyada) sobre el tapete verde con su cuadrícula de 1 cm y 5 cm.
-- **Do** abrir el detalle como ficha junto al punto pulsado, unida por un hilo, sin sustituir la vista.
-- **Do** encajar en la cuadrícula de 1 cm todo lo que se suelta o se recoloca.
-- **Do** usar la sombra tintada en verde (`rgba(12,34,26,…)`) en claro y la negra en oscuro.
-- **Do** emparejar siempre verde y rojo de estado con su triángulo.
-- **Do** respetar `prefers-reduced-motion` con fundidos de 150ms.
+- **Do** usar grafito como único acento de interfaz y dejar el color a los datos.
+- **Do** separar con sombras interiores de .5px (`hair`) en vez de bordes.
+- **Do** dar a cada ventana su semáforo (rojo cierra, amarillo pliega) y apagarlo cuando queda detrás.
+- **Do** mover ventanas con muelles por eje interrumpibles y respetar `prefers-reduced-motion` y `prefers-reduced-transparency`.
+- **Do** usar cifras tabulares y una sola unidad por eje.
+- **Do** acompañar cada variación con su triángulo verde o rojo.
+- **Do** incrustar Inter Var para que la página funcione sin conexión fuera de Apple.
 
 ### Don't:
-- **Don't** repintar un partido ni reutilizar sus colores para otra cosa.
-- **Don't** usar el consenso de o9 como referencia fuera de reportes históricos.
-- **Don't** usar la monoespaciada para nada que no sea un código EAN.
-- **Don't** usar sombras negras puras en modo claro.
-- **Don't** volver a la carta de tonos, a la cámara oscura con tarjetas ni al dashboard de tres columnas que sustituye la vista.
+- **Don't** usar el azul de sistema ni ningún color de cromo cercano a un color de partido.
+- **Don't** reasignar colores de partido, categoría, regla + DAs o consenso, ni pintar el consenso fuera de reportes históricos.
+- **Don't** poner bordes de 1px a los paneles ni elevar los paneles al pasar.
+- **Don't** hacer redonda la etiqueta de partido de una ventana ni ponerla junto al semáforo.
+- **Don't** sustituir la vista al abrir un EAN: se abre una ventana encima y el parlamento sigue visible.
+- **Don't** mezclar unidades en un mismo eje.

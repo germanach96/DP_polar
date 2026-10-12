@@ -1,801 +1,991 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-11T22:06:47+00:00",
-  "title": "Design System: Parlamento de la demanda",
+  "generatedAt": "2026-10-12T17:22:52+00:00",
+  "title": "Design System: Explorador del parlamento",
   "extensions": {
     "colorMeta": {
-      "mat": {
-        "role": "secondary",
-        "displayName": "Verde tapete",
-        "canonical": "#3D7862",
-        "tonalRamp": [
-          "#1A3329",
-          "#2B5545",
-          "#3C7661",
-          "#4D987C",
-          "#67B296",
-          "#93C8B4",
-          "#C2E0D5",
-          "#EEF6F3"
-        ]
-      },
-      "mat-2": {
-        "role": "secondary",
-        "displayName": "Verde tapete de regla",
-        "canonical": "#356B57",
-        "tonalRamp": [
-          "#19332A",
-          "#2A5545",
-          "#3B7761",
-          "#4C997D",
-          "#66B396",
-          "#92C9B5",
-          "#C2E1D5",
-          "#EEF7F3"
-        ]
-      },
-      "mat-ink": {
-        "role": "secondary",
-        "displayName": "Números de regla",
-        "canonical": "#D8EDE2",
-        "tonalRamp": [
-          "#183426",
-          "#28573F",
-          "#387A58",
-          "#489D71",
-          "#62B78A",
-          "#8FCBAC",
-          "#C0E2D0",
-          "#EEF7F2"
-        ]
-      },
-      "paper": {
+      "canvas": {
         "role": "neutral",
-        "displayName": "Papel",
-        "canonical": "#FCFCFA",
+        "displayName": "Lienzo",
+        "canonical": "#F5F5F7",
         "tonalRamp": [
-          "#30301D",
-          "#505030",
-          "#707043",
-          "#8F8F56",
-          "#A9A970",
-          "#C2C299",
-          "#DDDDC6",
-          "#F5F5EF"
+          "#22222A",
+          "#3B3B4A",
+          "#545469",
+          "#6D6D88",
+          "#8B8BA2",
+          "#AAAABB",
+          "#CCCCD6",
+          "#F1F1F4"
         ]
       },
-      "paper-2": {
+      "panel": {
         "role": "neutral",
-        "displayName": "Papel 2",
-        "canonical": "#F2F3F0",
+        "displayName": "Panel",
+        "canonical": "#FFFFFF",
         "tonalRamp": [
-          "#282A22",
-          "#424739",
-          "#5D634F",
-          "#777F66",
-          "#909980",
-          "#B0B6A4",
-          "#D3D6CC",
-          "#F3F4F1"
+          "#262626",
+          "#424242",
+          "#5E5E5E",
+          "#7A7A7A",
+          "#969696",
+          "#B2B2B2",
+          "#D1D1D1",
+          "#F2F2F2"
         ]
       },
-      "card": {
+      "panel-2": {
         "role": "neutral",
-        "displayName": "Ficha",
-        "canonical": "#FCFCFA",
+        "displayName": "Panel 2",
+        "canonical": "#FAFAFC",
         "tonalRamp": [
-          "#30301D",
-          "#505030",
-          "#707043",
-          "#8F8F56",
-          "#A9A970",
-          "#C2C299",
-          "#DDDDC6",
-          "#F5F5EF"
+          "#1D1D30",
+          "#323253",
+          "#474776",
+          "#5C5C99",
+          "#7C7CB1",
+          "#9F9FC6",
+          "#C6C6DD",
+          "#EFEFF5"
         ]
+      },
+      "fill": {
+        "role": "neutral",
+        "displayName": "Relleno de control",
+        "canonical": "rgba(120,120,128,.12)"
+      },
+      "fill-2": {
+        "role": "neutral",
+        "displayName": "Relleno suave",
+        "canonical": "rgba(120,120,128,.07)"
       },
       "ink": {
-        "role": "primary",
-        "displayName": "Tinta de imprenta",
-        "canonical": "#1B1E1C",
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "#1D1D1F",
         "tonalRamp": [
-          "#242826",
-          "#3C433F",
-          "#555E58",
-          "#6D7971",
-          "#86928A",
-          "#A9B2AC",
-          "#CFD4D0",
-          "#F2F3F2"
+          "#252528",
+          "#404045",
+          "#5B5B61",
+          "#76767E",
+          "#93939A",
+          "#B0B0B5",
+          "#D0D0D3",
+          "#F2F2F3"
         ]
       },
       "ink-2": {
         "role": "neutral",
-        "displayName": "Tinta 2",
-        "canonical": "#474D49",
+        "displayName": "Tinta secundaria",
+        "canonical": "#424245",
         "tonalRamp": [
-          "#252826",
-          "#3D423F",
-          "#565D58",
-          "#6E7771",
-          "#88918B",
-          "#AAB1AC",
-          "#CFD3D0",
-          "#F2F3F2"
+          "#252527",
+          "#414144",
+          "#5C5C60",
+          "#78787D",
+          "#949499",
+          "#B1B1B4",
+          "#D0D0D2",
+          "#F2F2F3"
         ]
       },
       "muted": {
         "role": "neutral",
-        "displayName": "Gris de lápiz",
-        "canonical": "#5E6561",
+        "displayName": "Apagado",
+        "canonical": "#6E6E73",
         "tonalRamp": [
-          "#252826",
-          "#3D423F",
-          "#565C59",
-          "#6F7772",
-          "#88908C",
-          "#AAB0AD",
-          "#CFD3D1",
-          "#F2F3F2"
+          "#252527",
+          "#414144",
+          "#5C5C60",
+          "#78787D",
+          "#949499",
+          "#B1B1B4",
+          "#D0D0D2",
+          "#F2F2F3"
         ]
       },
-      "line": {
+      "hair": {
         "role": "neutral",
         "displayName": "Filete",
-        "canonical": "#DADDD7",
+        "canonical": "rgba(0,0,0,.09)"
+      },
+      "accent-graphite": {
+        "role": "primary",
+        "displayName": "Grafito",
+        "canonical": "#1D1D1F",
         "tonalRamp": [
-          "#262923",
-          "#40453B",
-          "#596052",
-          "#737C69",
-          "#8C9683",
-          "#ADB4A7",
-          "#D1D5CD",
-          "#F2F3F1"
+          "#252528",
+          "#404045",
+          "#5B5B61",
+          "#76767E",
+          "#93939A",
+          "#B0B0B5",
+          "#D0D0D3",
+          "#F2F2F3"
         ]
       },
+      "accent-ink": {
+        "role": "primary",
+        "displayName": "Texto sobre grafito",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5E5E5E",
+          "#7A7A7A",
+          "#969696",
+          "#B2B2B2",
+          "#D1D1D1",
+          "#F2F2F2"
+        ]
+      },
+      "accent-soft": {
+        "role": "primary",
+        "displayName": "Grafito suave",
+        "canonical": "rgba(0,0,0,.06)"
+      },
+      "glass": {
+        "role": "neutral",
+        "displayName": "Vidrio",
+        "canonical": "rgba(255,255,255,.97)"
+      },
+      "glass-edge": {
+        "role": "neutral",
+        "displayName": "Canto del vidrio",
+        "canonical": "rgba(0,0,0,.10)"
+      },
+      "glass-hi": {
+        "role": "neutral",
+        "displayName": "Filo de luz",
+        "canonical": "rgba(255,255,255,.75)"
+      },
+      "thumb": {
+        "role": "neutral",
+        "displayName": "Cursor segmentado",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5E5E5E",
+          "#7A7A7A",
+          "#969696",
+          "#B2B2B2",
+          "#D1D1D1",
+          "#F2F2F2"
+        ]
+      },
+      "tl-red": {
+        "role": "neutral",
+        "displayName": "Semáforo rojo (cerrar)",
+        "canonical": "#FF5F57",
+        "tonalRamp": [
+          "#4C0400",
+          "#850600",
+          "#BD0900",
+          "#F50C00",
+          "#FF382E",
+          "#FF6D66",
+          "#FFA8A3",
+          "#FFE7E5"
+        ]
+      },
+      "tl-yellow": {
+        "role": "neutral",
+        "displayName": "Semáforo amarillo (plegar)",
+        "canonical": "#FEBC2E",
+        "tonalRamp": [
+          "#4C3400",
+          "#845A01",
+          "#BC8001",
+          "#F4A701",
+          "#FEBC2F",
+          "#FECE67",
+          "#FFE2A4",
+          "#FFF7E6"
+        ]
+      },
+      "tl-off": {
+        "role": "neutral",
+        "displayName": "Semáforo apagado",
+        "canonical": "#D5D5D8",
+        "tonalRamp": [
+          "#252528",
+          "#404045",
+          "#5B5B62",
+          "#76767F",
+          "#93939A",
+          "#B0B0B5",
+          "#CFCFD3",
+          "#F2F2F3"
+        ]
+      },
+      "tl-glyph": {
+        "role": "neutral",
+        "displayName": "Glifo del semáforo",
+        "canonical": "rgba(0,0,0,.55)"
+      },
       "empate": {
-        "role": "tertiary",
+        "role": "secondary",
         "displayName": "Empate",
         "canonical": "#B7BCC4",
         "tonalRamp": [
           "#22252A",
-          "#393E46",
-          "#505762",
-          "#67707E",
-          "#818A98",
-          "#A5ACB5",
+          "#3C4149",
+          "#555C68",
+          "#6E7887",
+          "#8C94A1",
+          "#ABB1BA",
           "#CDD0D6",
           "#F1F2F4"
         ]
       },
       "status-good": {
-        "role": "status",
-        "displayName": "Bueno",
+        "role": "tertiary",
+        "displayName": "Estado bueno (triángulo)",
         "canonical": "#0ca30c",
         "tonalRamp": [
           "#054705",
-          "#097709",
-          "#0CA60C",
-          "#10D610",
-          "#29EF29",
-          "#67F467",
+          "#097C09",
+          "#0DB00D",
+          "#11E411",
+          "#3CF13C",
+          "#70F570",
           "#A9F9A9",
           "#E7FDE7"
         ]
       },
       "status-critical": {
-        "role": "status",
-        "displayName": "Crítico",
+        "role": "tertiary",
+        "displayName": "Estado crítico (triángulo)",
         "canonical": "#d03b3b",
         "tonalRamp": [
           "#3E0F0F",
-          "#671919",
-          "#902323",
-          "#B92C2C",
-          "#D34646",
-          "#DF7B7B",
+          "#6B1A1A",
+          "#982424",
+          "#C52F2F",
+          "#D75656",
+          "#E18484",
           "#EDB5B5",
           "#FAEAEA"
         ]
       },
       "party-regla-fragancias": {
-        "role": "tertiary",
+        "role": "secondary",
         "displayName": "Regla fragancias",
         "canonical": "#6250d6",
         "tonalRamp": [
           "#150F3E",
-          "#231867",
-          "#312291",
-          "#3F2CBA",
-          "#5845D3",
-          "#887BE0",
+          "#24196B",
+          "#342499",
+          "#432EC6",
+          "#6756D7",
+          "#9083E2",
           "#BCB5EE",
           "#ECEAFA"
         ]
       },
       "party-media-12m-estacional": {
-        "role": "tertiary",
+        "role": "secondary",
         "displayName": "Media 12M estacional",
         "canonical": "#eda100",
         "tonalRamp": [
           "#4C3400",
-          "#805700",
-          "#B27900",
-          "#E69C00",
-          "#FFB51A",
-          "#FFCB5C",
+          "#855A00",
+          "#BD8000",
+          "#F5A600",
+          "#FFBC2E",
+          "#FFCE66",
           "#FFE2A3",
           "#FFF7E5"
         ]
       },
       "party-media-6m-estacional": {
-        "role": "tertiary",
+        "role": "secondary",
         "displayName": "Media 6M estacional",
         "canonical": "#00a3c4",
         "tonalRamp": [
           "#00404C",
-          "#006A80",
-          "#0094B2",
-          "#00BFE6",
-          "#1AD8FF",
-          "#5CE4FF",
+          "#006E85",
+          "#009DBD",
+          "#00CCF5",
+          "#2EDCFF",
+          "#66E5FF",
           "#A3F0FF",
           "#E5FBFF"
         ]
       },
       "party-regla-makeup": {
-        "role": "tertiary",
+        "role": "secondary",
         "displayName": "Regla makeup",
         "canonical": "#eb6834",
         "tonalRamp": [
           "#461907",
-          "#74290B",
-          "#A23A10",
-          "#D14A15",
-          "#EA642E",
-          "#F0906A",
+          "#792B0C",
+          "#AC3D11",
+          "#DF4F16",
+          "#EC7141",
+          "#F19774",
           "#F7C1AB",
           "#FDEEE8"
         ]
       },
       "party-media-6m-prudente": {
-        "role": "tertiary",
+        "role": "secondary",
         "displayName": "Media 6M prudente",
         "canonical": "#2a78d6",
         "tonalRamp": [
           "#0C2440",
-          "#153C6B",
-          "#1D5496",
-          "#256CC0",
-          "#3F85DA",
-          "#76A8E5",
+          "#153E6F",
+          "#1E589E",
+          "#2873CD",
+          "#5090DD",
+          "#7FAEE6",
           "#B2CEF0",
           "#EAF1FB"
         ]
       },
       "party-ciclo-de-vida": {
-        "role": "tertiary",
+        "role": "secondary",
         "displayName": "Ciclo de vida",
         "canonical": "#e87ba4",
         "tonalRamp": [
           "#410B20",
-          "#6D1335",
-          "#981A4A",
-          "#C3225F",
-          "#DD3C78",
-          "#E7749F",
+          "#711437",
+          "#A11C4E",
+          "#D02465",
+          "#E04D84",
+          "#E87DA5",
           "#F1B1C9",
           "#FBE9F0"
         ]
       },
       "fragancias": {
-        "role": "tertiary",
+        "role": "secondary",
         "displayName": "Morado fragancias",
         "canonical": "#6250d6",
         "tonalRamp": [
           "#150F3E",
-          "#231867",
-          "#312291",
-          "#3F2CBA",
-          "#5845D3",
-          "#887BE0",
+          "#24196B",
+          "#342499",
+          "#432EC6",
+          "#6756D7",
+          "#9083E2",
           "#BCB5EE",
           "#ECEAFA"
         ]
       },
       "makeup": {
-        "role": "tertiary",
+        "role": "secondary",
         "displayName": "Naranja makeup",
         "canonical": "#eb6834",
         "tonalRamp": [
           "#461907",
-          "#74290B",
-          "#A23A10",
-          "#D14A15",
-          "#EA642E",
-          "#F0906A",
+          "#792B0C",
+          "#AC3D11",
+          "#DF4F16",
+          "#EC7141",
+          "#F19774",
           "#F7C1AB",
           "#FDEEE8"
         ]
       },
       "rule-teal": {
-        "role": "tertiary",
+        "role": "secondary",
         "displayName": "Verde azulado regla + DAs",
         "canonical": "#0F8A86",
         "tonalRamp": [
           "#084543",
-          "#0D7370",
-          "#12A19C",
-          "#17CFC9",
-          "#30E9E3",
-          "#6CEFEB",
+          "#0D7874",
+          "#13AAA5",
+          "#18DDD6",
+          "#42EAE5",
+          "#75F0EC",
           "#ACF6F4",
           "#E8FDFC"
         ]
       },
       "consenso-navy": {
-        "role": "tertiary",
+        "role": "secondary",
         "displayName": "Azul marino consenso (histórico)",
         "canonical": "#26408B",
         "tonalRamp": [
           "#101C3C",
-          "#1B2E64",
-          "#26418C",
-          "#3153B4",
-          "#4B6CCE",
-          "#7F97DC",
+          "#1C3068",
+          "#294494",
+          "#3559C0",
+          "#5B7AD2",
+          "#879DDE",
           "#B7C4EB",
           "#EBEFFA"
         ]
       },
-      "dark-mat": {
-        "role": "dark",
-        "displayName": "Oscuro: mat",
-        "canonical": "#1C362D",
+      "dark-canvas": {
+        "role": "neutral",
+        "displayName": "Lienzo (oscuro)",
+        "canonical": "#000000",
         "tonalRamp": [
-          "#1A322A",
-          "#2C5446",
-          "#3D7662",
-          "#4E977E",
-          "#68B197",
-          "#94C7B5",
-          "#C3E0D6",
-          "#EEF6F3"
+          "#262626",
+          "#424242",
+          "#5E5E5E",
+          "#7A7A7A",
+          "#969696",
+          "#B2B2B2",
+          "#D1D1D1",
+          "#F2F2F2"
         ]
       },
-      "dark-mat-2": {
-        "role": "dark",
-        "displayName": "Oscuro: mat-2",
-        "canonical": "#182F27",
+      "dark-panel": {
+        "role": "neutral",
+        "displayName": "Panel (oscuro)",
+        "canonical": "#1C1C1E",
         "tonalRamp": [
-          "#1A332A",
-          "#2B5446",
-          "#3C7662",
-          "#4E987E",
-          "#67B198",
-          "#93C8B5",
-          "#C2E0D6",
-          "#EEF6F4"
+          "#252528",
+          "#404045",
+          "#5B5B62",
+          "#76767F",
+          "#93939A",
+          "#B0B0B5",
+          "#D0D0D3",
+          "#F2F2F3"
         ]
       },
-      "dark-mat-ink": {
-        "role": "dark",
-        "displayName": "Oscuro: mat-ink",
-        "canonical": "#9EC1AF",
+      "dark-panel-2": {
+        "role": "neutral",
+        "displayName": "Panel 2 (oscuro)",
+        "canonical": "#232325",
         "tonalRamp": [
-          "#1E2F26",
-          "#324E3F",
-          "#466D59",
-          "#598C72",
-          "#73A68C",
-          "#9BBFAD",
-          "#C7DBD1",
-          "#EFF5F2"
+          "#252527",
+          "#404044",
+          "#5C5C61",
+          "#77777E",
+          "#949499",
+          "#B0B0B5",
+          "#D0D0D2",
+          "#F2F2F3"
         ]
       },
-      "dark-paper": {
-        "role": "dark",
-        "displayName": "Oscuro: paper",
-        "canonical": "#222624",
-        "tonalRamp": [
-          "#242826",
-          "#3C4340",
-          "#545E59",
-          "#6C7973",
-          "#86938C",
-          "#A9B2AD",
-          "#CFD4D1",
-          "#F2F3F2"
-        ]
+      "dark-fill": {
+        "role": "neutral",
+        "displayName": "Relleno de control (oscuro)",
+        "canonical": "rgba(118,118,128,.24)"
       },
-      "dark-paper-2": {
-        "role": "dark",
-        "displayName": "Oscuro: paper-2",
-        "canonical": "#2A2F2C",
-        "tonalRamp": [
-          "#242826",
-          "#3C433F",
-          "#545E58",
-          "#6C7971",
-          "#86938B",
-          "#A9B2AC",
-          "#CFD4D1",
-          "#F2F3F2"
-        ]
-      },
-      "dark-card": {
-        "role": "dark",
-        "displayName": "Oscuro: card",
-        "canonical": "#2B302D",
-        "tonalRamp": [
-          "#242826",
-          "#3C433F",
-          "#545E58",
-          "#6C7971",
-          "#86938B",
-          "#A9B2AD",
-          "#CFD4D1",
-          "#F2F3F2"
-        ]
+      "dark-fill-2": {
+        "role": "neutral",
+        "displayName": "Relleno suave (oscuro)",
+        "canonical": "rgba(118,118,128,.14)"
       },
       "dark-ink": {
-        "role": "dark",
-        "displayName": "Oscuro: ink",
-        "canonical": "#E9EDEA",
+        "role": "neutral",
+        "displayName": "Tinta (oscuro)",
+        "canonical": "#F5F5F7",
         "tonalRamp": [
-          "#222A24",
-          "#39463D",
-          "#506255",
-          "#677E6D",
-          "#819887",
-          "#A5B6A9",
-          "#CDD6CF",
-          "#F1F4F2"
+          "#22222A",
+          "#3B3B4A",
+          "#545469",
+          "#6D6D88",
+          "#8B8BA2",
+          "#AAAABB",
+          "#CCCCD6",
+          "#F1F1F4"
         ]
       },
       "dark-ink-2": {
-        "role": "dark",
-        "displayName": "Oscuro: ink-2",
-        "canonical": "#C1C8C3",
+        "role": "neutral",
+        "displayName": "Tinta secundaria (oscuro)",
+        "canonical": "#D2D2D7",
         "tonalRamp": [
-          "#242925",
-          "#3C443E",
-          "#545F57",
-          "#6C7A70",
-          "#859389",
-          "#A9B2AB",
-          "#CED4D0",
-          "#F1F3F2"
+          "#242429",
+          "#3E3E46",
+          "#595964",
+          "#737382",
+          "#90909D",
+          "#AEAEB7",
+          "#CECED4",
+          "#F1F1F3"
         ]
       },
       "dark-muted": {
-        "role": "dark",
-        "displayName": "Oscuro: muted",
-        "canonical": "#9AA39E",
+        "role": "neutral",
+        "displayName": "Apagado (oscuro)",
+        "canonical": "#98989D",
         "tonalRamp": [
-          "#242826",
-          "#3D433F",
-          "#555D59",
-          "#6D7872",
-          "#87928C",
-          "#AAB1AD",
-          "#CFD3D1",
-          "#F2F3F2"
+          "#252527",
+          "#414144",
+          "#5C5C61",
+          "#77777D",
+          "#949499",
+          "#B1B1B4",
+          "#D0D0D2",
+          "#F2F2F3"
         ]
       },
-      "dark-line": {
-        "role": "dark",
-        "displayName": "Oscuro: line",
-        "canonical": "#383E3B",
+      "dark-hair": {
+        "role": "neutral",
+        "displayName": "Filete (oscuro)",
+        "canonical": "rgba(255,255,255,.10)"
+      },
+      "dark-accent-graphite": {
+        "role": "primary",
+        "displayName": "Grafito (oscuro)",
+        "canonical": "#F5F5F7",
         "tonalRamp": [
-          "#242826",
-          "#3D4340",
-          "#555E59",
-          "#6D7973",
-          "#86928C",
-          "#A9B2AD",
-          "#CFD3D1",
-          "#F2F3F2"
+          "#22222A",
+          "#3B3B4A",
+          "#545469",
+          "#6D6D88",
+          "#8B8BA2",
+          "#AAAABB",
+          "#CCCCD6",
+          "#F1F1F4"
         ]
+      },
+      "dark-accent-ink": {
+        "role": "primary",
+        "displayName": "Texto sobre grafito (oscuro)",
+        "canonical": "#1D1D1F",
+        "tonalRamp": [
+          "#252528",
+          "#404045",
+          "#5B5B61",
+          "#76767E",
+          "#93939A",
+          "#B0B0B5",
+          "#D0D0D3",
+          "#F2F2F3"
+        ]
+      },
+      "dark-accent-soft": {
+        "role": "primary",
+        "displayName": "Grafito suave (oscuro)",
+        "canonical": "rgba(255,255,255,.12)"
+      },
+      "dark-glass": {
+        "role": "neutral",
+        "displayName": "Vidrio (oscuro)",
+        "canonical": "rgba(40,40,42,.96)"
+      },
+      "dark-glass-edge": {
+        "role": "neutral",
+        "displayName": "Canto del vidrio (oscuro)",
+        "canonical": "rgba(255,255,255,.12)"
+      },
+      "dark-glass-hi": {
+        "role": "neutral",
+        "displayName": "Filo de luz (oscuro)",
+        "canonical": "rgba(255,255,255,.08)"
+      },
+      "dark-thumb": {
+        "role": "neutral",
+        "displayName": "Cursor segmentado (oscuro)",
+        "canonical": "#636366",
+        "tonalRamp": [
+          "#262627",
+          "#414143",
+          "#5D5D60",
+          "#79797C",
+          "#959598",
+          "#B1B1B4",
+          "#D0D0D2",
+          "#F2F2F2"
+        ]
+      },
+      "dark-tl-off": {
+        "role": "neutral",
+        "displayName": "Semáforo apagado (oscuro)",
+        "canonical": "#4A4A4E",
+        "tonalRamp": [
+          "#252527",
+          "#414144",
+          "#5C5C61",
+          "#77777E",
+          "#949499",
+          "#B0B0B5",
+          "#D0D0D2",
+          "#F2F2F3"
+        ]
+      },
+      "dark-tl-glyph": {
+        "role": "neutral",
+        "displayName": "Glifo del semáforo (oscuro)",
+        "canonical": "rgba(0,0,0,.6)"
       },
       "dark-empate": {
-        "role": "dark",
-        "displayName": "Oscuro: empate",
+        "role": "secondary",
+        "displayName": "Empate (oscuro)",
         "canonical": "#6E7380",
         "tonalRamp": [
           "#232529",
-          "#3B3E45",
-          "#525660",
-          "#6A6F7B",
-          "#848895",
-          "#A7ABB4",
+          "#3D4047",
+          "#575B65",
+          "#717684",
+          "#8F939E",
+          "#ADB0B8",
           "#CED0D5",
           "#F1F2F3"
         ]
-      },
-      "mat-line": {
-        "role": "neutral",
-        "displayName": "Línea de 1 cm",
-        "canonical": "rgba(255,255,255,.09)"
-      },
-      "mat-line-5": {
-        "role": "neutral",
-        "displayName": "Línea de 5 cm",
-        "canonical": "rgba(255,255,255,.2)"
-      },
-      "shadow-tint": {
-        "role": "neutral",
-        "displayName": "Sombra tintada",
-        "canonical": "rgba(12,34,26,.10)"
-      },
-      "dark-mat-line": {
-        "role": "neutral",
-        "displayName": "Oscuro: línea de 1 cm",
-        "canonical": "rgba(255,255,255,.05)"
-      },
-      "dark-mat-line-5": {
-        "role": "neutral",
-        "displayName": "Oscuro: línea de 5 cm",
-        "canonical": "rgba(255,255,255,.11)"
-      },
-      "dark-card-edge": {
-        "role": "neutral",
-        "displayName": "Oscuro: canto de ficha",
-        "canonical": "rgba(255,255,255,.07)"
       }
     },
     "typographyMeta": {
       "numeral": {
         "displayName": "Numeral",
-        "purpose": "Total de escaños en el centro del hemiciclo."
+        "purpose": "Escaños en el centro del hemiciclo."
       },
-      "brand": {
-        "displayName": "Marca",
-        "purpose": "Nombre en la tira superior."
-      },
-      "headline": {
-        "displayName": "Titular",
-        "purpose": "Nombre de la selección."
+      "large-title": {
+        "displayName": "Large title",
+        "purpose": "Título de la app sobre el lienzo."
       },
       "title": {
-        "displayName": "Título de hoja",
-        "purpose": "Título de cada hoja; cifras grandes de especificaciones."
+        "displayName": "Title",
+        "purpose": "Nombre de la selección."
       },
-      "card-title": {
-        "displayName": "Título de ficha",
-        "purpose": "Nombre dentro de la ficha flotante."
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Título de panel y cifra de lista agrupada."
+      },
+      "window-title": {
+        "displayName": "Window title",
+        "purpose": "Nombre en la ventana; 14px plegada."
       },
       "body": {
-        "displayName": "Cuerpo",
-        "purpose": "Texto de trabajo; cifras tabulares."
+        "displayName": "Body",
+        "purpose": "Filas, leyenda, filtros."
+      },
+      "callout": {
+        "displayName": "Callout",
+        "purpose": "Tablas, chips, segmentos."
+      },
+      "footnote": {
+        "displayName": "Footnote",
+        "purpose": "Notas, pistas, tooltips."
       },
       "label": {
-        "displayName": "Etiqueta",
-        "purpose": "Cabeceras de tabla, pestañas, facetas."
+        "displayName": "Label",
+        "purpose": "Cabeceras de tabla y grupos."
+      },
+      "axis": {
+        "displayName": "Axis",
+        "purpose": "Ejes: una unidad por eje."
       },
       "code": {
-        "displayName": "Código",
-        "purpose": "Solo códigos EAN."
+        "displayName": "Code",
+        "purpose": "EAN en el título de ventana y tablas."
+      },
+      "window-title-folded": {
+        "displayName": "Window title plegada",
+        "purpose": "Nombre en la ventana plegada o en fila."
       }
     },
-    "font": {
-      "family": "Bricolage Grotesque",
-      "source": "autoalojada en el HTML, woff2 variable (wght 200–800, opsz), font-display: swap",
-      "fallback": "Segoe UI, system-ui, sans-serif"
-    },
+    "fonts": [
+      {
+        "family": "SF Pro Display / SF Pro Text",
+        "source": "-apple-system (sistema)"
+      },
+      {
+        "family": "Inter Var",
+        "source": "incrustada en base64 (woff2, 100–900), licencia OFL; reserva fuera de Apple"
+      }
+    ],
+    "materials": [
+      {
+        "name": "glass-window",
+        "value": "background glass; backdrop-filter blur(40px) saturate(180%); inset 0 .5px 0 glass-hi",
+        "purpose": "Ventanas flotantes."
+      },
+      {
+        "name": "glass-menu",
+        "value": "blur(30px) saturate(180%)",
+        "purpose": "Menú del buscador."
+      },
+      {
+        "name": "glass-tip",
+        "value": "blur(24px) saturate(180%)",
+        "purpose": "Tooltips."
+      },
+      {
+        "name": "reduced-transparency",
+        "value": "background panel; backdrop-filter none",
+        "purpose": "prefers-reduced-transparency: reduce."
+      }
+    ],
     "shadows": [
       {
-        "name": "sh",
-        "value": "0 1px 0 rgba(12,34,26,.10), 0 2px 7px rgba(12,34,26,.20)",
-        "dark": "0 1px 0 rgba(0,0,0,.35), 0 3px 10px rgba(0,0,0,.45)",
-        "purpose": "Apoyada: hojas y fichas en reposo."
+        "name": "panel",
+        "value": "0 1px 1px rgba(0,0,0,.02), 0 6px 20px rgba(0,0,0,.04)",
+        "purpose": "Paneles quietos y buscador."
       },
       {
-        "name": "sh-top",
-        "value": "0 1px 0 rgba(12,34,26,.10), 0 8px 22px rgba(12,34,26,.28)",
-        "dark": "0 1px 0 rgba(0,0,0,.35), 0 8px 22px rgba(0,0,0,.55)",
-        "purpose": "Encima: la ficha delante del montón."
+        "name": "panel-dark",
+        "value": "0 0 0 .5px rgba(255,255,255,.06)",
+        "purpose": "Panel en oscuro: solo filo."
       },
       {
-        "name": "sh-lift",
-        "value": "0 2px 0 rgba(12,34,26,.08), 0 22px 44px rgba(12,34,26,.38)",
-        "dark": "0 2px 0 rgba(0,0,0,.3), 0 24px 48px rgba(0,0,0,.6)",
-        "purpose": "Levantada: ficha arrastrándose, desplegable de búsqueda, tooltips."
+        "name": "win",
+        "value": "0 0 0 .5px rgba(0,0,0,.10), 0 2px 6px rgba(0,0,0,.05), 0 18px 44px rgba(0,0,0,.12)",
+        "purpose": "Ventana de detrás y tooltips."
       },
       {
-        "name": "card-edge",
-        "value": "inset 0 0 0 1px var(--card-edge)",
-        "light": "transparent",
-        "dark": "rgba(255,255,255,.07)",
-        "purpose": "Canto interior de la ficha; visible solo en oscuro."
+        "name": "win-dark",
+        "value": "0 0 0 .5px rgba(255,255,255,.12), 0 2px 6px rgba(0,0,0,.4), 0 18px 44px rgba(0,0,0,.55)",
+        "purpose": "Ventana de detrás en oscuro."
+      },
+      {
+        "name": "top",
+        "value": "0 0 0 .5px rgba(0,0,0,.10), 0 4px 10px rgba(0,0,0,.06), 0 24px 56px rgba(0,0,0,.16)",
+        "purpose": "Ventana delante."
+      },
+      {
+        "name": "top-dark",
+        "value": "0 0 0 .5px rgba(255,255,255,.12), 0 4px 10px rgba(0,0,0,.45), 0 24px 56px rgba(0,0,0,.65)",
+        "purpose": "Ventana delante en oscuro."
+      },
+      {
+        "name": "lift",
+        "value": "0 0 0 .5px rgba(0,0,0,.10), 0 8px 18px rgba(0,0,0,.08), 0 36px 80px rgba(0,0,0,.22)",
+        "purpose": "Ventana arrastrada (escala 1.02) y menú del buscador."
+      },
+      {
+        "name": "lift-dark",
+        "value": "0 0 0 .5px rgba(255,255,255,.12), 0 8px 18px rgba(0,0,0,.5), 0 36px 80px rgba(0,0,0,.75)",
+        "purpose": "Arrastre en oscuro."
+      },
+      {
+        "name": "thumb",
+        "value": "0 0 0 .5px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.12), 0 3px 8px rgba(0,0,0,.06)",
+        "purpose": "Cursor del control segmentado."
+      },
+      {
+        "name": "thumb-dark",
+        "value": "0 0 0 .5px rgba(255,255,255,.06), 0 1px 3px rgba(0,0,0,.5)",
+        "purpose": "Cursor en oscuro."
+      },
+      {
+        "name": "glass-edge-highlight",
+        "value": "inset 0 .5px 0 rgba(255,255,255,.75)",
+        "purpose": "Filo de luz del vidrio (oscuro: rgba(255,255,255,.08)); va antes de win/top/lift."
+      },
+      {
+        "name": "hairline",
+        "value": "inset 0 .5px 0 rgba(0,0,0,.09)",
+        "purpose": "Separador de filas y facetas; sustituye al borde."
+      },
+      {
+        "name": "focus-ring",
+        "value": "0 0 0 3.5px color-mix(in srgb, #1D1D1F 45%, transparent)",
+        "purpose": "Foco visible con el grafito."
       }
     ],
     "motion": [
       {
         "name": "ease-out",
         "value": "cubic-bezier(0.23, 1, 0.32, 1)",
-        "purpose": "Curva por defecto: abrir, cerrar, encajar, deslizar, pestañas, pulsar."
+        "purpose": "Pulsar, abrir y cerrar ventanas, menús, tooltips."
       },
       {
         "name": "ease-io",
         "value": "cubic-bezier(0.77, 0, 0.175, 1)",
-        "purpose": "Puntos y marcas de la brújula (700ms)."
+        "purpose": "Puntos de la brújula al cambiar de eje (700ms)."
       },
       {
-        "name": "card-open",
-        "value": "230ms cubic-bezier(0.23, 1, 0.32, 1)",
-        "purpose": "Ficha nace desde escala 0.93 y opacidad 0, origen hacia el escaño."
+        "name": "ease-sheet",
+        "value": "cubic-bezier(0.32, 0.72, 0, 1)",
+        "purpose": "Cursor del control segmentado (340ms)."
       },
       {
-        "name": "card-close",
-        "value": "150ms cubic-bezier(0.23, 1, 0.32, 1)",
-        "purpose": "Ficha se va a escala 0.96 y opacidad 0."
+        "name": "spring-open",
+        "value": "response .48s, damping .92",
+        "purpose": "Ventana que nace del escaño y vuela a su sitio."
       },
       {
-        "name": "snap",
-        "value": "180ms cubic-bezier(0.23, 1, 0.32, 1)",
-        "purpose": "Encajar en la cuadrícula de 1 cm al soltar."
+        "name": "spring-settle",
+        "value": "response .45s, damping 1 (0.8 si |v| > 500 px/s)",
+        "purpose": "Asentar tras soltar; rebote solo si se lanzó."
       },
       {
-        "name": "glide",
-        "value": "220ms cubic-bezier(0.23, 1, 0.32, 1)",
-        "purpose": "Deslizamiento por defecto de una ficha."
+        "name": "spring-row",
+        "value": "response .5s, damping .9, escalonado 40ms",
+        "purpose": "Comparar en fila."
       },
       {
-        "name": "tidy",
-        "value": "360ms cubic-bezier(0.23, 1, 0.32, 1)",
-        "purpose": "Recolocar fichas en la fila de comparar."
+        "name": "momentum-projection",
+        "value": "v/1000 · d/(1−d), d = .995",
+        "purpose": "Destino proyectado de un lanzamiento (Apple)."
       },
       {
-        "name": "lift",
-        "value": "rotate -0.8deg; scale 1.015; sombra sh-lift (220–260ms)",
-        "purpose": "Ficha cogida."
+        "name": "rubber-band",
+        "value": "o·dim·.55 / (dim + .55·o)",
+        "purpose": "Resistencia al arrastrar fuera de los bordes."
+      },
+      {
+        "name": "window-open",
+        "value": "340ms, scale .6 → 1, blur 8px → 0, opacity 0 → 1, ease-out",
+        "purpose": "Aparición desde el punto pulsado (WAAPI)."
+      },
+      {
+        "name": "window-close",
+        "value": "200ms, scale 1 → .7, blur 0 → 6px, opacity → 0, ease-out, origen en su escaño",
+        "purpose": "Cierre hacia su escaño o fila."
+      },
+      {
+        "name": "window-nudge",
+        "value": "260ms, translateY 0 → −5px → 0",
+        "purpose": "Reabrir una ventana ya abierta."
       },
       {
         "name": "press",
-        "value": "scale .97, 160ms cubic-bezier(0.23, 1, 0.32, 1)",
+        "value": "160ms, scale .97, ease-out",
         "purpose": "Respuesta táctil de botones."
       },
       {
-        "name": "sweep",
-        "value": "320ms cubic-bezier(0.23, 1, 0.32, 1)",
-        "purpose": "Barrido de aparición del hemiciclo."
+        "name": "hemicycle-rise",
+        "value": "520ms, scale .96 + blur 6px → nada, ease-out",
+        "purpose": "Entrada del hemiciclo."
       },
       {
         "name": "reduced-motion",
-        "value": "opacity 150ms ease",
-        "purpose": "Con prefers-reduced-motion: sin escala, inclinación ni deslizamiento; fichas al instante; hemiciclo en fundido."
+        "value": "sin muelles ni escalas; fundidos de 150ms",
+        "purpose": "prefers-reduced-motion: ventanas colocadas al instante."
       }
     ],
     "breakpoints": [
       {
-        "name": "compact",
+        "name": "compact-desk",
         "value": "1240px"
       },
       {
         "name": "single-column",
         "value": "960px"
       }
-    ],
-    "grid": {
-      "origin": "22px 22px",
-      "minor": "1cm",
-      "major": "5cm",
-      "rulers": "22px, números en cm reales"
-    }
+    ]
   },
   "components": [
+    {
+      "name": "Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Panel quieto sobre el lienzo.",
+      "html": "<section class=\"ds-panel\"><h2>El parlamento</h2><p>Pulsa escaños o partidos para abrir sus fichas</p></section>",
+      "css": ".ds-panel{background:#FFFFFF;border-radius:20px;box-shadow:0 1px 1px rgba(0,0,0,.02), 0 6px 20px rgba(0,0,0,.04);padding:16px 18px;font:400 13px/1.45 -apple-system,BlinkMacSystemFont,'Inter Var',system-ui,sans-serif;color:#1D1D1F;max-width:360px}.ds-panel h2{margin:0;font:600 17px/1.2 -apple-system,BlinkMacSystemFont,'SF Pro Display','Inter Var',sans-serif;letter-spacing:-.022em}.ds-panel p{margin:4px 0 0;color:#6E6E73;font-size:12px}"
+    },
     {
       "name": "Botón principal",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Acción principal de una hoja o ficha.",
-      "html": "<button class=\"ds-btn\">Filtrar por este partido</button>",
-      "css": ".ds-btn{font:600 13.5px/1.45 var(--f,'Bricolage Grotesque',system-ui,sans-serif);background:#1B1E1C;color:#FCFCFA;border:1px solid #1B1E1C;border-radius:3px;padding:7px 12px;cursor:pointer;transition:transform 160ms cubic-bezier(0.23,1,0.32,1),background-color 160ms ease}.ds-btn:hover{background:#474D49;border-color:#474D49}.ds-btn:active{transform:scale(.97)}.ds-btn:focus-visible{outline:2px solid #1B1E1C;outline-offset:2px}"
+      "description": "Acción principal en grafito.",
+      "html": "<button class=\"ds-btn\">Comparar en fila</button>",
+      "css": ".ds-btn{border:0;background:#1D1D1F;color:#FFFFFF;border-radius:980px;padding:7px 15px;font:500 13px -apple-system,BlinkMacSystemFont,'Inter Var',sans-serif;cursor:pointer;transition:transform 160ms cubic-bezier(.23,1,.32,1),background-color 160ms ease}.ds-btn:hover{background:color-mix(in srgb,#1D1D1F 88%,#000)}.ds-btn:active{transform:scale(.97)}.ds-btn:focus-visible{outline:none;box-shadow:0 0 0 3.5px color-mix(in srgb,#1D1D1F 45%,transparent)}"
     },
     {
-      "name": "Botón fantasma",
+      "name": "Botón secundario",
       "kind": "button",
       "refersTo": "button-ghost",
-      "description": "Acción secundaria.",
-      "html": "<button class=\"ds-btn-ghost\">Comparar en fila</button>",
-      "css": ".ds-btn-ghost{font:600 13.5px/1.45 'Bricolage Grotesque',system-ui,sans-serif;background:transparent;color:#1B1E1C;border:1px solid #DADDD7;border-radius:3px;padding:7px 12px;cursor:pointer;transition:transform 160ms cubic-bezier(0.23,1,0.32,1),border-color 160ms ease}.ds-btn-ghost:hover{border-color:#474D49}.ds-btn-ghost:active{transform:scale(.97)}.ds-btn-ghost:focus-visible{outline:2px solid #1B1E1C;outline-offset:2px}"
+      "description": "Botones de la barra de título.",
+      "html": "<button class=\"ds-btn-ghost\">Cerrar fichas</button>",
+      "css": ".ds-btn-ghost{border:0;background:rgba(120,120,128,.12);color:#1D1D1F;border-radius:980px;padding:7px 15px;font:500 13px -apple-system,BlinkMacSystemFont,'Inter Var',sans-serif;cursor:pointer;transition:transform 160ms cubic-bezier(.23,1,.32,1),filter 160ms ease}.ds-btn-ghost:hover{filter:brightness(.97)}.ds-btn-ghost:active{transform:scale(.97)}.ds-btn-ghost:focus-visible{outline:none;box-shadow:0 0 0 3.5px color-mix(in srgb,#1D1D1F 45%,transparent)}"
     },
     {
       "name": "Buscador",
       "kind": "input",
-      "refersTo": "input-search",
-      "description": "Campo de búsqueda de la tira superior.",
-      "html": "<label class=\"ds-search\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M20 20l-4-4\"/></svg><input placeholder=\"Buscar EAN, línea, casa, tamaño…\"></label>",
-      "css": ".ds-search{position:relative;display:block;max-width:460px}.ds-search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#5E6561}.ds-search input{width:100%;box-sizing:border-box;font:400 13.5px/1.45 'Bricolage Grotesque',system-ui,sans-serif;color:#1B1E1C;border:1px solid #DADDD7;background:#F2F3F0;border-radius:3px;padding:8px 12px 8px 32px;transition:border-color 160ms ease,background-color 160ms ease}.ds-search input:focus{outline:none;border-color:#474D49;background:#FCFCFA}"
+      "refersTo": "search-field",
+      "description": "Campo de búsqueda de 34px.",
+      "html": "<input class=\"ds-search\" type=\"search\" placeholder=\"Buscar EAN, línea, casa, tamaño…\">",
+      "css": ".ds-search{width:300px;height:34px;border:0;background:#FFFFFF;border-radius:10px;padding:0 12px;font:400 13px -apple-system,BlinkMacSystemFont,'Inter Var',sans-serif;color:#1D1D1F;box-shadow:0 1px 1px rgba(0,0,0,.02), 0 6px 20px rgba(0,0,0,.04),inset 0 0 0 .5px rgba(0,0,0,.09);transition:box-shadow 200ms ease}.ds-search::placeholder{color:#6E6E73}.ds-search:focus{outline:none;box-shadow:0 1px 1px rgba(0,0,0,.02), 0 6px 20px rgba(0,0,0,.04),0 0 0 3.5px color-mix(in srgb,#1D1D1F 40%,transparent)}"
     },
     {
       "name": "Chip de filtro",
       "kind": "chip",
-      "refersTo": "chip-filter",
-      "description": "Filtro activo en la tira superior; el aspa lo quita.",
-      "html": "<button class=\"ds-chip\"><b>Casa:</b> Gucci <svg width=\"10\" height=\"10\" viewBox=\"0 0 10 10\" stroke=\"currentColor\" stroke-width=\"1.6\"><path d=\"M2 2l6 6M8 2l-6 6\"/></svg></button>",
-      "css": ".ds-chip{display:inline-flex;align-items:center;gap:6px;font:400 12.5px/1.3 'Bricolage Grotesque',system-ui,sans-serif;color:#1B1E1C;border:1px solid #DADDD7;background:#F2F3F0;border-radius:3px;padding:4px 6px 4px 9px;cursor:pointer;transition:transform 160ms cubic-bezier(0.23,1,0.32,1)}.ds-chip b{font-weight:500;color:#5E6561}.ds-chip svg{color:#5E6561}.ds-chip:active{transform:scale(.97)}.ds-chip:focus-visible{outline:2px solid #1B1E1C;outline-offset:2px}"
+      "refersTo": "filter-chip",
+      "description": "Filtro activo en la barra de título.",
+      "html": "<button class=\"ds-chip\"><b>Casa</b> Gucci <i>×</i></button>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;gap:6px;border:0;background:rgba(120,120,128,.12);border-radius:980px;padding:5px 8px 5px 11px;font:400 12.5px -apple-system,BlinkMacSystemFont,'Inter Var',sans-serif;color:#1D1D1F;cursor:pointer}.ds-chip b{font-weight:400;color:#6E6E73}.ds-chip i{font-style:normal;display:grid;place-items:center;width:16px;height:16px;border-radius:50%;background:rgba(120,120,128,.12);color:#424245}.ds-chip:hover{filter:brightness(.97)}.ds-chip:focus-visible{outline:none;box-shadow:0 0 0 3.5px color-mix(in srgb,#1D1D1F 45%,transparent)}"
     },
     {
-      "name": "Pestañas",
+      "name": "Control segmentado",
       "kind": "nav",
-      "refersTo": "tab-active",
-      "description": "Pestañas de hoja con subrayado que crece desde la izquierda.",
-      "html": "<div class=\"ds-tabs\"><button class=\"ds-tab\" aria-selected=\"true\">Histórico y proyección</button><button class=\"ds-tab\" aria-selected=\"false\">Partidos</button><button class=\"ds-tab\" aria-selected=\"false\">Lista de EANs</button></div>",
-      "css": ".ds-tabs{display:flex;gap:18px;border-bottom:1px solid #DADDD7}.ds-tab{position:relative;background:none;border:0;padding:12px 0 10px;font:650 13.5px/1.2 'Bricolage Grotesque',system-ui,sans-serif;color:#5E6561;cursor:pointer;transition:color 160ms ease}.ds-tab::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:#1B1E1C;transform:scaleX(0);transform-origin:left;transition:transform 220ms cubic-bezier(0.23,1,0.32,1)}.ds-tab[aria-selected=true]{color:#1B1E1C}.ds-tab[aria-selected=true]::after{transform:scaleX(1)}.ds-tab:hover{color:#1B1E1C}.ds-tab:focus-visible{outline:2px solid #1B1E1C;outline-offset:2px}"
+      "refersTo": "segmented-control",
+      "description": "Pestañas con cursor que se desliza (340ms ease-sheet).",
+      "html": "<div class=\"ds-seg\"><span class=\"ds-seg-thumb\"></span><button aria-selected=\"true\">Histórico</button><button>Partidos</button><button>Lista de EANs</button></div>",
+      "css": ".ds-seg{position:relative;display:flex;width:360px;padding:2px;background:rgba(120,120,128,.12);border-radius:9px;font:500 12.5px -apple-system,BlinkMacSystemFont,'Inter Var',sans-serif}.ds-seg button{position:relative;z-index:1;flex:1;border:0;background:none;padding:5px 10px;border-radius:7px;color:#424245;font:inherit;cursor:pointer;transition:color 200ms ease}.ds-seg button[aria-selected=true]{color:#1D1D1F;font-weight:600}.ds-seg button:hover{color:#1D1D1F}.ds-seg button:focus-visible{outline:none;box-shadow:0 0 0 3.5px color-mix(in srgb,#1D1D1F 45%,transparent)}.ds-seg-thumb{position:absolute;top:2px;bottom:2px;left:2px;width:calc((100% - 4px)/3);border-radius:7px;background:#FFFFFF;box-shadow:0 0 0 .5px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.12), 0 3px 8px rgba(0,0,0,.06);transition:transform 340ms cubic-bezier(.32,.72,0,1)}.ds-seg:has(button:nth-of-type(2):hover) .ds-seg-thumb{transform:translateX(100%)}@media (prefers-reduced-motion:reduce){.ds-seg-thumb{transition:opacity 150ms ease}}"
     },
     {
-      "name": "Hoja sobre el tapete",
+      "name": "Lista agrupada",
       "kind": "card",
-      "refersTo": "sheet",
-      "description": "Hoja de papel apoyada sobre el tapete con cuadrícula de 1 cm y 5 cm.",
-      "html": "<div class=\"ds-mat\"><section class=\"ds-sheet\"><h2>El parlamento</h2><p>Pulsa escaños o partidos para abrir sus fichas</p></section></div>",
-      "css": ".ds-mat{padding:1cm;background-color:#3D7862;background-image:linear-gradient(rgba(255,255,255,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.2) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.09) 1px,transparent 1px);background-size:5cm 5cm,5cm 5cm,1cm 1cm,1cm 1cm}.ds-sheet{background:#FCFCFA;color:#1B1E1C;border-radius:3px;box-shadow:0 1px 0 rgba(12,34,26,.10),0 2px 7px rgba(12,34,26,.20);padding:14px 16px;font:400 13.5px/1.45 'Bricolage Grotesque',system-ui,sans-serif}.ds-sheet h2{margin:0;font:700 17px/1.15 'Bricolage Grotesque',system-ui,sans-serif;letter-spacing:-.01em;font-variation-settings:'opsz' 28}.ds-sheet p{margin:4px 0 0;color:#5E6561;font-size:12px}"
+      "refersTo": "grouped-list",
+      "description": "Cifras de la selección, estilo Ajustes, con triángulo de estado.",
+      "html": "<dl class=\"ds-spec\"><div><dt>Volumen 12M<small>unidades enviadas</small></dt><dd><b>184 k</b> <span class=\"ds-up\">▲</span> +12%</dd></div><div><dt>Escaños</dt><dd><b>42</b></dd></div></dl>",
+      "css": ".ds-spec{width:320px;margin:0;background:rgba(120,120,128,.07);border-radius:12px;padding:0 12px;font:400 13px -apple-system,BlinkMacSystemFont,'Inter Var',sans-serif;color:#1D1D1F}.ds-spec div{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:2px 12px;padding:9px 0}.ds-spec div+div{box-shadow:inset 0 .5px 0 rgba(0,0,0,.09)}.ds-spec dt{font-weight:500}.ds-spec dt small{display:block;font-size:11.5px;font-weight:400;color:#6E6E73}.ds-spec dd{margin:0;font-variant-numeric:tabular-nums;font-size:12.5px;color:#424245}.ds-spec dd b{font:600 17px/1.1 -apple-system,BlinkMacSystemFont,'SF Pro Display','Inter Var',sans-serif;letter-spacing:-.02em;color:#1D1D1F}.ds-up{color:#0ca30c;font-size:8px}"
     },
     {
-      "name": "Ficha flotante",
+      "name": "Ventana flotante",
       "kind": "custom",
-      "refersTo": "card-floating",
-      "description": "Ficha de EAN o partido; al cogerla crece la sombra, se inclina −0.8deg y escala 1.015.",
-      "html": "<div class=\"ds-fic\" tabindex=\"0\"><div class=\"ds-fic-h\"><span class=\"ds-tag\"></span><span class=\"ds-code\">8005610625065</span></div><div class=\"ds-fic-b\"><h4>Gucci Bloom EDP 50 ml</h4><div class=\"ds-spec\"><span>Envíos últimos 12M</span><b>215 k</b></div></div></div>",
-      "css": ".ds-fic{width:340px;background:#FCFCFA;color:#1B1E1C;border-radius:3px;box-shadow:inset 0 0 0 1px transparent,0 1px 0 rgba(12,34,26,.10),0 2px 7px rgba(12,34,26,.20);transition:box-shadow 220ms cubic-bezier(0.23,1,0.32,1),rotate 260ms cubic-bezier(0.23,1,0.32,1),scale 220ms cubic-bezier(0.23,1,0.32,1);overflow:hidden;font:400 13.5px/1.45 'Bricolage Grotesque',system-ui,sans-serif;cursor:grab}.ds-fic:hover,.ds-fic:focus-visible{box-shadow:0 2px 0 rgba(12,34,26,.08),0 22px 44px rgba(12,34,26,.38);rotate:-0.8deg;scale:1.015;outline:none}.ds-fic-h{display:flex;align-items:center;gap:9px;padding:9px 12px;border-bottom:1px solid #DADDD7}.ds-tag{width:14px;height:14px;border-radius:2px;background:#6250d6}.ds-code{font:600 12px/1.2 ui-monospace,'SF Mono',Menlo,Consolas,monospace;color:#474D49}.ds-fic-b{padding:11px 13px 13px}.ds-fic-b h4{margin:0 0 8px;font:750 15.5px/1.25 'Bricolage Grotesque',system-ui,sans-serif;letter-spacing:-.01em}.ds-spec{display:flex;justify-content:space-between;align-items:baseline;border-top:1.5px solid #1B1E1C;padding:7px 0}.ds-spec span{font-weight:600}.ds-spec b{font:750 17px/1.1 'Bricolage Grotesque',system-ui,sans-serif;font-variant-numeric:tabular-nums}@media (prefers-reduced-motion:reduce){.ds-fic{transition:box-shadow 150ms ease}.ds-fic:hover,.ds-fic:focus-visible{rotate:none;scale:none}}"
-    },
-    {
-      "name": "Delta con triángulo",
-      "kind": "custom",
-      "description": "Variación con triángulo de estado: arriba bueno, abajo crítico.",
-      "html": "<span class=\"ds-dlt\"><svg width=\"8\" height=\"7\" viewBox=\"0 0 8 7\"><path d=\"M4 0L8 7H0Z\" fill=\"#0ca30c\"/></svg>+9%</span> <span class=\"ds-dlt\"><svg width=\"8\" height=\"7\" viewBox=\"0 0 8 7\"><path d=\"M0 0H8L4 7Z\" fill=\"#d03b3b\"/></svg>-18%</span>",
-      "css": ".ds-dlt{display:inline-flex;align-items:center;gap:4px;font:400 12.5px/1.3 'Bricolage Grotesque',system-ui,sans-serif;color:#1B1E1C;font-variant-numeric:tabular-nums}"
+      "refersTo": "window",
+      "description": "Ficha de EAN o partido en vidrio, con semáforo y etiqueta cuadrada separada.",
+      "html": "<div class=\"ds-win\"><div class=\"ds-win-h\"><span class=\"ds-tl\"><button class=\"r\" aria-label=\"Cerrar\"></button><button class=\"y\" aria-label=\"Plegar\"></button></span><i class=\"ds-tag\"></i><span class=\"ds-ttl\">8005610625836</span></div><div class=\"ds-win-b\"><h4>Gucci Bloom EDP 50 ml</h4><p>Elige Ciclo de vida</p></div></div>",
+      "css": ".ds-win{width:340px;background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(40px) saturate(180%);backdrop-filter:blur(40px) saturate(180%);border-radius:14px;box-shadow:inset 0 .5px 0 rgba(255,255,255,.75),0 0 0 .5px rgba(0,0,0,.10), 0 4px 10px rgba(0,0,0,.06), 0 24px 56px rgba(0,0,0,.16);overflow:hidden;font:400 13px -apple-system,BlinkMacSystemFont,'Inter Var',sans-serif;color:#1D1D1F;transition:box-shadow 260ms cubic-bezier(.23,1,.32,1),scale 260ms cubic-bezier(.23,1,.32,1)}.ds-win:active{box-shadow:inset 0 .5px 0 rgba(255,255,255,.75),0 0 0 .5px rgba(0,0,0,.10), 0 8px 18px rgba(0,0,0,.08), 0 36px 80px rgba(0,0,0,.22);scale:1.02}.ds-win-h{display:flex;align-items:center;gap:10px;padding:10px 8px 6px 12px;cursor:grab}.ds-tl{display:flex;gap:8px}.ds-tl button{width:12px;height:12px;border-radius:50%;border:0;padding:0;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.12);cursor:pointer}.ds-tl .r{background:#FF5F57}.ds-tl .y{background:#FEBC2E}.ds-tl button:focus-visible{outline:none;box-shadow:0 0 0 3.5px color-mix(in srgb,#1D1D1F 45%,transparent)}.ds-tag{width:8px;height:8px;border-radius:2.5px;background:#e87ba4;margin-left:10px}.ds-ttl{font:500 12px/1.2 ui-monospace,'SF Mono',Menlo,monospace;color:#6E6E73}.ds-win-b{padding:4px 14px 14px}.ds-win-b h4{margin:0;font:700 16px/1.25 -apple-system,BlinkMacSystemFont,'SF Pro Display','Inter Var',sans-serif;letter-spacing:-.02em}.ds-win-b p{margin:2px 0 0;font-size:12px;color:#6E6E73}@media (prefers-reduced-transparency:reduce){.ds-win{background:#FFFFFF;-webkit-backdrop-filter:none;backdrop-filter:none}}@media (prefers-reduced-motion:reduce){.ds-win:active{scale:none}}"
     }
   ],
   "narrative": {
-    "northStar": "La mesa de trabajo sobre el tapete de corte",
-    "overview": "La página es una mesa: un tapete verde de corte con cuadrícula de 1 cm (líneas finas cada centímetro y más marcadas cada 5 cm) y reglas numeradas en centímetros reales en el borde superior e izquierdo. Encima descansan hojas de papel blanco neutro (filtros, parlamento, histórico, selección) en una rejilla fija, y sobre ellas fichas flotantes que el planner levanta, arrastra, apila y compara sin perder de vista el parlamento.\n\nDensidad de herramienta de análisis: texto de 13.5px, tablas de especificaciones con filete de tinta arriba, cifras tabulares. La tinta es casi negra; el color está reservado a los partidos y al estado. La profundidad es física y corta: el papel apoya, la ficha levantada proyecta una sombra larga y se inclina un poco. El modo oscuro es el mismo tapete de noche, no otro mundo.\n\nRechazados por el usuario: la «carta de tonos» y la cámara oscura con tarjetas (gritan IA), y el dashboard de tres columnas que sustituye la vista al pulsar.",
+    "northStar": "La app de macOS del parlamento",
+    "overview": "El explorador se comporta como una app nativa de Apple a pantalla completa (lenguaje pedido por el usuario el 2026-10-12). Lienzo gris claro, negro en oscuro; encima, paneles blancos sin borde y quietos (filtros, parlamento, histórico, selección). Lo que se abre no sustituye la vista: cada EAN o partido nace como una ventana translúcida desde el escaño o la fila pulsada, se lanza con inercia, se asienta con un muelle y se pliega o se compara en fila sin tapar el parlamento.\n\nDensidad de herramienta: texto de 13px, cifras tabulares, listas agrupadas tipo Ajustes, controles segmentados. El color es casi solo de los datos: el cromo es gris y grafito para que los seis colores de partido, el morado de fragancias y el naranja de makeup sean lo único que se lee como color. Funciona descargado y sin conexión: la letra es la del sistema de Apple y, fuera de Apple, Inter Var incrustada.\n\nRechazados por el usuario: la carta de tonos y la cámara oscura con tarjetas, y la mesa de trabajo sobre tapete de corte (el sistema anterior, sustituido entero).",
     "keyCharacteristics": [
-      "Tapete verde con cuadrícula de 1 cm y 5 cm y reglas numeradas en cm reales.",
-      "Hojas de papel con esquina de 3px y sombra corta tintada en verde.",
-      "Fichas flotantes que nacen junto al punto pulsado, unidas a su escaño por un hilo del color del partido, y que se encajan en la cuadrícula de 1 cm.",
-      "Una grotesca humanista variable (Bricolage Grotesque) y monoespaciada solo para códigos EAN.",
-      "Colores de partido fijos; tinta para todo lo demás."
+      "Paneles de 20px sin borde con sombra difusa sobre lienzo #F5F5F7 / #000000.",
+      "Ventanas de 14px en material translúcido con semáforo de macOS (rojo cierra, amarillo pliega).",
+      "Acento grafito, nunca azul de sistema.",
+      "Muelles por eje, proyección de la inercia, resistencia en los bordes; todo interrumpible.",
+      "Un significado por color; el estado nunca va solo en el color."
     ],
     "rules": [
       {
-        "name": "La Regla de Un Significado",
-        "body": "Un color = una cosa en todo el proyecto. El color de un partido sigue a la entidad, no a su posición; filtrar nunca repinta a los que quedan. Morado = fragancias, naranja = makeup, verde azulado = regla + DAs, azul marino = consenso (solo histórico).",
+        "name": "The Graphite Rule",
+        "body": "El acento es grafito. El azul de sistema de Apple se midió a ΔE 3.3 del partido Media 6M prudente (#2a78d6): se leería como ese partido. Ningún color de cromo puede acercarse a un color de partido.",
         "section": "colors"
       },
       {
-        "name": "La Regla del Triángulo",
-        "body": "Verde y rojo de estado nunca van solos: el signo va con un triángulo hacia arriba (bueno) o hacia abajo (crítico) y la cifra con su signo.",
+        "name": "The One Meaning Rule",
+        "body": "Cada color significa una sola cosa en todo el proyecto: partido, categoría, regla + DAs, consenso o estado. El cromo no usa ninguno de ellos.",
         "section": "colors"
       },
       {
-        "name": "La Regla del Código",
-        "body": "La monoespaciada es solo para códigos EAN; nombres, cifras y etiquetas van en Bricolage con cifras tabulares.",
+        "name": "The Triangle Rule",
+        "body": "Verde y rojo solo aparecen como triángulo (arriba bueno, abajo crítico) al lado de la cifra; nunca colorean el número ni van solos.",
+        "section": "colors"
+      },
+      {
+        "name": "The Display Tracking Rule",
+        "body": "De 16px hacia arriba se aprieta: −0.02em (16–17px) a −0.035em (58px). El cuerpo lleva −0.003em.",
         "section": "typography"
       },
       {
-        "name": "La Regla del Levantar",
-        "body": "Al coger una ficha crece la sombra a «levantada», se inclina −0.8deg y escala a 1.015; al soltarla vuelve a apoyar y se encaja en la cuadrícula.",
+        "name": "The One Unit Rule",
+        "body": "Cada eje usa una sola unidad, elegida por el valor más alto (`k` desde 1.000, `M` desde 1.000.000, coma decimal española): nunca «10 k» junto a «5000».",
+        "section": "typography"
+      },
+      {
+        "name": "The Reduced Transparency Rule",
+        "body": "Con `prefers-reduced-transparency: reduce`, ventanas, menú y tooltips pasan a `panel` macizo sin desenfoque.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Still Panels Rule",
+        "body": "Los paneles no se mueven ni suben de sombra; solo las ventanas tienen elevación variable.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "**Do** poner el contenido en hojas de papel (3px, sombra apoyada) sobre el tapete verde con su cuadrícula de 1 cm y 5 cm.",
-      "**Do** abrir el detalle como ficha junto al punto pulsado, unida por un hilo, sin sustituir la vista.",
-      "**Do** encajar en la cuadrícula de 1 cm todo lo que se suelta o se recoloca.",
-      "**Do** usar la sombra tintada en verde (`rgba(12,34,26,…)`) en claro y la negra en oscuro.",
-      "**Do** emparejar siempre verde y rojo de estado con su triángulo.",
-      "**Do** respetar `prefers-reduced-motion` con fundidos de 150ms."
+      "**Do** usar grafito como único acento de interfaz y dejar el color a los datos.",
+      "**Do** separar con sombras interiores de .5px (`hair`) en vez de bordes.",
+      "**Do** dar a cada ventana su semáforo (rojo cierra, amarillo pliega) y apagarlo cuando queda detrás.",
+      "**Do** mover ventanas con muelles por eje interrumpibles y respetar `prefers-reduced-motion` y `prefers-reduced-transparency`.",
+      "**Do** usar cifras tabulares y una sola unidad por eje.",
+      "**Do** acompañar cada variación con su triángulo verde o rojo.",
+      "**Do** incrustar Inter Var para que la página funcione sin conexión fuera de Apple."
     ],
     "donts": [
-      "**Don't** repintar un partido ni reutilizar sus colores para otra cosa.",
-      "**Don't** usar el consenso de o9 como referencia fuera de reportes históricos.",
-      "**Don't** usar la monoespaciada para nada que no sea un código EAN.",
-      "**Don't** usar sombras negras puras en modo claro.",
-      "**Don't** volver a la carta de tonos, a la cámara oscura con tarjetas ni al dashboard de tres columnas que sustituye la vista."
+      "**Don't** usar el azul de sistema ni ningún color de cromo cercano a un color de partido.",
+      "**Don't** reasignar colores de partido, categoría, regla + DAs o consenso, ni pintar el consenso fuera de reportes históricos.",
+      "**Don't** poner bordes de 1px a los paneles ni elevar los paneles al pasar.",
+      "**Don't** hacer redonda la etiqueta de partido de una ventana ni ponerla junto al semáforo.",
+      "**Don't** sustituir la vista al abrir un EAN: se abre una ventana encima y el parlamento sigue visible.",
+      "**Don't** mezclar unidades en un mismo eje."
     ]
   }
 }
