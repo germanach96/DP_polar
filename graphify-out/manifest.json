@@ -628,5 +628,35 @@
     "seen": 1791828833.9636304,
     "ast_hash": "2f3fe7618c3332ad553a6eec42709ca4",
     "semantic_hash": ""
+  },
+  "src/brujulas_html.py": {
+    "mtime": 1791845972.0457366,
+    "seen": 1791921418.9626076,
+    "ast_hash": "0573f3cac89248c5f9afd5ffcbd75a71",
+    "semantic_hash": ""
+  },
+  "src/brujulas_template.html": {
+    "mtime": 1791846155.189514,
+    "seen": 1791921418.9628408,
+    "ast_hash": "07bc35c186cd97fd22c49a9a3ed3c3e8",
+    "semantic_hash": ""
+  },
+  ".impeccable/review/br-dark-focus.png": {
+    "mtime": 1791846162.7137477,
+    "seen": 1791921418.96286,
+    "ast_hash": "99e7895f14f34f4a8786075bf79bba27",
+    "semantic_hash": ""
+  },
+  ".impeccable/review/br-desk.png": {
+    "mtime": 1791846157.7657475,
+    "seen": 1791921418.9628623,
+    "ast_hash": "baf733659c20b227bf3a7508317f424e",
+    "semantic_hash": ""
+  },
+  ".impeccable/review/br-mob.png": {
+    "mtime": 1791846164.7057478,
+    "seen": 1791921418.9628644,
+    "ast_hash": "ee496b3745c7945d515e3b8e21c8e691",
+    "semantic_hash": ""
   }
 }
